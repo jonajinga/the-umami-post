@@ -1184,15 +1184,13 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
 }
 .nutrition-modal__footnote--est { font-style: italic; border: 0; padding-top: 0; margin-top: var(--space-1); }
 
-/* Recipe-notes preview (truncated copy in card; full text in modal) */
-.recipe-notes__preview {
-  max-height: 8em;
-  overflow: hidden;
-  position: relative;
-  mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  margin-bottom: var(--space-3);
-}
+/* Recipe-notes preview — full intro paragraph; the "Full make-
+ * ahead plan" button below opens the modal for storage / freezing
+ * / reheating sub-sections. Earlier mask-fade was hiding readable
+ * content for no payoff. */
+.recipe-notes__preview { margin: 0 0 var(--space-3); }
+.recipe-notes__preview > :first-child { margin-top: 0; }
+.recipe-notes__preview > :last-child { margin-bottom: 0; }
 
 /* ─── Nutrition Facts ───────────────────────────────────── */
 .nutrition {
