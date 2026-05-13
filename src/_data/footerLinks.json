@@ -86,16 +86,5 @@
       { "label": "Transparency",    "url": "/transparency/" },
       { "label": "Costs",           "url": "/costs/" }
     ]
-  },
-  {
-    "heading": "Build",
-    "headingUrl": "/stack/",
-    "links": [
-      { "label": "Tech Stack",      "url": "/stack/" },
-      { "label": "Style Guide",     "url": "/style-guide/" },
-      { "label": "Open Source",     "url": "/open-source/" },
-      { "label": "Changelog",       "url": "/changelog/" },
-      { "label": "Features",        "url": "/features/" }
-    ]
   }
 ]
