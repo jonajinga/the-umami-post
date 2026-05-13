@@ -24,7 +24,7 @@
   {% if yield %}
   <div class="recipe-meta-bar__item">
     <span class="recipe-meta-bar__label">Makes</span>
-    <span class="recipe-meta-bar__value">{{ yield }}</span>
+    <span class="recipe-meta-bar__value" data-base-yield="{{ yield }}">{{ yield }}</span>
   </div>
   {% endif %}
   {% if difficulty %}

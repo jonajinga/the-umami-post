@@ -125,8 +125,8 @@
     el.innerHTML = '';
     var level = parseInt(el.getAttribute('data-rough-level') || '0', 10);
     var max = 5;
-    var size = 22;
-    var gap = 4;
+    var size = 28;
+    var gap = 6;
     var w = (size * max) + (gap * (max - 1));
     var h = size + 4;
     var s = svg(w, h);
@@ -134,30 +134,46 @@
     var rc = rough.svg(s);
     var fill = colorFor('accent');
     var ink  = colorFor('ink');
+    var bg   = cssVar('--color-bg', '#FAF6EF');
     for (var i = 0; i < max; i++) {
       var x = i * (size + gap);
       var filled = i < level;
-      // Simplified chef hat: a dome on top of a band
-      var bandY = h - 6;
-      var band = rc.rectangle(x + 2, bandY - 4, size - 4, 6, {
-        stroke: ink, strokeWidth: 1.4,
-        roughness: 1.4,
+      var cx = x + size / 2;
+      var cy = h / 2;
+      // Mushroom cap (half-ellipse with a flat bottom edge)
+      var capW = size - 6;
+      var capH = size * 0.55;
+      var capCy = cy - 3;
+      var capPath = 'M ' + (cx - capW / 2) + ' ' + (capCy + capH / 2 - 1) +
+                    ' a ' + (capW / 2) + ' ' + capH + ' 0 0 1 ' + capW + ' 0 z';
+      s.appendChild(rc.path(capPath, {
+        stroke: ink, strokeWidth: 1.3,
+        roughness: 1.8,
         fill: filled ? fill : 'none',
-        fillStyle: 'cross-hatch',
-        fillWeight: 1,
+        fillStyle: filled ? 'solid' : 'hachure',
+        fillWeight: 1.2,
         hachureGap: 3
-      });
-      s.appendChild(band);
-      // Dome (ellipse on top)
-      var dome = rc.ellipse(x + size / 2, bandY - 8, size - 4, 14, {
-        stroke: ink, strokeWidth: 1.4,
-        roughness: 1.6,
-        fill: filled ? fill : 'none',
+      }));
+      // Stem (small rounded rect)
+      var stemW = size * 0.42;
+      var stemH = size * 0.36;
+      s.appendChild(rc.rectangle(cx - stemW / 2, capCy + capH / 2 - 2, stemW, stemH, {
+        stroke: ink, strokeWidth: 1.3,
+        roughness: 1.4,
+        fill: filled ? colorFor('olive') : 'none',
         fillStyle: 'hachure',
         fillWeight: 1,
         hachureGap: 3
-      });
-      s.appendChild(dome);
+      }));
+      // Two cream cap spots, but only on filled mushrooms
+      if (filled) {
+        s.appendChild(rc.circle(cx - capW * 0.18, capCy - 1, 3, {
+          stroke: bg, strokeWidth: 1, roughness: 1.2, fill: bg, fillStyle: 'solid'
+        }));
+        s.appendChild(rc.circle(cx + capW * 0.18, capCy + 2, 2.5, {
+          stroke: bg, strokeWidth: 1, roughness: 1.2, fill: bg, fillStyle: 'solid'
+        }));
+      }
     }
   }
 

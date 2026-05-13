@@ -179,6 +179,45 @@
       var unitEl = el.parentElement && el.parentElement.querySelector('.ingredient__unit');
       if (unitEl) unitEl.textContent = newUnit;
     }
+
+    // Scale the yield / "Makes" line too. We scan for the first
+    // numeric token (integer, decimal, fraction, mixed) and multiply
+    // by scale. Everything else in the string is preserved.
+    var yieldEls = root.querySelectorAll('[data-base-yield]');
+    yieldEls.forEach(function (yEl) {
+      var base = yEl.getAttribute('data-base-yield') || yEl.textContent || '';
+      yEl.textContent = scaleYieldText(base, scale);
+    });
+  }
+
+  // Find the first number-like token in a yield string and scale it.
+  // Supports "4 bowls", "1 1/2 loaves", "8-10 servings", "One 9-inch cake".
+  function scaleYieldText(text, scale) {
+    if (!text) return text;
+    // Try mixed "1 1/2"
+    var m = text.match(/^(.*?)(\d+)\s+(\d+)\/(\d+)(.*)$/);
+    if (m) {
+      var v = parseInt(m[2], 10) + parseInt(m[3], 10) / parseInt(m[4], 10);
+      return m[1] + formatFraction(v * scale) + m[5];
+    }
+    // Range "8-10"
+    m = text.match(/^(.*?)(\d+)\s*[-–]\s*(\d+)(.*)$/);
+    if (m) {
+      return m[1] + Math.round(parseInt(m[2], 10) * scale) + '-' + Math.round(parseInt(m[3], 10) * scale) + m[4];
+    }
+    // Fraction "1/2"
+    m = text.match(/^(.*?)(\d+)\/(\d+)(.*)$/);
+    if (m) {
+      var fv = parseInt(m[2], 10) / parseInt(m[3], 10);
+      return m[1] + formatFraction(fv * scale) + m[4];
+    }
+    // Decimal or integer
+    m = text.match(/^(.*?)(\d+(?:\.\d+)?)(.*)$/);
+    if (m) {
+      var dv = parseFloat(m[2]);
+      return m[1] + formatFraction(dv * scale) + m[3];
+    }
+    return text;
   }
 
   // -- wiring --------------------------------------------------------
