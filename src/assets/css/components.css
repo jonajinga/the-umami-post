@@ -14,13 +14,13 @@
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-xs);
-  min-height: 26px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 4px 0;
+  padding: 8px 0;
   /* Stick with the header on scroll so readers always see where they
    * are. Header sets its own top offsets via JS; the breadcrumb bar
    * sits flush underneath. */
@@ -40,7 +40,9 @@
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
   row-gap: 2px;
+  width: 100%;
 }
+.breadcrumbs-bar__item { align-items: center; }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
 .breadcrumbs-bar__item--current {
   /* Don't ellipsize the current page; let it overflow into the

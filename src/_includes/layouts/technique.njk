@@ -59,7 +59,7 @@ isReadingPage: true
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tippy-content="See all from {{ authors[author].name or authorName or author }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tippy-content="{{ authors[author].bio or ('See all recipes and stories from ' + (authors[author].name or authorName or author)) }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
       &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
     </p>
   </header>

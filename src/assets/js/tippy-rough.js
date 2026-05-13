@@ -28,6 +28,11 @@
 
   function paintBox(box, rough) {
     if (!box) return;
+    // Leave already-themed tooltips alone — `author-bio`, `badge`,
+    // and `glossary` themes ship their own contrast pairs in
+    // components.css and the rough overlay would clobber them.
+    var theme = box.getAttribute('data-theme') || '';
+    if (/\b(author-bio|badge|glossary)\b/.test(theme)) return;
     var existing = box.querySelector(':scope > svg[data-tippy-rough]');
     if (existing) existing.remove();
     var rect = box.getBoundingClientRect();
@@ -43,13 +48,15 @@
     s.style.inset = '0';
     s.style.pointerEvents = 'none';
     var rc = rough.svg(s);
+    // Use ink as both stroke and fill so the default tippy white
+    // text always has contrast — the previous bg-alt fill caused
+    // white-on-cream in light mode (a contrast failure).
     var ink  = cssVar('--color-ink', '#2B1F18');
-    var bg   = cssVar('--color-bg-alt', '#F2EBDE');
     s.appendChild(rc.rectangle(2, 2, w - 4, h - 4, {
       stroke: ink,
       strokeWidth: 1.1,
       roughness: 0.5,
-      fill: bg,
+      fill: ink,
       fillStyle: 'solid'
     }));
     // Slip the SVG underneath the content so text renders crisply on top.
@@ -58,6 +65,7 @@
     box.style.border = '0';
     box.style.boxShadow = 'none';
     box.style.position = 'relative';
+    box.style.color = cssVar('--color-bg', '#FAF6EF');
   }
 
   function hookTippy() {
