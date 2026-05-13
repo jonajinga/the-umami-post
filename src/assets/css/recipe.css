@@ -641,16 +641,16 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
   text-decoration: none;
   color: var(--color-ink);
   position: relative;
-  overflow: hidden;
-  /* Soft drop shadow lifts the card off the cream background;
-   * second layer adds depth. Both deepen on hover. */
+  /* Soft baseline shadow keeps the card readable; on hover the
+   * card snaps to a hard offset "stamp" shadow that matches the
+   * nutrition + make-ahead modal treatment. */
   box-shadow: 0 1px 2px rgba(43, 31, 24, 0.06), 0 8px 24px -10px rgba(43, 31, 24, 0.18);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 .card:hover,
 .recipe-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 2px 4px rgba(43, 31, 24, 0.10), 0 16px 32px -8px rgba(43, 31, 24, 0.24);
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 var(--color-ink);
 }
 .card__photo,
 .recipe-card__photo {
