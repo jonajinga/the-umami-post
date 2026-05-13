@@ -1070,6 +1070,14 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
   font-family: var(--font-ui);
   color: var(--color-ink);
 }
+/* HTML `hidden` attribute would normally set display:none via the
+ * UA sheet, but our `display: flex / block` rules above override
+ * it. Force the hide so the close button (which only toggles the
+ * `hidden` attribute) actually closes the modal. */
+.modal[hidden],
+.modal-overlay[hidden] {
+  display: none !important;
+}
 .modal__header {
   display: flex;
   align-items: center;
