@@ -314,6 +314,7 @@ module.exports = function (eleventyConfig) {
               /\[data-base-/,        // ingredient + yield base values consumed by serving-scaler.js
               /\[data-ingredient-list/,
               /\[data-target-unit/,  // unit-toggle buttons
+              /\[data-active/,       // unit-switch active state (set by JS at runtime)
               /\[data-scale/,        // serving-scaler preset multiplier buttons
               /\[aria-/,             // aria state selectors (aria-expanded, aria-current…)
               /\[hidden\]/,

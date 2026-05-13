@@ -771,24 +771,23 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg);
+  background: transparent;
   color: var(--color-ink);
-  border: 1px solid var(--color-rule);
-  border-radius: 50%;
+  border: 0;
   cursor: pointer;
   z-index: 2;
-  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+  padding: 0;
+  transition: color var(--transition-fast);
 }
-.card__save svg { width: 16px; height: 16px; }
+.card__save svg { width: 18px; height: 18px; }
 .card__save:hover,
 .card__save.is-saved {
   color: var(--color-accent);
-  border-color: var(--color-accent);
 }
 .card__save.is-saved svg { fill: var(--color-accent); stroke: var(--color-accent); }
 .card__body,
