@@ -32,13 +32,13 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  /* Match container alignment: max-width + auto margins + gutter
-   * padding — same x as the hamburger and section-nav row above. */
   justify-content: flex-start;
   list-style: none;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  /* +5px on the left so the trail starts a touch further right
+   * than the strict gutter (per editorial nudge). */
+  padding: 0 var(--gutter) 0 calc(var(--gutter) + 5px);
   line-height: 1;
   height: 100%;
   color: var(--color-ink-faint);

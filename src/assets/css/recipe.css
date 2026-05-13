@@ -730,6 +730,11 @@ select option {
   padding: 0 8px;
   position: relative;
   box-sizing: border-box;
+  border: 2px solid var(--color-ink);
+  background: var(--color-bg);
+}
+.serving-scaler__custom-wrap:focus-within {
+  border-color: var(--color-accent);
 }
 .serving-scaler__custom {
   height: 100%;
