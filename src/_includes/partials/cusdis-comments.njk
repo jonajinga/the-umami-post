@@ -1,0 +1,81 @@
+{# Cusdis comments block. Included on article, recipe, technique, and
+   review layouts. Renders the "Show comments" toggle + the lazy-loaded
+   thread. Only renders when site.comments.appId is configured. #}
+{% if site.comments and site.comments.appId %}
+<div class="article-comments">
+  <div class="article-comments__header">
+    <div class="article-comments__heading">
+      <span class="article-comments__title">Comments</span>
+      <a class="article-comments__guidelines" href="/community-guidelines/">Community guidelines</a>
+    </div>
+    <button type="button" class="article-comments__toggle" id="comments-toggle"
+      onclick="window.__umamiShowComments(this);">
+      Show comments
+    </button>
+  </div>
+  <div id="comments-body" hidden>
+    <div class="article-comments__loading" hidden>Loading comments&hellip;</div>
+    <div id="cusdis_thread"
+      data-host="{{ site.comments.host }}"
+      data-app-id="{{ site.comments.appId }}"
+      data-page-id="{{ page.url }}"
+      data-page-url="{{ site.url }}{{ page.url }}"
+      data-page-title="{{ title }}">
+    </div>
+  </div>
+</div>
+
+<script>
+// Unified comments-toggle handler. Handles three states:
+//   1. Cusdis script not yet loaded -> inject + initial() on load
+//   2. Cusdis loaded but thread empty (e.g. SPA-nav left it stale) ->
+//      call CUSDIS.initial() against the current data-* attributes
+//   3. Already rendered -> just toggle visibility / scroll
+window.__umamiShowComments = window.__umamiShowComments || function (btn, alwaysOpen) {
+  var body = document.getElementById('comments-body');
+  if (!body) return;
+  var inlineBtn = document.getElementById('comments-toggle');
+  var loading = body.querySelector('.article-comments__loading');
+  var thread = document.getElementById('cusdis_thread');
+  var willShow = alwaysOpen || body.hidden;
+  body.hidden = !willShow;
+  if (inlineBtn) inlineBtn.textContent = willShow ? 'Hide comments' : 'Show comments';
+  if (!willShow) return;
+  if (thread) {
+    thread.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') || 'light');
+  }
+  function rerender() {
+    try { if (window.CUSDIS && typeof window.CUSDIS.initial === 'function') window.CUSDIS.initial(); } catch (e) {}
+    if (loading) loading.hidden = true;
+  }
+  if (window.CUSDIS && typeof window.CUSDIS.initial === 'function') {
+    rerender();
+  } else {
+    if (loading) loading.hidden = false;
+    var existing = document.querySelector('script[data-cusdis]');
+    if (!existing) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.defer = true;
+      s.dataset.cusdis = 'true';
+      s.src = '{{ site.comments.host }}/js/cusdis.es.js';
+      s.onload = rerender;
+      s.onerror = function () { if (loading) loading.textContent = 'Comments are unavailable right now.'; };
+      document.body.appendChild(s);
+    } else {
+      var tries = 0;
+      var iv = setInterval(function () {
+        tries += 1;
+        if (window.CUSDIS) { clearInterval(iv); rerender(); }
+        else if (tries > 30) { clearInterval(iv); if (loading) loading.textContent = 'Comments are taking a while to load. Refresh if they don\'t appear.'; }
+      }, 200);
+    }
+  }
+  if (alwaysOpen) {
+    var anchor = body.closest('.article-comments') || body;
+    var top = anchor.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+};
+</script>
+{% endif %}

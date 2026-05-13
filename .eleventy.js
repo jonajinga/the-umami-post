@@ -1848,7 +1848,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLayoutAlias("article", "layouts/article.njk");
   eleventyConfig.addLayoutAlias("section", "layouts/section.njk");
   eleventyConfig.addLayoutAlias("home", "layouts/home.njk");
-  eleventyConfig.addLayoutAlias("glossary-term", "layouts/glossary-term.njk");
+  eleventyConfig.addLayoutAlias("glossary-term", "layouts/glossary-entry.njk");
   eleventyConfig.addLayoutAlias("book-entry", "layouts/book-entry.njk");
   eleventyConfig.addLayoutAlias("library-home",    "layouts/library-home.njk");
   eleventyConfig.addLayoutAlias("library-work",    "layouts/library-work.njk");
