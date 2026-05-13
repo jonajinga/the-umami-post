@@ -270,15 +270,11 @@
         });
       }
 
-      // Unit toggle — works on both the legacy paired buttons
-      // (.unit-toggle__btn) and the new pill switch (.unit-switch).
+      // Unit toggle — drives the segmented .unit-switch via the
+      // data-active attribute (CSS picks the active label color
+      // and slides the thumb to the active half).
       function setActiveUnit(system) {
         state.system = system;
-        scaler.querySelectorAll('[data-target-unit]').forEach(function (b) {
-          var on = b.getAttribute('data-target-unit') === system;
-          b.classList.toggle('unit-toggle__btn--active', on);
-          b.classList.toggle('unit-switch__btn--active', on);
-        });
         var sw = scaler.querySelector('.unit-switch');
         if (sw) sw.setAttribute('data-active', system);
       }

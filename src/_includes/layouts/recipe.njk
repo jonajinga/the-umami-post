@@ -122,12 +122,7 @@ isReadingPage: true
     </div>
     {% endif %}
 
-    {% if makeAhead %}
-    <div class="recipe-notes recipe-notes--makeahead" data-rough="frame" data-rough-color="paprika">
-      <h2>Make-ahead &amp; storage</h2>
-      {{ makeAhead | safe }}
-    </div>
-    {% endif %}
+    {% include "partials/make-ahead-modal.njk" %}
 
     {% if source %}
     <div class="recipe-notes recipe-notes--source" data-rough="frame" data-rough-color="olive">
@@ -152,6 +147,17 @@ isReadingPage: true
 {% include "partials/reader-chrome.njk" %}
 
 {% block scripts %}
+<script>
+// Close nutrition / make-ahead modals on Escape.
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  ['nutrition-modal','nutrition-overlay','makeahead-modal','makeahead-overlay'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && !el.hidden) el.hidden = true;
+  });
+  document.body.style.overflow = '';
+});
+</script>
 <script src="/assets/js/serving-scaler.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/ingredient-checklist.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/cooking-mode.js?v={{ buildTime }}" defer></script>

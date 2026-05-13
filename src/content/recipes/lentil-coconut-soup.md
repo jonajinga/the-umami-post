@@ -50,6 +50,44 @@ notes: |
   <p><strong>If you don't have shallots.</strong> A small yellow onion fried in thin slices works. You want a lot of surface area.</p>
   <p><strong>Add greens.</strong> Stir in a few handfuls of baby spinach or chopped kale in the last 2 minutes if you want it more substantial.</p>
 source: "Our weeknight version. Loosely owes a debt to dal makhani and Sri Lankan mulligatawny without claiming to be either."
+makeAhead: |
+  <p>The soup keeps beautifully and the flavor only deepens on day two. Cook through, cool, refrigerate, and warm gently before serving. Make the crispy shallots fresh -- they go soft after a few hours in a sealed container.</p>
+makeAheadStorage: |
+  <p>Refrigerate in an airtight container for up to <strong>4 days</strong>. The soup thickens as it sits; loosen with a splash of hot water or stock when reheating.</p>
+makeAheadFreeze: |
+  <p>Freezes for up to <strong>3 months</strong>. Cool fully, leave 1 inch of headspace, and freeze in single-serving containers. Thaw overnight in the fridge or microwave straight from frozen at 50% power, stirring every 90 seconds.</p>
+makeAheadReheat: |
+  <p>Reheat in a small saucepan over medium-low, stirring every minute or so, until just under a simmer. Add a fresh squeeze of lime and a pile of new crispy shallots at the very end -- the lime brightens what the fridge dulls.</p>
+nutrition:
+  servings: "4"
+  calories: 380
+  totalFat: "18g"
+  totalFatDV: 23
+  saturatedFat: "13g"
+  saturatedFatDV: 65
+  transFat: "0g"
+  cholesterol: "0mg"
+  cholesterolDV: 0
+  sodium: "640mg"
+  sodiumDV: 28
+  totalCarbs: "42g"
+  totalCarbsDV: 15
+  dietaryFiber: "8g"
+  dietaryFiberDV: 29
+  totalSugars: "4g"
+  addedSugars: "0g"
+  addedSugarsDV: 0
+  protein: "13g"
+  vitaminD: "0mcg"
+  vitaminDDV: 0
+  calcium: "60mg"
+  calciumDV: 5
+  iron: "5mg"
+  ironDV: 28
+  potassium: "780mg"
+  potassiumDV: 17
+  vitaminC: "8mg"
+  vitaminCDV: 9
 tags:
   - soup
   - lentils

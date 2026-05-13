@@ -45,6 +45,45 @@ notes: |
   <p><strong>Substitutions.</strong> Orange zest works in place of lemon. A splash of bourbon instead of the vanilla is excellent. Don't substitute the cornmeal -- it's the whole point.</p>
   <p><strong>What if the butter scorches.</strong> If the milk solids go black instead of amber, start over. Burnt butter tastes burnt all the way through.</p>
 source: "Adapted from our own kitchen over many cornmeal cakes that came out wrong before this one came out right."
+makeAhead: |
+  <p>The cake actually gets better on day two -- the cornmeal hydrates fully and the brown-butter flavor settles. Bake the day before you need it and you'll be the smartest person at the table.</p>
+makeAheadStorage: |
+  <p>Wrap the cooled cake tightly in plastic or store under a cake dome at <strong>room temperature for up to 3 days</strong>. The crackly turbinado top stays best at room temp; refrigerating dulls it.</p>
+makeAheadFreeze: |
+  <p>Wrap the cooled cake (whole or sliced) in plastic, then foil, and freeze for up to <strong>2 months</strong>. Thaw at room temperature for 2 hours before serving; the crumb returns to original.</p>
+makeAheadReheat: |
+  <p>Day-old slices revive beautifully under the broiler for 30 seconds with a small smear of butter on top -- you get that just-baked edge back. Or warm at 300&deg;F for 5 minutes if you've got more time.</p>
+coolTime: PT15M
+nutrition:
+  servings: "10 to 12 slices"
+  calories: 320
+  totalFat: "16g"
+  totalFatDV: 21
+  saturatedFat: "9g"
+  saturatedFatDV: 45
+  transFat: "0g"
+  cholesterol: "85mg"
+  cholesterolDV: 28
+  sodium: "260mg"
+  sodiumDV: 11
+  totalCarbs: "40g"
+  totalCarbsDV: 15
+  dietaryFiber: "1g"
+  dietaryFiberDV: 4
+  totalSugars: "20g"
+  addedSugars: "20g"
+  addedSugarsDV: 40
+  protein: "5g"
+  vitaminD: "0.4mcg"
+  vitaminDDV: 2
+  calcium: "70mg"
+  calciumDV: 5
+  iron: "2mg"
+  ironDV: 11
+  potassium: "75mg"
+  potassiumDV: 2
+  vitaminA: "120mcg"
+  vitaminADV: 13
 tags:
   - baking
   - cake

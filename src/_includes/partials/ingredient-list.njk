@@ -12,18 +12,22 @@
       <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1" data-rough="frame" data-rough-color="accent">1&times;</button>
       <button type="button" class="serving-scaler__btn" data-scale="2" data-rough="frame" data-rough-color="ink">2&times;</button>
       <button type="button" class="serving-scaler__btn" data-scale="3" data-rough="frame" data-rough-color="ink">3&times;</button>
-      <label class="serving-scaler__custom-wrap" data-rough="frame" data-rough-color="ink">
-        <span class="serving-scaler__custom-label">Custom scale</span>
-        <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom scale multiplier (e.g. 1.5)" data-rough-skip-frame>
-      </label>
+      <span class="serving-scaler__custom-stack">
+        <span class="serving-scaler__custom-label">Custom</span>
+        <label class="serving-scaler__custom-wrap" data-rough="frame" data-rough-color="ink">
+          <span class="visually-hidden">Custom scale</span>
+          <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom scale multiplier (e.g. 1.5)" data-rough-skip-frame>
+        </label>
+      </span>
     </div>
   </div>
 
   <div class="unit-toggle">
     <span class="serving-scaler__label">Units</span>
-    <div class="unit-switch" role="group" aria-label="Measurement units">
-      <button type="button" class="unit-switch__btn unit-switch__btn--active unit-toggle__btn unit-toggle__btn--active" data-target-unit="us">US</button>
-      <button type="button" class="unit-switch__btn unit-toggle__btn" data-target-unit="metric">Metric</button>
+    <div class="unit-switch" role="group" aria-label="Measurement units" data-active="us" data-rough="frame" data-rough-color="ink">
+      <span class="unit-switch__thumb" aria-hidden="true"></span>
+      <button type="button" class="unit-switch__btn" data-target-unit="us">US</button>
+      <button type="button" class="unit-switch__btn" data-target-unit="metric">Metric</button>
     </div>
   </div>
 

@@ -3787,8 +3787,36 @@
 .article-layout__inner:has(.article-body[data-rs-width="wide"])   { max-width: min(1100px, 92vw); }
 
 /* Background presets */
-[data-rs-bg="sepia"] { --color-bg: #f4ecd8; --color-bg-alt: #ede4cc; --color-ink: #5b4636; }
-[data-rs-bg="cream"] { --color-bg: #fefcf0; --color-bg-alt: #f8f5e8; --color-ink: #333; }
+/* Reading-settings background overrides. Each variant tweaks the
+ * full token set used by rough.js + form decorations so frames /
+ * dividers / chips stay legible — the bare bg/ink pair wasn't
+ * enough; rough.js reads --color-accent and --color-rule too. */
+[data-rs-bg="sepia"] {
+  --color-bg: #f4ecd8;
+  --color-bg-alt: #ede4cc;
+  --color-bg-inset: #e4d8b8;
+  --color-ink: #4a382c;
+  --color-ink-muted: #6b4f3f;
+  --color-ink-faint: #8a6f55;
+  --color-rule: #c9b890;
+  --color-rule-heavy: #9a7d52;
+  --color-accent: #a8521c;          /* darker saffron survives the cream */
+  --color-accent-hover: #7a3a10;
+  --color-link: #5c6a2e;             /* darker olive */
+}
+[data-rs-bg="cream"] {
+  --color-bg: #fefcf0;
+  --color-bg-alt: #f5f2e2;
+  --color-bg-inset: #e8e2c8;
+  --color-ink: #2a2a2a;
+  --color-ink-muted: #4a4a4a;
+  --color-ink-faint: #7a7a7a;
+  --color-rule: #d0c8a8;
+  --color-rule-heavy: #908860;
+  --color-accent: #B66024;
+  --color-accent-hover: #843e0d;
+  --color-link: #5a6824;
+}
 [data-rs-bg="dark"] { --color-bg: #1a1a1a; --color-bg-alt: #222; --color-ink: #e0e0e0; --color-ink-muted: #aaa; --color-ink-faint: #666; --color-rule: #333; }
 
 /* Reading ruler */
