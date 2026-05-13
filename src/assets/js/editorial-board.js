@@ -229,7 +229,7 @@
         // /section/slug/ → src/content/section/slug.md (best-effort link)
         var parts = d.url.replace(/^\/|\/$/g, '').split('/');
         if (parts.length === 2) {
-          srcA.setAttribute('href', 'https://github.com/jonajinga/the-the-umami-post/blob/main/src/content/' + parts[0] + '/' + parts[1] + '.md');
+          srcA.setAttribute('href', 'https://github.com/jonajinga/the-umami-post/blob/main/src/content/' + parts[0] + '/' + parts[1] + '.md');
         } else {
           srcA.style.display = 'none';
         }

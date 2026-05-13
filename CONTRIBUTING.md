@@ -335,8 +335,8 @@ The slug must match the `author:` field in the article frontmatter exactly.
 **Prerequisites:** Node.js 18+, npm, git.
 
 ```bash
-git clone https://github.com/jonajinga/the-the-umami-post.git
-cd the-the-umami-post
+git clone https://github.com/jonajinga/the-umami-post.git
+cd the-umami-post
 npm install
 cp .env.example .env       # all values optional for local builds
 npm start                  # → http://localhost:8080 with live reload

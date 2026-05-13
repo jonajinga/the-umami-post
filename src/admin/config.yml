@@ -7,7 +7,7 @@
 
 backend:
   name: github
-  repo: jonajinga/the-the-umami-post
+  repo: jonajinga/the-umami-post
   branch: main
   base_url: https://theumamipost.com
   auth_endpoint: api/auth
