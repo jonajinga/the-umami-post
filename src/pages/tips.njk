@@ -1,7 +1,7 @@
-﻿---
+---
 layout: base
-title: "Submit a Tip"
-description: Share a news tip with The Umami Post. Anonymous submissions welcome.
+title: "Send a Tip"
+description: Share a story tip, a restaurant lead, a labor or supply-chain story we should be covering. Anonymous channels available for sensitive tips.
 permalink: /tips/
 ---
 
@@ -24,28 +24,28 @@ permalink: /tips/
 
     <div class="article-body">
 
-      <p>We are interested in tips related to: religious institutions and their public influence, church-state violations, suppression of scientific information, censorship of secular voices, and abuses of power conducted under religious authority.</p>
+      <p>We are interested in tips on: food-industry labor conditions, supply-chain abuses, food-safety failures, restaurant ownership and labor disputes, hidden ingredient sourcing, climate impact in food production, and stories about cooks, farmers, fermenters, butchers, and bakers we should be writing about.</p>
 
       <div class="callout callout--warning" style="margin: var(--space-6) 0; padding: var(--space-4) var(--space-5); background: var(--color-bg-alt); border-left: 4px solid var(--color-accent); font-family: var(--font-body); font-size: var(--text-md); line-height: var(--leading-normal);">
         <p style="font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 var(--space-2);">Before you send anything</p>
-        <p style="margin: 0 0 var(--space-3);"><strong>This form is not anonymous.</strong> Submissions flow through <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a> (a third-party handler that logs IP addresses for spam prevention) and <a href="https://www.hcaptcha.com" target="_blank" rel="noopener">hCaptcha</a> (which fingerprints your browser). Your connection metadata — IP, user agent, timing — is visible to those services.</p>
-        <p style="margin: 0;">If your tip could put you at risk (employer retaliation, legal exposure, physical danger), do <em>not</em> use this form. Use one of the safer channels below instead.</p>
+        <p style="margin: 0 0 var(--space-3);"><strong>This form is not anonymous.</strong> Submissions flow through <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a> (a third-party handler that logs IP addresses for spam prevention) and <a href="https://www.hcaptcha.com" target="_blank" rel="noopener">hCaptcha</a> (which fingerprints your browser). Your connection metadata -- IP, user agent, timing -- is visible to those services.</p>
+        <p style="margin: 0;">If your tip could put you at risk (employer retaliation, legal exposure, immigration-status exposure, physical danger), do <em>not</em> use this form. Use one of the safer channels below instead.</p>
       </div>
 
       <h2 id="safer-channels">For sensitive tips</h2>
-      <p>If anonymity genuinely matters, pick one of these out-of-band channels:</p>
+      <p>If anonymity genuinely matters -- for example, you are a line cook reporting an employer's labor or wage practices -- pick one of these out-of-band channels:</p>
       <ul>
         <li><strong>Tor Browser + an anonymous email account.</strong> Create a <a href="https://proton.me/mail" target="_blank" rel="noopener">ProtonMail</a> or <a href="https://tutanota.com" target="_blank" rel="noopener">Tuta</a> account over Tor, send from there to <a href="mailto:{{ site.email }}">{{ site.email }}</a>. Never log into that inbox over your normal connection.</li>
-        <li><strong>Signal, on a burner.</strong> Install <a href="https://signal.org" target="_blank" rel="noopener">Signal</a> on a phone not associated with your legal name (prepaid SIM, or WiFi-only + <a href="https://signal.org/support/articles/360007318691-Signal-registration-with-a-non-US-or-EU-number" target="_blank" rel="noopener">registration tips</a>) and message us to request a Signal contact.</li>
-        <li><strong>Physical mail.</strong> Printed, no return address, dropped from a mailbox that isn&rsquo;t your own, to our editorial address on the <a href="/masthead/">masthead</a>.</li>
+        <li><strong>Signal, on a burner.</strong> Install <a href="https://signal.org" target="_blank" rel="noopener">Signal</a> on a phone not associated with your legal name (prepaid SIM, or WiFi-only) and message us to request a Signal contact.</li>
+        <li><strong>Physical mail.</strong> Printed, no return address, dropped from a mailbox that is not your own, to our editorial address on the <a href="/masthead/">masthead</a>.</li>
       </ul>
-      <p>The form below is fine for lower-risk tips &mdash; public-record leads, stories we should be covering, general corrections, church/state issues with no personal retaliation risk. Think of it as a quick-send channel, not a whistleblower pipeline.</p>
+      <p>The form below is fine for lower-risk tips -- restaurant recommendations, story leads, public-record leads, recipe corrections, food-history pointers. Think of it as a quick-send channel, not a whistleblower pipeline.</p>
 
-      <p>If you do use the form, you don&rsquo;t need to provide your name or email. If you do, we will not publish your identity without your explicit written consent. You can also send tips via <a href="/contact/">our contact form</a>.</p>
+      <p>If you do use the form, you do not need to provide your name or email. If you do, we will not publish your identity without your explicit written consent. You can also send tips via <a href="/contact/">our contact form</a>.</p>
 
       <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
         <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
-        <input type="hidden" name="subject" value="Anonymous tip, {{ site.title }}">
+        <input type="hidden" name="subject" value="Tip, {{ site.title }}">
         <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
         <input type="hidden" name="from_name" value="{{ site.title }} Tip Line">
         <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
@@ -53,11 +53,13 @@ permalink: /tips/
         <div class="w3f__group">
           <label class="w3f__label" for="tip-topic">What is this about?</label>
           <select class="w3f__select" name="topic" id="tip-topic">
-            <option value="Church-state violation">Church-state violation</option>
-            <option value="Institutional misconduct">Institutional misconduct</option>
-            <option value="Censorship">Censorship or suppression</option>
-            <option value="Science denial">Science denial in policy</option>
-            <option value="Discrimination">Religious discrimination</option>
+            <option value="Labor / wage practices">Labor or wage practices in a kitchen, farm, or processing plant</option>
+            <option value="Supply chain">Supply chain or sourcing</option>
+            <option value="Food safety">Food safety / public-health story</option>
+            <option value="Restaurant ownership">Restaurant ownership or industry consolidation</option>
+            <option value="Climate / agriculture">Climate or agriculture story</option>
+            <option value="Cook / farmer profile">A cook, farmer, or food-maker we should profile</option>
+            <option value="Restaurant tip">Restaurant or pop-up worth writing about</option>
             <option value="Story lead">General story lead</option>
             <option value="Other">Other</option>
           </select>
@@ -66,7 +68,7 @@ permalink: /tips/
         <div class="w3f__group">
           <label class="w3f__label" for="tip-message">Your tip <span class="w3f__required">*</span></label>
           <span class="w3f__hint" id="tip-msg-hint">Be as specific as you can. Who, what, where, when. Names, dates, and documents help us investigate.</span>
-          <textarea class="w3f__textarea" name="message" id="tip-message" rows="8" required aria-required="true" aria-describedby="tip-msg-hint" maxlength="5000" data-dictation></textarea>
+          <textarea class="w3f__textarea" name="message" id="tip-message" rows="8" required aria-required="true" aria-describedby="tip-msg-hint" maxlength="5000"></textarea>
         </div>
 
         <div class="w3f__group">

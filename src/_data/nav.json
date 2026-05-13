@@ -1,9 +1,147 @@
 [
-  { "label": "Recipes",       "url": "/recipes/",       "key": "recipes",       "collection": "recipes" },
-  { "label": "Techniques",    "url": "/techniques/",    "key": "techniques",    "collection": "techniques" },
-  { "label": "Stories",       "url": "/stories/",       "key": "stories",       "type": "hub" },
-  { "label": "Reviews",       "url": "/reviews/",       "key": "reviews",       "collection": "reviews" },
-  { "label": "Seasonal",      "url": "/seasonal/",      "key": "seasonal",      "type": "hub" },
-  { "label": "Submit",        "url": "/submit/",        "key": "submit",        "type": "hub" },
+  {
+    "label": "Recipes",
+    "url": "/recipes/",
+    "key": "recipes",
+    "collection": "recipes",
+    "submenu": [
+      { "heading": "By course", "links": [
+        { "title": "Breakfast",  "url": "/recipes/?s=Breakfast" },
+        { "title": "Lunch",      "url": "/recipes/?s=Lunch" },
+        { "title": "Dinner",     "url": "/recipes/?s=Dinner" },
+        { "title": "Sides",      "url": "/recipes/?s=Sides" },
+        { "title": "Sauces",     "url": "/recipes/?s=Sauces" },
+        { "title": "Baking",     "url": "/recipes/?s=Baking" },
+        { "title": "Drinks",     "url": "/recipes/?s=Drinks" },
+        { "title": "Dessert",    "url": "/recipes/?s=Dessert" },
+        { "title": "Snacks",     "url": "/recipes/?s=Snacks" },
+        { "title": "Preserves",  "url": "/recipes/?s=Preserves" }
+      ]},
+      { "heading": "By diet", "links": [
+        { "title": "Vegan",        "url": "/recipes/?diet=vegan" },
+        { "title": "Vegetarian",   "url": "/recipes/?diet=vegetarian" },
+        { "title": "Gluten-free",  "url": "/recipes/?diet=gluten-free" },
+        { "title": "Dairy-free",   "url": "/recipes/?diet=dairy-free" },
+        { "title": "Nut-free",     "url": "/recipes/?diet=nut-free" },
+        { "title": "Low-carb",     "url": "/recipes/?diet=low-carb" }
+      ]},
+      { "heading": "Discover", "links": [
+        { "title": "Seasonal",     "url": "/seasonal/" },
+        { "title": "Ingredients",  "url": "/ingredients/" },
+        { "title": "All recipes →", "url": "/recipes/" }
+      ]}
+    ]
+  },
+  {
+    "label": "Techniques",
+    "url": "/techniques/",
+    "key": "techniques",
+    "collection": "techniques",
+    "submenu": [
+      { "heading": "Foundations", "links": [
+        { "title": "Knife skills",       "url": "/techniques/?s=Knife%20skills" },
+        { "title": "Heat",               "url": "/techniques/?s=Heat" },
+        { "title": "Doughs & batters",   "url": "/techniques/?s=Doughs%20%26%20batters" },
+        { "title": "Stocks & sauces",    "url": "/techniques/?s=Stocks%20%26%20sauces" }
+      ]},
+      { "heading": "Specialty", "links": [
+        { "title": "Fermentation",       "url": "/techniques/?s=Fermentation" },
+        { "title": "Preservation",       "url": "/techniques/?s=Preservation" },
+        { "title": "Plating",            "url": "/techniques/?s=Plating" }
+      ]},
+      { "heading": "Reference", "links": [
+        { "title": "Cooking glossary",   "url": "/glossary/" },
+        { "title": "All techniques →","url": "/techniques/" }
+      ]}
+    ]
+  },
+  {
+    "label": "Stories",
+    "url": "/stories/",
+    "key": "stories",
+    "type": "hub",
+    "submenu": [
+      { "heading": "Reporting", "links": [
+        { "title": "News",          "url": "/news/" },
+        { "title": "Opinion",       "url": "/opinion/" },
+        { "title": "Deep Dives",    "url": "/deep-dives/" },
+        { "title": "Cook's Letters","url": "/cooks-letters/" }
+      ]},
+      { "heading": "Features", "links": [
+        { "title": "Food & Culture","url": "/food-culture/" },
+        { "title": "Food Science",  "url": "/food-science/" },
+        { "title": "Food History",  "url": "/food-history/" }
+      ]},
+      { "heading": "Discover", "links": [
+        { "title": "Archives",      "url": "/archives/" },
+        { "title": "Most Read",     "url": "/most-read/" },
+        { "title": "All stories →", "url": "/stories/" }
+      ]}
+    ]
+  },
+  {
+    "label": "Reviews",
+    "url": "/reviews/",
+    "key": "reviews",
+    "collection": "reviews",
+    "submenu": [
+      { "heading": "Subjects", "links": [
+        { "title": "Cookbooks",      "url": "/reviews/?s=Cookbooks" },
+        { "title": "Restaurants",    "url": "/reviews/?s=Restaurants" },
+        { "title": "Equipment",      "url": "/reviews/?s=Equipment" },
+        { "title": "Pantry",         "url": "/reviews/?s=Pantry" }
+      ]},
+      { "heading": "Related", "links": [
+        { "title": "Cookbook shelf", "url": "/bookshelf/" },
+        { "title": "Public-domain cookbooks", "url": "/library/" },
+        { "title": "Pitch a review", "url": "/submit/review/" },
+        { "title": "All reviews →", "url": "/reviews/" }
+      ]}
+    ]
+  },
+  {
+    "label": "Seasonal",
+    "url": "/seasonal/",
+    "key": "seasonal",
+    "type": "hub",
+    "submenu": [
+      { "heading": "By season", "links": [
+        { "title": "Spring",         "url": "/seasonal/?s=Spring" },
+        { "title": "Summer",         "url": "/seasonal/?s=Summer" },
+        { "title": "Fall",           "url": "/seasonal/?s=Fall" },
+        { "title": "Winter",         "url": "/seasonal/?s=Winter" }
+      ]},
+      { "heading": "Discover", "links": [
+        { "title": "What's in season now", "url": "/seasonal/" },
+        { "title": "Ingredients",    "url": "/ingredients/" },
+        { "title": "Farmers markets","url": "/events/" }
+      ]}
+    ]
+  },
+  {
+    "label": "Submit",
+    "url": "/submit/",
+    "key": "submit",
+    "type": "hub",
+    "submenu": [
+      { "heading": "Pitch", "links": [
+        { "title": "A recipe",       "url": "/submit/recipe/" },
+        { "title": "A story",        "url": "/submit/story/" },
+        { "title": "A technique",    "url": "/submit/technique/" },
+        { "title": "A review",       "url": "/submit/review/" }
+      ]},
+      { "heading": "Respond", "links": [
+        { "title": "Cook's Letter",  "url": "/letters/submit/" },
+        { "title": "Correction",     "url": "/corrections/report/" },
+        { "title": "Event",          "url": "/events/submit/" },
+        { "title": "Quote",          "url": "/quotes/submit/" }
+      ]},
+      { "heading": "Help", "links": [
+        { "title": "Volunteer",      "url": "/volunteer/" },
+        { "title": "Tip line",       "url": "/tips/" },
+        { "title": "All ways to submit →", "url": "/submit/" }
+      ]}
+    ]
+  },
   { "label": "Explore",       "url": "/more/",          "key": "more",          "type": "more" }
 ]

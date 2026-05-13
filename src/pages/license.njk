@@ -1,9 +1,7 @@
-﻿---
+---
 layout: base
 title: Republication license
-description: The terms under which articles from The Umami Post can be
-  republished. Free to reuse under CC BY-NC-ND 4.0 with attribution and no
-  derivatives.
+description: The terms under which content from The Umami Post can be republished. Recipes ship under CC BY-SA 4.0. Editorial articles are credited to their authors.
 permalink: /license/
 ---
 <div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
@@ -11,55 +9,59 @@ permalink: /license/
   <header class="page-header">
     <h1 class="page-header__title">Republication license</h1>
     <p class="page-header__lede">
-      Every article on {{ site.title }} is released under a Creative Commons license. You are free to republish, quote, translate, and mirror our work &mdash; provided you follow four short rules.
+      The Umami Post is free and open source. The code, the recipes, and the technique guides are all licensed for you to cook, copy, adapt, and republish.
     </p>
   </header>
 
   <div class="sg-layout">
 
     <aside class="sg-nav" aria-label="Page sections">
-      <a href="#license">CC&nbsp;BY-NC-ND&nbsp;4.0</a>
-      <a href="#rules">The four rules</a>
-      <a href="#grab-code">How to grab an article</a>
-      <a href="#webmentions">Reciprocal conversation</a>
-      <a href="#contact">Commercial license</a>
+      <a href="#code">Code -- MIT</a>
+      <a href="#recipes">Recipes &amp; techniques -- CC BY-SA 4.0</a>
+      <a href="#articles">Editorial articles &amp; reviews</a>
+      <a href="#photography">Photography</a>
+      <a href="#webmentions">Webmentions</a>
+      <a href="#contact">Other uses</a>
     </aside>
 
     <div class="article-body">
 
-      <h2 id="license">Creative Commons BY-NC-ND 4.0</h2>
-      <p>Articles on {{ site.title }} are licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="license" data-umami-event="license-learn">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International</a>.</p>
-      <p>That license gives you the right to share and republish our work &mdash; including in magazines, newsletters, blogs, archives, classroom materials, and academic papers &mdash; without asking permission first. In exchange you agree to four things.</p>
+      <h2 id="code">Code: MIT</h2>
+      <p>The source code that runs this site is on <a href="https://github.com/jonajinga/the-umami-post">GitHub</a> under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. Fork it, run your own publication on it, do what you like with it. No warranty.</p>
 
-      <h2 id="rules">The four rules</h2>
+      <h2 id="recipes">Recipes &amp; technique guides: CC BY-SA 4.0</h2>
+      <p>Every recipe and technique guide on The Umami Post is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">Creative Commons Attribution-ShareAlike 4.0</a>.</p>
+      <p>That means:</p>
+      <ul>
+        <li><strong>Cook it.</strong> Obviously. That's what recipes are for.</li>
+        <li><strong>Copy it.</strong> Print it, save it, paste it into your personal recipe binder, hand it to your kid in college.</li>
+        <li><strong>Adapt it.</strong> Substitute, scale, rewrite for your kitchen. Publish your adaptation.</li>
+        <li><strong>Republish it.</strong> Put it in a cookbook, a magazine, a newsletter, a blog post. Commercial use is fine.</li>
+      </ul>
+      <p>You agree to two short things in exchange:</p>
+      <ol>
+        <li><strong>Attribution.</strong> Credit the original cook by name and link back to the recipe on theumamipost.com. A line like &ldquo;<em>Adapted from <a href="{{ site.url }}/">{{ site.title }}</a>.</em>&rdquo; is ideal.</li>
+        <li><strong>ShareAlike.</strong> Your adaptation gets licensed the same way. If you publish a remix of one of our recipes, your version is also CC BY-SA 4.0. Other cooks can adapt your version too. That's how the community grows.</li>
+      </ol>
 
-      <h3>1. Attribution</h3>
-      <p>Credit {{ site.title }} clearly, and link back to the original article URL at the top of the text. A line like &ldquo;<em>Originally published by <a href="{{ site.url }}/">{{ site.title }}</a> on [date].</em>&rdquo; is ideal. Include the author&rsquo;s byline.</p>
+      <h2 id="articles">Editorial articles, reviews, food journalism</h2>
+      <p>Articles, deep dives, reviews, profiles, and other editorial work are <strong>copyright the individual author</strong>. They are not under a Creative Commons license by default.</p>
+      <p>If you'd like to republish, quote at length, translate, or anthologize an article, contact the author directly through their <a href="/contributors/">contributor page</a> or via our <a href="/contact/">contact form</a> and we'll connect you. Quoting a few sentences with attribution and a link is fair use and doesn't need permission.</p>
 
-      <h3>2. No derivatives</h3>
-      <p>Don&rsquo;t edit the article beyond tiny relative fixes (&ldquo;last Tuesday&rdquo; &rarr; the date, &ldquo;here in Paris&rdquo; &rarr; &ldquo;in Paris&rdquo; if your readership is elsewhere). No cuts, no remixes, no translations repackaged as original work. If you need a condensed version or a translation, contact us and we&rsquo;ll review it.</p>
+      <h2 id="photography">Photography</h2>
+      <p>Photography is copyright the photographer. Most contributor recipes ship with photos the cook took themselves; those photos are theirs. Contact the contributor through our forms if you want to license a specific image.</p>
 
-      <h3>3. Non-commercial</h3>
-      <p>You can&rsquo;t sell our work, put it behind a paywall, or syndicate it into a commercial platform (Apple News, Google News Showcase, paid newsletters). Free republication on your own site, in a free newsletter, or in a non-commercial print publication is fine. A for-profit site whose model is advertising against <em>other</em> content is fine; one that monetizes <em>our</em> articles specifically is not.</p>
+      <h2 id="webmentions">Webmentions welcome</h2>
+      <p>If your site can send <a href="https://indieweb.org/Webmention" target="_blank" rel="noopener">webmentions</a>, we'd love to hear from you. When you publish your remix or response, your site can POST to our endpoint and the mention shows up on the canonical recipe page. This is how the decentralized web keeps track of itself.</p>
 
-      <h3>4. Webmentions welcome</h3>
-      <p>If your site can send <a href="https://indieweb.org/Webmention" target="_blank" rel="noopener">webmentions</a>, we&rsquo;d love to hear from you. When you publish your repost or response, your site can POST to our endpoint and the mention shows up on the canonical article. This is how the decentralized web keeps track of itself &mdash; no platform, no account, just two websites talking.</p>
-
-      <h2 id="grab-code">How to grab an article</h2>
-      <p>Most articles we intend for broad republication have a <strong>Republish this story</strong> section above the comments. Expand <em>Grab the HTML</em>, copy the textarea&rsquo;s contents, and paste into your CMS&rsquo; HTML view. The grab-code includes the attribution paragraph, the article body with headings and links intact, and a canonical link back. Your CMS will apply its own typography on top.</p>
-      <p>If you want to republish an article that doesn&rsquo;t show the grab surface, email us &mdash; most pieces are eligible; the flag just isn&rsquo;t on by default.</p>
-
-      <h2 id="webmentions">Reciprocal conversation</h2>
-      <p>We read and display webmentions from every republisher, reply, like, and repost we receive. We link back to you. This is a two-way street &mdash; republishing our work means your readers may end up on our site, and our readers may end up on yours.</p>
-
-      <h2 id="contact">Commercial license</h2>
-      <p>Need to use {{ site.title }} work in a paid product, an educational anthology for sale, a broadcast, or a consulting deliverable? Commercial licenses are case-by-case, mostly affordable, and money goes straight into more reporting. Tell us what you have in mind and we&rsquo;ll get back to you.</p>
+      <h2 id="contact">Other uses</h2>
+      <p>Need to use Umami Post content in a way that isn't covered above -- a paid product, a broadcast, a consulting deliverable, an educational anthology, a translation? Tell us what you have in mind and we'll work it out.</p>
 
       <form action="https://api.web3forms.com/submit" method="POST" class="w3f">
         <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
-        <input type="hidden" name="subject" value="Commercial license inquiry, {{ site.title }}">
+        <input type="hidden" name="subject" value="License inquiry, {{ site.title }}">
         <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
-        <input type="hidden" name="from_name" value="{{ site.title }} Commercial License">
+        <input type="hidden" name="from_name" value="{{ site.title }} License Inquiry">
         <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="w3f__row">
@@ -79,18 +81,18 @@ permalink: /license/
         </div>
 
         <div class="w3f__group">
-          <label class="w3f__label" for="license-piece">Which article?</label>
+          <label class="w3f__label" for="license-piece">Which recipe or article?</label>
           <input class="w3f__input" type="text" name="article_url" id="license-piece" placeholder="URL or title">
         </div>
 
         <div class="w3f__group">
           <label class="w3f__label" for="license-use">Intended use <span class="w3f__required">*</span></label>
-          <textarea class="w3f__textarea" name="message" id="license-use" rows="6" required aria-required="true" maxlength="5000" placeholder="Paid product? Broadcast? Educational anthology? Tell us the context, the audience, the timeline, and whether money changes hands."></textarea>
+          <textarea class="w3f__textarea" name="message" id="license-use" rows="6" required aria-required="true" maxlength="5000" placeholder="Cookbook? Broadcast? Educational anthology? Tell us the context, the audience, the timeline, and whether money changes hands."></textarea>
         </div>
 
         <div class="w3f__status" role="status" aria-live="polite" aria-atomic="true"></div>
-        <button type="submit" class="w3f__submit" data-umami-event="license-inquiry-submit">Send inquiry</button>
-        <p class="w3f__privacy">Delivered to our editorial inbox via Web3Forms. We never sell or share submissions. See our <a href="/privacy/#contact-forms">privacy policy</a> for what Web3Forms does with form data and how long we retain messages.</p>
+        <button type="submit" class="w3f__submit">Send inquiry</button>
+        <p class="w3f__privacy">Delivered to our editorial inbox via Web3Forms. See our <a href="/privacy/#contact-forms">privacy policy</a>.</p>
       </form>
 
     </div>

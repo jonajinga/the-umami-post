@@ -1,7 +1,7 @@
 ﻿---
 layout: base
 title: "Submit a Quote"
-description: Know a great Food quote? Submit it for our curated collection.
+description: Know a great food, cooking, or eating quote? Submit it for our curated collection.
 permalink: /quotes/submit/
 ---
 
@@ -18,13 +18,13 @@ permalink: /quotes/submit/
       </nav>
       <h1 class="page-header__title">Submit a Quote</h1>
       <p class="page-header__lede">
-        Know a great quote from the Food tradition? We'd love to add it to our <a href="/quotes/">collection</a>.
+        Know a great quote about food, cooking, or the table? We'd love to add it to our <a href="/quotes/">collection</a>.
       </p>
     </header>
 
     <div class="article-body">
 
-      <p>We look for quotes that are well-sourced, thought-provoking, and relevant to the Food tradition, reason, secularism, science, liberty of conscience, and the examined life. Please verify the attribution before submitting. You can also send quote suggestions via <a href="/contact/">our contact form</a>.</p>
+      <p>We look for quotes that are well-sourced and that say something honest about food, cooking, ingredients, hospitality, hunger, or the act of feeding people. Please verify the attribution before submitting -- the internet is full of misattributed food aphorisms. You can also send quote suggestions via <a href="/contact/">our contact form</a>.</p>
 
       <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
         <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
@@ -42,12 +42,12 @@ permalink: /quotes/submit/
         <div class="w3f__row">
           <div class="w3f__group">
             <label class="w3f__label" for="quote-author">Author <span class="w3f__required">*</span></label>
-            <input class="w3f__input" type="text" name="author" id="quote-author" required aria-required="true" placeholder="e.g. Carl Sagan">
+            <input class="w3f__input" type="text" name="author" id="quote-author" required aria-required="true" placeholder="e.g. M.F.K. Fisher">
           </div>
           <div class="w3f__group">
             <label class="w3f__label" for="quote-source">Source <span class="w3f__optional">(optional)</span></label>
             <span class="w3f__hint" id="quote-source-hint">Book, speech, interview, letter, etc.</span>
-            <input class="w3f__input" type="text" name="source" id="quote-source" aria-describedby="quote-source-hint" placeholder="e.g. The Demon-Haunted World, 1995">
+            <input class="w3f__input" type="text" name="source" id="quote-source" aria-describedby="quote-source-hint" placeholder="e.g. The Gastronomical Me, 1943">
           </div>
         </div>
 

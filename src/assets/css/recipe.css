@@ -146,19 +146,34 @@
 
 .serving-scaler {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--space-2);
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-sm);
+}
+.serving-scaler__multipliers,
+.unit-toggle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 .serving-scaler__label {
   color: var(--color-ink-faint);
   font-size: var(--text-xs);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  margin-right: var(--space-2);
+  flex-shrink: 0;
+  min-width: 3rem;
 }
-.serving-scaler__btn {
+.serving-scaler__btn,
+.unit-toggle__btn {
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -170,14 +185,45 @@
   min-width: 44px;
   min-height: 44px;
 }
-.serving-scaler__btn:hover {
+.serving-scaler__btn:hover,
+.unit-toggle__btn:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
-.serving-scaler__btn--active {
+.serving-scaler__btn--active,
+.unit-toggle__btn--active {
   background: var(--color-accent);
   color: var(--color-bg);
   border-color: var(--color-accent);
+}
+.serving-scaler__custom-wrap {
+  display: inline-flex;
+  align-items: stretch;
+  margin-left: var(--space-2);
+}
+.serving-scaler__custom {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  width: 5rem;
+  padding: 6px 10px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+  min-height: 44px;
+}
+.serving-scaler__custom:focus {
+  border-color: var(--color-accent);
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .ingredient-list {
@@ -410,6 +456,144 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
   margin-left: var(--space-2);
   color: var(--color-ink-faint);
   font-weight: 500;
+}
+
+/* -- Print sheets ---------------------------------------- */
+/* Each content type prints as a clean sheet with only the
+ * essentials: hero photo, title, byline, meta bar, ingredients,
+ * instructions, notes. All chrome (header, nav, footer, toolbar,
+ * panel, related, comments) is hidden. */
+
+@media print {
+  /* Universal: hide chrome */
+  .site-header,
+  .breadcrumb-strip,
+  .site-footer,
+  .annotation-toolbar,
+  .library-panel,
+  .library-panel-overlay,
+  .reading-floats,
+  .article-header__actions,
+  .sitewide-disclosures,
+  .cooking-mode__exit,
+  .skip-link,
+  .site-announce,
+  .breaking-banner,
+  .download-panel,
+  .share-panel,
+  .cite-modal,
+  .cite-overlay,
+  .article-feedback-popup,
+  #annotation-toolbar,
+  #cite-data,
+  #cite-modal,
+  #cite-overlay,
+  #article-notes-panel,
+  #reading-floats,
+  .responses-section--header,
+  .backlinks-section,
+  #article-footnotes-end {
+    display: none !important;
+  }
+
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  /* RECIPE print sheet */
+  .recipe.container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .recipe-hero__photo {
+    max-height: 3in;
+    overflow: hidden;
+  }
+  .recipe-hero__photo img {
+    max-height: 3in;
+    object-fit: cover;
+  }
+  .recipe-hero__title {
+    font-size: 22pt;
+    margin: 0 0 6pt;
+  }
+  .recipe-hero__dek {
+    font-size: 11pt;
+    color: #444 !important;
+    margin-bottom: 6pt;
+  }
+  .recipe-hero__byline {
+    font-size: 9pt;
+    color: #555 !important;
+  }
+  .recipe-meta-bar {
+    background: #f4efe6 !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+  .recipe-body {
+    display: block !important;
+  }
+  .recipe-body__ingredients,
+  .recipe-body__instructions {
+    page-break-inside: auto;
+  }
+  .serving-scaler,
+  .unit-toggle,
+  .ingredient__check { display: none !important; }
+
+  .ingredient {
+    page-break-inside: avoid;
+    padding: 4pt 0 !important;
+  }
+  .ingredient__amount {
+    font-weight: 700;
+  }
+
+  .instruction-list__item {
+    page-break-inside: avoid;
+    padding: 8pt 0 !important;
+  }
+  .instruction-list__item::before {
+    background: #000 !important;
+    color: #fff !important;
+    border-radius: 50%;
+  }
+  .recipe-notes {
+    background: #f4efe6 !important;
+    border-left: 3pt solid #888 !important;
+    page-break-inside: avoid;
+  }
+
+  /* TECHNIQUE print sheet */
+  .recipe.container .article-body { font-size: 11pt; }
+
+  /* REVIEW print sheet */
+  .review-verdict {
+    background: #f4efe6 !important;
+    border-top: 2pt solid #888 !important;
+    border-bottom: 2pt solid #888 !important;
+    page-break-inside: avoid;
+  }
+  .star-rating { color: #000 !important; }
+
+  /* Force-show a print footer with the canonical URL on every sheet */
+  .print-footer {
+    display: block !important;
+    margin-top: 12pt;
+    padding-top: 6pt;
+    border-top: 1pt solid #888;
+    font-size: 8pt;
+    color: #555 !important;
+  }
 }
 
 /* -- Review verdict block --------------------------------- */

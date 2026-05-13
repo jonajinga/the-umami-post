@@ -6,12 +6,6 @@ permalink: /support/
 ---
 
 {% set pubTipUrl = site.tipping.kofi or site.tipping.bmac or site.tipping.patreon %}
-{% set authors_with_tipping = [] %}
-{% for slug, a in authors %}
-  {% if slug != "staff" and a.tipping and (a.tipping.kofi or a.tipping.bmac or a.tipping.patreon) %}
-    {% set authors_with_tipping = (authors_with_tipping.push({slug: slug, name: a.name, url: a.tipping.kofi or a.tipping.bmac or a.tipping.patreon}), authors_with_tipping) %}
-  {% endif %}
-{% endfor %}
 
 <div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
   <div class="container--prose">
@@ -66,18 +60,18 @@ permalink: /support/
           <div class="support-block__eyebrow">Individual Authors</div>
           <h3 class="support-block__heading">Support a Contributor</h3>
           <p class="support-block__body">{{ supportContent.authorBlockBody }}</p>
-          {% if authors_with_tipping.length %}
           <div class="support-block__author-list">
-            {% for a in authors_with_tipping %}
-            <a class="tip-badge"
-               href="{{ a.url }}" target="_blank" rel="noopener noreferrer"
-               data-tippy-content="Support {{ a.name }} directly. Your tip goes entirely to the author."
-               data-tippy-theme="badge" data-tippy-placement="top">
-              <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ a.name }}</span>
-            </a>
+            {% for slug, a in authors %}
+              {% if slug != "staff" and a.tipping and (a.tipping.kofi or a.tipping.bmac or a.tipping.patreon) %}
+              <a class="tip-badge"
+                 href="{{ a.tipping.kofi or a.tipping.bmac or a.tipping.patreon }}" target="_blank" rel="noopener noreferrer"
+                 data-tippy-content="Support {{ a.name }} directly. Your tip goes entirely to the cook."
+                 data-tippy-theme="badge" data-tippy-placement="top">
+                <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ a.name }}</span>
+              </a>
+              {% endif %}
             {% endfor %}
           </div>
-          {% endif %}
         </div>
 
       </div>
@@ -103,13 +97,17 @@ permalink: /support/
     <div class="article-body">
       <h2>Other ways to help</h2>
 
-      <p><strong>Share specific pieces.</strong> When an article is worth reading, send it to one person who would find it genuinely useful. Not broadcast, targeted. A good article landing in front of the right reader is worth more than a hundred passive impressions.</p>
+      <p><strong>Cook the recipes and tell us how it went.</strong> If something failed in your kitchen, we want to know. If something worked beautifully, we want to know that too. Recipe corrections and variations are how the next cook avoids the same mistake.</p>
+
+      <p><strong>Share specific pieces.</strong> When a recipe or story is worth passing along, send it to one person who would find it genuinely useful. Not broadcast, targeted. The recipe landing in the right kitchen is worth more than a hundred passive impressions.</p>
 
       <p><strong>Link to us.</strong> If you write, blog, or maintain any kind of online presence, linking to pieces you found valuable is how independent publications build the search presence that brings new readers.</p>
 
-      <p><strong>Write a letter.</strong> Reader correspondence published in the Letters section is part of the publication's editorial content. A thoughtful response to something we've published contributes to the work directly. <a href="/letters/submit/">Write a letter</a>.</p>
+      <p><strong>Write a Cook's Letter.</strong> Reader correspondence published in the Cook's Letters section is part of the publication's editorial content. A thoughtful response to something we've published contributes to the work directly. <a href="/letters/submit/">Write a letter</a>.</p>
 
-      <p><strong>Tell us what we're missing.</strong> The best editorial tip is a story that matters and isn't being told. If you know of something that deserves investigation, <a href="/tips/">send us a tip</a>.</p>
+      <p><strong>Submit a recipe.</strong> The most direct way to keep this publication going is to send us a recipe you stand behind. <a href="/submit/recipe/">Submit one</a>.</p>
+
+      <p><strong>Tell us what we're missing.</strong> The best editorial tip is a story or technique that matters and isn't being covered. <a href="/tips/">Send us a tip</a>.</p>
     </div>
 
     {# Closing note #}

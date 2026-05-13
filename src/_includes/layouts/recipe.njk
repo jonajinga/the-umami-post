@@ -27,7 +27,17 @@ isReadingPage: true
   {% endif %}
 </div>
 
-<article class="recipe container" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
+{# Context for annotations.js #}
+<div id="annotations-context" data-page-slug="{{ page.fileSlug }}" data-page-url="{{ page.url }}" data-page-title="{{ title | escape }}" hidden></div>
+
+<div class="reading-progress" aria-hidden="true"></div>
+
+<div class="print-header" aria-hidden="true">
+  <span class="print-header__title">{{ site.title }}</span>
+  <span class="print-header__url">{{ site.url }}</span>
+</div>
+
+<article class="recipe container article-body" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
 
   <header class="recipe-hero">
     <span class="recipe-hero__eyebrow">Recipe{% if course %} &middot; {{ course }}{% endif %}{% if cuisine %} &middot; {{ cuisine }}{% endif %}</span>
@@ -101,6 +111,8 @@ isReadingPage: true
   <button type="button" class="cooking-mode__exit" onclick="document.body.classList.remove('cooking-mode');history.pushState({},'',location.pathname);">Exit cooking mode</button>
 
 </article>
+
+{% include "partials/reader-chrome.njk" %}
 
 {% block scripts %}
 <script src="/assets/js/serving-scaler.js?v={{ buildTime }}" defer></script>

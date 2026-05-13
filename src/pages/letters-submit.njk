@@ -1,7 +1,7 @@
 ﻿---
 layout: base
-title: "Write a Letter"
-description: Respond to something we published. Letters to the editor are selected, edited for clarity, and published in our Letters section.
+title: "Write a Cook's Letter"
+description: Respond to something we published -- a recipe, a review, a story. Cook's Letters are selected, edited for clarity, and published in our Cook's Letters section.
 permalink: /letters/submit/
 ---
 
@@ -12,19 +12,19 @@ permalink: /letters/submit/
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol class="breadcrumbs__list">
           <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
-          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/letters/">Letters</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/cooks-letters/">Cook's Letters</a></li>
           <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Write a Letter</li>
         </ol>
       </nav>
-      <h1 class="page-header__title">Write a Letter</h1>
+      <h1 class="page-header__title">Write a Cook's Letter</h1>
       <p class="page-header__lede">
-        Respond to something we published. We read every letter and publish a selection.
+        Respond to a recipe, a review, a story -- anything we published. We read every letter and publish a selection.
       </p>
     </header>
 
     <div class="article-body">
 
-      <p>Letters should respond to a specific article or editorial position. Include your name, city, and a brief note on your relevant background if applicable. Letters may be edited for length and clarity. You can also send letters via <a href="/contact/">our contact form</a>.</p>
+      <p>Letters should respond to a specific recipe, technique, review, or article. Include your name, city, and a brief note on your relevant background -- "home cook", "pastry chef", "restaurant line cook", whatever applies. Letters may be edited for length and clarity. You can also send letters via <a href="/contact/">our contact form</a>.</p>
 
       <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin-top: var(--space-6);">
         <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
@@ -51,7 +51,7 @@ permalink: /letters/submit/
           </div>
           <div class="w3f__group">
             <label class="w3f__label" for="letter-background">Background <span class="w3f__optional">(optional)</span></label>
-            <input class="w3f__input" type="text" name="background" id="letter-background" placeholder="e.g. History professor, retired pastor">
+            <input class="w3f__input" type="text" name="background" id="letter-background" placeholder="e.g. Home cook, line cook, butcher, farmer">
           </div>
         </div>
 

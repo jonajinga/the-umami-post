@@ -1,0 +1,292 @@
+{# Reader chrome -- the bottom annotation toolbar, the full reader
+   panel, the action-button strip, and the share/download/cite/comment
+   popovers. Shared across every reading layout (article, recipe,
+   technique, review) so each content type gets the same toolbar and
+   panel experience.
+
+   Required vars set by the consuming layout:
+     title         (string)  -- the piece title (used in panel header,
+                                 share URLs, citation data)
+     section       (string)  -- the section slug (Recipes / Techniques /
+                                 Reviews / News / Opinion / ...)
+     author        (string)  -- author slug, used to resolve display name
+     authorName    (string?) -- optional display-name override
+     tags          (array?)  -- for related-content matching
+     page.url, page.date     -- standard Eleventy variables
+
+   Optional:
+     contentBodySelector  (default ".article-body") -- the element
+       reading-progress.js, paragraph-anchors.js, footnotes.js, etc.
+       attach to. Recipe layouts can override to ".recipe" or similar.
+
+   The annotation-toolbar.njk partial floats at the bottom on every
+   reading page. The reader panel aside slides in from the right when
+   the user taps the Reader button in the toolbar (or any other
+   trigger with class .article-notes-toggle / aria-controls=
+   article-notes-panel). reader-panel-migrate.js re-parents the
+   action buttons into the panel tabs at runtime. #}
+
+<div class="article-header__actions" data-pagefind-ignore>
+
+  {# Reader panel toggle #}
+  <button class="article-action-btn article-notes-toggle" type="button"
+    aria-label="Reader"
+    aria-expanded="false"
+    aria-controls="article-notes-panel">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+  </button>
+
+  {# Save to reading list #}
+  <button class="article-action-btn bookmark-btn" id="bookmark-btn" type="button" aria-label="Save to reading list"
+    data-url="{{ page.url }}"
+    data-title="{{ title | escape }}"
+    data-section="{{ section or '' }}"
+    data-date="{{ page.date | htmlDateString }}"
+    data-mins="{{ content | readingMins }}">
+    <svg class="bookmark-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+    </svg>
+    <span class="btn-label">Save</span>
+  </button>
+
+  {# Like / heart #}
+  <button class="article-action-btn like-btn" id="like-btn" type="button"
+    aria-label="Like this" aria-pressed="false"
+    data-url="{{ page.url }}">
+    <svg class="like-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    <span class="btn-label">Like</span>
+  </button>
+
+  {# Mark as read #}
+  <button class="article-action-btn mark-read-btn" id="mark-read-btn" type="button"
+    aria-label="Mark as read" aria-pressed="false"
+    data-url="{{ page.url }}"
+    data-title="{{ title | escape }}"
+    data-section="{{ section or '' }}">
+    <svg class="mark-read-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    <span class="btn-label mark-read-btn__label">Mark as read</span>
+  </button>
+
+  {# Add to print basket #}
+  <button class="article-action-btn pdf-basket-btn" id="pdf-basket-btn" type="button"
+    aria-label="Add to print basket" aria-pressed="false" title="Add to print basket"
+    data-url="{{ page.url }}"
+    data-title="{{ title | escape }}"
+    data-section="{{ section or '' }}"
+    data-date="{{ page.date | htmlDateString }}"
+    data-author="{{ authors[author].name or authorName or author or '' }}">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 7h18l-2 12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L3 7z"/>
+      <path d="M8 7V5a4 4 0 0 1 8 0v2"/>
+    </svg>
+  </button>
+
+  {# Share #}
+  <div class="share-wrap">
+    <button class="article-action-btn" id="share-btn" type="button"
+      aria-label="Share" aria-expanded="false" aria-controls="share-panel"
+      data-title="{{ title | escape }}"
+      data-url="{{ site.url }}{{ page.url }}">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <span class="btn-label">Share</span>
+    </button>
+    <div id="share-panel" class="share-panel" hidden role="menu">
+      <a class="share-panel__item" id="share-twitter" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">X / Twitter</a>
+      <a class="share-panel__item" id="share-facebook" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">Facebook</a>
+      <a class="share-panel__item" id="share-linkedin" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">LinkedIn</a>
+      <a class="share-panel__item" id="share-reddit" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">Reddit</a>
+      <a class="share-panel__item" id="share-bluesky" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">Bluesky</a>
+      <a class="share-panel__item" id="share-mastodon" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">Mastodon</a>
+      <hr class="share-panel__divider" aria-hidden="true">
+      <button class="share-panel__item" id="share-copy" type="button" role="menuitem">Copy link</button>
+      <a class="share-panel__item" id="share-email" href="#" role="menuitem">Email</a>
+    </div>
+  </div>
+
+  {# Download #}
+  <div class="download-wrap">
+    <button class="article-action-btn" id="download-btn" type="button"
+      aria-label="Download"
+      aria-expanded="false"
+      aria-controls="download-panel"
+      data-title="{{ title | escape }}"
+      data-author="{{ (authors[author].name or authorName or author) | default('') }}"
+      data-date="{{ page.date | htmlDateString }}"
+      data-url="{{ site.url }}{{ page.url }}"
+      data-slug="{{ page.fileSlug }}">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      <span class="btn-label">Download</span>
+    </button>
+    <div id="download-panel" class="download-panel" hidden role="menu">
+      <button class="download-panel__item" id="dl-txt" type="button" role="menuitem">Plain text (.txt)</button>
+      <button class="download-panel__item" id="dl-md" type="button" role="menuitem">Markdown (.md)</button>
+    </div>
+  </div>
+
+  {# Cite #}
+  <button class="article-action-btn" id="cite-btn" type="button" aria-label="Cite" aria-expanded="false" aria-controls="cite-modal">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.685.54-2.293.44-.6 1.05-1.05 1.83-1.343.78-.295 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.824-2.556 1.51-.755.685-1.347 1.54-1.78 2.563-.432 1.025-.65 2.218-.65 3.58 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44zm9 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.132-1.54-.022-.16-.95.1-1.685.54-2.294.44-.606 1.05-1.056 1.83-1.35.78-.294 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.825-2.556 1.51-.755.686-1.347 1.54-1.78 2.565-.432 1.022-.65 2.216-.65 3.578 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44z"/>
+    </svg>
+    <span class="btn-label">Cite</span>
+  </button>
+
+  {# Comments #}
+  {% if site.comments and site.comments.appId %}
+  <button class="article-action-btn" type="button" aria-label="Comments"
+    onclick="window.__umamiShowComments && window.__umamiShowComments(null, true);">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <span class="btn-label">Comment</span>
+  </button>
+  {% endif %}
+
+</div>
+
+{# Citation data, consumed by JS to build formatted citations #}
+<div id="cite-data"
+  data-title="{{ title | escape }}"
+  data-author="{{ (authors[author].name or authorName or author) | default('') }}"
+  data-date="{{ page.date | isoDate }}"
+  data-publication="{{ site.title }}"
+  data-url="{{ site.url }}{{ page.url }}"
+  hidden></div>
+
+{# Cite modal #}
+<div id="cite-overlay" class="cite-overlay" hidden aria-hidden="true"></div>
+<div id="cite-modal" class="cite-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cite-modal-title">
+  <div class="cite-modal__inner">
+    <div class="cite-modal__header">
+      <p class="cite-modal__title" id="cite-modal-title">Cite This</p>
+      <button id="cite-close" class="cite-modal__close" type="button" aria-label="Close citation panel">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cite-modal__tabs" role="tablist" aria-label="Citation format">
+      <button class="cite-tab is-active" data-format="apa"     role="tab" aria-selected="true"  type="button">APA 7th</button>
+      <button class="cite-tab"           data-format="mla"     role="tab" aria-selected="false" type="button">MLA 9th</button>
+      <button class="cite-tab"           data-format="chicago" role="tab" aria-selected="false" type="button">Chicago 17th</button>
+    </div>
+    <div class="cite-modal__body">
+      <p id="cite-text" class="cite-modal__text"></p>
+    </div>
+    <button id="cite-copy-btn" class="cite-modal__copy-btn" type="button">Copy citation</button>
+  </div>
+</div>
+
+{# Notes panel overlay + aside #}
+<div class="article-notes-overlay library-panel-overlay" aria-hidden="true"></div>
+
+<aside id="article-notes-panel" class="library-panel" aria-hidden="true" aria-label="Reader panel">
+  <header class="library-panel__header">
+    <div class="library-panel__heading">
+      <p class="library-panel__kicker">Reader</p>
+      <p class="library-panel__title">{{ title }}</p>
+    </div>
+    <button class="library-panel__close" type="button" aria-label="Close reader panel">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </header>
+
+  <div class="library-panel__tabs" role="tablist" aria-label="Reader panel sections">
+    <button class="library-panel__tab" role="tab" aria-selected="true" data-target="article-panel-contents" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span class="library-panel__tab-label">Contents</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-highlights" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span class="library-panel__tab-label">Highlights</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-notes" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="library-panel__tab-label">Notes</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-bookmarks" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span class="library-panel__tab-label">Bookmarks</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-related" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span class="library-panel__tab-label">Related</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-cite-inline" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.685.54-2.293.44-.6 1.05-1.05 1.83-1.343.78-.295 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.824-2.556 1.51-.755.685-1.347 1.54-1.78 2.563-.432 1.025-.65 2.218-.65 3.58 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44zm9 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.132-1.54-.022-.16-.95.1-1.685.54-2.294.44-.606 1.05-1.056 1.83-1.35.78-.294 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.825-2.556 1.51-.755.686-1.347 1.54-1.78 2.565-.432 1.022-.65 2.216-.65 3.578 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44z"/></svg>
+      <span class="library-panel__tab-label">Cite</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="article-panel-export" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="library-panel__tab-label">Export</span>
+    </button>
+  </div>
+
+  <div class="library-panel__body">
+    <div id="article-panel-contents" class="library-panel__section" aria-hidden="false">
+      <p class="library-panel__section-head">Contents</p>
+      <p class="library-panel__section-lede">Jump to any section. The current section highlights as you scroll.</p>
+      <nav id="toc-nav" aria-label="Sections"></nav>
+    </div>
+    <div id="article-panel-highlights" class="library-panel__section" aria-hidden="true" data-print-label="Highlights">
+      <p class="library-panel__section-head">Highlights</p>
+      <p class="library-panel__section-lede">Passages you've marked, in reverse chronological order.</p>
+    </div>
+    <div id="article-panel-notes" class="library-panel__section" aria-hidden="true" data-print-label="Notes">
+      <p class="library-panel__section-head">Notes</p>
+      <p class="library-panel__section-lede">Annotated passages with your comments attached.</p>
+    </div>
+    <div id="article-panel-bookmarks" class="library-panel__section" aria-hidden="true" data-print-label="Bookmarks">
+      <p class="library-panel__section-head">Bookmarks</p>
+      <p class="library-panel__section-lede">Specific positions you've saved so you can resume later.</p>
+    </div>
+    <div id="article-panel-export" class="library-panel__section" aria-hidden="true">
+      <p class="library-panel__section-head">Export</p>
+      <p class="library-panel__section-lede">Download your notes and highlights. Everything stays in your browser until you export.</p>
+      <ul class="reader-export-list">
+        <li><button type="button" class="reader-export-btn" data-export="txt"><span><strong>Plain text</strong><em>.txt -- readable in any editor</em></span></button></li>
+        <li><button type="button" class="reader-export-btn" data-export="md"><span><strong>Markdown</strong><em>.md -- for Obsidian, Notion, any notes app</em></span></button></li>
+        <li><button type="button" class="reader-export-btn" data-export="json"><span><strong>JSON</strong><em>.json -- raw structured data</em></span></button></li>
+        <li><button type="button" class="reader-export-btn" data-export="print"><span><strong>Print</strong><em>Open a printable view</em></span></button></li>
+      </ul>
+    </div>
+    <div id="article-panel-cite-inline" class="library-panel__section" aria-hidden="true">
+      <p class="library-panel__section-head">Cite this</p>
+      <p class="library-panel__section-lede">Pre-formatted citations in the most common academic styles, ready to copy.</p>
+    </div>
+    <div id="article-panel-related" class="library-panel__section" aria-hidden="true" data-print-label="Related">
+      <p class="library-panel__section-head">Related</p>
+      <p class="library-panel__section-lede">Other recipes, techniques, reviews, or stories connected by tag, section, or subject matter.</p>
+      {% set relatedList = collections.allContent | relatedArticles({ tags: tags, section: section, title: title }, page.url, 4) %}
+      {% if relatedList.length > 0 %}
+      <ul style="list-style:none;padding:0;margin:0;">
+        {% for item in relatedList %}
+        {% if item.url != page.url %}
+        <li style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-rule);">
+          <a href="{{ item.url }}" style="font-family:var(--font-headline);font-size:var(--text-sm);font-weight:600;color:var(--color-ink);text-decoration:none;display:block;line-height:var(--leading-snug);">{{ item.data.title }}</a>
+          {% if item.data.section %}<div style="margin-top:6px;font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);">{{ item.data.section }}</div>{% endif %}
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p style="font-size:var(--text-xs);color:var(--color-ink-faint);font-style:italic;">No related content found.</p>
+      {% endif %}
+    </div>
+  </div>
+
+</aside>
+
+{# Bottom-floating annotation toolbar #}
+{% set readerPanelId = "article-notes-panel" %}
+{% set readerToggleClass = "article-notes-toggle" %}
+{% include "partials/annotation-toolbar.njk" %}

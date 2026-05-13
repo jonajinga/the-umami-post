@@ -60,32 +60,20 @@ permalink: /accessibility/
         <li><strong>Image alt text:</strong> All meaningful images have descriptive alt text. Decorative images use <code>aria-hidden="true"</code>.</li>
       </ul>
 
-      <h3>Reading tools</h3>
+      <h3>Reading and recipe tools</h3>
       <ul>
-        <li><strong>Reading settings:</strong> Full reading settings panel available on both article and library pages, font, size, line spacing, text width, word spacing, reading ruler, and auto-scroll.</li>
-        <li><strong>Rich-text notes:</strong> WYSIWYG editor with formatting toolbar, no markdown syntax required for bold, italic, lists, quotes, or links.</li>
-        <li><strong>Voice search:</strong> Speak to search instead of typing (Chrome, Edge, Safari).</li>
-        <li><strong>Form dictation:</strong> Dictate into form textareas using your device's microphone.</li>
-        <li><strong>Glossary pronunciation:</strong> Hear any glossary term spoken aloud.</li>
+        <li><strong>Reading settings:</strong> Font, size, line spacing, text width, word spacing, reading ruler, and auto-scroll, available on every article and recipe page.</li>
+        <li><strong>Rich-text notes:</strong> WYSIWYG editor for cook's notes, no markdown syntax required.</li>
+        <li><strong>Ingredient checklist:</strong> Each ingredient row is a labeled checkbox; state persists across reloads via localStorage.</li>
+        <li><strong>Serving scaler:</strong> 0.5x / 1x / 2x buttons re-render ingredient amounts in place; readable for screen readers.</li>
+        <li><strong>Cooking mode:</strong> A hands-free recipe view with larger type and a screen wake-lock so the page stays open while you cook.</li>
       </ul>
 
       <h3>Touch and mobile</h3>
       <ul>
-        <li><strong>Touch targets:</strong> All buttons and interactive elements meet 44x44px minimum touch target size.</li>
+        <li><strong>Touch targets:</strong> All buttons and interactive elements meet 44x44px minimum touch target size -- important for greasy fingers in a working kitchen.</li>
         <li><strong>Responsive design:</strong> Every page adapts to screen sizes from 320px to ultrawide.</li>
         <li><strong>No hover-only interactions:</strong> Everything accessible by hover is also accessible by tap or keyboard.</li>
-      </ul>
-
-      <h3>Gallery lightbox</h3>
-      <ul>
-        <li><strong>Keyboard controls:</strong> Arrow keys to move between images, <kbd>+</kbd>/<kbd>-</kbd> to zoom in and out, <kbd>0</kbd> to reset zoom, <kbd>Escape</kbd> to close.</li>
-        <li><strong>Focus trapping:</strong> Focus stays within the lightbox while it is open.</li>
-      </ul>
-
-      <h3>Music player</h3>
-      <ul>
-        <li><strong>Keyboard accessible:</strong> Play/pause, skip, volume, and close buttons are all keyboard-focusable with visible focus rings.</li>
-        <li><strong>Non-intrusive:</strong> The player bar at the bottom of the page does not obscure content, page padding adjusts when the bar is visible.</li>
       </ul>
 
       <h3>SPA navigation</h3>
@@ -106,7 +94,7 @@ permalink: /accessibility/
       <ul>
         <li>The GTranslate machine translation widget has its own accessibility characteristics that we cannot fully control.</li>
         <li>The Cusdis comment system renders in an iframe with its own styling.</li>
-        <li>Some interactive features (voice search, dictation) are not supported in Firefox.</li>
+        <li>Cooking mode's screen wake-lock requires HTTPS and is not available in every browser. The recipe still functions without it.</li>
         <li>The hCaptcha widget on forms has its own accessibility trade-offs.</li>
       </ul>
 

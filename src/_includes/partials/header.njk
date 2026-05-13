@@ -318,7 +318,7 @@
         <ul class="site-nav__list" role="list">
           {% for item in nav %}
           {% set sectionItems = collections[item.collection] if item.collection %}
-          {% set hasDropdown = item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
+          {% set hasDropdown = item.submenu or item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
           <li class="site-nav__item{% if hasDropdown %} site-nav__item--has-dropdown{% endif %}">
             <a
               class="site-nav__link"
@@ -335,10 +335,25 @@
       {# ── Nav Dropdowns, siblings of .site-nav__inner so they escape overflow:hidden ── #}
       {% for item in nav %}
       {% set sectionItems = collections[item.collection] if item.collection %}
-      {% set hasDropdown = item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
+      {% set hasDropdown = item.submenu or item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
       {% if hasDropdown %}
       <div class="nav-dropdown" id="dropdown-{{ item.key }}" aria-label="{{ item.label }}">
-        {% if item.type == "more" %}
+        {% if item.submenu %}
+          {# Per-nav-item megamenu. Renders columns from nav.json's
+             submenu array. Each column has a heading + a list of links. #}
+          <div class="nav-mega">
+            {% for col in item.submenu %}
+            <div class="nav-mega__col">
+              <p class="nav-mega__heading">{{ col.heading }}</p>
+              {% for link in col.links %}
+              <a href="{{ link.url }}" class="nav-mega__link">
+                <span class="nav-mega__title">{{ link.title }}</span>
+              </a>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        {% elif item.type == "more" %}
           <div class="nav-mega">
             {% for col in megaMenu %}
             <div class="nav-mega__col">
@@ -432,8 +447,8 @@
 <div class="quote-bar" id="quote-bar" data-pagefind-ignore>
   <div class="container quote-bar__inner">
     <a class="quote-bar__link" href="/quotes/" title="View quotes collection">
-      <span class="quote-bar__text">&ldquo;The hands that help are better far than lips that pray.&rdquo;</span>
-      <span class="quote-bar__author">&mdash; Robert G. Ingersoll</span>
+      <span class="quote-bar__text">&ldquo;First we eat, then we do everything else.&rdquo;</span>
+      <span class="quote-bar__author">&mdash; M.F.K. Fisher</span>
     </a>
   </div>
 </div>

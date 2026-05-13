@@ -16,7 +16,16 @@ isReadingPage: true
   {% if author %}<span data-pagefind-filter="author">{{ authors[author].name or authorName or author }}</span>{% endif %}
 </div>
 
-<article class="recipe container" data-pagefind-body>
+<div id="annotations-context" data-page-slug="{{ page.fileSlug }}" data-page-url="{{ page.url }}" data-page-title="{{ title | escape }}" hidden></div>
+
+<div class="reading-progress" aria-hidden="true"></div>
+
+<div class="print-header" aria-hidden="true">
+  <span class="print-header__title">{{ site.title }}</span>
+  <span class="print-header__url">{{ site.url }}</span>
+</div>
+
+<article class="recipe container article-body" data-pagefind-body>
 
   <header class="recipe-hero">
     <span class="recipe-hero__eyebrow">Review{% if reviewType %} &middot; {{ reviewType }}{% endif %}</span>
@@ -78,3 +87,5 @@ isReadingPage: true
   </div>
 
 </article>
+
+{% include "partials/reader-chrome.njk" %}

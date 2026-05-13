@@ -1,12 +1,28 @@
 {# Ingredient list. Expects: ingredients (array of { amount, unit, name,
-   prep, optional, group }), servings. Renders scaler + flat list with
-   optional group headings rendered inline when the group key changes. #}
+   prep, optional, group }), servings. Renders the scaler bar
+   (preset multipliers + custom multiplier + US/metric toggle) plus
+   the flat ingredient list with optional inline group headings. #}
 
-<div class="recipe-scaler serving-scaler" data-recipe-scaler data-base-servings="{{ servings or 4 }}">
-  <span class="serving-scaler__label">Serves</span>
-  <button type="button" class="serving-scaler__btn" data-scale="0.5">0.5&times;</button>
-  <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1">1&times;</button>
-  <button type="button" class="serving-scaler__btn" data-scale="2">2&times;</button>
+<div class="recipe-scaler serving-scaler" data-recipe-scaler data-base-servings="{{ servings or 4 }}" data-unit-system="us">
+
+  <div class="serving-scaler__multipliers">
+    <span class="serving-scaler__label">Scale</span>
+    <button type="button" class="serving-scaler__btn" data-scale="0.5">&half;&times;</button>
+    <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1">1&times;</button>
+    <button type="button" class="serving-scaler__btn" data-scale="2">2&times;</button>
+    <button type="button" class="serving-scaler__btn" data-scale="3">3&times;</button>
+    <label class="serving-scaler__custom-wrap">
+      <span class="visually-hidden">Custom multiplier</span>
+      <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom multiplier (e.g. 1.5)">
+    </label>
+  </div>
+
+  <div class="unit-toggle">
+    <span class="serving-scaler__label">Units</span>
+    <button type="button" class="unit-toggle__btn unit-toggle__btn--active" data-target-unit="us">US</button>
+    <button type="button" class="unit-toggle__btn" data-target-unit="metric">Metric</button>
+  </div>
+
 </div>
 
 <ul class="ingredient-list" data-ingredient-list data-recipe-slug="{{ page.fileSlug }}">
@@ -19,7 +35,7 @@
     <li class="ingredient{% if ing.optional %} ingredient--optional{% endif %}">
       <input type="checkbox" class="ingredient__check" aria-label="Check off {{ ing.name }}">
       <span class="ingredient__text">
-        {% if ing.amount %}<span class="ingredient__amount" data-base-amount="{{ ing.amount }}">{{ ing.amount }}</span>{% endif %}
+        {% if ing.amount %}<span class="ingredient__amount" data-base-amount="{{ ing.amount }}" data-base-unit="{{ ing.unit or '' }}">{{ ing.amount }}</span>{% endif %}
         {% if ing.unit %}<span class="ingredient__unit">{{ ing.unit }}</span>{% endif %}
         <span class="ingredient__name">{{ ing.name }}</span>{% if ing.prep %}<span class="ingredient__prep">, {{ ing.prep }}</span>{% endif %}
       </span>
