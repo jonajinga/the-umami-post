@@ -30,7 +30,7 @@
         </a>
         {% endif %}
       </div>
-      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough="underline" data-rough-color="accent">
+      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough-skip-underline>
         {{ site.title }}
       </a>
       <button
@@ -344,7 +344,7 @@
           <div class="nav-mega">
             {% for col in item.submenu %}
             <div class="nav-mega__col">
-              <p class="nav-mega__heading"><span data-rough="underline" data-rough-color="accent">{{ col.heading }}</span></p>
+              <p class="nav-mega__heading">{{ col.heading }}</p>
               {% for link in col.links %}
               <a href="{{ link.url }}" class="nav-mega__link">
                 <span class="nav-mega__title">{{ link.title }}</span>
@@ -357,7 +357,7 @@
           <div class="nav-mega">
             {% for col in megaMenu %}
             <div class="nav-mega__col">
-              <p class="nav-mega__heading"><span data-rough="underline" data-rough-color="accent">{{ col.heading }}</span></p>
+              <p class="nav-mega__heading">{{ col.heading }}</p>
               {% for link in col.links %}
               <a href="{{ link.url }}" class="nav-mega__link">
                 <span class="nav-mega__title">{{ link.title }}</span>

@@ -133,6 +133,15 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   margin: var(--space-4) 0 var(--space-6);
 }
 
+/* Any element opted into a rough-frame loses its native border so the
+ * sketched SVG outline doesn't double up with a 1px CSS rule. The
+ * frame sits over the element via position:absolute, so we also keep
+ * position:relative on the host. */
+[data-rough="frame"] {
+  border: 0 !important;
+  position: relative;
+}
+
 /* -- Recipe layout grid: ingredients + instructions ------- */
 .recipe-body {
   display: grid;
@@ -407,12 +416,16 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
-  border: 1px solid var(--color-rule);
+  /* Rough.js draws the sketched outline via [data-rough="frame"];
+     a small inner padding keeps the rough strokes off the content. */
+  border: 0;
+  padding: 6px;
   text-decoration: none;
   color: var(--color-ink);
-  transition: border-color var(--transition-fast);
+  position: relative;
+  transition: transform var(--transition-fast);
 }
-.recipe-card:hover { border-color: var(--color-accent); }
+.recipe-card:hover { transform: translateY(-2px); }
 .recipe-card__photo {
   aspect-ratio: 4 / 3;
   overflow: hidden;

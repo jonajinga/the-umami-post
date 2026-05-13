@@ -1,5 +1,7 @@
-{# Recipe card for /recipes/ grid. Expects: recipe (collection item). #}
-<a class="recipe-card" href="{{ recipe.url }}"
+{# Recipe card for /recipes/ grid. The card's outer border is a
+   rough.js sketched rectangle (data-rough="frame") instead of a
+   solid 1px line, to match the warm-magazine handcrafted feel. #}
+<a class="recipe-card" href="{{ recipe.url }}" data-rough="frame" data-rough-color="ink"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
   {% if recipe.data.hero %}
   <div class="recipe-card__photo">

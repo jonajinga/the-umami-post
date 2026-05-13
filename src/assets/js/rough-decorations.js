@@ -351,4 +351,13 @@
   // Re-render on theme change so dark-mode colors come through
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
   document.documentElement.addEventListener('themechange', renderAll);
+  // Once images have loaded, re-render frames sized to pre-image dimensions.
+  window.addEventListener('load', renderAll);
+  // Debounced resize re-render so frames track parent dimensions when
+  // the viewport changes (e.g. column reflow at breakpoints).
+  var resizeT;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(renderAll, 200);
+  });
 })();

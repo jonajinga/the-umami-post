@@ -14,12 +14,13 @@
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-xs);
-  min-height: 36px;
+  min-height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  padding: 0;
 }
 .breadcrumbs-bar__list {
   display: flex;
@@ -185,7 +186,7 @@
   border: none;
   color: var(--color-ink-faint);
   cursor: pointer;
-  padding: var(--space-2);
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1711,29 +1712,22 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   grid-template-columns: 1.2fr 1.8fr;
 }
 
-/* Show each dropdown only on its own trigger — one rule per nav item */
-.site-nav:has(#nav-news:hover)        #dropdown-news,
-.site-nav:has(#nav-news:focus)        #dropdown-news,
-.site-nav:has(#nav-opinion:hover)     #dropdown-opinion,
-.site-nav:has(#nav-opinion:focus)     #dropdown-opinion,
-.site-nav:has(#nav-analysis:hover)    #dropdown-analysis,
-.site-nav:has(#nav-analysis:focus)    #dropdown-analysis,
-.site-nav:has(#nav-arts-culture:hover)  #dropdown-arts-culture,
-.site-nav:has(#nav-arts-culture:focus)  #dropdown-arts-culture,
-.site-nav:has(#nav-science-tech:hover)  #dropdown-science-tech,
-.site-nav:has(#nav-science-tech:focus)  #dropdown-science-tech,
-.site-nav:has(#nav-history:hover)     #dropdown-history,
-.site-nav:has(#nav-history:focus)     #dropdown-history,
-.site-nav:has(#nav-letters:hover)     #dropdown-letters,
-.site-nav:has(#nav-letters:focus)     #dropdown-letters,
-.site-nav:has(#nav-library:hover)     #dropdown-library,
-.site-nav:has(#nav-library:focus)     #dropdown-library,
-.site-nav:has(#nav-projects:hover)    #dropdown-projects,
-.site-nav:has(#nav-projects:focus)    #dropdown-projects,
-.site-nav:has(#nav-games:hover)       #dropdown-games,
-.site-nav:has(#nav-games:focus)       #dropdown-games,
-.site-nav:has(#nav-quotes:hover)     #dropdown-quotes,
-.site-nav:has(#nav-quotes:focus)     #dropdown-quotes,
+/* Show each dropdown only on its own trigger. One pair per nav key.
+   Umami nav keys: recipes, techniques, stories, reviews, seasonal,
+   submit, more. Stays open while the cursor is inside the dropdown
+   itself (.nav-dropdown:hover) and on keyboard focus-within. */
+.site-nav:has(#nav-recipes:hover)    #dropdown-recipes,
+.site-nav:has(#nav-recipes:focus)    #dropdown-recipes,
+.site-nav:has(#nav-techniques:hover) #dropdown-techniques,
+.site-nav:has(#nav-techniques:focus) #dropdown-techniques,
+.site-nav:has(#nav-stories:hover)    #dropdown-stories,
+.site-nav:has(#nav-stories:focus)    #dropdown-stories,
+.site-nav:has(#nav-reviews:hover)    #dropdown-reviews,
+.site-nav:has(#nav-reviews:focus)    #dropdown-reviews,
+.site-nav:has(#nav-seasonal:hover)   #dropdown-seasonal,
+.site-nav:has(#nav-seasonal:focus)   #dropdown-seasonal,
+.site-nav:has(#nav-submit:hover)     #dropdown-submit,
+.site-nav:has(#nav-submit:focus)     #dropdown-submit,
 .site-nav:has(#nav-more:hover)       #dropdown-more,
 .site-nav:has(#nav-more:focus)       #dropdown-more,
 .nav-dropdown.is-open,
@@ -3178,7 +3172,7 @@ body.is-home .quote-bar {
   border: none;
   color: var(--color-ink-faint);
   cursor: pointer;
-  padding: var(--space-2);
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
