@@ -79,14 +79,14 @@ isReadingPage: true
       {% include "partials/instruction-list.njk" %}
 
       {% if notes %}
-      <aside class="recipe-notes">
+      <aside class="recipe-notes" data-rough="frame" data-rough-color="accent">
         <h2>Cook's notes</h2>
         {{ notes | safe }}
       </aside>
       {% endif %}
 
       {% if nutrition %}
-      <aside class="recipe-notes" style="border-color: var(--color-food-science);">
+      <aside class="recipe-notes" data-rough="frame" data-rough-color="olive">
         <h2>Nutrition (per serving)</h2>
         <p>
           {% if nutrition.calories %}<strong>Calories:</strong> {{ nutrition.calories }}&nbsp;&middot;&nbsp;{% endif %}

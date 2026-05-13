@@ -48,7 +48,7 @@ isReadingPage: true
     <section class="recipe-body__instructions article-body" style="max-width: var(--max-width-prose); margin: 0 auto;">
 
       {% if verdict or rating or pros or cons %}
-      <aside class="review-verdict">
+      <aside class="review-verdict" data-rough="frame" data-rough-color="reviews">
         {% if rating %}
         <div class="review-verdict__rating">
           {% set rating = rating %}

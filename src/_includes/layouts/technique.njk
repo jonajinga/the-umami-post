@@ -96,7 +96,7 @@ isReadingPage: true
       {% include "partials/instruction-list.njk" %}
 
       {% if commonMistakes %}
-      <aside class="recipe-notes" style="border-color: var(--color-news);">
+      <aside class="recipe-notes" data-rough="frame" data-rough-color="paprika">
         <h2>Common mistakes</h2>
         {{ commonMistakes | safe }}
       </aside>
