@@ -14,14 +14,12 @@
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: 11px;
-  /* Single-line strip; height locked to ~24px so the bar reads
-   * as a thin scrollable strip rather than a chunky banner. */
-  height: 24px;
+  height: 28px;
   min-height: 0;
-  max-height: 24px;
+  max-height: 28px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0;
@@ -34,7 +32,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   list-style: none;
   padding: 0 var(--gutter);
   line-height: 1;
@@ -53,7 +51,7 @@
 .breadcrumbs-bar__item {
   align-items: center;
   flex-shrink: 0;
-  height: 24px;
+  height: 28px;
   padding: 0;
 }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
