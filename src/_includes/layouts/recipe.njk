@@ -103,14 +103,20 @@ isReadingPage: true
       {% endif %}
 
       {% if source %}
-      <p class="recipe-source">
-        <strong>Source:</strong> {{ source | safe }}
-      </p>
+      <div class="recipe-notes recipe-notes--source">
+        <h2>Source</h2>
+        <p>{{ source | safe }}</p>
+      </div>
       {% endif %}
 
-      <div class="article-body recipe-prose">
-        {{ content | safe }}
+      {% if content and content.length > 0 %}
+      <div class="recipe-notes recipe-notes--headnote">
+        <h2>Headnote</h2>
+        <div class="article-body recipe-prose">
+          {{ content | safe }}
+        </div>
       </div>
+      {% endif %}
     </aside>
   </div>
 
