@@ -5,6 +5,7 @@ author: jon-ajinga
 date: 2026-05-05
 subsection: Heat
 level: Beginner
+difficulty: 1
 totalTime: PT10M
 prerequisites: A light-bottomed saucepan and your full attention.
 hero: ""
