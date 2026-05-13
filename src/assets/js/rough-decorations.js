@@ -313,20 +313,10 @@
     underline:  drawUnderline
   };
 
-  // Auto-decorate hero / page titles across the whole site with a wavy
-  // underline. Opt out per-element with data-rough-skip-underline on
-  // the title or any ancestor.
-  function autoDecorate() {
-    var titles = document.querySelectorAll('.recipe-hero__title, .page-header__title');
-    titles.forEach(function (el) {
-      if (el.dataset.rough) return;
-      if (el.closest('[data-rough-skip-underline]')) return;
-      el.setAttribute('data-rough', 'underline');
-      if (!el.getAttribute('data-rough-color')) {
-        el.setAttribute('data-rough-color', 'accent');
-      }
-    });
-  }
+  // No-op. Auto-underline on hero / page titles was removed per
+  // editorial direction — the wavy underline sat awkwardly under wide
+  // headlines. Decoration is now strictly opt-in via [data-rough].
+  function autoDecorate() {}
 
   function renderAll() {
     autoDecorate();

@@ -41,7 +41,20 @@
   }
 
   function shouldSkip(el) {
-    return !!el.closest('[data-rough-skip-frame]');
+    if (el.closest('[data-rough-skip-frame]')) return true;
+    // Skip controls inside hidden containers — getBoundingClientRect
+    // returns ~0 there, so paintFrame would draw a 40x24 stub at the
+    // top-left of the field. The feedback popup, share popovers, etc.
+    // are all initially `hidden`; we just render native browser
+    // styling for those forms instead.
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.hidden) return true;
+      var style = node.nodeType === 1 ? getComputedStyle(node) : null;
+      if (style && (style.display === 'none' || style.visibility === 'hidden')) return true;
+      node = node.parentElement;
+    }
+    return false;
   }
 
   function paintFrame(host, rough, color, opts) {

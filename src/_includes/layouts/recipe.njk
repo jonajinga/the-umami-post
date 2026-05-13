@@ -40,7 +40,9 @@ isReadingPage: true
 <article class="recipe container" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
 
   <header class="recipe-hero" data-meta-collapsed="true">
-    {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-hero__eyebrow">Recipe &middot; {{ course }}{% if cuisine %} &middot; {{ cuisine }}{% endif %}</a>{% else %}<span class="recipe-hero__eyebrow">Recipe</span>{% endif %}
+    <span class="recipe-hero__eyebrow">
+      <a href="/recipes/" class="recipe-hero__eyebrow-link">Recipe</a>{% if course %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ course | slugify }}/" class="recipe-hero__eyebrow-link">{{ course }}</a>{% endif %}{% if cuisine %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ cuisine | slugify }}/" class="recipe-hero__eyebrow-link">{{ cuisine }}</a>{% endif %}
+    </span>
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
@@ -50,7 +52,7 @@ isReadingPage: true
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tooltip="View all from {{ authors[author].name or authorName or author }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tippy-content="See all from {{ authors[author].name or authorName or author }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
       &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
       {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}">{{ updated | readableDate }}</a>{% endif %}
     </p>
@@ -77,16 +79,18 @@ isReadingPage: true
     <section class="recipe-body__instructions article-body" style="max-width:none;">
       <h2>Instructions</h2>
       {% include "partials/instruction-list.njk" %}
+    </section>
 
+    <aside class="recipe-body__notes">
       {% if notes %}
-      <aside class="recipe-notes" data-rough="frame" data-rough-color="accent">
+      <div class="recipe-notes" data-rough="frame" data-rough-color="accent">
         <h2>Cook's notes</h2>
         {{ notes | safe }}
-      </aside>
+      </div>
       {% endif %}
 
       {% if nutrition %}
-      <aside class="recipe-notes" data-rough="frame" data-rough-color="olive">
+      <div class="recipe-notes" data-rough="frame" data-rough-color="olive">
         <h2>Nutrition (per serving)</h2>
         <p>
           {% if nutrition.calories %}<strong>Calories:</strong> {{ nutrition.calories }}&nbsp;&middot;&nbsp;{% endif %}
@@ -95,19 +99,19 @@ isReadingPage: true
           {% if nutrition.fat %}<strong>Fat:</strong> {{ nutrition.fat }}{% endif %}
         </p>
         <p style="font-size: var(--text-xs); color: var(--color-ink-faint); margin-top: var(--space-2);">Estimated. Actual values vary with substitutions.</p>
-      </aside>
+      </div>
       {% endif %}
 
       {% if source %}
-      <p style="margin-top: var(--space-8); font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-faint);">
+      <p class="recipe-source">
         <strong>Source:</strong> {{ source | safe }}
       </p>
       {% endif %}
 
-      <div class="article-body" style="margin-top: var(--space-10);">
+      <div class="article-body recipe-prose">
         {{ content | safe }}
       </div>
-    </section>
+    </aside>
   </div>
 
   <button type="button" class="cooking-mode__exit" onclick="document.body.classList.remove('cooking-mode');history.pushState({},'',location.pathname);">Exit cooking mode</button>

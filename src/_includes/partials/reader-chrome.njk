@@ -388,6 +388,47 @@
 })();
 </script>
 
+{# Republish modal — driven by the same toolbar republish button as
+   article.njk. The trigger lives in annotation-toolbar.njk and is
+   gated by `syndicate`; this is its panel target. #}
+{% include "partials/republish.njk" %}
+
+{# Tippy.js init for byline author tooltips. Tippy is bundled by
+   header.njk on reading pages; we just attach to elements that
+   carry data-tippy-content (currently the .recipe-hero__author
+   byline link, but generic enough to cover future additions). #}
+<script>
+(function () {
+  function init() {
+    if (typeof window.tippy === 'undefined') return;
+    var els = document.querySelectorAll('.recipe-hero__author[data-tippy-content], [data-tippy-content].byline-tip');
+    if (!els.length) return;
+    els.forEach(function (el) {
+      if (el._tippy) return;
+      window.tippy(el, {
+        theme: 'pikes',
+        placement: 'bottom',
+        arrow: true,
+        delay: [120, 80],
+        maxWidth: 260,
+        touch: true,
+        appendTo: function () { return document.body; }
+      });
+    });
+  }
+  // Tippy may not be loaded yet at parse time — poll briefly.
+  var tries = 0;
+  var iv = setInterval(function () {
+    tries += 1;
+    if (typeof window.tippy !== 'undefined') { init(); clearInterval(iv); return; }
+    if (tries > 40) clearInterval(iv);
+  }, 50);
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('spa:contentswap', init);
+})();
+</script>
+
 {# Bottom-floating annotation toolbar #}
 {% set readerPanelId = "article-notes-panel" %}
 {% set readerToggleClass = "article-notes-toggle" %}

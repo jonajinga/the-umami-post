@@ -8,13 +8,13 @@
   <div class="serving-scaler__multipliers">
     <span class="serving-scaler__label">Scale</span>
     <div class="serving-scaler__row">
-      <button type="button" class="serving-scaler__btn" data-scale="0.5">&half;&times;</button>
-      <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1">1&times;</button>
-      <button type="button" class="serving-scaler__btn" data-scale="2">2&times;</button>
-      <button type="button" class="serving-scaler__btn" data-scale="3">3&times;</button>
-      <label class="serving-scaler__custom-wrap">
+      <button type="button" class="serving-scaler__btn" data-scale="0.5" data-rough="frame" data-rough-color="ink">&half;&times;</button>
+      <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1" data-rough="frame" data-rough-color="accent">1&times;</button>
+      <button type="button" class="serving-scaler__btn" data-scale="2" data-rough="frame" data-rough-color="ink">2&times;</button>
+      <button type="button" class="serving-scaler__btn" data-scale="3" data-rough="frame" data-rough-color="ink">3&times;</button>
+      <label class="serving-scaler__custom-wrap" data-rough="frame" data-rough-color="ink">
         <span class="visually-hidden">Custom multiplier</span>
-        <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom multiplier (e.g. 1.5)">
+        <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom multiplier (e.g. 1.5)" data-rough-skip-frame>
       </label>
     </div>
   </div>
@@ -22,8 +22,8 @@
   <div class="unit-toggle">
     <span class="serving-scaler__label">Units</span>
     <div class="serving-scaler__row">
-      <button type="button" class="unit-toggle__btn unit-toggle__btn--active" data-target-unit="us">US</button>
-      <button type="button" class="unit-toggle__btn" data-target-unit="metric">Metric</button>
+      <button type="button" class="unit-toggle__btn unit-toggle__btn--active" data-target-unit="us" data-rough="frame" data-rough-color="accent">US</button>
+      <button type="button" class="unit-toggle__btn" data-target-unit="metric" data-rough="frame" data-rough-color="ink">Metric</button>
     </div>
   </div>
 

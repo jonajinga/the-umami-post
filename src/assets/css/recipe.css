@@ -93,23 +93,28 @@
   margin-top: var(--space-2);
 }
 
-/* -- Recipe meta bar (time / yield / difficulty chips) --- */
+/* -- Recipe meta bar (time / yield / difficulty chips) ---
+ * Flex-wrap layout so items pack left-to-right with no empty grid
+ * cells (the prior 4-col grid left blank slots when a recipe didn't
+ * supply every meta field). The rough.js frame is painted around
+ * the natural content height; no chasing empty cells. */
 .recipe-meta-bar {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-6) var(--space-8);
   background: var(--color-bg-alt);
-  border: 1px solid var(--color-rule);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-6);
   margin: 0 0 var(--space-8);
-}
-@media (min-width: 600px) {
-  .recipe-meta-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  border: 0;
+  position: relative;
 }
 .recipe-meta-bar__item {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  min-width: 0;
+  flex: 0 0 auto;
 }
 .recipe-meta-bar__label {
   font-family: var(--font-ui);
@@ -127,7 +132,7 @@
   line-height: var(--leading-snug);
 }
 .recipe-meta-bar__tags {
-  grid-column: 1 / -1;
+  flex: 1 1 100%;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -189,7 +194,7 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   outline: none;
 }
 
-/* -- Recipe layout grid: ingredients + instructions ------- */
+/* -- Recipe layout grid: ingredients + instructions + notes/prose --- */
 .recipe-body {
   display: grid;
   grid-template-columns: 1fr;
@@ -198,10 +203,25 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   margin: 0 auto;
 }
 @media (min-width: 1024px) {
-  .recipe-body { grid-template-columns: minmax(280px, 22rem) minmax(0, 1fr); }
+  .recipe-body {
+    grid-template-columns: minmax(280px, 22rem) minmax(0, 1fr) minmax(260px, 20rem);
+  }
 }
 @media (min-width: 1024px) {
   .recipe-body__ingredients { position: sticky; top: 5.5rem; align-self: start; }
+  .recipe-body__notes { position: sticky; top: 5.5rem; align-self: start; }
+}
+.recipe-body__notes { display: flex; flex-direction: column; gap: var(--space-6); }
+.recipe-body__notes .recipe-notes { margin: 0; }
+.recipe-source {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+.recipe-prose {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
 }
 
 /* -- Ingredient list -------------------------------------- */

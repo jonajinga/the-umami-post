@@ -1,7 +1,7 @@
 {# Cusdis comments block. Included on article, recipe, technique, and
-   review layouts. Renders the "Show comments" toggle + the lazy-loaded
-   thread. Only renders when site.comments.appId is configured. #}
-{% if site.comments and site.comments.appId %}
+   review layouts. The shell (header + toggle) renders unconditionally
+   so readers know comments exist on every piece; the lazy-loaded
+   thread only attempts to mount when site.comments.appId is set. #}
 <div class="article-comments">
   <div class="article-comments__header">
     <div class="article-comments__heading">
@@ -14,6 +14,7 @@
     </button>
   </div>
   <div id="comments-body" hidden>
+    {% if site.comments and site.comments.appId %}
     <div class="article-comments__loading" hidden>Loading comments&hellip;</div>
     <div id="cusdis_thread"
       data-host="{{ site.comments.host }}"
@@ -22,6 +23,9 @@
       data-page-url="{{ site.url }}{{ page.url }}"
       data-page-title="{{ title }}">
     </div>
+    {% else %}
+    <p class="article-comments__placeholder" style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-faint); font-style: italic; margin: var(--space-4) 0;">Comments are coming soon. In the meantime, write a letter to the editor or pitch a piece via <a href="/submit/">our submission portal</a>.</p>
+    {% endif %}
   </div>
 </div>
 
@@ -78,4 +82,3 @@ window.__umamiShowComments = window.__umamiShowComments || function (btn, always
   }
 };
 </script>
-{% endif %}
