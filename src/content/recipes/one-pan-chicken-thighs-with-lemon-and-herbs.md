@@ -1,5 +1,6 @@
 ---
 title: "One-Pan Chicken Thighs with Lemon and Herbs"
+featured: true
 dek: "The roast-chicken weeknight you can stop apologising for. Crispy skin, jammy pan sauce, forty-five minutes."
 author: jon-ajinga
 date: 2026-05-17

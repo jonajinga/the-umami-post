@@ -2788,6 +2788,34 @@ body.is-home .quote-bar {
 .site-footer__social a svg { position: relative; z-index: 1; }
 
 .site-footer__tip { margin-top: var(--space-2); }
+
+/* Legal strip — single-line row of policy + compliance links
+ * just above the copyright. Visually de-emphasised relative to
+ * the editorial columns so the eye lands on Cook / Stories /
+ * Library first. */
+.site-footer__legal {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+.site-footer__legal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  justify-content: center;
+}
+.site-footer__legal li { white-space: nowrap; }
+.site-footer__legal a {
+  color: var(--color-ink-faint);
+  text-decoration: none;
+}
+.site-footer__legal a:hover { color: var(--color-ink); }
 .btn--support {
   display: inline-block;
   padding: 10px 18px;

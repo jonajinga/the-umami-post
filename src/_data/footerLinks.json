@@ -5,6 +5,7 @@
     "links": [
       { "label": "Recipes",         "url": "/recipes/" },
       { "label": "Techniques",      "url": "/techniques/" },
+      { "label": "How-Tos",         "url": "/how-tos/" },
       { "label": "Seasonal",        "url": "/seasonal/" },
       { "label": "Ingredients",     "url": "/ingredients/" },
       { "label": "Cooking Glossary","url": "/glossary/" }
@@ -61,13 +62,14 @@
     "heading": "Contribute",
     "headingUrl": "/contribute/",
     "links": [
-      { "label": "Submit a recipe",   "url": "/submit/recipe/" },
-      { "label": "Pitch a story",     "url": "/submit/story/" },
-      { "label": "Pitch a technique", "url": "/submit/technique/" },
-      { "label": "Pitch a review",    "url": "/submit/review/" },
-      { "label": "Volunteer",         "url": "/volunteer/" },
-      { "label": "Tips & Letters",    "url": "/tips/" },
-      { "label": "Republish",         "url": "/license/" }
+      { "label": "Submit a recipe",     "url": "/submit/recipe/" },
+      { "label": "Pitch a story",       "url": "/submit/story/" },
+      { "label": "Pitch a technique",   "url": "/submit/technique/" },
+      { "label": "Pitch a review",      "url": "/submit/review/" },
+      { "label": "Share a cooking tip", "url": "/submit/cooking-tip/" },
+      { "label": "Write a Cook's letter", "url": "/letters/submit/" },
+      { "label": "Volunteer",           "url": "/volunteer/" },
+      { "label": "Republish",           "url": "/license/" }
     ]
   },
   {
@@ -78,24 +80,22 @@
       { "label": "Start Here",      "url": "/start-here/" },
       { "label": "Masthead",        "url": "/masthead/" },
       { "label": "Contributors",    "url": "/contributors/" },
-      { "label": "Contact",         "url": "/contact/" }
+      { "label": "Contact",         "url": "/contact/" },
+      { "label": "Editorial Ethics","url": "/ethics/" },
+      { "label": "Editorial Handbook","url": "/editorial/" },
+      { "label": "Transparency",    "url": "/transparency/" },
+      { "label": "Costs",           "url": "/costs/" }
     ]
   },
   {
-    "heading": "Inside",
-    "headingUrl": "/transparency/",
+    "heading": "Build",
+    "headingUrl": "/stack/",
     "links": [
-      { "label": "Editorial Ethics", "url": "/ethics/" },
-      { "label": "Editorial Handbook","url": "/editorial/" },
-      { "label": "Transparency",     "url": "/transparency/" },
-      { "label": "Costs",            "url": "/costs/" },
-      { "label": "Changelog",        "url": "/changelog/" },
-      { "label": "Features",         "url": "/features/" },
-      { "label": "Tech Stack",       "url": "/stack/" },
-      { "label": "Style Guide",      "url": "/style-guide/" },
-      { "label": "Open Source",      "url": "/open-source/" },
-      { "label": "Accessibility",    "url": "/accessibility/" },
-      { "label": "Legal",            "url": "/legal/" }
+      { "label": "Tech Stack",      "url": "/stack/" },
+      { "label": "Style Guide",     "url": "/style-guide/" },
+      { "label": "Open Source",     "url": "/open-source/" },
+      { "label": "Changelog",       "url": "/changelog/" },
+      { "label": "Features",        "url": "/features/" }
     ]
   }
 ]
