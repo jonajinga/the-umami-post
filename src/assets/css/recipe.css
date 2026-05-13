@@ -146,14 +146,19 @@
   border-top: 1px solid var(--color-rule);
 }
 
-/* Nutrition group — sits inside the meta bar as its own labelled
- * cluster so 'Per serving' applies to all four macros at once
- * rather than repeating on every chip. */
+/* Nutrition group — sits inline alongside time/yield/difficulty
+ * (no row break). A vertical rule separates it from the time
+ * cluster on its left. The 'Per serving' eyebrow stacks above the
+ * four-macro row inside this group. */
 .recipe-meta-bar__nutrition-group {
-  flex: 1 1 100%;
-  margin-top: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-rule);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-6);
+  margin-left: var(--space-2);
+  border-left: 1px solid var(--color-rule-heavy);
+  align-self: stretch;
+  flex: 0 1 auto;
 }
 .recipe-meta-bar__nutrition-eyebrow {
   font-family: var(--font-ui);
@@ -162,13 +167,26 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-accent);
-  margin: 0 0 var(--space-3);
+  margin: 0;
 }
 .recipe-meta-bar__nutrition-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: var(--space-6) var(--space-8);
+  gap: var(--space-3) var(--space-6);
+}
+/* When the meta bar wraps (narrow viewport), the nutrition group
+ * gracefully flows to its own row with a horizontal rule above
+ * instead of the broken-mid-row vertical one. */
+@media (max-width: 768px) {
+  .recipe-meta-bar__nutrition-group {
+    flex: 1 1 100%;
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: var(--space-3);
+    border-left: 0;
+    border-top: 1px solid var(--color-rule);
+  }
 }
 .recipe-meta-bar__nutrition-btn {
   display: inline-flex;
