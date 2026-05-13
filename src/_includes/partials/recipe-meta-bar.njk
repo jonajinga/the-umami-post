@@ -21,6 +21,12 @@
     <span class="recipe-meta-bar__value">{{ cookTime | duration }}</span>
   </div>
   {% endif %}
+  {% if coolTime %}
+  <div class="recipe-meta-bar__item">
+    <span class="recipe-meta-bar__label">Cool</span>
+    <span class="recipe-meta-bar__value">{{ coolTime | duration }}</span>
+  </div>
+  {% endif %}
   {% if yield %}
   <div class="recipe-meta-bar__item">
     <span class="recipe-meta-bar__label">Makes</span>

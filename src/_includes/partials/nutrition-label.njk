@@ -1,0 +1,81 @@
+{# Nutrition facts: summary strip + collapsible full FDA-style label.
+   Optional. Renders only when `nutrition` is present on the recipe.
+
+   nutrition front-matter shape (every field optional):
+     calories, totalFat, saturatedFat, transFat, cholesterol, sodium,
+     totalCarbs, dietaryFiber, totalSugars, addedSugars, protein,
+     vitaminD, calcium, iron, potassium, vitaminA, vitaminC,
+     servings (label, e.g. "6 to 8")
+   Backwards-compat aliases: fat → totalFat, carbs → totalCarbs.
+
+   Hide-show is driven by a [data-nutrition-toggle] button on the
+   summary; no extra JS file needed — toggle handler lives inline. #}
+
+{% if nutrition %}
+{% set fat = nutrition.totalFat or nutrition.fat %}
+{% set carbs = nutrition.totalCarbs or nutrition.carbs %}
+
+<aside class="nutrition" data-rough="frame" data-rough-color="olive">
+  <p class="nutrition__eyebrow">Nutrition facts <span>(per serving)</span></p>
+
+  <ul class="nutrition__summary">
+    {% if nutrition.calories %}<li><strong>{{ nutrition.calories }}</strong><span>Calories</span></li>{% endif %}
+    {% if fat %}<li><strong>{{ fat }}</strong><span>Fat</span></li>{% endif %}
+    {% if carbs %}<li><strong>{{ carbs }}</strong><span>Carbs</span></li>{% endif %}
+    {% if nutrition.protein %}<li><strong>{{ nutrition.protein }}</strong><span>Protein</span></li>{% endif %}
+  </ul>
+
+  <button type="button" class="nutrition__toggle" aria-expanded="false" aria-controls="nutrition-label"
+    onclick="var p=document.getElementById('nutrition-label');var open=p.hidden;p.hidden=!open;this.setAttribute('aria-expanded',String(open));this.querySelector('span').textContent=open?'Hide full nutrition label':'Show full nutrition label';">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    <span>Show full nutrition label</span>
+  </button>
+
+  <div id="nutrition-label" class="nutrition__label" hidden>
+    <h3 class="nutrition__label-title">Nutrition Facts</h3>
+    {% if nutrition.servings %}<p class="nutrition__label-servings">Servings: {{ nutrition.servings }}</p>{% endif %}
+
+    <p class="nutrition__label-amount">Amount per serving</p>
+    {% if nutrition.calories %}
+    <p class="nutrition__label-calories"><strong>Calories</strong> <span>{{ nutrition.calories }}</span></p>
+    {% endif %}
+
+    <p class="nutrition__label-dv">% Daily Value*</p>
+
+    <table class="nutrition__table">
+      <tbody>
+        {% if fat %}<tr><th>Total Fat <span class="nutrition__value">{{ fat }}</span></th><td>{{ nutrition.totalFatDV or "" }}{% if nutrition.totalFatDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.saturatedFat %}<tr class="nutrition__sub"><th>Saturated Fat <span class="nutrition__value">{{ nutrition.saturatedFat }}</span></th><td>{{ nutrition.saturatedFatDV or "" }}{% if nutrition.saturatedFatDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.transFat %}<tr class="nutrition__sub"><th>Trans Fat <span class="nutrition__value">{{ nutrition.transFat }}</span></th><td></td></tr>{% endif %}
+        {% if nutrition.cholesterol %}<tr><th>Cholesterol <span class="nutrition__value">{{ nutrition.cholesterol }}</span></th><td>{{ nutrition.cholesterolDV or "" }}{% if nutrition.cholesterolDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.sodium %}<tr><th>Sodium <span class="nutrition__value">{{ nutrition.sodium }}</span></th><td>{{ nutrition.sodiumDV or "" }}{% if nutrition.sodiumDV %}%{% endif %}</td></tr>{% endif %}
+        {% if carbs %}<tr><th>Total Carbohydrate <span class="nutrition__value">{{ carbs }}</span></th><td>{{ nutrition.totalCarbsDV or "" }}{% if nutrition.totalCarbsDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.dietaryFiber %}<tr class="nutrition__sub"><th>Dietary Fiber <span class="nutrition__value">{{ nutrition.dietaryFiber }}</span></th><td>{{ nutrition.dietaryFiberDV or "" }}{% if nutrition.dietaryFiberDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.totalSugars %}<tr class="nutrition__sub"><th>Total Sugars <span class="nutrition__value">{{ nutrition.totalSugars }}</span></th><td></td></tr>{% endif %}
+        {% if nutrition.addedSugars %}<tr class="nutrition__sub nutrition__sub--deep"><th>Includes Added Sugars <span class="nutrition__value">{{ nutrition.addedSugars }}</span></th><td>{{ nutrition.addedSugarsDV or "" }}{% if nutrition.addedSugarsDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.protein %}<tr><th>Protein <span class="nutrition__value">{{ nutrition.protein }}</span></th><td></td></tr>{% endif %}
+      </tbody>
+    </table>
+
+    {% if nutrition.vitaminD or nutrition.calcium or nutrition.iron or nutrition.potassium or nutrition.vitaminA or nutrition.vitaminC %}
+    <table class="nutrition__table nutrition__table--micros">
+      <tbody>
+        {% if nutrition.vitaminD %}<tr><th>Vitamin D <span class="nutrition__value">{{ nutrition.vitaminD }}</span></th><td>{{ nutrition.vitaminDDV or "" }}{% if nutrition.vitaminDDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.calcium %}<tr><th>Calcium <span class="nutrition__value">{{ nutrition.calcium }}</span></th><td>{{ nutrition.calciumDV or "" }}{% if nutrition.calciumDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.iron %}<tr><th>Iron <span class="nutrition__value">{{ nutrition.iron }}</span></th><td>{{ nutrition.ironDV or "" }}{% if nutrition.ironDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.potassium %}<tr><th>Potassium <span class="nutrition__value">{{ nutrition.potassium }}</span></th><td>{{ nutrition.potassiumDV or "" }}{% if nutrition.potassiumDV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.vitaminA %}<tr><th>Vitamin A <span class="nutrition__value">{{ nutrition.vitaminA }}</span></th><td>{{ nutrition.vitaminADV or "" }}{% if nutrition.vitaminADV %}%{% endif %}</td></tr>{% endif %}
+        {% if nutrition.vitaminC %}<tr><th>Vitamin C <span class="nutrition__value">{{ nutrition.vitaminC }}</span></th><td>{{ nutrition.vitaminCDV or "" }}{% if nutrition.vitaminCDV %}%{% endif %}</td></tr>{% endif %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    <p class="nutrition__label-footnote">
+      *The % Daily Value (DV) tells you how much a nutrient in a food serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.
+    </p>
+    <p class="nutrition__label-footnote nutrition__label-footnote--est">
+      Estimated. Actual values vary with substitutions and brands.
+    </p>
+  </div>
+</aside>
+{% endif %}

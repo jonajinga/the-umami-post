@@ -324,39 +324,39 @@ select option {
 .unit-toggle__btn { width: 72px; min-width: 72px; flex-basis: 72px; }
 
 /* Unit switch — two segmented buttons sharing a single track with
- * a sliding thumb that animates between US and Metric positions.
- * Replaces the old paired buttons so the unit chooser reads as a
- * native-feeling switch even though both halves are click targets. */
+ * a sliding thumb that animates between US and Metric positions. */
 .unit-switch {
   position: relative;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  width: 160px;
+  display: inline-flex;
+  align-items: stretch;
+  width: 180px;
   height: 36px;
-  border: 0;
   background: var(--color-bg);
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   font-weight: 600;
   user-select: none;
+  isolation: isolate;
 }
 .unit-switch__thumb {
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: calc(50% - 4px);
-  height: calc(100% - 8px);
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
   background: var(--color-accent);
   transition: transform 0.18s ease;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 .unit-switch[data-active="metric"] .unit-switch__thumb {
-  transform: translateX(calc(100% + 0px));
+  transform: translateX(100%);
 }
 .unit-switch__btn {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  flex: 1 1 50%;
+  min-width: 0;
   background: transparent;
   border: 0;
   color: var(--color-ink);
@@ -365,9 +365,13 @@ select option {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
   transition: color var(--transition-fast);
 }
 .unit-switch__btn--active { color: var(--color-bg); }
+/* The rough.js frame SVG is appended last; make sure it sits
+ * BEHIND the thumb + buttons. */
+.unit-switch > svg[data-rough-frame] { z-index: 0; }
 .serving-scaler__btn:hover,
 .unit-toggle__btn:hover {
   border-color: var(--color-accent);
@@ -378,6 +382,15 @@ select option {
   background: var(--color-accent);
   color: var(--color-bg);
   border-color: var(--color-accent);
+}
+/* Active + hover must keep the saffron-on-cream contrast pair; the
+ * generic :hover above was overriding the active state's color
+ * back to accent, producing saffron-on-saffron on the active chip. */
+.serving-scaler__btn--active:hover,
+.unit-toggle__btn--active:hover {
+  background: var(--color-accent-hover, var(--color-accent));
+  color: var(--color-bg);
+  border-color: var(--color-accent-hover, var(--color-accent));
 }
 .serving-scaler__custom-wrap {
   display: inline-flex;
@@ -536,6 +549,13 @@ body.cooking-mode .recipe-meta-bar__tags {
 }
 body.cooking-mode .recipe-body {
   grid-template-columns: 1fr;
+}
+/* Kill the sticky on ingredients when columns collapse — sticky
+ * + single-column stacking caused the ingredients block to ride
+ * over the instructions as the user scrolled. */
+body.cooking-mode .recipe-body__ingredients {
+  position: static !important;
+  top: auto !important;
 }
 .cooking-mode__exit {
   position: fixed;
@@ -848,8 +868,215 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
 .recipe-actions__btn:hover { color: var(--color-accent); }
 .recipe-actions__btn svg { position: relative; z-index: 1; }
 .recipe-actions__btn span { position: relative; z-index: 1; }
+
+/* Keep-screen-awake switch — toggle pill sitting alongside the
+ * Print / Cook Mode action buttons. Track lights in accent when
+ * the wake lock is active, thumb slides right. */
+.wake-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  min-height: 44px;
+  transition: color var(--transition-fast);
+}
+.wake-switch:hover,
+.wake-switch.is-on { color: var(--color-ink); }
+.wake-switch__track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--color-bg-inset);
+  border: 1px solid var(--color-rule-heavy);
+  border-radius: 999px;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.wake-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--color-ink-muted);
+  border-radius: 50%;
+  transition: transform 0.18s ease, background var(--transition-fast);
+}
+.wake-switch.is-on .wake-switch__track {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.wake-switch.is-on .wake-switch__thumb {
+  transform: translateX(20px);
+  background: var(--color-bg);
+}
+.wake-switch__label { white-space: nowrap; }
+
 @media print {
   .recipe-actions { display: none; }
+}
+
+/* ─── Nutrition Facts ───────────────────────────────────── */
+.nutrition {
+  position: relative;
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-bg-alt);
+  border: 0;
+  margin: 0;
+}
+.nutrition__eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink);
+  text-align: center;
+  margin: 0 0 var(--space-4);
+}
+.nutrition__eyebrow span {
+  font-weight: 500;
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nutrition__summary {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+.nutrition__summary li {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-ui);
+}
+.nutrition__summary strong {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1;
+}
+.nutrition__summary span {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-top: 4px;
+}
+.nutrition__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) 0;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-link);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.nutrition__toggle:hover { color: var(--color-accent); }
+
+/* Full FDA-style label */
+.nutrition__label {
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg);
+  border: 2px solid var(--color-ink);
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+}
+.nutrition__label-title {
+  font-family: var(--font-headline);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  margin: 0 0 var(--space-1);
+  line-height: 1;
+  border-bottom: 8px solid var(--color-ink);
+  padding-bottom: var(--space-1);
+}
+.nutrition__label-servings,
+.nutrition__label-amount {
+  margin: var(--space-1) 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.nutrition__label-amount {
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-1);
+}
+.nutrition__label-calories {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  border-bottom: 4px solid var(--color-ink);
+  padding-bottom: var(--space-1);
+  font-size: var(--text-md);
+}
+.nutrition__label-calories strong { font-size: var(--text-xl); font-weight: 900; }
+.nutrition__label-calories span { font-size: var(--text-xl); font-weight: 700; }
+.nutrition__label-dv {
+  text-align: right;
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 2px;
+}
+.nutrition__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.nutrition__table th,
+.nutrition__table td {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--color-rule);
+  text-align: left;
+  font-weight: 700;
+}
+.nutrition__table td { text-align: right; font-weight: 700; }
+.nutrition__table .nutrition__value {
+  font-weight: 400;
+  margin-left: 4px;
+}
+.nutrition__table .nutrition__sub th { padding-left: var(--space-4); font-weight: 600; }
+.nutrition__table .nutrition__sub--deep th { padding-left: var(--space-6); }
+.nutrition__table--micros {
+  margin-top: var(--space-1);
+  border-top: 8px solid var(--color-ink);
+}
+.nutrition__label-footnote {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  margin: var(--space-3) 0 0;
+  line-height: 1.4;
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-2);
+}
+.nutrition__label-footnote--est { font-style: italic; border: 0; padding-top: 0; margin-top: var(--space-1); }
+
+@media print {
+  .nutrition__toggle { display: none; }
+  .nutrition__label { display: block !important; }
+  .nutrition__label[hidden] { display: block !important; }
 }
 
 /* ============================================================

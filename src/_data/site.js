@@ -29,7 +29,11 @@ module.exports = {
     name: "the-umami-post",
     branch: "main"
   },
-  fontsUrl: "https://fonts.bunny.net/css?family=playfair-display:ital,wght@0,700;0,900;1,700&family=source-serif-4:ital,wght@0,400;0,600;1,400&family=inter:wght@400;500;600&display=swap",
+  // Hand-drawn family to match the rough.js sketched frames + chips.
+  //   Caveat — masthead + display titles (warm script)
+  //   Lora — body prose (humanist serif, readable at length)
+  //   Patrick Hand — UI labels, captions, nav (legible handwritten)
+  fontsUrl: "https://fonts.bunny.net/css?family=caveat:wght@500;600;700&family=lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=patrick-hand:wght@400&display=swap",
   forms: {
     provider: "web3forms",
     accessKey: env.WEB3FORMS_ACCESS_KEY || ""

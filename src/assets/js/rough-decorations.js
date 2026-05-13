@@ -147,23 +147,19 @@
       var capPath = 'M ' + (cx - capW / 2) + ' ' + (capCy + capH / 2 - 1) +
                     ' a ' + (capW / 2) + ' ' + capH + ' 0 0 1 ' + capW + ' 0 z';
       s.appendChild(rc.path(capPath, {
-        stroke: ink, strokeWidth: 1.1,
+        stroke: ink, strokeWidth: 2,
         roughness: 0.5,
         fill: filled ? fill : 'none',
-        fillStyle: filled ? 'solid' : 'hachure',
-        fillWeight: 1.2,
-        hachureGap: 3
+        fillStyle: 'solid'
       }));
       // Stem (small rounded rect)
       var stemW = size * 0.42;
       var stemH = size * 0.36;
       s.appendChild(rc.rectangle(cx - stemW / 2, capCy + capH / 2 - 2, stemW, stemH, {
-        stroke: ink, strokeWidth: 1.1,
+        stroke: ink, strokeWidth: 2,
         roughness: 0.5,
         fill: filled ? colorFor('olive') : 'none',
-        fillStyle: 'hachure',
-        fillWeight: 1,
-        hachureGap: 3
+        fillStyle: 'solid'
       }));
       // Two cream cap spots, but only on filled mushrooms
       if (filled) {

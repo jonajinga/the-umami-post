@@ -56,6 +56,26 @@ isReadingPage: true
       &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
       {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}">{{ updated | readableDate }}</a>{% endif %}
     </p>
+
+    {# Recipe-level actions sit immediately under the byline so the
+       cook can hit Print / Cook mode / wake lock the moment they
+       decide to make the dish. #}
+    <div class="recipe-actions">
+      <a class="recipe-actions__btn" href="{{ page.url }}print/?auto=1" data-rough="frame" data-rough-color="ink" data-umami-event="recipe-print">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span>Print recipe</span>
+      </a>
+      <a class="recipe-actions__btn" href="?cook=1" data-rough="frame" data-rough-color="accent" data-umami-event="recipe-cook-mode">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v8M5 10h14l-1 12H6L5 10z"/></svg>
+        <span>Cook mode</span>
+      </a>
+      <button type="button" class="wake-switch" data-wake-lock-toggle aria-pressed="false" aria-label="Keep screen awake" data-umami-event="recipe-wake-lock">
+        <span class="wake-switch__track" aria-hidden="true">
+          <span class="wake-switch__thumb"></span>
+        </span>
+        <span class="wake-switch__label">Keep screen awake</span>
+      </button>
+    </div>
   </header>
 
   {# Headnote — full-width prose row directly beneath the hero. This
@@ -90,10 +110,10 @@ isReadingPage: true
     </section>
   </div>
 
-  {# Footer row — Cook's notes + Source + Nutrition below the two-
-     column body so the cook only reaches for them after the recipe
-     is done. #}
-  {% if notes or source or nutrition %}
+  {# Footer row — Cook's notes + Make-Ahead + Source + Nutrition
+     below the two-column body so the cook only reaches for them
+     after the recipe is done. #}
+  {% if notes or makeAhead or source or nutrition %}
   <section class="recipe-footer">
     {% if notes %}
     <div class="recipe-notes" data-rough="frame" data-rough-color="accent">
@@ -102,25 +122,21 @@ isReadingPage: true
     </div>
     {% endif %}
 
+    {% if makeAhead %}
+    <div class="recipe-notes recipe-notes--makeahead" data-rough="frame" data-rough-color="paprika">
+      <h2>Make-ahead &amp; storage</h2>
+      {{ makeAhead | safe }}
+    </div>
+    {% endif %}
+
     {% if source %}
-    <div class="recipe-notes recipe-notes--source" data-rough="frame" data-rough-color="ink">
+    <div class="recipe-notes recipe-notes--source" data-rough="frame" data-rough-color="olive">
       <h2>Source</h2>
       <p>{{ source | safe }}</p>
     </div>
     {% endif %}
 
-    {% if nutrition %}
-    <div class="recipe-notes" data-rough="frame" data-rough-color="olive">
-      <h2>Nutrition (per serving)</h2>
-      <p>
-        {% if nutrition.calories %}<strong>Calories:</strong> {{ nutrition.calories }}&nbsp;&middot;&nbsp;{% endif %}
-        {% if nutrition.protein %}<strong>Protein:</strong> {{ nutrition.protein }}&nbsp;&middot;&nbsp;{% endif %}
-        {% if nutrition.carbs %}<strong>Carbs:</strong> {{ nutrition.carbs }}&nbsp;&middot;&nbsp;{% endif %}
-        {% if nutrition.fat %}<strong>Fat:</strong> {{ nutrition.fat }}{% endif %}
-      </p>
-      <p style="font-size: var(--text-xs); color: var(--color-ink-faint); margin-top: var(--space-2);">Estimated. Actual values vary with substitutions.</p>
-    </div>
-    {% endif %}
+    {% include "partials/nutrition-label.njk" %}
   </section>
   {% endif %}
 
@@ -153,5 +169,6 @@ isReadingPage: true
 <script src="/assets/js/serving-scaler.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/ingredient-checklist.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/cooking-mode.js?v={{ buildTime }}" defer></script>
+<script src="/assets/js/wake-lock.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
 {% endblock %}

@@ -57,6 +57,7 @@ eleventyComputed:
   <dl class="rp__meta">
     {% if r.data.prepTime %}<div><dt>Prep</dt><dd>{{ r.data.prepTime | duration }}</dd></div>{% endif %}
     {% if r.data.cookTime %}<div><dt>Cook</dt><dd>{{ r.data.cookTime | duration }}</dd></div>{% endif %}
+    {% if r.data.coolTime %}<div><dt>Cool</dt><dd>{{ r.data.coolTime | duration }}</dd></div>{% endif %}
     {% if r.data.totalTime %}<div><dt>Total</dt><dd>{{ r.data.totalTime | duration }}</dd></div>{% endif %}
     {% if r.data.yield %}<div><dt>Makes</dt><dd>{{ r.data.yield }}</dd></div>{% endif %}
     {% if r.data.difficulty %}<div><dt>Difficulty</dt><dd>{{ r.data.difficulty }}/5</dd></div>{% endif %}
@@ -120,14 +121,23 @@ eleventyComputed:
   </section>
   {% endif %}
 
+  {% if r.data.makeAhead %}
+  <section class="rp__notes">
+    <h2>Make-ahead &amp; storage</h2>
+    {{ r.data.makeAhead | safe }}
+  </section>
+  {% endif %}
+
   {% if r.data.nutrition %}
+  {% set fat = r.data.nutrition.totalFat or r.data.nutrition.fat %}
+  {% set carbs = r.data.nutrition.totalCarbs or r.data.nutrition.carbs %}
   <section class="rp__nutrition">
     <h2>Nutrition (per serving)</h2>
     <p>
       {% if r.data.nutrition.calories %}<strong>Calories:</strong> {{ r.data.nutrition.calories }} &middot; {% endif %}
       {% if r.data.nutrition.protein %}<strong>Protein:</strong> {{ r.data.nutrition.protein }} &middot; {% endif %}
-      {% if r.data.nutrition.carbs %}<strong>Carbs:</strong> {{ r.data.nutrition.carbs }} &middot; {% endif %}
-      {% if r.data.nutrition.fat %}<strong>Fat:</strong> {{ r.data.nutrition.fat }}{% endif %}
+      {% if carbs %}<strong>Carbs:</strong> {{ carbs }} &middot; {% endif %}
+      {% if fat %}<strong>Fat:</strong> {{ fat }}{% endif %}
     </p>
     <p class="rp__nutrition-fineprint">Estimated. Actual values vary with substitutions.</p>
   </section>
