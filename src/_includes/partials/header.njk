@@ -30,7 +30,7 @@
         </a>
         {% endif %}
       </div>
-      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home">
+      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough="underline" data-rough-color="accent">
         {{ site.title }}
       </a>
       <button
@@ -325,7 +325,7 @@
               href="{{ item.url }}"
               {% if hasDropdown %}id="nav-{{ item.key }}" aria-haspopup="true" aria-expanded="false"{% endif %}
               {% if page.url == item.url %}aria-current="page"{% endif %}>
-              {{ item.label }}
+              <span data-rough="underline" data-rough-color="accent">{{ item.label }}</span>
             </a>
           </li>
           {% endfor %}
@@ -344,7 +344,7 @@
           <div class="nav-mega">
             {% for col in item.submenu %}
             <div class="nav-mega__col">
-              <p class="nav-mega__heading">{{ col.heading }}</p>
+              <p class="nav-mega__heading"><span data-rough="underline" data-rough-color="accent">{{ col.heading }}</span></p>
               {% for link in col.links %}
               <a href="{{ link.url }}" class="nav-mega__link">
                 <span class="nav-mega__title">{{ link.title }}</span>
@@ -357,7 +357,7 @@
           <div class="nav-mega">
             {% for col in megaMenu %}
             <div class="nav-mega__col">
-              <p class="nav-mega__heading">{{ col.heading }}</p>
+              <p class="nav-mega__heading"><span data-rough="underline" data-rough-color="accent">{{ col.heading }}</span></p>
               {% for link in col.links %}
               <a href="{{ link.url }}" class="nav-mega__link">
                 <span class="nav-mega__title">{{ link.title }}</span>
