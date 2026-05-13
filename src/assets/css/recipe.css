@@ -190,6 +190,9 @@
   line-height: var(--leading-snug);
 }
 .recipe-meta-bar__tags {
+  /* Span both grid columns so the chip row reads as the full-
+   * width footer of the overview card, not as a third column. */
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
