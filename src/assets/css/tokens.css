@@ -40,20 +40,10 @@
   --color-bookshelf:      #7A5232;   /* walnut */
   --color-glossary:       #3D5A47;   /* basil */
 
-  /* -- Typography: Families -------------------------------
-   * Hand-drawn family to match the rough.js sketched frames.
-   *   Caveat       — masthead + display headlines (warm script,
-   *                  big sizes only; never set as body)
-   *   Lora         — body prose (humanist serif, comfortable
-   *                  for long reads; reliable across weights)
-   *   Patrick Hand — UI labels, nav, captions, meta (legible
-   *                  handwritten sans — replaces Inter)
-   * Each falls back through a system stack so the page still
-   * reads if Bunny is unreachable. */
-  --font-masthead:   'Caveat', 'Patrick Hand', 'Comic Sans MS', cursive;
-  --font-headline:   'Caveat', 'Patrick Hand', 'Comic Sans MS', cursive;
-  --font-body:       'Lora', Georgia, 'Iowan Old Style', serif;
-  --font-ui:         'Patrick Hand', 'Caveat', system-ui, sans-serif;
+  --font-masthead:   'Playfair Display', Georgia, serif;
+  --font-headline:   'Playfair Display', Georgia, serif;
+  --font-body:       'Source Serif 4', Georgia, serif;
+  --font-ui:         'Inter', system-ui, sans-serif;
 
   /* -- Typography: Scale (Major Third -- 1.25) ------------ */
   --text-xs:    0.75rem;
