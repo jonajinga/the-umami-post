@@ -1,0 +1,164 @@
+---
+pagination:
+  data: collections.recipes
+  size: 1
+  alias: r
+  addAllPagesToCollections: false
+permalink: "/recipes/{{ r.fileSlug }}/print/"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ r.data.title }} — Print"
+  description: "Printable view of {{ r.data.title }}."
+  noindex: true
+---
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ r.data.title }} — {{ site.title }}</title>
+  <link rel="canonical" href="{{ site.url }}{{ r.url }}">
+  <link rel="stylesheet" href="/assets/css/main.css?v={{ buildTime }}">
+  <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+  <link rel="stylesheet" href="{{ site.fontsUrl }}">
+</head>
+<body class="recipe-print">
+
+<header class="rp__masthead">
+  <a href="/" class="rp__brand">
+    <img src="/assets/favicon.svg" alt="" width="24" height="24" aria-hidden="true">
+    <span>{{ site.title }}</span>
+  </a>
+  <p class="rp__source">{{ site.url }}{{ r.url }}</p>
+</header>
+
+<article class="rp__article">
+
+  <header class="rp__header">
+    <p class="rp__eyebrow">
+      Recipe{% if r.data.course %} &middot; {{ r.data.course }}{% endif %}{% if r.data.cuisine %} &middot; {{ r.data.cuisine }}{% endif %}
+    </p>
+    <h1 class="rp__title">{{ r.data.title }}</h1>
+    {% if r.data.dek %}<p class="rp__dek">{{ r.data.dek }}</p>{% endif %}
+    <p class="rp__byline">
+      {% if r.data.author %}By {{ authors[r.data.author].name or r.data.author }}{% endif %}
+      &middot; {{ r.date | readableDate }}
+    </p>
+  </header>
+
+  {% if r.data.hero %}
+  <figure class="rp__photo">
+    <img src="{{ r.data.hero }}" alt="{{ r.data.heroAlt or r.data.title }}">
+  </figure>
+  {% endif %}
+
+  {# Meta strip: prep / cook / total / yield / difficulty #}
+  <dl class="rp__meta">
+    {% if r.data.prepTime %}<div><dt>Prep</dt><dd>{{ r.data.prepTime | duration }}</dd></div>{% endif %}
+    {% if r.data.cookTime %}<div><dt>Cook</dt><dd>{{ r.data.cookTime | duration }}</dd></div>{% endif %}
+    {% if r.data.totalTime %}<div><dt>Total</dt><dd>{{ r.data.totalTime | duration }}</dd></div>{% endif %}
+    {% if r.data.yield %}<div><dt>Makes</dt><dd>{{ r.data.yield }}</dd></div>{% endif %}
+    {% if r.data.difficulty %}<div><dt>Difficulty</dt><dd>{{ r.data.difficulty }}/5</dd></div>{% endif %}
+  </dl>
+
+  {# Headnote — the long-form prose that sits above ingredients
+     on the regular page; valuable context for the cook reading
+     the printed copy. #}
+  {% if r.templateContent and r.templateContent.length > 0 %}
+  <section class="rp__headnote">
+    {{ r.templateContent | safe }}
+  </section>
+  {% endif %}
+
+  <div class="rp__columns">
+
+    <section class="rp__ingredients">
+      <h2>Ingredients</h2>
+      {% if r.data.ingredients and r.data.ingredients.length %}
+      <ul>
+        {% set lastGroup = "" %}
+        {% for ing in r.data.ingredients %}
+          {% if ing.group and ing.group != lastGroup %}
+          <li class="rp__group">{{ ing.group }}</li>
+          {% set lastGroup = ing.group %}
+          {% endif %}
+          <li>
+            {% if ing.amount %}<strong>{{ ing.amount }}</strong>{% endif %}
+            {% if ing.unit %}{{ ing.unit }}{% endif %}
+            {{ ing.name }}{% if ing.prep %}, <em>{{ ing.prep }}</em>{% endif %}{% if ing.optional %} <em>(optional)</em>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if r.data.equipment and r.data.equipment.length %}
+      <h2 class="rp__equipment-heading">Equipment</h2>
+      <ul class="rp__equipment">
+        {% for tool in r.data.equipment %}<li>{{ tool }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+
+    <section class="rp__instructions">
+      <h2>Directions</h2>
+      {% if r.data.instructions and r.data.instructions.length %}
+      <ol>
+        {% for s in r.data.instructions %}
+        <li>{{ s.body | safe if s.body else s }}</li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+    </section>
+
+  </div>
+
+  {% if r.data.notes %}
+  <section class="rp__notes">
+    <h2>Cook's notes</h2>
+    {{ r.data.notes | safe }}
+  </section>
+  {% endif %}
+
+  {% if r.data.nutrition %}
+  <section class="rp__nutrition">
+    <h2>Nutrition (per serving)</h2>
+    <p>
+      {% if r.data.nutrition.calories %}<strong>Calories:</strong> {{ r.data.nutrition.calories }} &middot; {% endif %}
+      {% if r.data.nutrition.protein %}<strong>Protein:</strong> {{ r.data.nutrition.protein }} &middot; {% endif %}
+      {% if r.data.nutrition.carbs %}<strong>Carbs:</strong> {{ r.data.nutrition.carbs }} &middot; {% endif %}
+      {% if r.data.nutrition.fat %}<strong>Fat:</strong> {{ r.data.nutrition.fat }}{% endif %}
+    </p>
+    <p class="rp__nutrition-fineprint">Estimated. Actual values vary with substitutions.</p>
+  </section>
+  {% endif %}
+
+  {% if r.data.source %}
+  <p class="rp__source-line"><strong>Source:</strong> {{ r.data.source | safe }}</p>
+  {% endif %}
+
+  <footer class="rp__footer">
+    <p>Originally published at <a href="{{ site.url }}{{ r.url }}">{{ site.url }}{{ r.url }}</a></p>
+    <p>&copy; {{ currentYear }} {{ site.title }}. Articles licensed under <a href="{{ site.url }}/license/">CC BY-NC-ND 4.0</a>.</p>
+  </footer>
+
+</article>
+
+<div class="rp__actions no-print">
+  <button type="button" onclick="window.print()">Print this recipe</button>
+  <a href="{{ r.url }}">&larr; Back to the recipe</a>
+</div>
+
+<script>
+// Auto-trigger the print dialog on first load when ?auto=1 is passed.
+// Keeps the page useful as both a clean-screen view and a one-tap
+// print target.
+(function () {
+  if (location.search.indexOf('auto=1') !== -1) {
+    setTimeout(function () { window.print(); }, 200);
+  }
+})();
+</script>
+
+</body>
+</html>

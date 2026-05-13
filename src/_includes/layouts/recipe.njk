@@ -126,6 +126,13 @@ isReadingPage: true
 
   <button type="button" class="cooking-mode__exit" onclick="document.body.classList.remove('cooking-mode');history.pushState({},'',location.pathname);">Exit cooking mode</button>
 
+  {# Dedicated printable view -- mirrors Serious Eats' ?print URL.
+     Clean single page, no chrome, page-break tuned. Auto-fires the
+     print dialog when arriving via ?auto=1. #}
+  <p class="recipe-print-link">
+    <a href="{{ page.url }}print/?auto=1" data-umami-event="recipe-print">Print this recipe &rarr;</a>
+  </p>
+
 </article>
 
 <div class="container" style="max-width: var(--max-width-prose); margin: var(--space-12) auto 0; padding: 0 var(--gutter);">
