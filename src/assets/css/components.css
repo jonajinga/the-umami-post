@@ -193,15 +193,20 @@
 .masthead__icon-btn {
   background: none;
   border: none;
-  color: var(--color-ink-faint);
+  color: var(--color-ink);
   cursor: pointer;
-  padding: 4px;
-  display: flex;
+  /* Equal square footprint for every masthead icon button so the
+   * rough.js frames render at matching dimensions across the row. */
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   transition: color var(--transition-fast);
   line-height: 1;
+  position: relative;
 }
 
 .masthead__icon-btn:hover {

@@ -7,6 +7,7 @@
     "links": [
       { "label": "Recipes",         "url": "/recipes/" },
       { "label": "Techniques",      "url": "/techniques/" },
+      { "label": "How-Tos",         "url": "/how-tos/" },
       { "label": "Seasonal",        "url": "/seasonal/" },
       { "label": "Ingredients",     "url": "/ingredients/" },
       { "label": "Cooking Glossary","url": "/glossary/" }
@@ -101,8 +102,9 @@
       { "label": "Pitch a story",     "url": "/submit/story/" },
       { "label": "Pitch a technique", "url": "/submit/technique/" },
       { "label": "Pitch a review",    "url": "/submit/review/" },
+      { "label": "Share a cooking tip", "url": "/submit/cooking-tip/" },
+      { "label": "Write a Cook's letter", "url": "/letters/submit/" },
       { "label": "Volunteer",         "url": "/volunteer/" },
-      { "label": "Tips & Letters",    "url": "/tips/" },
       { "label": "Republish",         "url": "/license/" }
     ]
   },

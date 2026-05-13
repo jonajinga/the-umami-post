@@ -1,0 +1,70 @@
+---
+layout: base
+title: Share a cooking tip
+description: A trick, a shortcut, a one-line lesson you learned at the stove. Submit it. We publish the best ones, attributed to you.
+permalink: /submit/cooking-tip/
+---
+
+<div class="container" style="max-width: var(--max-width-prose); margin: 0 auto; padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Contribute</span>
+    <h1 class="recipe-hero__title">Share a cooking tip</h1>
+    <p class="recipe-hero__dek">
+      A trick, a shortcut, a one-line lesson you learned at the stove. We publish the best ones, attributed to you. Anonymous tips welcome.
+    </p>
+  </header>
+
+  <form class="w3f" action="https://api.web3forms.com/submit" method="POST" novalidate>
+    <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+    <input type="hidden" name="subject" value="Cooking tip submission">
+    <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+    <input type="hidden" name="from_name" value="{{ site.title }} Cooking Tip">
+    <input type="checkbox" name="botcheck" class="w3f__botcheck" tabindex="-1" autocomplete="off">
+
+    <label class="w3f__field">
+      <span class="w3f__label">Your name <span class="w3f__hint">(or leave blank for anonymous)</span></span>
+      <input type="text" name="name" autocomplete="name" class="w3f__input">
+    </label>
+
+    <label class="w3f__field">
+      <span class="w3f__label">Email <span class="w3f__hint">(optional, so we can credit you if we publish)</span></span>
+      <input type="email" name="email" autocomplete="email" class="w3f__input">
+    </label>
+
+    <label class="w3f__field">
+      <span class="w3f__label">What kind of tip?</span>
+      <select name="category" class="w3f__input">
+        <option value="Technique">Technique</option>
+        <option value="Ingredient">Ingredient</option>
+        <option value="Equipment">Equipment</option>
+        <option value="Storage">Storage / make-ahead</option>
+        <option value="Substitution">Substitution</option>
+        <option value="Knife skill">Knife skill</option>
+        <option value="Cleanup">Cleanup</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+
+    <label class="w3f__field">
+      <span class="w3f__label">The tip <span class="w3f__required">*</span></span>
+      <textarea name="tip" rows="6" required placeholder="One paragraph. What's the trick, why does it work, and where did you learn it?" class="w3f__input w3f__textarea"></textarea>
+    </label>
+
+    <label class="w3f__field">
+      <span class="w3f__label">Related recipe or technique <span class="w3f__hint">(optional URL or title)</span></span>
+      <input type="text" name="related" class="w3f__input">
+    </label>
+
+    <div class="w3f__actions">
+      <button type="submit" class="w3f__submit">Submit cooking tip</button>
+    </div>
+
+    <p class="w3f__fineprint">
+      By submitting you grant {{ site.title }} the right to publish the tip with attribution (or as Anonymous if you prefer). We may edit for length and clarity.
+    </p>
+  </form>
+
+</div>
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

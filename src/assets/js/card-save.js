@@ -66,6 +66,33 @@
         toggle(btn);
       });
     });
+
+    // Whole-card click target: any element with data-card-link
+    // navigates to its href when the user clicks anywhere on the
+    // card EXCEPT a nested interactive element (anchor, button,
+    // input, [role=button]). Cursor + Enter/Space keyboard support
+    // matches the role="link" pattern emitted by recipe-card.njk.
+    document.querySelectorAll('[data-card-link]').forEach(function (card) {
+      if (card.dataset.cardLinkBound === '1') return;
+      card.dataset.cardLinkBound = '1';
+      card.style.cursor = 'pointer';
+      function go(e) {
+        // Don't navigate when the click landed on an actual
+        // interactive child element — let its own handler run.
+        if (e.target.closest('a, button, input, select, textarea, [role="button"], [role="menuitem"]')) return;
+        var href = card.dataset.cardLink;
+        if (!href) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey) {
+          window.open(href, '_blank', 'noopener');
+        } else {
+          location.assign(href);
+        }
+      }
+      card.addEventListener('click', go);
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); }
+      });
+    });
   }
 
   if (document.readyState === 'loading') {

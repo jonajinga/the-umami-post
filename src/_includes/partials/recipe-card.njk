@@ -1,7 +1,12 @@
-{# Recipe card. Photo on top with a save heart in the corner;
-   section eyebrow (clickable to topic), title, author byline
-   (clickable to author page), and mushroom difficulty rating. #}
+{# Recipe card. The whole card is one click target — data-card-link
+   on the article + card-save.js's "navigate to card link unless a
+   nested control was clicked" handler. Inside the card the eyebrow,
+   title, and byline are individually clickable so screen-reader
+   users have direct links; click events that bubble out of those
+   anchors are not overridden by the card-level click. #}
 <article class="card card--recipe" data-rough="frame" data-rough-color="accent"
+   data-card-link="{{ recipe.url }}"
+   tabindex="0" role="link" aria-label="Open {{ recipe.data.title | escape }}"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
   {# Save-to-reading-list lives at the top-right of every card —
      above the photo if there is one, floating over the corner of
