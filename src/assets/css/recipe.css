@@ -145,45 +145,56 @@
 }
 
 .serving-scaler {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
   margin: 0 0 var(--space-5);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   background: var(--color-bg-alt);
   border: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-sm);
 }
-.serving-scaler__multipliers,
+.serving-scaler__multipliers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
 .unit-toggle {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 4px;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
 }
 .serving-scaler__label {
   color: var(--color-ink-faint);
-  font-size: var(--text-xs);
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-right: var(--space-2);
+  letter-spacing: 0.12em;
+  margin-right: var(--space-3);
   flex-shrink: 0;
-  min-width: 3rem;
+  min-width: 3.25rem;
 }
 .serving-scaler__btn,
 .unit-toggle__btn {
   font-family: var(--font-ui);
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-weight: 600;
   background: var(--color-bg);
   color: var(--color-ink);
   border: 1px solid var(--color-rule);
-  padding: 6px 12px;
-  cursor: pointer;
+  padding: 0 12px;
+  height: 36px;
   min-width: 44px;
-  min-height: 44px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 .serving-scaler__btn:hover,
 .unit-toggle__btn:hover {
@@ -198,18 +209,19 @@
 }
 .serving-scaler__custom-wrap {
   display: inline-flex;
-  align-items: stretch;
+  align-items: center;
   margin-left: var(--space-2);
 }
 .serving-scaler__custom {
   font-family: var(--font-ui);
   font-size: var(--text-sm);
-  width: 5rem;
-  padding: 6px 10px;
+  width: 4rem;
+  height: 36px;
+  padding: 0 8px;
   background: var(--color-bg);
   color: var(--color-ink);
   border: 1px solid var(--color-rule);
-  min-height: 44px;
+  text-align: center;
 }
 .serving-scaler__custom:focus {
   border-color: var(--color-accent);

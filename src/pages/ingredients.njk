@@ -14,11 +14,11 @@ eleventyExcludeFromCollections: true
     <p class="recipe-hero__dek">Pick an ingredient. See every recipe that uses it.</p>
   </header>
 
-  {% if ingredients.length > 0 %}
+  {% if ingredientIndex.length > 0 %}
   <section style="margin-top: var(--space-8);">
-    <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-muted); margin: 0 0 var(--space-6);">{{ ingredients.length }} unique ingredients across {{ collections.recipes.length }} recipes.</p>
+    <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-muted); margin: 0 0 var(--space-6);">{{ ingredientIndex.length }} unique ingredients across {{ collections.recipes.length }} recipes.</p>
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:var(--space-3);grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
-      {% for ing in ingredients %}
+      {% for ing in ingredientIndex %}
       <li style="padding: var(--space-3); border: 1px solid var(--color-rule); font-family: var(--font-ui); font-size: var(--text-sm); display:flex; justify-content:space-between; align-items:baseline;">
         <span style="font-weight:600;">{{ ing.name }}</span>
         <span style="color:var(--color-ink-faint);">{{ ing.recipes.length }}</span>
