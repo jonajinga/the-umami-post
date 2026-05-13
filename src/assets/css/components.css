@@ -19,7 +19,7 @@
   max-height: 28px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0;
@@ -32,7 +32,9 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  /* Left-aligned to the container's gutter — matches where the
+   * hamburger toggle sits in the masthead row above. */
+  justify-content: flex-start;
   list-style: none;
   padding: 0 var(--gutter);
   line-height: 1;
@@ -46,6 +48,15 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   width: 100%;
+}
+/* Eyebrow chip crumbs (course / cuisine / type) get a slightly
+ * lighter visual weight so they read as tags appended to the
+ * navigation crumbs rather than navigation themselves. */
+.breadcrumbs-bar__item--chip {
+  color: var(--color-accent);
+}
+.breadcrumbs-bar__item--chip .breadcrumbs-bar__link {
+  color: var(--color-accent);
 }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
 .breadcrumbs-bar__item {

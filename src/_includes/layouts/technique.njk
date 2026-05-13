@@ -47,9 +47,6 @@ isReadingPage: true
 <article class="recipe container" data-pagefind-body>
 
   <header class="recipe-hero" data-meta-collapsed="false">
-    <span class="recipe-hero__eyebrow">
-      <a href="/techniques/" class="recipe-hero__eyebrow-link">Technique</a>{% if subsection %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ subsection | slugify }}/" class="recipe-hero__eyebrow-link">{{ subsection }}</a>{% endif %}
-    </span>
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
