@@ -153,6 +153,10 @@
 .masthead__title {
   line-height: 1.1;
   margin: 0;
+  /* Rough.js frame sits around the title; pad so the sketched
+   * stroke clears the letterforms. */
+  padding: 6px 14px;
+  position: relative;
 }
 
 .masthead__lead {
@@ -1665,27 +1669,27 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 .site-nav__item { flex-shrink: 0; }
 
 .site-nav__link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 6px var(--space-3);
-  padding-top: 8px;
-  padding-bottom: calc(var(--space-3) - 4px);
+  /* Larger pill-style padding now that the rough.js frame sits
+   * around each link. Spacing must clear the sketched stroke. */
+  padding: 8px 14px;
+  margin: 4px 2px;
   font-family: var(--font-ui);
   font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-ink-muted);
+  font-weight: 600;
+  color: var(--color-ink);
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  border-bottom: 1px solid transparent;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast);
   white-space: nowrap;
+  position: relative;
 }
 
 .site-nav__link:hover,
 .site-nav__link[aria-current="page"] {
-  color: var(--color-ink);
-  border-bottom-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* ── Section dropdowns — page-width, unified ────────────────── */

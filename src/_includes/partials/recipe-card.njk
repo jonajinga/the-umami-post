@@ -3,15 +3,25 @@
    (clickable to author page), and mushroom difficulty rating. #}
 <article class="card card--recipe" data-rough="frame" data-rough-color="accent"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
+  {# Save-to-reading-list lives at the top-right of every card —
+     above the photo if there is one, floating over the corner of
+     the body otherwise. Wired by card-save.js to the shared
+     `umami-reading-list` localStorage key. #}
+  <button type="button" class="card__save" aria-label="Save {{ recipe.data.title | escape }} to your reading list"
+    data-url="{{ recipe.url }}"
+    data-title="{{ recipe.data.title | escape }}"
+    data-section="Recipes"
+    {% if recipe.data.date %}data-date="{{ recipe.data.date | htmlDateString }}"{% endif %}
+    aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+    </svg>
+  </button>
   {% if recipe.data.hero %}
   <div class="card__photo">
     <a href="{{ recipe.url }}" aria-label="{{ recipe.data.title | escape }}">
       <img src="{{ recipe.data.hero }}" alt="{{ recipe.data.heroAlt or recipe.data.title }}" loading="lazy" decoding="async">
     </a>
-    <button type="button" class="card__save" aria-label="Save {{ recipe.data.title | escape }} to your reading list"
-      onclick="event.preventDefault();event.stopPropagation();this.classList.toggle('is-saved');">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-    </button>
   </div>
   {% endif %}
   <div class="card__body">

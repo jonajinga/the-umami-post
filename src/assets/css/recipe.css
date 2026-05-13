@@ -439,10 +439,11 @@ select option {
   z-index: 2;
   background: transparent;
   border: 0;
-  /* Inactive label sits on the cream half of the track; use full
-   * ink for legibility, not muted (the muted brown was too faint
-   * against the cream and the user couldn't see Metric). */
-  color: var(--color-ink);
+  /* Default = inactive button; lives on the cream half of the
+   * track. Force full ink with !important so any ancestor color
+   * (link colour, theme override) doesn't bleed through and make
+   * the label invisible. */
+  color: var(--color-ink) !important;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -453,11 +454,11 @@ select option {
   transition: color var(--transition-fast);
   white-space: nowrap;
 }
-.unit-switch__btn:hover { color: var(--color-accent); }
-/* Active = the button covered by the thumb */
+/* Active = the button covered by the saffron thumb. Cream label
+ * on saffron fill reads cleanly. */
 .unit-switch[data-active="us"]     .unit-switch__btn[data-target-unit="us"],
 .unit-switch[data-active="metric"] .unit-switch__btn[data-target-unit="metric"] {
-  color: var(--color-bg);
+  color: var(--color-bg) !important;
 }
 /* The rough.js frame SVG is appended last; make sure it sits
  * BEHIND the thumb + buttons. */

@@ -30,7 +30,7 @@
         </a>
         {% endif %}
       </div>
-      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough-skip-underline>
+      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough-skip-underline data-rough="frame" data-rough-color="accent">
         {{ site.title }}
       </a>
       <button
@@ -323,6 +323,7 @@
             <a
               class="site-nav__link"
               href="{{ item.url }}"
+              data-rough="frame" data-rough-color="ink"
               {% if hasDropdown %}id="nav-{{ item.key }}" aria-haspopup="true" aria-expanded="false"{% endif %}
               {% if page.url == item.url %}aria-current="page"{% endif %}>
               {{ item.label }}

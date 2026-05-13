@@ -358,8 +358,14 @@
     var hero = document.querySelector('.recipe-hero');
     var btn  = document.getElementById('ann-info-btn');
     if (!hero) return;
-    var expanded = false;
-    try { expanded = localStorage.getItem(KEY) === 'true'; } catch (e) {}
+    /* Default ON — article details are shown unless the reader
+     * has explicitly collapsed them. localStorage stores 'true'/
+     * 'false'; missing key means we keep them visible. */
+    var expanded = true;
+    try {
+      var v = localStorage.getItem(KEY);
+      if (v === 'false') expanded = false;
+    } catch (e) {}
     hero.setAttribute('data-meta-collapsed', expanded ? 'false' : 'true');
     if (btn) {
       btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');

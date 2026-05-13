@@ -39,7 +39,7 @@ isReadingPage: true
 
 <article class="recipe container" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
 
-  <header class="recipe-hero" data-meta-collapsed="true">
+  <header class="recipe-hero" data-meta-collapsed="false">
     <span class="recipe-hero__eyebrow">
       <a href="/recipes/" class="recipe-hero__eyebrow-link" data-rough="underline" data-rough-color="accent">Recipe</a>{% if course %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ course | slugify }}/" class="recipe-hero__eyebrow-link" data-rough="underline" data-rough-color="accent">{{ course }}</a>{% endif %}{% if cuisine %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ cuisine | slugify }}/" class="recipe-hero__eyebrow-link" data-rough="underline" data-rough-color="accent">{{ cuisine }}</a>{% endif %}
     </span>
