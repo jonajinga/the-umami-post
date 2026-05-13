@@ -291,6 +291,14 @@ module.exports = function (eleventyConfig) {
               "pdf-modal__action",
               "pdf-modal__close",
               "pdf-modal__frame",
+              // Nav dropdown trigger / target IDs -- the IDs are emitted from
+              // a Nunjucks {{ item.key }} so PurgeCSS can't see them as
+              // literal strings in source templates.
+              "nav-recipes", "nav-techniques", "nav-stories", "nav-reviews",
+              "nav-seasonal", "nav-submit", "nav-more",
+              "dropdown-recipes", "dropdown-techniques", "dropdown-stories",
+              "dropdown-reviews", "dropdown-seasonal", "dropdown-submit",
+              "dropdown-more",
             ],
             // ── Keep any rule whose selector contains these patterns ─────────
             deep: [
@@ -298,13 +306,21 @@ module.exports = function (eleventyConfig) {
               /\[data-gs-/,          // global settings (font, bg, spacing…)
               /\[data-focus-mode/,   // reader focus mode
               /\[data-rs-/,          // reading settings
+              /\[data-rough/,        // rough.js decoration hooks (frame, divider, chip, ...)
               /\[data-has-sidenote/, // sidenote presence
               /\[data-page-/,        // page-level metadata attributes
+              /\[data-recipe-/,      // recipe-scaler hooks (data-recipe-scaler, data-recipe-slug)
+              /\[data-base-/,        // ingredient + yield base values consumed by serving-scaler.js
+              /\[data-ingredient-list/,
+              /\[data-target-unit/,  // unit-toggle buttons
+              /\[data-scale/,        // serving-scaler preset multiplier buttons
               /\[aria-/,             // aria state selectors (aria-expanded, aria-current…)
               /\[hidden\]/,
               /\[disabled\]/,
               /:root/,               // CSS custom property declarations
-              /:has\(/,              // :has() compound selectors (bottom-strip stacking, smart-position rules)
+              /:has\(/,              // :has() compound selectors (incl. nav dropdown triggers)
+              /#nav-/,               // section nav link IDs (recipes, techniques, ...)
+              /#dropdown-/,          // matching mega-menu dropdown IDs
             ],
             // ── Keep any rule where the selector string contains these ───────
             greedy: [
