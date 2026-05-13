@@ -1,5 +1,5 @@
 {
-  "layout": "glossary-term",
+  "layout": "layouts/glossary-entry.njk",
   "tags": ["glossary"],
   "permalink": "/glossary/{{ page.fileSlug }}/"
 }
