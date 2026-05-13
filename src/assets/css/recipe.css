@@ -223,21 +223,18 @@
   gap: var(--space-1);
 }
 .recipe-meta-bar__nutrition-group {
+  /* Own row beneath the time chips, separated by a horizontal
+   * accent bar across the top. Full Label button anchors the
+   * far-left edge; macros sit in a row to its right. */
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--space-4);
-  padding-left: var(--space-6);
-  /* Heavier separator bar between the time chips and the
-   * nutrition block — reads as a structural divider, not just
-   * a faint rule. */
-  border-left: 3px solid var(--color-accent);
-  align-self: stretch;
-  flex: 0 1 auto;
+  padding-top: var(--space-4);
+  flex: 1 1 100%;
+  border-top: 3px solid var(--color-accent);
 }
 .recipe-meta-bar__nutrition-group .recipe-meta-bar__nutrition-btn {
-  /* Full Label button anchors the far-left edge of the nutrition
-   * group; macros sit to its right via the stack column. */
   flex: 0 0 auto;
   margin: 0;
 }
@@ -246,14 +243,7 @@
   flex-direction: column;
   gap: var(--space-2);
   min-width: 0;
-}
-@media (max-width: 900px) {
-  .recipe-meta-bar__nutrition-group {
-    flex: 1 1 100%;
-    padding: var(--space-4) 0 0;
-    border-left: 0;
-    border-top: 3px solid var(--color-accent);
-  }
+  flex: 1 1 auto;
 }
 .recipe-meta-bar__nutrition-head {
   display: flex;
