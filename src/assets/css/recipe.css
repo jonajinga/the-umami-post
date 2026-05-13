@@ -27,16 +27,21 @@
 .recipe-hero[data-meta-collapsed="true"] ~ .recipe-meta-bar {
   display: none;
 }
+/* Byline links — rough.js paints the underline via data-rough,
+ * so suppress both the native text-decoration and the dotted
+ * border-bottom we used to fake an underline. Otherwise three
+ * rules stack under each link. */
 .recipe-hero__author,
-.recipe-hero__date {
+.recipe-hero__date,
+.recipe-hero__eyebrow-link {
   color: var(--color-ink-muted);
   text-decoration: none;
-  border-bottom: 1px dotted var(--color-rule);
+  border-bottom: 0;
 }
 .recipe-hero__author:hover,
-.recipe-hero__date:hover {
+.recipe-hero__date:hover,
+.recipe-hero__eyebrow-link:hover {
   color: var(--color-ink);
-  border-bottom-color: var(--color-ink);
 }
 .recipe-hero__eyebrow {
   display: inline-block;
@@ -140,6 +145,53 @@
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-rule);
 }
+
+/* Nutrition group — sits inside the meta bar as its own labelled
+ * cluster so 'Per serving' applies to all four macros at once
+ * rather than repeating on every chip. */
+.recipe-meta-bar__nutrition-group {
+  flex: 1 1 100%;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+}
+.recipe-meta-bar__nutrition-eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-3);
+}
+.recipe-meta-bar__nutrition-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-6) var(--space-8);
+}
+.recipe-meta-bar__nutrition-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  padding: 8px 16px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  cursor: pointer;
+  position: relative;
+  min-height: 36px;
+  transition: color var(--transition-fast);
+}
+.recipe-meta-bar__nutrition-btn:hover { color: var(--color-accent); }
+.recipe-meta-bar__nutrition-btn svg,
+.recipe-meta-bar__nutrition-btn span { position: relative; z-index: 1; }
 a.recipe-meta-bar__tag,
 .recipe-meta-bar__tag {
   display: inline-flex;
@@ -174,6 +226,12 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
 [data-rough="frame"] {
   border: 0 !important;
   position: relative;
+}
+/* Same idea for rough underlines — strip the native text-decoration
+ * so the hand-drawn line stands alone. */
+[data-rough="underline"] {
+  text-decoration: none !important;
+  border-bottom: 0 !important;
 }
 
 /* form-decorations.js wraps every text-ish control in a .rough-field

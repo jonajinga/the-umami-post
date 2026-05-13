@@ -15,12 +15,12 @@
         {# Social / RSS row #}
         <ul class="site-footer__social" aria-label="Follow us">
           {% if site.social.rss %}
-          <li><a data-rough="frame" data-rough-color="ink" href="{{ site.social.rss }}" aria-label="RSS feeds — whole site, sections, authors, topics" title="RSS feeds — whole site, sections, authors, topics" data-umami-event="rss-sub" data-umami-event-feed="discovery">
+          <li><a data-rough="frame" data-rough-color="ink" href="{{ site.social.rss }}" aria-label="RSS feeds — whole site, sections, authors, topics" data-tippy-content="RSS feeds — whole site, sections, authors, topics" data-umami-event="rss-sub" data-umami-event-feed="discovery">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
           </a></li>
           {% endif %}
           {% if site.social.twitter %}
-          <li><a data-rough="frame" data-rough-color="ink" href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" title="Twitter / X">
+          <li><a data-rough="frame" data-rough-color="ink" href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" data-tippy-content="Twitter / X">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a></li>
           {% endif %}

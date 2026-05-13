@@ -1970,20 +1970,31 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 /* Strip native text-decoration on every surface that gets the
  * rough-notation hover underline (drawn by nav-hover-underline.js).
  * Otherwise the browser default underline stacks below the rough
- * stroke and reads as a double-rule. */
+ * stroke and reads as a double-rule. !important defeats the
+ * higher-specificity per-component rules in components.css and
+ * article.css. */
 .site-nav__link,
+.site-nav__link:hover,
 .nav-mega__link,
+.nav-mega__link:hover,
 .nav-section-col__link,
+.nav-section-col__link:hover,
 .nav-section-col__article,
 .nav-dropdown__footer-link,
 .nav-dropdown__footer,
 .nav-drawer__link,
 .nav-drawer__latest-row,
+.site-footer a,
+.site-footer a:hover,
 .site-footer__nav a,
+.site-footer__nav a:hover,
+.site-footer__heading a,
+.site-footer__heading a:hover,
 .breadcrumbs-bar__link,
+.breadcrumbs-bar__link:hover,
 [data-rough-hover="underline"],
 .rn-hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .nav-mega__title {

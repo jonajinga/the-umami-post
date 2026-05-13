@@ -43,6 +43,7 @@
       case 'reviews':   return cssVar('--color-reviews', '#8B6914');
       case 'paprika':   return cssVar('--color-news', '#B6431E');
       case 'plum':      return cssVar('--color-opinion', '#7A3954');
+      case 'yellow':    return '#E8C547';
       default:          return cssVar('--color-ink-muted', '#4A382C');
     }
   }
