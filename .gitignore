@@ -10,3 +10,6 @@ Thumbs.db
 # Intermediate WAVs from build-time TTS — only the .mp3 + .json sidecar
 # in src/assets/audio/ are committed.
 *.wav
+_site/
+build.log
+.cache/

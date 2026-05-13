@@ -1,0 +1,80 @@
+---
+layout: base
+title: "Pitch a Technique"
+description: Pitch a technique guide -- a step-by-step how-to that lives on the site and gets linked from every recipe that uses it.
+permalink: /submit/technique/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/submit/">Submit</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Technique</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Pitch a Technique</h1>
+      <p class="page-header__lede">Foundational how-to guides that get linked from every recipe that uses them.</p>
+    </header>
+
+    <div class="article-body">
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin-top: var(--space-6);">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Technique pitch, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Technique Pitch">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="t-name">Name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="t-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="t-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="t-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="t-title">Technique <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="technique" id="t-title" required aria-required="true" placeholder="e.g. Pan-roasting a chicken, fermenting a hot sauce">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="t-level">Cook level it's for</label>
+            <select class="w3f__input" name="cook_level" id="t-level">
+              <option value="">-- choose --</option>
+              <option>Beginner</option><option>Intermediate</option><option>Confident home cook</option>
+            </select>
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="t-photo">Photo capability</label>
+            <select class="w3f__input" name="photo" id="t-photo">
+              <option value="">-- choose --</option>
+              <option>Yes -- I can shoot every step</option>
+              <option>Maybe -- I'll try</option>
+              <option>No -- need help</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="t-prereqs">Prerequisites</label>
+          <input class="w3f__input" type="text" name="prerequisites" id="t-prereqs" placeholder="e.g. A heavy skillet, a thermometer">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="t-outline">Outline <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="t-outline-hint">Step-by-step bullet list. We're looking for the through-line, not the final draft.</span>
+          <textarea class="w3f__textarea" name="outline" id="t-outline" rows="10" required aria-required="true" aria-describedby="t-outline-hint"></textarea>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Pitch</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,105 +1,120 @@
 [
   {
+    "heading": "Cook",
+    "links": [
+      { "title": "Recipes",        "url": "/recipes/" },
+      { "title": "Techniques",     "url": "/techniques/" },
+      { "title": "Seasonal",       "url": "/seasonal/" },
+      { "title": "Ingredients",    "url": "/ingredients/" },
+      { "title": "Cooking Glossary","url": "/glossary/" }
+    ]
+  },
+  {
+    "heading": "Stories",
+    "links": [
+      { "title": "News",           "url": "/news/" },
+      { "title": "Opinion",        "url": "/opinion/" },
+      { "title": "Deep Dives",     "url": "/deep-dives/" },
+      { "title": "Food & Culture", "url": "/food-culture/" },
+      { "title": "Food Science",   "url": "/food-science/" },
+      { "title": "Food History",   "url": "/food-history/" }
+    ]
+  },
+  {
+    "heading": "Reviews",
+    "links": [
+      { "title": "All Reviews",    "url": "/reviews/" },
+      { "title": "Cookbooks",      "url": "/reviews/?s=Cookbooks" },
+      { "title": "Restaurants",    "url": "/reviews/?s=Restaurants" },
+      { "title": "Equipment",      "url": "/reviews/?s=Equipment" },
+      { "title": "Pantry",         "url": "/reviews/?s=Pantry" },
+      { "title": "Cookbook Shelf", "url": "/bookshelf/" }
+    ]
+  },
+  {
     "heading": "Library",
     "links": [
-      { "title": "Library", "url": "/library/" },
-      { "title": "Bookshelf", "url": "/bookshelf/" },
-      { "title": "Quotes", "url": "/quotes/" },
-      { "title": "Glossary", "url": "/glossary/" },
-      { "title": "Documents", "url": "/documents/" }
-    ]
-  },
-  {
-    "heading": "History",
-    "links": [
-      { "title": "Timeline", "url": "/timeline/" },
-      { "title": "Trials of Thought", "url": "/trials/" },
-      { "title": "Thought Experiments", "url": "/thought-experiments/" }
-    ]
-  },
-  {
-    "heading": "Media",
-    "links": [
-      { "title": "Photo Gallery", "url": "/gallery/" },
-      { "title": "Videos", "url": "/videos/" },
-      { "title": "Music", "url": "/music/" },
-      { "title": "Knowledge Map", "url": "/knowledge-map/" },
-      { "title": "Games", "url": "/games/" },
-      { "title": "All projects →", "url": "/projects/" }
+      { "title": "Public-Domain Cookbooks", "url": "/library/" },
+      { "title": "Cookbook Shelf", "url": "/bookshelf/" },
+      { "title": "Quotes",         "url": "/quotes/" },
+      { "title": "Historical Menus","url": "/documents/" },
+      { "title": "Timeline",       "url": "/timeline/" },
+      { "title": "Knowledge Map",  "url": "/knowledge-map/" }
     ]
   },
   {
     "heading": "Reader Tools",
     "links": [
-      { "title": "Search", "url": "/search/" },
-      { "title": "Reading List", "url": "/reading-list/" },
-      { "title": "Notes & Highlights", "url": "/notes/" },
+      { "title": "Search",          "url": "/search/" },
+      { "title": "Reading List",    "url": "/reading-list/" },
+      { "title": "Cook's Notes",    "url": "/notes/" },
       { "title": "Reading History", "url": "/reading-history/" },
-      { "title": "Reading Calendar", "url": "/reading-calendar/" },
-      { "title": "Print Basket", "url": "/print-basket/" },
+      { "title": "Reading Calendar","url": "/reading-calendar/" },
+      { "title": "Print Basket",    "url": "/print-basket/" },
       { "title": "All reader tools →", "url": "/reader-tools/" }
     ]
   },
   {
     "heading": "Discover",
     "links": [
-      { "title": "Archives", "url": "/archives/" },
-      { "title": "Most Read", "url": "/most-read/" },
-      { "title": "Random", "url": "/random/" },
-      { "title": "Newsletter", "url": "/newsletter/" },
-      { "title": "RSS Reader", "url": "/reader/" },
-      { "title": "Feeds", "url": "/feeds/" }
+      { "title": "Archives",       "url": "/archives/" },
+      { "title": "Most Read",      "url": "/most-read/" },
+      { "title": "Random",         "url": "/random/" },
+      { "title": "Newsletter",     "url": "/newsletter/" },
+      { "title": "RSS Reader",     "url": "/reader/" },
+      { "title": "Feeds",          "url": "/feeds/" }
     ]
   },
   {
     "heading": "Community",
     "links": [
-      { "title": "Directory", "url": "/community/" },
-      { "title": "Events", "url": "/events/" },
+      { "title": "Cook Directory",  "url": "/community/" },
+      { "title": "Events",          "url": "/events/" },
+      { "title": "Cook's Letters",  "url": "/cooks-letters/" },
       { "title": "Community Guidelines", "url": "/community-guidelines/" }
     ]
   },
   {
     "heading": "Contribute",
     "links": [
-      { "title": "Submit", "url": "/submit/" },
-      { "title": "Contribute", "url": "/contribute/" },
-      { "title": "Templates", "url": "/templates/" },
-      { "title": "Volunteer", "url": "/volunteer/" },
-      { "title": "Tips & Letters", "url": "/tips/" },
-      { "title": "Survey", "url": "/survey/" },
-      { "title": "Republish", "url": "/license/" }
+      { "title": "Submit a recipe",    "url": "/submit/recipe/" },
+      { "title": "Pitch a story",      "url": "/submit/story/" },
+      { "title": "Pitch a technique",  "url": "/submit/technique/" },
+      { "title": "Pitch a review",     "url": "/submit/review/" },
+      { "title": "Volunteer",          "url": "/volunteer/" },
+      { "title": "Tips & Letters",     "url": "/tips/" },
+      { "title": "Republish",          "url": "/license/" }
     ]
   },
   {
     "heading": "About",
     "links": [
-      { "title": "About Us", "url": "/about/" },
-      { "title": "Start Here", "url": "/start-here/" },
-      { "title": "Masthead", "url": "/masthead/" },
-      { "title": "Contributors", "url": "/contributors/" },
-      { "title": "Contact", "url": "/contact/" }
+      { "title": "About Us",       "url": "/about/" },
+      { "title": "Start Here",     "url": "/start-here/" },
+      { "title": "Masthead",       "url": "/masthead/" },
+      { "title": "Contributors",   "url": "/contributors/" },
+      { "title": "Contact",        "url": "/contact/" }
     ]
   },
   {
     "heading": "Inside",
     "links": [
       { "title": "Editorial Ethics", "url": "/ethics/" },
-      { "title": "Editorial Handbook", "url": "/editorial/" },
-      { "title": "Transparency", "url": "/transparency/" },
-      { "title": "Costs", "url": "/costs/" },
-      { "title": "Changelog", "url": "/changelog/" },
-      { "title": "Features", "url": "/features/" }
+      { "title": "Editorial Handbook","url": "/editorial/" },
+      { "title": "Transparency",     "url": "/transparency/" },
+      { "title": "Costs",            "url": "/costs/" },
+      { "title": "Changelog",        "url": "/changelog/" },
+      { "title": "Features",         "url": "/features/" }
     ]
   },
   {
     "heading": "Build",
     "links": [
-      { "title": "Tech Stack", "url": "/stack/" },
-      { "title": "Style Guide", "url": "/style-guide/" },
-      { "title": "Open Source", "url": "/open-source/" },
-      { "title": "Accessibility", "url": "/accessibility/" },
-      { "title": "Legal", "url": "/legal/" }
+      { "title": "Tech Stack",     "url": "/stack/" },
+      { "title": "Style Guide",    "url": "/style-guide/" },
+      { "title": "Open Source",    "url": "/open-source/" },
+      { "title": "Accessibility",  "url": "/accessibility/" },
+      { "title": "Legal",          "url": "/legal/" }
     ]
   }
 ]

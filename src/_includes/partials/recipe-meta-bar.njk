@@ -1,0 +1,37 @@
+{# Meta bar: time / yield / difficulty / cuisine / diet chips.
+   Expects: prepTime, cookTime, totalTime, yield, course, cuisine,
+   difficulty, diet (array). All optional. #}
+<div class="recipe-meta-bar">
+  {% if totalTime %}
+  <div class="recipe-meta-bar__item">
+    <span class="recipe-meta-bar__label">Total time</span>
+    <span class="recipe-meta-bar__value">{{ totalTime | duration }}</span>
+  </div>
+  {% endif %}
+  {% if prepTime %}
+  <div class="recipe-meta-bar__item">
+    <span class="recipe-meta-bar__label">Prep</span>
+    <span class="recipe-meta-bar__value">{{ prepTime | duration }}</span>
+  </div>
+  {% endif %}
+  {% if cookTime %}
+  <div class="recipe-meta-bar__item">
+    <span class="recipe-meta-bar__label">Cook</span>
+    <span class="recipe-meta-bar__value">{{ cookTime | duration }}</span>
+  </div>
+  {% endif %}
+  {% if yield %}
+  <div class="recipe-meta-bar__item">
+    <span class="recipe-meta-bar__label">Makes</span>
+    <span class="recipe-meta-bar__value">{{ yield }}</span>
+  </div>
+  {% endif %}
+  {% if course or cuisine or difficulty or diet %}
+  <div class="recipe-meta-bar__tags">
+    {% if course %}<span class="recipe-meta-bar__tag">{{ course }}</span>{% endif %}
+    {% if cuisine %}<span class="recipe-meta-bar__tag">{{ cuisine }}</span>{% endif %}
+    {% if difficulty %}<span class="recipe-meta-bar__tag">Difficulty {{ difficulty }}/5</span>{% endif %}
+    {% for d in diet %}<span class="recipe-meta-bar__tag">{{ d }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</div>

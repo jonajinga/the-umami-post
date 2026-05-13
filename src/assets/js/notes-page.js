@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Notes & Highlights page — renders all annotations, highlights,
  * and bookmarks across the site from localStorage.
  */
@@ -25,7 +25,7 @@
   // Fall through to the initial boot at the bottom of this file.
 
 function boot(root) {
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
 
   // ── Scan localStorage for all annotation/bookmark keys ────
   function scanStorage() {

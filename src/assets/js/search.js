@@ -1,5 +1,5 @@
-/**
- * The Freethinking Times — Search
+﻿/**
+ * The Umami Post — Search
  * Loads Pagefind on demand (after first keystroke) and displays
  * results in a keyboard-navigable modal overlay.
  */

@@ -1,0 +1,32 @@
+---
+layout: base
+title: Seasonal
+description: What's in season now, and which recipes will make the most of it.
+permalink: /seasonal/
+eleventyExcludeFromCollections: true
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Cook with the calendar</span>
+    <h1 class="recipe-hero__title">Seasonal</h1>
+    <p class="recipe-hero__dek">What is at the farmers market right now, and which of our recipes will make the most of it.</p>
+  </header>
+
+  {% set allRecipes = collections.recipes | reverse %}
+  {% if allRecipes.length > 0 %}
+  <section style="margin-top: var(--space-8);">
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0 0 var(--space-4); padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-accent);">All recipes</h2>
+    <div class="recipe-grid">
+      {% for recipe in allRecipes %}
+        {% set recipe = recipe %}
+        {% include "partials/recipe-card.njk" %}
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-faint);">No recipes published yet.</p>
+  {% endif %}
+
+</div>

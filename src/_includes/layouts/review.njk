@@ -1,0 +1,80 @@
+---
+layout: layouts/base.njk
+isReadingPage: true
+---
+
+{% block head %}
+{% if tags %}<meta name="news_keywords" content="{{ tags | join(', ') }}">{% endif %}
+{% include "partials/review-jsonld.njk" %}
+{% endblock %}
+
+<div aria-hidden="true" style="display:none">
+  <span data-pagefind-meta="section">Reviews</span>
+  <span data-pagefind-filter="section">reviews</span>
+  {% if reviewType %}<span data-pagefind-filter="reviewType">{{ reviewType }}</span>{% endif %}
+  {% if rating %}<span data-pagefind-filter="rating">{{ rating }}</span>{% endif %}
+  {% if author %}<span data-pagefind-filter="author">{{ authors[author].name or authorName or author }}</span>{% endif %}
+</div>
+
+<article class="recipe container">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Review{% if reviewType %} &middot; {{ reviewType }}{% endif %}</span>
+    <h1 class="recipe-hero__title">{{ title }}</h1>
+    {% if subject and subject != title %}<p class="recipe-hero__dek"><strong>{{ subject }}</strong></p>{% endif %}
+    {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
+    {% if hero %}
+    <figure class="recipe-hero__photo">
+      <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
+      {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+    <p class="recipe-hero__byline">
+      {% if author %}By <a href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      &middot; {{ page.date | readableDate }}
+    </p>
+  </header>
+
+  <div class="recipe-body" style="grid-template-columns: 1fr;">
+    <section class="recipe-body__instructions" style="max-width: var(--max-width-prose); margin: 0 auto;">
+
+      {% if verdict or rating or pros or cons %}
+      <aside class="review-verdict">
+        {% if rating %}
+        <div class="review-verdict__rating">
+          {% set rating = rating %}
+          {% include "partials/star-rating.njk" %}
+        </div>
+        {% endif %}
+        {% if verdict %}
+        <h2>Verdict</h2>
+        <p>{{ verdict }}</p>
+        {% endif %}
+        {% if pros or cons %}
+        <div class="review-proscons">
+          {% if pros %}
+          <div class="review-proscons__pros">
+            <h3>What works</h3>
+            <ul>{% for p in pros %}<li>{{ p }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+          {% if cons %}
+          <div class="review-proscons__cons">
+            <h3>What doesn't</h3>
+            <ul>{% for c in cons %}<li>{{ c }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if price %}<p><strong>Price:</strong> {{ price }}{% if availability %} &middot; {{ availability }}{% endif %}</p>{% endif %}
+      </aside>
+      {% endif %}
+
+      <div class="article-body">
+        {{ content | safe }}
+      </div>
+
+    </section>
+  </div>
+
+</article>

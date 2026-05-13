@@ -1,0 +1,31 @@
+{# Schema.org Review JSON-LD. Renders inside <head> on review pages. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "name": {{ title | dump | safe }},
+  {% if dek %}"description": {{ dek | dump | safe }},{% endif %}
+  "datePublished": {{ (page.date | isoDate) | dump | safe }},
+  "author": {
+    "@type": "Person",
+    "name": {{ (authors[author].name or authorName or "The Umami Post") | dump | safe }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | dump | safe }},
+    "url": {{ site.url | dump | safe }}
+  },
+  {% if rating %}
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": {{ rating }},
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  {% endif %}
+  "itemReviewed": {
+    "@type": {% if reviewType == "Book" %}"Book"{% elif reviewType == "Restaurant" %}"Restaurant"{% elif reviewType == "Product" %}"Product"{% else %}"Thing"{% endif %},
+    "name": {{ (subject or title) | dump | safe }}
+  }
+}
+</script>

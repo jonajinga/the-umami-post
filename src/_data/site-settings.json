@@ -1,66 +1,68 @@
 {
   "founded": 2026,
-  "footerByline": "Freethought writings and resources for the world.",
+  "footerByline": "A community food publication. Free and open source.",
   "gtranslate": true,
   "contactSubjects": [
     "General enquiry",
+    "Recipe submission",
+    "Story pitch",
+    "Technique pitch",
+    "Review pitch",
     "Correction request",
-    "Story tip",
-    "Letter to the editor",
-    "Submission / pitch",
+    "Restaurant tip",
     "Partnership or collaboration",
     "Press enquiry",
-    "Feedback on coverage",
     "Technical issue",
     "Other"
   ],
   "announcement": {
-    "active": true,
+    "active": false,
     "severity": "info",
-    "id": "preview-2026-04-26-knowledge-map",
-    "text": "Sample announcement — the knowledge map is now live, plotting every article by topic and author.",
-    "linkText": "Open the map",
-    "linkUrl": "/knowledge-map/",
+    "id": "umami-2026-launch",
+    "text": "Welcome to The Umami Post -- a community food publication.",
+    "linkText": "Read about us",
+    "linkUrl": "/about/",
     "dismissible": true
   },
   "subscribe": {
     "eyebrow": "Newsletter",
-    "heading": "One article per email.",
-    "body": "New pieces are delivered to your inbox the moment they publish.",
+    "heading": "One recipe per email.",
+    "body": "Fresh recipes, techniques, and stories delivered to your inbox the moment they publish.",
     "notice": "Free. Unsubscribe anytime.",
-    "sidebarBody": "Articles are delivered to your inbox when published.",
+    "sidebarBody": "New work delivered to your inbox when published.",
     "footerHeading": "Subscribe to our newsletter",
-    "footerBody": "New articles are delivered one at a time."
+    "footerBody": "New recipes and stories, one at a time."
   },
-  "author": "The Freethinking Times",
+  "author": "The Umami Post",
   "googleNews": {
-    "followUrl": "https://news.google.com/publications/CAAqJQgKIh9DQklTRVFnTWFnMEtDM1JvWVhSemRHaGxiR2x1ZHcoQVAB",
+    "followUrl": "",
     "publicationId": ""
   },
   "live": {
-    "active": true,
+    "active": false,
     "platform": "youtube",
-    "url": "https://www.youtube.com/@TheFreethinkingTimes",
-    "title": "Sample stream — replace this with your live URL",
-    "subtitle": "Edit site.live in src/_data/site-settings.json to wire a real broadcast"
+    "url": "",
+    "title": "",
+    "subtitle": ""
   },
   "tipping": {
     "kofi": "",
     "bmac": "",
-    "patreon": "."
+    "patreon": ""
   },
   "social": {
     "rss": "/feeds/",
-    "bluesky": "https://bsky.app/profile/jonajinga.bsky.social",
+    "bluesky": "",
     "twitter": "",
-    "mastodon": ""
+    "mastodon": "",
+    "github": "https://github.com/jonajinga/the-umami-post"
   },
-  "tagline": "Freethought writings and resources for the world.",
-  "title": "The Freethinking Times",
+  "tagline": "A community food publication.",
+  "title": "The Umami Post",
   "newsletter": {
     "provider": "buttondown",
-    "username": "thefreethinkingtimes"
+    "username": "theumamipost"
   },
-  "email": "hello@thefreethinkingtimes.com",
-  "description": "Freethought writings and resources for the world."
+  "email": "hello@theumamipost.com",
+  "description": "A community food publication. Tested recipes, technique guides, food journalism, and reviews -- written by cooks, for cooks. Free and open source."
 }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Per-article reading progress tracking.
  *
  * 1. On article pages (pages with an .article-body), tracks the user's scroll
@@ -13,7 +13,7 @@
 (function () {
   'use strict';
 
-  var PREFIX = window.__PREFIX || 'tft';
+  var PREFIX = window.__PREFIX || 'umami';
   var KEY = PREFIX + '-read-pct';
 
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Manual read-state + reading history.
  *
  * Two storage keys, both keyed by article URL:
@@ -24,8 +24,8 @@
 (function () {
   'use strict';
 
-  var PCT_KEY    = 'tft-read-pct';
-  var MANUAL_KEY = 'tft-read-manual';
+  var PCT_KEY    = 'umami-read-pct';
+  var MANUAL_KEY = 'umami-read-manual';
 
   function load(key) { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; } }
   function save(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {} }

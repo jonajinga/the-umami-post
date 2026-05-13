@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+title: Techniques
+description: How to do the things that make cooking work -- knife skills, heat, fermentation, doughs, and the rest.
+permalink: /techniques/
+section: techniques
+eleventyExcludeFromCollections: true
+---
+
+<div aria-hidden="true" style="display:none">
+  <span data-pagefind-meta="section">Techniques</span>
+  <span data-pagefind-filter="section">techniques</span>
+</div>
+
+<header class="recipe-hero container">
+  <span class="recipe-hero__eyebrow">Index</span>
+  <h1 class="recipe-hero__title">Techniques</h1>
+  <p class="recipe-hero__dek">The mechanics behind the recipes. Read one before you cook one.</p>
+</header>
+
+<section class="container" style="margin-top: var(--space-8);">
+  {% set techniquesList = collections.techniques | reverse %}
+  {% if techniquesList.length > 0 %}
+  <div class="recipe-grid">
+    {% for recipe in techniquesList %}
+      {% set recipe = recipe %}
+      {% include "partials/recipe-card.njk" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-faint);">No technique guides published yet. <a href="/submit/technique/" style="color: var(--color-accent);">Pitch one</a>.</p>
+  {% endif %}
+</section>

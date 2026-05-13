@@ -1,46 +1,41 @@
 {
   "tiers": [
-    { "name": "Guest Writer",        "desc": "One-off or occasional pieces. Full editorial support provided." },
-    { "name": "Contributing Writer", "desc": "Regular contributors with an established track record. Byline page and author RSS feed." },
+    { "name": "Guest Contributor", "desc": "One-off or occasional pieces. Full editorial support provided." },
+    { "name": "Contributing Cook", "desc": "Regular contributors with an established track record. Cook profile page and author RSS feed." },
     { "name": "Contributing Editor", "desc": "Section-level editorial input. Helps shape coverage in their area of expertise." }
   ],
   "lookingFor": [
-    "Clear, direct prose, no jargon, no academic obscurantism",
-    "Original thinking, not just summaries of existing debates",
-    "Evidence and sourcing, claims backed by references",
-    "Intellectual honesty, engage the strongest version of opposing arguments",
-    "Relevance to the freethought tradition, broadly construed"
+    "Clear, direct prose -- no jargon, no AI sludge",
+    "Evidence and sourcing -- claims backed by testing or references",
+    "Honest writing -- engage the actual tradeoffs",
+    "Relevance to the cook -- write for someone with a real kitchen and limited time"
   ],
   "topics": [
-    "Church-state separation cases and policy",
-    "History of freethought and secularism",
-    "Philosophy of religion and ethics",
-    "Science communication and scientific literacy",
-    "Religious influence on education, healthcare, and law",
-    "Profiles of freethinkers past and present",
-    "Book reviews and literary criticism",
-    "Personal deconversion narratives (if they illuminate broader themes)"
+    "Recipes you have tested at least three times",
+    "Technique deep-dives (knife skills, heat, fermentation, doughs, sauces)",
+    "Cookbook reviews -- honest takes, not blurbs",
+    "Restaurant reviews -- with disclosure of any conflict",
+    "Food-system reporting (labor, supply chain, policy, climate)",
+    "Food history and food culture essays",
+    "Profiles of cooks, farmers, butchers, fermenters, and other practitioners",
+    "Equipment reviews after a year of real use"
   ],
   "otherWays": [
-    { "label": "Submit a freethought quote",   "url": "/quotes/submit/" },
-    { "label": "Suggest a timeline entry",     "url": "/timeline/submit/" },
-    { "label": "Recommend a book",             "url": "/bookshelf/submit/" },
-    { "label": "Suggest a glossary term",      "url": "/glossary/submit/" },
-    { "label": "Suggest a trial",              "url": "/trials/submit/" },
-    { "label": "Suggest a thought experiment", "url": "/thought-experiments/submit/" },
-    { "label": "Suggest a song",               "url": "/music/submit/" },
-    { "label": "Suggest a playlist",           "url": "/music/playlists/submit/" },
-    { "label": "Submit a photo",               "url": "/gallery/submit/" },
-    { "label": "Suggest a community",          "url": "/community/submit/" },
-    { "label": "Submit an event",              "url": "/events/submit/" }
+    { "label": "Submit a recipe",        "url": "/submit/recipe/" },
+    { "label": "Pitch a story",          "url": "/submit/story/" },
+    { "label": "Pitch a technique",      "url": "/submit/technique/" },
+    { "label": "Pitch a review",         "url": "/submit/review/" },
+    { "label": "Write a Cook's Letter",  "url": "/letters/submit/" },
+    { "label": "Report a correction",    "url": "/corrections/report/" },
+    { "label": "Submit an event",        "url": "/events/submit/" },
+    { "label": "Volunteer to test recipes","url": "/volunteer/" }
   ],
   "writingStyle": [
-    "Write in the first person when appropriate, this is a publication with a voice",
-    "Lead with the argument, not the background",
+    "Write in plain English -- this is a publication for cooks, not academics",
+    "Lead with what the dish or piece actually is",
     "Use short paragraphs and clear topic sentences",
     "Avoid passive voice unless it serves clarity",
-    "Cite sources inline or in footnotes, we use tooltip footnotes, not endnotes",
-    "No clickbait headlines, say what the piece argues",
+    "No clickbait headlines -- say what the piece is",
     "No emoji in headings or body text"
   ]
 }

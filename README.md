@@ -1,8 +1,8 @@
-# The Freethinking Times
+﻿# The Umami Post
 
 Independent journalism. Investigative. Philosophical. Adversarial to power.
 
-[![Build & Validate](https://github.com/jonajinga/the-freethinking-times/actions/workflows/build.yml/badge.svg)](https://github.com/jonajinga/the-freethinking-times/actions/workflows/build.yml)
+[![Build & Validate](https://github.com/jonajinga/the-the-umami-post/actions/workflows/build.yml/badge.svg)](https://github.com/jonajinga/the-the-umami-post/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node >=18](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
 [![Deployed on Cloudflare Pages](https://img.shields.io/badge/deployed-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
@@ -24,8 +24,8 @@ authors — see the note in [LICENSE](LICENSE) if you intend to fork.
 **Prerequisites:** Node.js 18 or higher, npm, git.
 
 ```bash
-git clone https://github.com/jonajinga/the-freethinking-times.git
-cd the-freethinking-times
+git clone https://github.com/jonajinga/the-the-umami-post.git
+cd the-the-umami-post
 npm install
 cp .env.example .env       # fill in values — all optional for local builds
 npm start                  # dev server at http://localhost:8080
@@ -52,9 +52,9 @@ style, and the PR process.
 
 **Path 1 — Decap CMS (recommended if you don't use Git):**
 
-1. Contact [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com)
+1. Contact [hello@theumamipost.com](mailto:hello@theumamipost.com)
    to be added as a contributor (requires a free GitHub account).
-2. Once added, visit [thefreethinkingtimes.com/admin/](https://thefreethinkingtimes.com/admin/)
+2. Once added, visit [theumamipost.com/admin/](https://theumamipost.com/admin/)
    and authenticate with your GitHub account.
 3. All content collections (News, Opinion, Analysis, Glossary, Bookshelf, etc.)
    appear in the left sidebar.
@@ -184,7 +184,7 @@ editorial workflow, corrections process, and how to add new authors.
 │   │   ├── history/
 │   │   ├── letters/
 │   │   └── reviews/
-│   ├── glossary/                 # Freethought vocabulary entries
+│   ├── glossary/                 # Food vocabulary entries
 │   ├── bookshelf/                # Annotated reading list entries
 │   ├── thought-experiments/      # Classic thought experiments
 │   ├── trials/                   # Landmark trials of ideas
@@ -211,7 +211,7 @@ Copy `.env.example` to `.env` and fill in the values you need.
 
 | Variable | Required in prod? | Purpose |
 |---|---|---|
-| `SITE_URL` | Yes | Canonical URL (e.g. `https://thefreethinkingtimes.com`) — used in sitemaps, OG tags, RSS |
+| `SITE_URL` | Yes | Canonical URL (e.g. `https://theumamipost.com`) — used in sitemaps, OG tags, RSS |
 | `SITE_EMAIL` | No | Contact email; falls back to value in `site-settings.json` |
 
 ### Analytics (Umami)

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Article like button (heart).
  *
  * One like per browser per article (idempotent localStorage flag). The first
@@ -13,7 +13,7 @@
 (function () {
   'use strict';
 
-  var KEY = 'tft-likes';
+  var KEY = 'umami-likes';
 
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
   function save(data) { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }

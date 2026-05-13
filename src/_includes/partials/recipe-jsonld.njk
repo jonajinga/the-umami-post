@@ -1,0 +1,43 @@
+{# Schema.org Recipe JSON-LD. Renders inside <head> on recipe pages. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": {{ title | dump | safe }},
+  {% if dek %}"description": {{ dek | dump | safe }},{% endif %}
+  {% if hero %}"image": [{{ (site.url + hero) | dump | safe }}],{% endif %}
+  "datePublished": {{ (page.date | isoDate) | dump | safe }},
+  {% if updated %}"dateModified": {{ (updated | isoDate) | dump | safe }},{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": {{ (authors[author].name or authorName or "The Umami Post") | dump | safe }},
+    {% if author %}"url": {{ (site.url + "/author/" + author + "/") | dump | safe }}{% endif %}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | dump | safe }},
+    "url": {{ site.url | dump | safe }}
+  },
+  {% if prepTime %}"prepTime": {{ prepTime | dump | safe }},{% endif %}
+  {% if cookTime %}"cookTime": {{ cookTime | dump | safe }},{% endif %}
+  {% if totalTime %}"totalTime": {{ totalTime | dump | safe }},{% endif %}
+  {% if yield %}"recipeYield": {{ yield | dump | safe }},{% endif %}
+  {% if course %}"recipeCategory": {{ course | dump | safe }},{% endif %}
+  {% if cuisine %}"recipeCuisine": {{ cuisine | dump | safe }},{% endif %}
+  {% if diet %}"suitableForDiet": [{% for d in diet %}{{ ("https://schema.org/" + d) | dump | safe }}{% if not loop.last %},{% endif %}{% endfor %}],{% endif %}
+  {% if ingredients %}"recipeIngredient": [
+    {%- for ing in ingredients -%}
+    {{ ([ing.amount, ing.unit, ing.name, (ing.prep and (", " + ing.prep)) or ""] | join(" ") | trim) | dump | safe }}{% if not loop.last %},{% endif %}
+    {%- endfor -%}
+  ],{% endif %}
+  {% if instructions %}"recipeInstructions": [
+    {%- for step in instructions -%}
+    {
+      "@type": "HowToStep",
+      "position": {{ loop.index }},
+      "text": {{ step.body | dump | safe }}
+    }{% if not loop.last %},{% endif %}
+    {%- endfor -%}
+  ]{% endif %}
+}
+</script>

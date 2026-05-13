@@ -3,7 +3,22 @@ name: Jon Ajinga
 role: Founding Editor
 title: ""
 location: Colorado
-bio: Jon Ajinga is the founding editor of The Freethinking Times.
+bio: Jon is the founding editor of The Umami Post.
+kitchenStory: |
+  I've been cooking my way through the world's pantries for as long as I've been writing about them. I started The Umami Post because every cook I know has at least one recipe worth saving forever, and the internet is bad at saving recipes forever.
+specialties:
+  - West African
+  - Levantine
+  - American South
+dietaryFocus:
+  - Family-friendly
+  - Make-ahead
+favoriteTools:
+  - Carbon-steel skillet
+  - Cast-iron Dutch oven
+  - Microplane
+certifications: ""
+whereIRL: Colorado Springs
 photo: src/assets/img/authors/jon-ajinga.webp
 social:
   x: https://x.com/jonajinga

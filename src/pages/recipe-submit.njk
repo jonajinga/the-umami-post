@@ -1,0 +1,150 @@
+---
+layout: base
+title: "Submit a Recipe"
+description: Share a recipe you cook and stand behind. We test, edit lightly, credit you in full, and publish under a Creative Commons license.
+permalink: /submit/recipe/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/submit/">Submit</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Recipe</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Submit a Recipe</h1>
+      <p class="page-header__lede">
+        Share something you actually cook. We test it, edit lightly, credit you, and publish under Creative Commons.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <p>Before you submit: please make sure the recipe is your own work, or that you have the right to share it. If it is adapted from another source, include the attribution in the source field.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin-top: var(--space-6);">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Recipe submission, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Recipe Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-name">Your name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="r-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="r-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-title">Recipe title <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="recipe_title" id="r-title" required aria-required="true" placeholder="e.g. Brown-butter cornmeal cake">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-course">Course</label>
+            <select class="w3f__input" name="course" id="r-course">
+              <option value="">-- choose --</option>
+              <option>Breakfast</option><option>Lunch</option><option>Dinner</option>
+              <option>Sides</option><option>Sauces</option><option>Baking</option>
+              <option>Drinks</option><option>Dessert</option><option>Snacks</option>
+              <option>Preserves</option>
+            </select>
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-cuisine">Cuisine</label>
+            <input class="w3f__input" type="text" name="cuisine" id="r-cuisine" placeholder="e.g. Italian, Levantine, West African">
+          </div>
+        </div>
+
+        <fieldset class="w3f__group" style="border:1px solid var(--color-rule);padding:var(--space-3);">
+          <legend class="w3f__label" style="padding:0 var(--space-2);">Diet (check all that apply)</legend>
+          <div class="w3f__checklist">
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Vegan"> Vegan</label>
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Vegetarian"> Vegetarian</label>
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Gluten-free"> Gluten-free</label>
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Dairy-free"> Dairy-free</label>
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Nut-free"> Nut-free</label>
+            <label class="w3f__check"><input type="checkbox" name="diet[]" value="Low-carb"> Low-carb</label>
+          </div>
+        </fieldset>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-prep">Prep time</label>
+            <input class="w3f__input" type="text" name="prep_time" id="r-prep" placeholder="e.g. 20 min">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-cook">Cook time</label>
+            <input class="w3f__input" type="text" name="cook_time" id="r-cook" placeholder="e.g. 45 min">
+          </div>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-yield">Yield</label>
+            <input class="w3f__input" type="text" name="recipe_yield" id="r-yield" placeholder="e.g. Serves 4">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="r-difficulty">Difficulty</label>
+            <select class="w3f__input" name="difficulty" id="r-difficulty">
+              <option value="">-- choose --</option>
+              <option value="1">1 -- weeknight easy</option>
+              <option value="2">2 -- basic technique</option>
+              <option value="3">3 -- some patience</option>
+              <option value="4">4 -- weekend project</option>
+              <option value="5">5 -- ambitious</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-ingredients">Ingredients <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="r-ingredients-hint">One per line. Format: amount | unit | name | prep -- e.g. <code>2 | cups | flour | sifted</code></span>
+          <textarea class="w3f__textarea" name="ingredients" id="r-ingredients" rows="10" required aria-required="true" aria-describedby="r-ingredients-hint"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-instructions">Instructions <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="r-instructions-hint">One step per blank-line block. We'll number them.</span>
+          <textarea class="w3f__textarea" name="instructions" id="r-instructions" rows="14" required aria-required="true" aria-describedby="r-instructions-hint"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-notes">Cook's notes <span class="w3f__optional">(optional)</span></label>
+          <textarea class="w3f__textarea" name="notes" id="r-notes" rows="4" placeholder="Substitutions, make-ahead, what to do when it goes sideways..."></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-source">Source / attribution <span class="w3f__optional">(if adapted)</span></label>
+          <input class="w3f__input" type="text" name="source" id="r-source" placeholder="e.g. Adapted from Marcella Hazan, Essentials of Classic Italian Cooking">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="r-photo">Photo URL <span class="w3f__optional">(optional)</span></label>
+          <input class="w3f__input" type="url" name="photo_url" id="r-photo" placeholder="https://...">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__check">
+            <input type="checkbox" name="consent" required aria-required="true">
+            I have the right to share this recipe and grant The Umami Post a non-exclusive license to publish it under Creative Commons. <span class="w3f__required">*</span>
+          </label>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Recipe</button>
+        <p class="w3f__privacy">We'll reach out if we test the recipe and want to publish it. You'll see the edit before it goes live.</p>
+      </form>
+
+    </div>
+  </div>
+</div>

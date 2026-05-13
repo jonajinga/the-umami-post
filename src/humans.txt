@@ -1,6 +1,6 @@
-/* TEAM */
-Editor & Publisher: The Freethinking Times
-Contact: hello [at] thefreethinkingtimes [dot] com
+﻿/* TEAM */
+Editor & Publisher: The Umami Post
+Contact: hello [at] theumamipost [dot] com
 Location: United States
 
 /* THANKS */

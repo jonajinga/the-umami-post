@@ -49,20 +49,7 @@
   <p class="article-card__dek">{{ article.data.description }}</p>
   {% endif %}
 
-  {# Listen button — its own row so the byline below stays a clean
-     single-line text flow instead of wrapping awkwardly around a
-     30 px pill. #}
-  {% set listenUrl = article.url %}
-  {% set listenTitle = article.data.title %}
-  {% set listenSize = "sm" %}
-  {% set _aud = audioManifest[listenUrl] %}
-  {% if _aud %}
-  <div class="article-card__listen">
-    {% include "partials/listen-button.njk" %}
-  </div>
-  {% endif %}
-
-  {# Byline — each segment is its own span so the CSS can drop a
+  {# Byline -- each segment is its own span so the CSS can drop a
      hairline rule between them in place of dot separators. #}
   <p class="article-card__byline">
     {% if article.data.author %}

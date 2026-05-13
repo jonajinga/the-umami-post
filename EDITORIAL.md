@@ -1,6 +1,6 @@
-# Editorial Standards — The Freethinking Times
+﻿# Editorial Standards — The Umami Post
 
-This document is the editorial constitution of The Freethinking Times. It applies to
+This document is the editorial constitution of The Umami Post. It applies to
 all contributors — staff writers, freelancers, guest columnists, and editors. It covers
 what we publish, how we report it, and what we owe our readers.
 
@@ -8,7 +8,7 @@ what we publish, how we report it, and what we owe our readers.
 
 ## Mission and Editorial Philosophy
 
-The Freethinking Times exists to do the journalism and intellectual work that the
+The Umami Post exists to do the journalism and intellectual work that the
 institutional press increasingly cannot or will not do: long-form investigation of how
 power actually operates, philosophy taken seriously rather than performed, and ideas
 argued rather than signaled.
@@ -20,7 +20,7 @@ do not soften findings to preserve relationships.
 
 **Philosophical** means we treat ideas as consequential. We believe that how people
 reason matters — that epistemology, ethics, and the philosophy of science have real
-consequences for real people — and that the freethinking tradition from Paine and Hume
+consequences for real people — and that the Umami tradition from Paine and Hume
 through Russell and Ingersoll offers tools that contemporary intellectual life has
 largely abandoned.
 
@@ -276,7 +276,7 @@ to approve, modify, or veto the surrounding text.
 
 **Attribution for documents:** Name the document, its author or issuing body, and
 its date where possible. "According to a 2024 audit by the City Controller's office"
-is better than "according to documents reviewed by The Freethinking Times."
+is better than "according to documents reviewed by The Umami Post."
 
 ---
 
@@ -424,6 +424,6 @@ Include both what was wrong and what it now says. "Corrected a date" is not enou
 
 ## Questions
 
-Editorial questions: [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com)
+Editorial questions: [hello@theumamipost.com](mailto:hello@theumamipost.com)
 
 For the technical contribution process, see [CONTRIBUTING.md](CONTRIBUTING.md).

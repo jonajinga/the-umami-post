@@ -1,0 +1,78 @@
+---
+layout: base
+title: "Pitch a Review"
+description: Cookbook, restaurant, equipment, or pantry-staple review pitches.
+permalink: /submit/review/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/submit/">Submit</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Review</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Pitch a Review</h1>
+      <p class="page-header__lede">Honest assessments of cookbooks, restaurants, equipment, and pantry staples.</p>
+    </header>
+
+    <div class="article-body">
+      <p>We do not accept reviews of items where the reviewer has a financial or personal conflict. Please disclose conflicts even if you think they don't matter -- we'll decide.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin-top: var(--space-6);">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Review pitch, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Review Pitch">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="rv-name">Name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="rv-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="rv-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="rv-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="rv-type">Subject type <span class="w3f__required">*</span></label>
+            <select class="w3f__input" name="subject_type" id="rv-type" required aria-required="true">
+              <option value="">-- choose --</option>
+              <option>Cookbook</option><option>Restaurant</option><option>Equipment</option><option>Pantry staple</option>
+            </select>
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="rv-subject">Subject name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="subject_name" id="rv-subject" required aria-required="true" placeholder="Title, brand + model, restaurant name">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="rv-coi">Conflict of interest <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="rv-coi-hint">Any personal, financial, professional, or family connection. "None" is a fine answer.</span>
+          <textarea class="w3f__textarea" name="conflict" id="rv-coi" rows="3" required aria-required="true" aria-describedby="rv-coi-hint"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="rv-angle">Angle <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="rv-angle-hint">What's the actual take. "It's good" is not a take.</span>
+          <textarea class="w3f__textarea" name="angle" id="rv-angle" rows="5" required aria-required="true" aria-describedby="rv-angle-hint"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="rv-words">Estimated word count</label>
+          <input class="w3f__input" type="text" name="word_count" id="rv-words" placeholder="e.g. 1,200">
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Pitch</button>
+      </form>
+    </div>
+  </div>
+</div>

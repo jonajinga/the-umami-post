@@ -1,10 +1,10 @@
-date: "2026-04-11"
+﻿date: "2026-04-11"
 title: Timelines, showcases, highlight colours, WYSIWYG notes, submission forms, hub pages
 sections:
   - label: Timelines & showcases
     entries:
       - >-
-        Freethought Timeline rebuilt as vertical alternating CSS timeline with era markers, scroll-reveal animation, and
+        Food Timeline rebuilt as vertical alternating CSS timeline with era markers, scroll-reveal animation, and
         era filter
       - >-
         Timeline Showcase at /timeline/showcase/ — full-screen screensaver cycling through events with auto-advance

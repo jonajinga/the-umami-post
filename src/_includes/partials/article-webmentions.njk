@@ -1,4 +1,4 @@
-{#
+﻿{#
   article-webmentions.njk — renders webmentions for the current page.
 
   Usage: include this partial inside an article / author layout. It
@@ -120,7 +120,7 @@
   var toggle = section.querySelector('[data-wm-toggle]');
   var body   = section.querySelector('.wm__body');
   if (!toggle || !body) return;
-  var prefix = (window.__PREFIX || 'tft');
+  var prefix = (window.__PREFIX || 'umami');
   var key    = prefix + '-wm-collapsed';
   function apply(collapsed) {
     section.setAttribute('data-wm-collapsed', collapsed ? 'true' : 'false');

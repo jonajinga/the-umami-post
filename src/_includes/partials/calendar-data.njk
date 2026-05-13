@@ -18,10 +18,7 @@
       "date": {{ (item.date | htmlDateString) | dump | safe }},
       "image": {{ (item.data.image or "") | dump | safe }},
       "imageAlt": {{ (item.data.imageAlt or "") | dump | safe }},
-      "wordCount": {{ item.templateContent | wordCount | replace(",", "") | replace(" words", "") | default(0, true) }},
-      "hasAudio": {% if audioManifest[item.url] %}true{% else %}false{% endif %},
-      "audioMp3": {{ (audioManifest[item.url].mp3 if audioManifest[item.url] else "") | dump | safe }},
-      "audioDuration": {{ audioManifest[item.url].duration if audioManifest[item.url] else 0 }}
+      "wordCount": {{ item.templateContent | wordCount | replace(",", "") | replace(" words", "") | default(0, true) }}
     }
     {%- endfor %}
   ]

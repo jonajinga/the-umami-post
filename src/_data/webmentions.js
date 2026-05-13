@@ -1,4 +1,4 @@
-// Build-time Webmentions fetcher.
+﻿// Build-time Webmentions fetcher.
 //
 // Pulls every mention webmention.io has received for this domain and
 // groups them by target URL so templates can look up `webmentions[page.url]`.
@@ -136,7 +136,7 @@ module.exports = async function () {
         {
           id: 'demo-1',
           property: 'in-reply-to',
-          url: 'https://example.com/alice/2026/04/reply-to-freethinking-times',
+          url: 'https://example.com/alice/2026/04/reply-to-the-umami-post',
           published: '2026-04-14T11:32:00Z',
           author: {
             name: 'Alice Renfield',

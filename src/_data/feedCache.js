@@ -1,4 +1,4 @@
-// Fetch RSS feeds at build time with disk caching via @11ty/eleventy-fetch
+﻿// Fetch RSS feeds at build time with disk caching via @11ty/eleventy-fetch
 const EleventyFetch = require("@11ty/eleventy-fetch");
 const Parser = require("rss-parser");
 const parser = new Parser({ timeout: 10000 });
@@ -14,7 +14,7 @@ module.exports = async function () {
         duration: "1h",
         type: "text",
         fetchOptions: {
-          headers: { "User-Agent": "TheFreethinkingTimes/1.0 (RSS Reader)" }
+          headers: { "User-Agent": "theumamipost/1.0 (RSS Reader)" }
         }
       });
 

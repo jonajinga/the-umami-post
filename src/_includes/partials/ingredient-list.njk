@@ -1,0 +1,28 @@
+{# Ingredient list. Expects: ingredients (array of { amount, unit, name,
+   prep, optional, group }), servings. Renders scaler + flat list with
+   optional group headings rendered inline when the group key changes. #}
+
+<div class="recipe-scaler serving-scaler" data-recipe-scaler data-base-servings="{{ servings or 4 }}">
+  <span class="serving-scaler__label">Serves</span>
+  <button type="button" class="serving-scaler__btn" data-scale="0.5">0.5&times;</button>
+  <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1">1&times;</button>
+  <button type="button" class="serving-scaler__btn" data-scale="2">2&times;</button>
+</div>
+
+<ul class="ingredient-list" data-ingredient-list data-recipe-slug="{{ page.fileSlug }}">
+  {% set lastGroup = "" %}
+  {% for ing in ingredients %}
+    {% if ing.group and ing.group != lastGroup %}
+      <li class="ingredient-list__group-name">{{ ing.group }}</li>
+      {% set lastGroup = ing.group %}
+    {% endif %}
+    <li class="ingredient{% if ing.optional %} ingredient--optional{% endif %}">
+      <input type="checkbox" class="ingredient__check" aria-label="Check off {{ ing.name }}">
+      <span class="ingredient__text">
+        {% if ing.amount %}<span class="ingredient__amount" data-base-amount="{{ ing.amount }}">{{ ing.amount }}</span>{% endif %}
+        {% if ing.unit %}<span class="ingredient__unit">{{ ing.unit }}</span>{% endif %}
+        <span class="ingredient__name">{{ ing.name }}</span>{% if ing.prep %}<span class="ingredient__prep">, {{ ing.prep }}</span>{% endif %}
+      </span>
+    </li>
+  {% endfor %}
+</ul>

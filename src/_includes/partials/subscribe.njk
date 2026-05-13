@@ -1,4 +1,4 @@
-{#
+﻿{#
   Subscribe Form Partial
   Usage: {% set subscribeVariant = "inline" %}{% include "partials/subscribe.njk" %}
   Variants: "inline" (between articles), "sidebar" (sidebar widget), "footer" (footer strip)
@@ -9,7 +9,7 @@
 
 {% if variant == "inline" %}
 {# ── Full inline block, between articles or end of article ── #}
-<aside class="subscribe-block" aria-label="Subscribe to The Freethinking Times">
+<aside class="subscribe-block" aria-label="Subscribe to The Umami Post">
   <p class="subscribe-block__eyebrow">{{ site.subscribe.eyebrow or "Newsletter" }}</p>
   <h2 class="subscribe-block__heading">{{ site.subscribe.heading or "One email, one article." }}</h2>
   <p class="subscribe-block__body">{{ site.subscribe.body or "New pieces in your inbox the moment they publish." }}</p>

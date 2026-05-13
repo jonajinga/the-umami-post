@@ -1,8 +1,8 @@
-# Code of Conduct
+﻿# Code of Conduct
 
 ## Who This Applies To
 
-This code of conduct applies to everyone participating in The Freethinking Times
+This code of conduct applies to everyone participating in The Umami Post
 project: contributors to the codebase, editorial contributors (writers, columnists,
 photographers, letter writers), editors, and anyone participating in GitHub issues,
 pull requests, or any other space operated by the publication.
@@ -46,7 +46,7 @@ honest environment.
 
 ## Editorial Standards Addendum
 
-The Freethinking Times is a publication, not only a software project. Participation
+The Umami Post is a publication, not only a software project. Participation
 here involves editorial work as well as technical work, and we have additional
 expectations accordingly:
 
@@ -80,7 +80,7 @@ publication.
 ## Enforcement
 
 Instances of unacceptable behavior may be reported to:
-[hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com)
+[hello@theumamipost.com](mailto:hello@theumamipost.com)
 
 All reports are reviewed promptly and confidentially. The editor will respond within
 72 hours.

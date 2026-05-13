@@ -4,8 +4,8 @@
   "role": "Founding Editor",
   "title": "Writer, editor, and independent publisher",
   "location": "Denver, Colorado",
-  "bio": "Jon Ajinga is the founding editor of The Freethinking Times, covering regulation, institutional power, and the life of ideas.",
-  "bioLong": "<p>Jon Ajinga founded The Freethinking Times in 2025 as an independent publication for long-form reporting and analysis, the kind of work mainstream outlets increasingly can't afford to do and platform publishers won't.</p><p>Before The Freethinking Times he worked as a software engineer, an organiser, and (briefly, badly) a bartender. He reads too much philosophy and not enough fiction. His coverage focuses on regulatory capture, administrative agencies, and the quiet institutional decisions that shape public life.</p><p>He lives in Denver with his family and a very opinionated cat.</p>",
+  "bio": "Jon Ajinga is the founding editor of The Umami Post, covering regulation, institutional power, and the life of ideas.",
+  "bioLong": "<p>Jon Ajinga founded The Umami Post in 2025 as an independent publication for long-form reporting and analysis, the kind of work mainstream outlets increasingly can't afford to do and platform publishers won't.</p><p>Before The Umami Post he worked as a software engineer, an organiser, and (briefly, badly) a bartender. He reads too much philosophy and not enough fiction. His coverage focuses on regulatory capture, administrative agencies, and the quiet institutional decisions that shape public life.</p><p>He lives in Denver with his family and a very opinionated cat.</p>",
   "photo": "src/assets/img/authors/jon-ajinga.webp",
   "social": {
     "x": "https://x.com/jonajinga",
@@ -16,7 +16,7 @@
     "threads": "",
     "instagram": "",
     "website": "https://jonajinga.com",
-    "email": "jon@thefreethinkingtimes.com"
+    "email": "jon@theumamipost.com"
   },
   "tipping": {
     "kofi": "https://ko-fi.com/jonajinga",

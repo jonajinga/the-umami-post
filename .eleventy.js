@@ -54,7 +54,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets/favicon.svg": "assets/favicon.svg" });
   eleventyConfig.addPassthroughCopy({ "src/assets/favicon-dark.svg": "assets/favicon-dark.svg" });
   eleventyConfig.addPassthroughCopy({ "src/assets/img": "assets/img" });
-  eleventyConfig.addPassthroughCopy({ "src/assets/audio": "assets/audio" });
   eleventyConfig.addPassthroughCopy({ "src/humans.txt": "humans.txt" });
   eleventyConfig.addPassthroughCopy({ "src/admin": "admin" });
 
@@ -69,8 +68,8 @@ module.exports = function (eleventyConfig) {
         const cssDir = path.dirname(inputPath);
         const order = [
           "tokens.css", "base.css", "layout.css", "components.css",
-          "article.css", "projects.css", "library.css", "calendar.css",
-          "editorial.css"
+          "article.css", "recipe.css", "projects.css", "library.css",
+          "calendar.css", "editorial.css"
         ];
         let combined = "";
         for (const file of order) {
@@ -121,9 +120,6 @@ module.exports = function (eleventyConfig) {
               "glossary-tip", "w3f__dictate",
               "cite-inline__entry", "cite-inline__label",
               "cite-inline__text", "cite-inline__copy",
-              "music-bar", "music-bar__info", "music-bar__name",
-              "music-bar__title", "music-bar__controls",
-              "music-bar__btn", "music-bar__btn--play", "music-bar__vol",
               "article-action-btn", "search-filter-btn",
               "rs-ruler-line", "heading-anchor",
               "toc-list", "toc-list__link",
@@ -173,38 +169,26 @@ module.exports = function (eleventyConfig) {
               "w3f__check",
               // Article engagement buttons — toggled at runtime by
               // like-btn.js, read-state.js, pdf-basket.js, tts.js.
-              "is-liked", "is-read", "is-in-basket", "is-playing",
+              "is-liked", "is-read", "is-in-basket",
               "sitewide-disclosures",
-              "article-audio", "article-audio__head",
-              "article-audio__icon", "article-audio__label",
-              "article-audio__title", "article-audio__meta",
-              "article-audio__player",
               "article-topics", "article-topics__label",
               "article-topics__list",
-              "listen-btn", "listen-btn--sm", "listen-btn--md",
-              "listen-btn__icon", "listen-btn__label",
-              "listen-btn__sep", "listen-btn__time",
-              "article-card__listen", "archive-entry__listen",
               "article-card__byline-item",
               "article-list__meta--bars", "article-list__meta-item",
               "is-current",
-              "audio-bar", "audio-bar__play",
-              "audio-bar__icon-play", "audio-bar__icon-pause",
-              "audio-bar__controls", "audio-bar__title",
-              "audio-bar__time", "audio-bar__scrub", "audio-bar__close",
-              "has-audio-bar",
-              "tts-popover", "tts-popover__head", "tts-popover__close",
-              "tts-popover__lede", "tts-popover__choices", "tts-popover__choice",
-              "tts-popover__row", "tts-popover__btn",
-              "tts-progress", "tts-progress__bar", "tts-progress__fill",
-              "tts-progress__line", "tts-progress__pct", "tts-progress__file",
-              "tts-field",
               "like-count",
               "article-meta-item",
               "article-meta-item--length",
               "article-meta-item--time",
               "article-meta-item--stat",
-              "mark-read-btn__label", "pdf-basket-btn__label", "tts-btn__label",
+              "mark-read-btn__label", "pdf-basket-btn__label",
+              // Recipe-specific runtime classes — toggled by serving-scaler.js,
+              // ingredient-checklist.js, cooking-mode.js. PurgeCSS can't see
+              // them in source templates because they're injected at runtime.
+              "recipe-scaler", "recipe-scaler__btn", "recipe-scaler__btn--active",
+              "ingredient", "ingredient--checked", "ingredient--optional",
+              "ingredient-list", "ingredient-list__group",
+              "cooking-mode", "cooking-mode__exit",
               // Floating PDF-basket tray — appended to <body> when basket
               // first becomes non-empty; never present in template source.
               "pdf-basket-tray",
@@ -417,6 +401,21 @@ module.exports = function (eleventyConfig) {
     const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
     const mins = Math.max(1, Math.ceil(words / 200));
     return `${mins} min read`;
+  });
+
+  // ISO 8601 duration ("PT1H30M", "PT45M") -> "1 h 30 min" / "45 min".
+  // Accepts pre-formatted strings ("30 min", "1 hour") and passes them through.
+  eleventyConfig.addFilter("duration", (value) => {
+    if (!value) return "";
+    const s = String(value).trim();
+    const m = s.match(/^PT(?:(\d+)H)?(?:(\d+)M)?$/);
+    if (!m) return s;
+    const h = parseInt(m[1] || "0", 10);
+    const mins = parseInt(m[2] || "0", 10);
+    const parts = [];
+    if (h) parts.push(`${h} h`);
+    if (mins) parts.push(`${mins} min`);
+    return parts.join(" ") || "0 min";
   });
 
   // Returns the raw minute count (integer) — used for data attributes and filtering
@@ -903,7 +902,7 @@ module.exports = function (eleventyConfig) {
   // Transform a collection into API records — each item as { ...frontMatter, url }
   // Strips Eleventy internals like `collections`, `eleventy`, `page`, etc.
   eleventyConfig.addFilter("toApiItems", (items, baseUrl) => {
-    const strip = new Set(["collections", "eleventy", "page", "pagination", "pkg", "tags", "layout", "permalink", "eleventyComputed", "eleventyExcludeFromCollections", "site", "authors", "quotes", "videos", "events", "timeline", "feeds", "changelog", "gallery", "playlists", "songs", "library", "projects"]);
+    const strip = new Set(["collections", "eleventy", "page", "pagination", "pkg", "tags", "layout", "permalink", "eleventyComputed", "eleventyExcludeFromCollections", "site", "authors", "quotes", "events", "timeline", "feeds", "changelog", "library", "projects", "ingredients", "seasonal"]);
     return items.map(item => {
       const out = { url: (baseUrl || "") + (item.url || "") };
       Object.keys(item.data || {}).forEach(k => {
@@ -1855,6 +1854,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLayoutAlias("library-work",    "layouts/library-work.njk");
   eleventyConfig.addLayoutAlias("library-chapter", "layouts/library-chapter.njk");
   eleventyConfig.addLayoutAlias("library-short",   "layouts/library-short.njk");
+  eleventyConfig.addLayoutAlias("recipe",          "layouts/recipe.njk");
+  eleventyConfig.addLayoutAlias("technique",       "layouts/technique.njk");
+  eleventyConfig.addLayoutAlias("review",          "layouts/review.njk");
 
   // ─── Global Data
   eleventyConfig.addGlobalData("currentYear", () => new Date().getFullYear());

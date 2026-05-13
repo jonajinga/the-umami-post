@@ -64,26 +64,25 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon-dark.svg" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#E8E4DC" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FAF6EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1A1410" media="(prefers-color-scheme: dark)">
 
   {# ── Resource Hints ── #}
   <link rel="dns-prefetch" href="https://fonts.bunny.net">
   <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 
-  {# ── Font woff2 preloads, DM Sans + Source Serif 4 regular + Lora 700
-       (the article headline weight) to prevent FOUC / FOIT on the
-       article title during cold loads + SPA-nav swaps ── #}
-  <link rel="preload" href="https://fonts.bunny.net/dm-sans/files/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  {# ── Font woff2 preloads -- Inter UI 400 + Source Serif 4 body 400 + Playfair Display headline 700
+       to prevent FOUC / FOIT on the article title during cold loads + SPA-nav swaps ── #}
+  <link rel="preload" href="https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="https://fonts.bunny.net/source-serif-4/files/source-serif-4-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="https://fonts.bunny.net/lora/files/lora-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.bunny.net/playfair-display/files/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 
   {# ── Fonts (async, non-render-blocking) ── #}
   <link rel="preload" href="{{ site.fontsUrl }}" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ site.fontsUrl }}" crossorigin></noscript>
 
   {# ── Critical CSS: tokens + body baseline, inlined to prevent FOUC while main.css loads async ── #}
-  <style>:root{--color-bg:#F4F1EB;--color-bg-alt:#EAE6DE;--color-bg-inset:#E0DBCF;--color-ink:#1A1A1A;--color-ink-muted:#4A4845;--color-ink-faint:#5E5856;--color-rule:#C8C2B6;--color-rule-heavy:#8A847A;--color-accent:#C0392B;--color-link:#2C5F8A;--color-selection:#6A1B9A;--color-selection-ink:#fff;--font-masthead:'Playfair Display',Georgia,serif;--font-headline:'Lora',Georgia,serif;--font-body:'Source Serif 4',Georgia,serif;--font-ui:'DM Sans',system-ui,sans-serif}[data-theme="dark"]{--color-bg:#141414;--color-bg-alt:#1E1E1E;--color-bg-inset:#252525;--color-ink:#E8E4DC;--color-ink-muted:#A8A49C;--color-ink-faint:#9E9A96;--color-rule:#303030;--color-rule-heavy:#484440;--color-accent:#E05545;--color-link:#6B9EC7}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#141414;--color-bg-alt:#1E1E1E;--color-bg-inset:#252525;--color-ink:#E8E4DC;--color-ink-muted:#A8A49C;--color-ink-faint:#9E9A96;--color-rule:#303030;--color-rule-heavy:#484440;--color-accent:#E05545;--color-link:#6B9EC7}}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{color-scheme:light dark}body{background:var(--color-bg);color:var(--color-ink);font-family:var(--font-body)}.site-wrapper{min-height:100vh;display:flex;flex-direction:column}</style>
+  <style>:root{--color-bg:#FAF6EF;--color-bg-alt:#F2EBDE;--color-bg-inset:#EADFCB;--color-ink:#2B1F18;--color-ink-muted:#4A382C;--color-ink-faint:#6A5240;--color-rule:#D8CBB6;--color-rule-heavy:#8A7858;--color-accent:#D4793A;--color-accent-hover:#B66024;--color-link:#6B7340;--color-link-hover:#525830;--color-selection:#D4793A;--color-selection-ink:#FAF6EF;--font-masthead:'Playfair Display',Georgia,serif;--font-headline:'Playfair Display',Georgia,serif;--font-body:'Source Serif 4',Georgia,serif;--font-ui:'Inter',system-ui,sans-serif}[data-theme="dark"]{--color-bg:#1A1410;--color-bg-alt:#231B16;--color-bg-inset:#2C231C;--color-ink:#F2E9D8;--color-ink-muted:#C9BCA4;--color-ink-faint:#A99980;--color-rule:#3A2E25;--color-rule-heavy:#5A4838;--color-accent:#E89456;--color-accent-hover:#F0A86E;--color-link:#9AA565;--color-link-hover:#B5C081}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#1A1410;--color-bg-alt:#231B16;--color-bg-inset:#2C231C;--color-ink:#F2E9D8;--color-ink-muted:#C9BCA4;--color-ink-faint:#A99980;--color-rule:#3A2E25;--color-rule-heavy:#5A4838;--color-accent:#E89456;--color-accent-hover:#F0A86E;--color-link:#9AA565;--color-link-hover:#B5C081}}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{color-scheme:light dark}body{background:var(--color-bg);color:var(--color-ink);font-family:var(--font-body)}.site-wrapper{min-height:100vh;display:flex;flex-direction:column}</style>
 
   {# ── Styles ── #}
   <link rel="stylesheet" href="/assets/css/main.css?v={{ buildTime }}">
@@ -108,7 +107,7 @@
   <script>window.__PREFIX='{{ site.storagePrefix }}';{% if site.repo %}window.__repo={owner:"{{ site.repo.owner }}",name:"{{ site.repo.name }}",branch:"{{ site.repo.branch | default('main') }}"};{% endif %}</script>
 
   {# ── Theme: inlined to prevent FOUC without a render-blocking network request ── #}
-  <script>(function(){'use strict';var STORAGE_KEY=(window.__PREFIX||'tft')+'-theme';var root=document.documentElement;function getSystemTheme(){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}function getStoredTheme(){try{return localStorage.getItem(STORAGE_KEY);}catch{return null;}}function applyTheme(theme){root.setAttribute('data-theme',theme);root.classList.add('js-enabled');}applyTheme(getStoredTheme()||getSystemTheme());try{var bg=localStorage.getItem((window.__PREFIX||'tft')+'-gs-bg');if(bg&&bg!=='default')root.setAttribute('data-gs-bg',bg);var gsFont=localStorage.getItem((window.__PREFIX||'tft')+'-gs-font');if(gsFont&&gsFont!=='default'){root.setAttribute('data-gs-font',gsFont);var wf={inter:'inter:wght@400;600;700',merriweather:'merriweather:wght@400;700',roboto:'roboto:wght@400;700',opensans:'open-sans:wght@400;600;700',baskerville:'libre-baskerville:wght@400;700',crimson:'crimson-pro:wght@400;600;700',ibmplex:'ibm-plex-serif:wght@400;600;700',literata:'literata:wght@400;600;700',atkinson:'atkinson-hyperlegible:wght@400;700'};if(wf[gsFont]){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.bunny.net/css?family='+wf[gsFont]+'&display=swap';document.head.appendChild(l);}}var gsFontSize=localStorage.getItem((window.__PREFIX||'tft')+'-gs-font-size');if(gsFontSize&&parseInt(gsFontSize)>0)root.style.fontSize=gsFontSize+'px';var gsSpacing=localStorage.getItem((window.__PREFIX||'tft')+'-gs-spacing');if(gsSpacing&&gsSpacing!=='normal'){var map={tight:'1.3',relaxed:'1.8'};if(map[gsSpacing])root.style.lineHeight=map[gsSpacing];}var gsWordspace=localStorage.getItem((window.__PREFIX||'tft')+'-gs-wordspace');if(gsWordspace&&gsWordspace!=='normal'){var wsMap={wide:'0.12em',wider:'0.25em'};if(wsMap[gsWordspace])root.style.wordSpacing=wsMap[gsWordspace];}}catch(e){}document.addEventListener('DOMContentLoaded',function(){var btn=document.getElementById('theme-toggle');if(!btn)return;function updateButton(theme){btn.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');}updateButton(root.getAttribute('data-theme'));btn.addEventListener('click',function(){var current=root.getAttribute('data-theme');var next=current==='dark'?'light':'dark';applyTheme(next);try{localStorage.setItem(STORAGE_KEY,next);}catch{}updateButton(next);});window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!getStoredTheme()){var theme=e.matches?'dark':'light';applyTheme(theme);updateButton(theme);}});});})();</script>
+  <script>(function(){'use strict';var STORAGE_KEY=(window.__PREFIX||'umami')+'-theme';var root=document.documentElement;function getSystemTheme(){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}function getStoredTheme(){try{return localStorage.getItem(STORAGE_KEY);}catch{return null;}}function applyTheme(theme){root.setAttribute('data-theme',theme);root.classList.add('js-enabled');}applyTheme(getStoredTheme()||getSystemTheme());try{var bg=localStorage.getItem((window.__PREFIX||'umami')+'-gs-bg');if(bg&&bg!=='default')root.setAttribute('data-gs-bg',bg);var gsFont=localStorage.getItem((window.__PREFIX||'umami')+'-gs-font');if(gsFont&&gsFont!=='default'){root.setAttribute('data-gs-font',gsFont);var wf={inter:'inter:wght@400;600;700',merriweather:'merriweather:wght@400;700',roboto:'roboto:wght@400;700',opensans:'open-sans:wght@400;600;700',baskerville:'libre-baskerville:wght@400;700',crimson:'crimson-pro:wght@400;600;700',ibmplex:'ibm-plex-serif:wght@400;600;700',literata:'literata:wght@400;600;700',atkinson:'atkinson-hyperlegible:wght@400;700'};if(wf[gsFont]){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.bunny.net/css?family='+wf[gsFont]+'&display=swap';document.head.appendChild(l);}}var gsFontSize=localStorage.getItem((window.__PREFIX||'umami')+'-gs-font-size');if(gsFontSize&&parseInt(gsFontSize)>0)root.style.fontSize=gsFontSize+'px';var gsSpacing=localStorage.getItem((window.__PREFIX||'umami')+'-gs-spacing');if(gsSpacing&&gsSpacing!=='normal'){var map={tight:'1.3',relaxed:'1.8'};if(map[gsSpacing])root.style.lineHeight=map[gsSpacing];}var gsWordspace=localStorage.getItem((window.__PREFIX||'umami')+'-gs-wordspace');if(gsWordspace&&gsWordspace!=='normal'){var wsMap={wide:'0.12em',wider:'0.25em'};if(wsMap[gsWordspace])root.style.wordSpacing=wsMap[gsWordspace];}}catch(e){}document.addEventListener('DOMContentLoaded',function(){var btn=document.getElementById('theme-toggle');if(!btn)return;function updateButton(theme){btn.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');}updateButton(root.getAttribute('data-theme'));btn.addEventListener('click',function(){var current=root.getAttribute('data-theme');var next=current==='dark'?'light':'dark';applyTheme(next);try{localStorage.setItem(STORAGE_KEY,next);}catch{}updateButton(next);});window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!getStoredTheme()){var theme=e.matches?'dark':'light';applyTheme(theme);updateButton(theme);}});});})();</script>
 
   {# ── OG Article properties (article pages only) ── #}
   {% if section %}
@@ -173,9 +172,6 @@
 
     {# ── Footer ── #}
     {% include "partials/footer.njk" %}
-
-    {# ── Global audio bar (TTS playback while reader browses) ── #}
-    {% include "partials/audio-bar.njk" %}
 
     <script>
       // Inline disclosures — toggle hidden + scroll the panel into
@@ -247,8 +243,6 @@
   <script src="/assets/js/subscribe.js?v={{ buildTime }}" defer></script>
   <script src="/assets/js/global-settings.js?v={{ buildTime }}" defer></script>
   <script src="/assets/js/spa-nav.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/music-player.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/audio-bar.js?v={{ buildTime }}" defer></script>
   {# Notes page uses localStorage; load it sitewide so the IIFE
      stays alive across SPA-nav and binds to #notes-page-root the
      moment the /notes/ page swaps in. Without this, /notes/
@@ -297,15 +291,9 @@
   {# ── PDF basket: collect articles, print as one PDF ── #}
   <script src="/assets/js/pdf-basket.js?v={{ buildTime }}" defer></script>
 
-  {# Article TTS now uses build-time MP3 files served via the global
-     audio bar — no client-side Kokoro / Web Speech engine. tts.js
-     is intentionally not loaded here; the toolbar Listen button is
-     a [data-tft-audio-trigger] that routes through audio-bar.js. #}
-
-  {# ── hCaptcha + dictation for Web3Forms pages ── #}
+  {# ── hCaptcha for Web3Forms pages ── #}
   {% if site.forms and site.forms.accessKey %}
   <script src="https://web3forms.com/client/script.js" async defer></script>
-  <script src="/assets/js/dictation.js?v={{ buildTime }}" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded',function(){
     document.querySelectorAll('.w3f').forEach(function(f){
@@ -327,7 +315,7 @@
       var d={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k)d[k]=localStorage.getItem(k);}
       var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
       var u=URL.createObjectURL(b);var a=document.createElement('a');
-      a.href=u;a.download='tft-backup.json';a.click();URL.revokeObjectURL(u);
+      a.href=u;a.download='umami-backup.json';a.click();URL.revokeObjectURL(u);
     });
     if(ib)ib.addEventListener('click',function(){
       var i=document.createElement('input');i.type='file';i.accept='.json';

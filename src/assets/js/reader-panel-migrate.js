@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Reader-panel migration + share/print popover wiring.
  *
  * The article HTML still renders the original .article-header__actions block
@@ -183,7 +183,7 @@
   // the article body and append its note text inline as a .print-inline-note
   // span. CSS reveals these only in print + print-include-notes mode.
   function injectInlineNotes() {
-    var key = (window.__PREFIX || 'tft') + '-annotations';
+    var key = (window.__PREFIX || 'umami') + '-annotations';
     var ann = [];
     try { ann = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
     var byId = {};

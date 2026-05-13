@@ -1,11 +1,11 @@
-/**
+﻿/**
  * Article utilities: reading progress bar, progress %, back to top,
  * copy link, print, table of contents, pullquote share, focus mode.
  */
 (function () {
   'use strict';
 
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
 
   // Re-execution guard. On SPA content swaps article-layout scripts get
   // re-injected so new #main-content DOM gets fresh bindings; window- and

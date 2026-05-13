@@ -184,19 +184,19 @@
     ]
   },
   {
-    "term": "Freethought tradition",
+    "term": "Food tradition",
     "see_also": ["Secularism", "Vocabulary"],
     "entries": [
       {
         "sub_term": "naming and the vocabulary of unbelief",
         "references": [
-          { "title": "The Vocabulary of Unbelief: How Freethinkers Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
+          { "title": "The Vocabulary of Unbelief: How Cooks Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
         ]
       },
       {
         "sub_term": "uncomfortable ancestors of",
         "references": [
-          { "title": "Review: 'Radicals' Finds the Freethought Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
+          { "title": "Review: 'Radicals' Finds the Food Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
         ]
       }
     ]
@@ -439,7 +439,7 @@
       {
         "sub_term": "Radicals (documentary)",
         "references": [
-          { "title": "Review: 'Radicals' Finds the Freethought Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
+          { "title": "Review: 'Radicals' Finds the Food Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
         ]
       }
     ]
@@ -470,12 +470,12 @@
   },
   {
     "term": "Vocabulary, philosophical",
-    "see_also": ["Freethought tradition"],
+    "see_also": ["Food tradition"],
     "entries": [
       {
         "sub_term": "of unbelief, naming a tradition",
         "references": [
-          { "title": "The Vocabulary of Unbelief: How Freethinkers Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
+          { "title": "The Vocabulary of Unbelief: How Cooks Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
         ]
       }
     ]

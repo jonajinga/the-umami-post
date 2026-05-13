@@ -1,9 +1,9 @@
-# Security Policy
+﻿# Security Policy
 
 ## Scope
 
 This policy covers responsible disclosure of security vulnerabilities in the
-**source code and build infrastructure** of The Freethinking Times.
+**source code and build infrastructure** of The Umami Post.
 
 **In scope:**
 
@@ -19,7 +19,7 @@ This policy covers responsible disclosure of security vulnerabilities in the
 - Denial-of-service attacks against Cloudflare infrastructure — report these to
   [Cloudflare directly](https://www.cloudflare.com/trust-hub/security-policy/)
 - Spam or abuse of the contact or submission forms — email
-  [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com)
+  [hello@theumamipost.com](mailto:hello@theumamipost.com)
 - Vulnerabilities in third-party services we use (Pagefind, Decap CMS, Cusdis,
   Buttondown, Web3Forms) — report those to the respective projects
 - Editorial disputes, factual errors, or harassment — see
@@ -32,7 +32,7 @@ This policy covers responsible disclosure of security vulnerabilities in the
 **Do not open a public GitHub issue.** Public issues expose vulnerabilities to
 everyone before they can be fixed.
 
-**Email:** [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com)
+**Email:** [hello@theumamipost.com](mailto:hello@theumamipost.com)
 with **subject line: Security Disclosure**
 
 Include in your report:

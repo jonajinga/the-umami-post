@@ -1,19 +1,26 @@
 slug: staff
-name: The Freethinking Times
+name: The Umami Post
 role: Publication
-title: Founded 2026. Freethought writings and resources for the world.
+title: Founded 2026. A community food publication.
 location: Colorado
-bio: Stories reported and edited by the staff of The Freethinking Times.
+bio: Stories, recipes, and techniques reported and edited by the staff of The Umami Post and our contributor network.
+kitchenStory: |
+  We're a community of cooks, writers, recipe testers, photographers, and editors building a food publication that belongs to its readers.
+specialties: []
+dietaryFocus: []
+favoriteTools: []
+certifications: ""
+whereIRL: ""
 photo: src/assets/favicon.svg
 social:
-  x: https://x.com/freethinkingtms
-  bluesky: https://bsky.app/profile/thefreethinkingtimes.com
-  mastodon: 
-  linkedin: 
-  github: 
-  website: https://thefreethinkingtimes.com
-  email: 
+  x: ""
+  bluesky: ""
+  mastodon: ""
+  linkedin: ""
+  github: https://github.com/jonajinga/the-umami-post
+  website: https://theumamipost.com
+  email: ""
 tipping:
-  kofi: 
-  bmac: 
-  patreon: 
+  kofi: ""
+  bmac: ""
+  patreon: ""

@@ -1,4 +1,4 @@
-date: "2026-03-19"
+﻿date: "2026-03-19"
 title: Newsletter, privacy & site polish
 sections:
   - label: Newsletter
@@ -26,7 +26,7 @@ sections:
         Analytics link added to footer bottom bar alongside Privacy, Corrections, Changelog, Sitemap, RSS — reordered
         with transparency items first
       - >-
-        All contact email addresses unified to hello@thefreethinkingtimes.com — corrected misspelled domain
+        All contact email addresses unified to hello@theumamipost.com — corrected misspelled domain
         (freetimingtimes) in about.njk, submit.njk, and support.njk
       - Privacy policy short-version subtitle updated
   - label: Site polish

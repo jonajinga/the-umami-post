@@ -1,4 +1,4 @@
----
+﻿---
 layout: layouts/base.njk
 isReadingPage: true
 ---
@@ -188,12 +188,7 @@ isReadingPage: true
            categorisation cluster reads as one group ahead of the
            title — duplicate block here removed. #}
 
-        {# Listen pill is now rendered inline in the byline support
-           row above (next to "How We're Funded" / "Republish" /
-           "Add as Preferred"), so it's smaller and integrated rather
-           than a full-width card. See partials/article-audio.njk. #}
-
-        {# Responses to this piece — sits right below the tags so readers
+        {# Responses to this piece -- sits right below the tags so readers
            know up-front which other articles respond to this one. Only
            renders when at least one response exists. #}
         {% set responses = collections.allContent | responsesTo(page.url) %}
@@ -732,13 +727,7 @@ isReadingPage: true
       </figure>
       {% endif %}
 
-      {# Profile-specific header: audio player for podcast, embed for data viz #}
-      {% if profile == "podcast" and audioUrl %}
-      <figure class="profile-audio">
-        <audio controls preload="metadata" src="{{ audioUrl }}"></audio>
-        <figcaption>Listen to this episode. Transcript below.</figcaption>
-      </figure>
-      {% endif %}
+      {# Profile-specific header: embed for data viz #}
       {% if profile == "datavisualization" and embedUrl %}
       <figure class="profile-embed">
         <iframe src="{{ embedUrl }}" loading="lazy" title="{{ title | escape }}" style="width:100%;min-height:480px;border:1px solid var(--color-rule);"></iframe>
@@ -891,7 +880,7 @@ window.__tftShowComments = window.__tftShowComments || function (btn, alwaysOpen
    spa-nav swap. Tapping #ann-info-btn toggles + persists. #}
 <script>
 (function () {
-  var KEY = 'tft-article-meta-expanded';
+  var KEY = 'umami-article-meta-expanded';
   function apply() {
     var header = document.querySelector('.article-header[data-meta-collapsed]');
     var btn    = document.getElementById('ann-info-btn');
@@ -1064,9 +1053,6 @@ window.__tftShowComments = window.__tftShowComments || function (btn, alwaysOpen
         <li style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-rule);">
           <a href="{{ item.url }}" style="font-family:var(--font-headline);font-size:var(--text-sm);font-weight:600;color:var(--color-ink);text-decoration:none;display:block;line-height:var(--leading-snug);">{{ item.data.title }}</a>
           {% if item.data.section %}<div style="margin-top:6px;font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);">{{ item.data.section }}</div>{% endif %}
-          {% set listenUrl = item.url %}{% set listenTitle = item.data.title %}{% set listenSize = "sm" %}
-          {% set _itemAud = audioManifest[item.url] %}
-          {% if _itemAud %}<div style="margin-top:8px;">{% include "partials/listen-button.njk" %}</div>{% endif %}
         </li>
         {% endif %}
         {% endfor %}

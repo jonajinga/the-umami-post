@@ -1,4 +1,4 @@
-{#
+﻿{#
   site-announcement.njk — renders the editorial-state announcement strip
   at the top of every page when site.announcement.active is true.
 
@@ -35,7 +35,7 @@
     {% endif %}
     {% if _ann.dismissible %}
     <button type="button" class="site-announce__close" aria-label="Dismiss announcement"
-      onclick="(function(b){var el=b.closest('.site-announce');if(!el)return;var id=el.dataset.announceId;var key='tft-announce-dismissed';var list=[];try{list=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}if(list.indexOf(id)===-1)list.push(id);try{localStorage.setItem(key,JSON.stringify(list));}catch(e){}el.hidden=true;})(this);">
+      onclick="(function(b){var el=b.closest('.site-announce');if(!el)return;var id=el.dataset.announceId;var key='umami-announce-dismissed';var list=[];try{list=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}if(list.indexOf(id)===-1)list.push(id);try{localStorage.setItem(key,JSON.stringify(list));}catch(e){}el.hidden=true;})(this);">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     {% endif %}
@@ -46,7 +46,7 @@
   var el = document.getElementById('site-announce');
   if (!el || el.dataset.pinned === 'true') return;
   var id = el.dataset.announceId;
-  var key = 'tft-announce-dismissed';
+  var key = 'umami-announce-dismissed';
   var list = [];
   try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
   if (list.indexOf(id) !== -1) el.hidden = true;

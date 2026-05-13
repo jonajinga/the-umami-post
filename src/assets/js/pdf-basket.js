@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PDF basket — collect articles for combined print export.
  *
  * Storage: `tft-pdf-basket` → array of { url, title, section, date, author }.
@@ -15,7 +15,7 @@
 (function () {
   'use strict';
 
-  var KEY = 'tft-pdf-basket';
+  var KEY = 'umami-pdf-basket';
 
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
   function save(arr) { try { localStorage.setItem(KEY, JSON.stringify(arr)); } catch (e) {} }

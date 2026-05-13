@@ -1,11 +1,9 @@
 [
-  { "label": "News",           "url": "/news/",               "key": "news",         "collection": "news" },
-  { "label": "Opinion",        "url": "/opinion/",            "key": "opinion",      "collection": "opinion" },
-  { "label": "Analysis",       "url": "/analysis/",           "key": "analysis",     "collection": "analysis" },
-  { "label": "Arts & Culture", "url": "/arts-culture/",       "key": "arts-culture", "collection": "arts-culture" },
-  { "label": "Science & Tech", "url": "/science-technology/", "key": "science-tech", "collection": "science-technology" },
-  { "label": "History",        "url": "/history/",            "key": "history",      "collection": "history" },
-  { "label": "Letters",        "url": "/letters/",            "key": "letters",      "collection": "letters" },
-  { "label": "Reviews",        "url": "/reviews/",            "key": "reviews",      "collection": "reviews" },
-  { "label": "Explore",        "url": "/more/",               "key": "more",         "type": "more" }
+  { "label": "Recipes",       "url": "/recipes/",       "key": "recipes",       "collection": "recipes" },
+  { "label": "Techniques",    "url": "/techniques/",    "key": "techniques",    "collection": "techniques" },
+  { "label": "Stories",       "url": "/stories/",       "key": "stories",       "type": "hub" },
+  { "label": "Reviews",       "url": "/reviews/",       "key": "reviews",       "collection": "reviews" },
+  { "label": "Seasonal",      "url": "/seasonal/",      "key": "seasonal",      "type": "hub" },
+  { "label": "Submit",        "url": "/submit/",        "key": "submit",        "type": "hub" },
+  { "label": "Explore",       "url": "/more/",          "key": "more",          "type": "more" }
 ]

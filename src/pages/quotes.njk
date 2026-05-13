@@ -1,7 +1,7 @@
----
+﻿---
 layout: base
 title: Quotes
-description: A curated collection of freethought quotes, save, share, and print your favourites.
+description: A curated collection of Food quotes, save, share, and print your favourites.
 permalink: /quotes/
 ---
 
@@ -9,7 +9,7 @@ permalink: /quotes/
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Freethought Quotes",
+  "name": "Food Quotes",
   "numberOfItems": {{ quotes | length }},
   "itemListElement": [
     {% for q in quotes | limit(10) %}
@@ -38,7 +38,7 @@ permalink: /quotes/
   <header style="padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink); margin-bottom: var(--space-10);">
     <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-4);">Quotes</h1>
     <p style="color: var(--color-ink-muted); font-size: var(--text-md); font-style: italic;">
-      A curated collection of freethought quotes.
+      A curated collection of Food quotes.
     </p>
     <p style="font-family: var(--font-ui); font-size: var(--text-sm); margin-top: var(--space-4);">
       Know a great quote? <a href="/quotes/submit/" style="color: var(--color-link); font-weight: 600;">Submit it</a>
@@ -113,7 +113,7 @@ permalink: /quotes/
 
 <script>
 (function () {
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
 
   // Scroll to hash on load (for reading list links)
   if (window.location.hash) {

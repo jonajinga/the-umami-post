@@ -1,11 +1,11 @@
-/**
+﻿/**
  * Reading list — localStorage bookmark system.
  * Runs on both article pages (bookmark button) and /reading-list/ (renders saved list).
  */
 (function () {
   'use strict';
 
-  var KEY = (window.__PREFIX || 'tft') + '-reading-list';
+  var KEY = (window.__PREFIX || 'umami') + '-reading-list';
 
   function load() {
     try {

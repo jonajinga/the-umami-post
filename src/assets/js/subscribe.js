@@ -1,5 +1,5 @@
-/**
- * The Freethinking Times — Email Subscribe
+﻿/**
+ * The Umami Post — Email Subscribe
  *
  * Handles Buttondown newsletter subscription forms.
  * Works with any number of .subscribe-form elements on the page.
@@ -17,7 +17,7 @@
 
   // ── Wire up all subscribe forms on the page ────────────────────
   document.querySelectorAll('.subscribe-form').forEach(form => {
-    const BUTTONDOWN_URL = form.dataset.action || 'https://buttondown.com/api/emails/embed-subscribe/thefreethinkingtimes';
+    const BUTTONDOWN_URL = form.dataset.action || 'https://buttondown.com/api/emails/embed-subscribe/theumamipost';
     const input  = form.querySelector('.subscribe-form__input');
     const btn    = form.querySelector('.subscribe-form__btn');
     const status = form.nextElementSibling?.classList.contains('subscribe-status')

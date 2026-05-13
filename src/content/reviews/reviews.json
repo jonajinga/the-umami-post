@@ -1,3 +1,6 @@
 {
+  "layout": "review",
+  "tags": ["reviews"],
+  "section": "reviews",
   "permalink": "/reviews/{{ page.fileSlug }}/"
 }

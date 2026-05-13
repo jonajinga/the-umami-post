@@ -22,13 +22,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     </button>
     {% endif %}
-    {# Listen pill — only renders when the page has a generated MP3. #}
-    {% if audioManifest and audioManifest[page.url] %}
-    <div id="ann-listen-slot" class="annotation-toolbar__slot">
-      {% include "partials/article-audio.njk" %}
-    </div>
-    {% endif %}
-    {# % through pill + back-to-top — base.njk's floating .reading-floats
+    {# % through pill + back-to-top -- base.njk's floating .reading-floats
        is suppressed on isReadingPage layouts so this is the only set of
        these IDs in the DOM. progress.js toggles is-visible. #}
     <div id="reading-floats" class="reading-floats annotation-toolbar__slot">
@@ -96,8 +90,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
   </button>
 
-  {# Music player slot, populated by music-player.js when playback starts. #}
-  <div id="annotation-toolbar-music" class="annotation-toolbar__music"></div>
 </div>
 
 {# Combined Share / Download / Print popover. Fullscreen modal with a

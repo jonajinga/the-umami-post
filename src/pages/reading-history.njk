@@ -1,4 +1,4 @@
----
+﻿---
 layout: base
 title: Reading history
 description: Your reading history — articles you've finished or marked as read, kept locally in your browser. Nothing leaves your device.
@@ -32,7 +32,7 @@ permalink: /reading-history/
       <span><strong data-rh-manual>0</strong> manually marked</span>
       <span><strong data-rh-auto>0</strong> auto-completed</span>
       <button type="button" id="rh-clear" style="margin-left: auto; background: none; border: 1px solid var(--color-rule); padding: var(--space-1) var(--space-3); cursor: pointer; font-family: inherit; font-size: inherit; color: var(--color-ink-muted);"
-        onclick="if(confirm('Clear your entire reading history? This cannot be undone.')){localStorage.removeItem('tft-read-manual');localStorage.removeItem('tft-read-pct');location.reload();}">Clear all</button>
+        onclick="if(confirm('Clear your entire reading history? This cannot be undone.')){localStorage.removeItem('umami-read-manual');localStorage.removeItem('umami-read-pct');location.reload();}">Clear all</button>
     </div>
 
     <ul id="reading-history-list" class="reading-history-list" style="list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-rule);"></ul>
@@ -106,8 +106,8 @@ permalink: /reading-history/
     var empty = document.getElementById('reading-history-empty');
     var summary = document.getElementById('reading-history-summary');
     if (!list) return;
-    var manual = load('tft-read-manual');
-    var pct = load('tft-read-pct');
+    var manual = load('umami-read-manual');
+    var pct = load('umami-read-pct');
     var entries = [];
     Object.keys(manual).forEach(function (url) {
       var m = manual[url];
@@ -153,12 +153,12 @@ permalink: /reading-history/
       var btn = ev.target.closest('[data-rh-remove]');
       if (!btn) return;
       var url = btn.getAttribute('data-rh-remove');
-      var m = load('tft-read-manual');
+      var m = load('umami-read-manual');
       delete m[url];
-      try { localStorage.setItem('tft-read-manual', JSON.stringify(m)); } catch (e) {}
-      var p = load('tft-read-pct');
+      try { localStorage.setItem('umami-read-manual', JSON.stringify(m)); } catch (e) {}
+      var p = load('umami-read-pct');
       delete p[url];
-      try { localStorage.setItem('tft-read-pct', JSON.stringify(p)); } catch (e) {}
+      try { localStorage.setItem('umami-read-pct', JSON.stringify(p)); } catch (e) {}
       btn.closest('li').remove();
     });
   }

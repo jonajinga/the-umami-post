@@ -1,0 +1,3 @@
+{
+  "permalink": "/food-history/{{ page.fileSlug }}/"
+}

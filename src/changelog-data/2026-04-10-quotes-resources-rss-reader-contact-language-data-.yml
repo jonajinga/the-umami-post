@@ -1,10 +1,10 @@
-date: "2026-04-10"
+﻿date: "2026-04-10"
 title: Quotes, resources, RSS reader, contact, language, data management
 sections:
   - label: New pages
     entries:
-      - Quotes page at /quotes/ — 30 curated freethought quotes with save, share, copy buttons and author filter
-      - Freethought Resources at /resources/ — organizations, publications, communities, archives, podcasts
+      - Quotes page at /quotes/ — 30 curated Food quotes with save, share, copy buttons and author filter
+      - Food Resources at /resources/ — organizations, publications, communities, archives, podcasts
       - RSS Reader at /reader/ — feeds fetched at build time, tab filtering by source
       - "Contact page at /contact/ — replaces all mailto: links with structured contact info"
       - Language page at /language/ — translation how-to, supported languages, privacy info

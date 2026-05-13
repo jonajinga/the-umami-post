@@ -1,5 +1,5 @@
-/**
- * The Freethinking Times — Article Download
+﻿/**
+ * The Umami Post — Article Download
  * Serves article content as plain text (.txt), Markdown (.md), or ePub (.epub).
  * ePub generation uses JSZip, loaded lazily from CDN on first use.
  */

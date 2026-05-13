@@ -1,0 +1,6 @@
+{# Star rating. Expects: rating (0-5). #}
+{% set _r = rating or 0 %}
+<span class="star-rating" aria-label="Rated {{ _r }} out of 5">
+  {% for i in range(0, 5) %}<span class="star-rating__star" aria-hidden="true">{% if i < _r %}&#9733;{% else %}&#9734;{% endif %}</span>{% endfor %}
+  <span class="star-rating__value">{{ _r }}/5</span>
+</span>

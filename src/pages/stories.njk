@@ -1,0 +1,44 @@
+---
+layout: base
+title: Stories
+description: News, opinion, deep dives, food culture, food science, and food history -- all the writing that isn't a recipe.
+permalink: /stories/
+eleventyExcludeFromCollections: true
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Index</span>
+    <h1 class="recipe-hero__title">Stories</h1>
+    <p class="recipe-hero__dek">Everything we publish that isn't a recipe. News, opinion, deep dives, culture, science, history.</p>
+  </header>
+
+  {% set storySections = ["news", "opinion", "deep-dives", "food-culture", "food-science", "food-history", "cooks-letters"] %}
+  <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-8); margin-top: var(--space-8);">
+    {% for s in storySections %}
+      {% set items = collections[s] | reverse | limit(3) %}
+      <section style="border-bottom: 1px solid var(--color-rule); padding-bottom: var(--space-6);">
+        <header style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-4);">
+          <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">
+            <a href="/{{ s }}/" style="color: var(--color-ink); text-decoration: none;">{{ site.sections[s].label }}</a>
+          </h2>
+          <a href="/{{ s }}/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-accent); text-decoration: none;">All &rarr;</a>
+        </header>
+        {% if items.length > 0 %}
+        <ul style="list-style:none;padding:0;margin:0;">
+          {% for item in items %}
+          <li style="padding: var(--space-3) 0; border-top: 1px solid var(--color-rule);">
+            <a href="{{ item.url }}" style="font-family: var(--font-headline); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); text-decoration: none; display: block;">{{ item.data.title }}</a>
+            {% if item.data.description %}<p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-muted); margin: 4px 0 0;">{{ item.data.description }}</p>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-faint); font-style: italic;">Nothing published in {{ site.sections[s].label }} yet.</p>
+        {% endif %}
+      </section>
+    {% endfor %}
+  </div>
+
+</div>

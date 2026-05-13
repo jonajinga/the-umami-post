@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+title: Recipes
+description: Tested recipes from our kitchen and yours. Filterable by cuisine, diet, course, season, and time.
+permalink: /recipes/
+section: recipes
+eleventyExcludeFromCollections: true
+---
+
+<div aria-hidden="true" style="display:none">
+  <span data-pagefind-meta="section">Recipes</span>
+  <span data-pagefind-filter="section">recipes</span>
+</div>
+
+<header class="recipe-hero container">
+  <span class="recipe-hero__eyebrow">Index</span>
+  <h1 class="recipe-hero__title">Recipes</h1>
+  <p class="recipe-hero__dek">Tested. Annotated. Free to cook, share, and remix.</p>
+</header>
+
+<section class="container" style="margin-top: var(--space-8);">
+  <form action="/search/" method="get" style="display:flex;gap:var(--space-3);max-width:42rem;">
+    <input type="search" name="q" placeholder="Search recipes" aria-label="Search recipes" style="flex:1;font-family:var(--font-ui);font-size:var(--text-base);padding:8px 12px;border:1px solid var(--color-rule);background:var(--color-bg);color:var(--color-ink);">
+    <input type="hidden" name="filter[section]" value="recipes">
+    <button type="submit" class="btn btn--primary" style="font-family:var(--font-ui);font-size:var(--text-sm);font-weight:600;background:var(--color-accent);color:var(--color-bg);border:0;padding:8px 20px;cursor:pointer;">Search</button>
+  </form>
+
+  {% set recipesList = collections.recipes | reverse %}
+  {% if recipesList.length > 0 %}
+  <div class="recipe-grid" style="margin-top: var(--space-8);">
+    {% for recipe in recipesList %}
+      {% set recipe = recipe %}
+      {% include "partials/recipe-card.njk" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <p style="margin-top: var(--space-8); font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-faint);">No recipes published yet. <a href="/submit/recipe/" style="color: var(--color-accent);">Submit one</a> to get us started.</p>
+  {% endif %}
+</section>

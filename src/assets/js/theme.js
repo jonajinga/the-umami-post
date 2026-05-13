@@ -1,11 +1,11 @@
-/**
- * The Freethinking Times — Theme System
+﻿/**
+ * The Umami Post — Theme System
  * Handles dark/light mode with no flash on load.
  * This script MUST be inlined in <head> to prevent FOUC.
  */
 
 (function () {
-  const STORAGE_KEY = (window.__PREFIX || 'tft') + '-theme';
+  const STORAGE_KEY = (window.__PREFIX || 'umami') + '-theme';
   const root = document.documentElement;
 
   function getSystemTheme() {
@@ -27,10 +27,10 @@
 
   // Apply background preset immediately (prevent flash)
   try {
-    const bg = localStorage.getItem((window.__PREFIX || 'tft') + '-gs-bg');
+    const bg = localStorage.getItem((window.__PREFIX || 'umami') + '-gs-bg');
     if (bg && bg !== 'default') root.setAttribute('data-gs-bg', bg);
 
-    const gsFont = localStorage.getItem((window.__PREFIX || 'tft') + '-gs-font');
+    const gsFont = localStorage.getItem((window.__PREFIX || 'umami') + '-gs-font');
     if (gsFont && gsFont !== 'default') {
       root.setAttribute('data-gs-font', gsFont);
       // Preload web fonts
@@ -40,15 +40,15 @@
 
     // Text-size selector retired — clear any persisted value so previously
     // saved sizes don't keep overriding the typography scale.
-    localStorage.removeItem((window.__PREFIX || 'tft') + '-gs-font-size');
+    localStorage.removeItem((window.__PREFIX || 'umami') + '-gs-font-size');
 
-    const gsSpacing = localStorage.getItem((window.__PREFIX || 'tft') + '-gs-spacing');
+    const gsSpacing = localStorage.getItem((window.__PREFIX || 'umami') + '-gs-spacing');
     if (gsSpacing && gsSpacing !== 'normal') {
       const map = { tight: '1.3', relaxed: '1.8' };
       if (map[gsSpacing]) root.style.lineHeight = map[gsSpacing];
     }
 
-    const gsWordspace = localStorage.getItem((window.__PREFIX || 'tft') + '-gs-wordspace');
+    const gsWordspace = localStorage.getItem((window.__PREFIX || 'umami') + '-gs-wordspace');
     if (gsWordspace && gsWordspace !== 'normal') {
       const wsMap = { wide: '0.12em', wider: '0.25em' };
       if (wsMap[gsWordspace]) root.style.wordSpacing = wsMap[gsWordspace];

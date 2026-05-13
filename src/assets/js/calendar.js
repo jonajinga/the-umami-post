@@ -1,5 +1,5 @@
-/* ============================================================
-   THE FREETHINKING TIMES — Events Calendar
+﻿/* ============================================================
+   The Umami Post — Events Calendar
    Editorial-style calendar with recurrence, keyboard nav,
    hash state, and responsive views.
    ============================================================ */

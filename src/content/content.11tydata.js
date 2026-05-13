@@ -12,10 +12,6 @@ module.exports = {
   // have redistribution rights for (licensed photos, embedded tweets,
   // one-time-permission long quotes) or have live legal exposure.
   syndicate: true,
-  // Default Kokoro voice for build-time TTS. Override per-article in
-  // front matter (e.g., `voice: am_michael`). See the voice catalog
-  // in src/assets/js/tts.js for the full list.
-  voice: "af_heart",
   eleventyComputed: {
     eleventyExcludeFromCollections: (data) => {
       if (process.env.SHOW_FUTURE === "1") return data.eleventyExcludeFromCollections || false;

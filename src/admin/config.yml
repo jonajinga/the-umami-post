@@ -1,4 +1,4 @@
-# Decap CMS Configuration
+﻿# Decap CMS Configuration
 # https://decapcms.org/docs/configuration-options/
 #
 # Authentication: GitHub PKCE flow (no server required)
@@ -7,9 +7,9 @@
 
 backend:
   name: github
-  repo: jonajinga/the-freethinking-times
+  repo: jonajinga/the-the-umami-post
   branch: main
-  base_url: https://thefreethinkingtimes.com
+  base_url: https://theumamipost.com
   auth_endpoint: api/auth
 
 publish_mode: editorial_workflow

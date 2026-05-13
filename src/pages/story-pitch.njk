@@ -1,0 +1,91 @@
+---
+layout: base
+title: "Pitch a Story"
+description: Food journalism, essays, profiles, deep dives. Pitch a story to The Umami Post.
+permalink: /submit/story/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/submit/">Submit</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Story</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Pitch a Story</h1>
+      <p class="page-header__lede">Tell us what you want to report, and why this publication is the right home for it.</p>
+    </header>
+
+    <div class="article-body">
+      <p>We commission reported features, essays, profiles, and deep dives. Rates vary by length and the work involved. We don't publish AI-generated copy.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin-top: var(--space-6);">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Story pitch, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Story Pitch">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="s-name">Name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="s-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="s-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="s-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="s-title">Working title <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="working_title" id="s-title" required aria-required="true">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="s-section">Section</label>
+          <select class="w3f__input" name="section" id="s-section">
+            <option value="">-- choose --</option>
+            <option>News</option><option>Opinion</option><option>Deep Dives</option>
+            <option>Food & Culture</option><option>Food Science</option><option>Food History</option>
+            <option>Cook's Letters</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="s-pitch">Pitch <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="s-pitch-hint">300-500 words. What's the story, who is it about, what's the angle, and why now.</span>
+          <textarea class="w3f__textarea" name="pitch" id="s-pitch" rows="10" required aria-required="true" aria-describedby="s-pitch-hint"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="s-reporting">Reporting plan</label>
+          <span class="w3f__hint" id="s-reporting-hint">Who you'll interview, what you'll observe, what records you'll request.</span>
+          <textarea class="w3f__textarea" name="reporting_plan" id="s-reporting" rows="5" aria-describedby="s-reporting-hint"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="s-words">Estimated word count</label>
+            <input class="w3f__input" type="text" name="word_count" id="s-words" placeholder="e.g. 1,800">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="s-deadline">Deadline you can hit</label>
+            <input class="w3f__input" type="text" name="deadline" id="s-deadline" placeholder="e.g. 4 weeks">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="s-clips">Prior clips (URLs)</label>
+          <textarea class="w3f__textarea" name="clips" id="s-clips" rows="3" placeholder="One URL per line"></textarea>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Pitch</button>
+        <p class="w3f__privacy">We try to respond within ten business days. If we pass, we'll tell you why.</p>
+      </form>
+    </div>
+  </div>
+</div>

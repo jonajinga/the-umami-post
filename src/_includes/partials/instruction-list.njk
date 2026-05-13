@@ -1,0 +1,15 @@
+{# Numbered step-by-step instructions. Expects: instructions (array
+   of { body, image, imageAlt }). Body is markdown-rendered HTML. #}
+<ol class="instruction-list">
+  {% for step in instructions %}
+  <li class="instruction-list__item" id="step-{{ loop.index }}">
+    <div class="instruction-list__body">{{ step.body | safe }}</div>
+    {% if step.image %}
+    <figure class="instruction-list__image">
+      <img src="{{ step.image }}" alt="{{ step.imageAlt or '' }}" loading="lazy" decoding="async">
+      {% if step.caption %}<figcaption>{{ step.caption }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ol>

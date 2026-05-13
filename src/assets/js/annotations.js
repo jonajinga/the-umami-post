@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Article Annotations — highlights, notes, and bookmarks for article pages.
  * Adapted from the library reader system.
  * Stores data in localStorage keyed by page URL slug.
@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
 
   // Only run on article pages (check for the context element)
   var ctx = document.getElementById('annotations-context');
@@ -515,7 +515,7 @@
     var panelClose   = panel ? panel.querySelector('.library-panel__close') : null;
     var panelTitle   = panel ? panel.querySelector('.library-panel__title') : null;
 
-    var PANEL_KEY = (window.__PREFIX || 'tft') + '-reader-panel';
+    var PANEL_KEY = (window.__PREFIX || 'umami') + '-reader-panel';
 
     // Shrink the panel title font-size until the full text fits on <= 3
     // lines without truncation. Long article headlines used to hit the
@@ -718,7 +718,7 @@
       var notes = all.filter(function (a) { return !!a.note; });
       var w = window.open('', '_blank');
       var html = '<html><head><title>Notes — ' + pageTitle + '</title><style>body{font-family:Georgia,serif;max-width:600px;margin:2rem auto;color:#1a1a1a;}h1{font-size:1.4rem;}h2{font-size:1.1rem;margin-top:2rem;border-bottom:2px solid #000;padding-bottom:0.3rem;}blockquote{border-left:3px solid #c0392b;padding-left:1rem;margin:0.75rem 0;font-style:italic;}.note{color:#333;font-size:0.9rem;margin:0.25rem 0 0.75rem 1rem;}.date{color:#888;font-size:0.8rem;margin:0.2rem 0 0.75rem;}</style></head><body>';
-      html += '<p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:#888;margin:0 0 0.5rem;">The Freethinking Times</p>';
+      html += '<p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:#888;margin:0 0 0.5rem;">The Umami Post</p>';
       html += '<h1>' + pageTitle + '</h1>';
       html += '<p style="color:#888;font-size:0.85rem;margin-bottom:1.5rem;">' + location.origin + pageUrl + '</p>';
 

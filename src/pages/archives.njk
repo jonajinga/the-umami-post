@@ -1,7 +1,7 @@
----
+﻿---
 layout: base
 title: Archives
-description: The complete article archive of The Freethinking Times.
+description: The complete article archive of The Umami Post.
 permalink: /archives/
 ---
 <div class="container" style="padding-top: 0; padding-bottom: var(--space-20);">
@@ -73,7 +73,7 @@ permalink: /archives/
   <header class="archive-header" style="margin-top: var(--space-8); margin-bottom: var(--space-10); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
     <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-2);">Archives</h1>
     <p style="font-size: var(--text-lg); color: var(--color-ink-muted); font-style: italic; margin: 0 0 var(--space-4);">
-      {{ collections.allContent | length }} articles published in The Freethinking Times.
+      {{ collections.allContent | length }} articles published in The Umami Post.
     </p>
     {% set viewFilter = "" %}
     {% include "partials/archive-views-buttons.njk" %}
@@ -99,7 +99,7 @@ permalink: /archives/
         {% for item in group.articles %}
         {% set itemDate = item.date | htmlDateString %}
         {% set authorSlug = item.data.author %}
-        {% set authorName = authors[authorSlug].name if (authorSlug and authors[authorSlug]) else "The Freethinking Times" %}
+        {% set authorName = authors[authorSlug].name if (authorSlug and authors[authorSlug]) else "The Umami Post" %}
         {% set itemSection = item.data.section if item.data.section else "" %}
         {% set itemTitle = item.data.title if item.data.title else "" %}
         {% set itemDesc = item.data.description if item.data.description else "" %}
@@ -137,18 +137,6 @@ permalink: /archives/
           {# Description #}
           {% if itemDesc %}
           <p class="archive-entry__desc">{{ itemDesc }}</p>
-          {% endif %}
-
-          {# Listen button — own row so the byline below stays a
-             clean single line. Auto-skips when no MP3 exists. #}
-          {% set listenUrl = item.url %}
-          {% set listenTitle = itemTitle %}
-          {% set listenSize = "sm" %}
-          {% set _aud = audioManifest[item.url] %}
-          {% if _aud %}
-          <div class="archive-entry__listen">
-            {% include "partials/listen-button.njk" %}
-          </div>
           {% endif %}
 
           {# Meta row: author | reading time | word count

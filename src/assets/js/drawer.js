@@ -1,5 +1,5 @@
-/**
- * The Freethinking Times — Nav Drawer
+﻿/**
+ * The Umami Post — Nav Drawer
  * Slide-out navigation drawer, always available.
  */
 

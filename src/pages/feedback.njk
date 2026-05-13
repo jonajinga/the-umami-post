@@ -1,7 +1,7 @@
----
+﻿---
 layout: base
 title: "Send Feedback"
-description: Tell us what you think about The Freethinking Times, report bugs, suggest features, or say something kind.
+description: Tell us what you think about The Umami Post, report bugs, suggest features, or say something kind.
 permalink: /feedback/
 ---
 
@@ -46,7 +46,7 @@ permalink: /feedback/
         <div class="w3f__group">
           <label class="w3f__label" for="fb-page">Which page? <span class="w3f__optional">(if applicable)</span></label>
           <span class="w3f__hint" id="fb-page-hint">Paste the URL or describe the page</span>
-          <input class="w3f__input" type="text" name="page_url" id="fb-page" aria-describedby="fb-page-hint" placeholder="https://thefreethinkingtimes.com/..." inputmode="url">
+          <input class="w3f__input" type="text" name="page_url" id="fb-page" aria-describedby="fb-page-hint" placeholder="https://theumamipost.com/..." inputmode="url">
         </div>
 
         <div class="w3f__group">
@@ -78,7 +78,7 @@ permalink: /feedback/
 (function () {
   var ref = document.referrer;
   var input = document.getElementById('fb-page');
-  if (ref && input && !input.value && ref.indexOf('thefreethinkingtimes.com') !== -1) {
+  if (ref && input && !input.value && ref.indexOf('theumamipost.com') !== -1) {
     input.value = ref;
   }
 }());

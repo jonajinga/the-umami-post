@@ -1,0 +1,118 @@
+---
+layout: layouts/base.njk
+isReadingPage: true
+---
+
+{% block head %}
+{% if tags %}<meta name="news_keywords" content="{{ tags | join(', ') }}">{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": {{ title | dump | safe }},
+  {% if dek %}"description": {{ dek | dump | safe }},{% endif %}
+  {% if hero %}"image": {{ (site.url + hero) | dump | safe }},{% endif %}
+  "datePublished": {{ (page.date | isoDate) | dump | safe }},
+  "author": {
+    "@type": "Person",
+    "name": {{ (authors[author].name or authorName or "The Umami Post") | dump | safe }}
+  },
+  {% if totalTime %}"totalTime": {{ totalTime | dump | safe }},{% endif %}
+  {% if instructions %}"step": [
+    {%- for s in instructions -%}
+    { "@type": "HowToStep", "position": {{ loop.index }}, "text": {{ s.body | dump | safe }} }{% if not loop.last %},{% endif %}
+    {%- endfor -%}
+  ]{% endif %}
+}
+</script>
+{% endblock %}
+
+<div aria-hidden="true" style="display:none">
+  <span data-pagefind-meta="section">Techniques</span>
+  <span data-pagefind-filter="section">techniques</span>
+  {% if author %}<span data-pagefind-filter="author">{{ authors[author].name or authorName or author }}</span>{% endif %}
+  {% if subsection %}<span data-pagefind-filter="subsection">{{ subsection }}</span>{% endif %}
+  {% if level %}<span data-pagefind-filter="level">{{ level }}</span>{% endif %}
+</div>
+
+<article class="recipe container">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Technique{% if subsection %} &middot; {{ subsection }}{% endif %}</span>
+    <h1 class="recipe-hero__title">{{ title }}</h1>
+    {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
+    {% if hero %}
+    <figure class="recipe-hero__photo">
+      <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
+      {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+    <p class="recipe-hero__byline">
+      {% if author %}By <a href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      &middot; {{ page.date | readableDate }}
+    </p>
+  </header>
+
+  {% if totalTime or level or prerequisites %}
+  <div class="recipe-meta-bar">
+    {% if totalTime %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Total time</span>
+      <span class="recipe-meta-bar__value">{{ totalTime | duration }}</span>
+    </div>
+    {% endif %}
+    {% if level %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Cook level</span>
+      <span class="recipe-meta-bar__value">{{ level }}</span>
+    </div>
+    {% endif %}
+    {% if prerequisites %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Needs</span>
+      <span class="recipe-meta-bar__value">{{ prerequisites }}</span>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="recipe-body" style="grid-template-columns: 1fr;">
+    <section class="recipe-body__instructions" style="max-width: var(--max-width-prose); margin: 0 auto;">
+      {% if whyMatters %}
+      <h2>Why this matters</h2>
+      <div class="article-body">{{ whyMatters | safe }}</div>
+      {% endif %}
+
+      <h2 style="margin-top: var(--space-8);">Step by step</h2>
+      {% include "partials/instruction-list.njk" %}
+
+      {% if commonMistakes %}
+      <aside class="recipe-notes" style="border-color: var(--color-news);">
+        <h2>Common mistakes</h2>
+        {{ commonMistakes | safe }}
+      </aside>
+      {% endif %}
+
+      <div class="article-body" style="margin-top: var(--space-8);">
+        {{ content | safe }}
+      </div>
+
+      {% if relatedRecipes %}
+      <section style="margin-top: var(--space-10);">
+        <h2>Recipes that use this technique</h2>
+        <div class="recipe-grid">
+          {% for url in relatedRecipes %}
+            {% for recipe in collections.recipes %}
+              {% if recipe.url == url %}
+                {% set recipe = recipe %}
+                {% include "partials/recipe-card.njk" %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+    </section>
+  </div>
+
+</article>

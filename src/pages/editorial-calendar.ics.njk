@@ -1,10 +1,10 @@
----
+﻿---
 permalink: /editorial-calendar/calendar.ics
 eleventyExcludeFromCollections: true
 ---
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//The Freethinking Times//Editorial Calendar//EN
+PRODID:-//The Umami Post//Editorial Calendar//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:{{ site.title }} — Editorial Calendar
@@ -15,7 +15,7 @@ X-WR-CALDESC:Publish dates for every article in {{ site.title }}.
 {%- set _summary = _summary | replace("\\", "\\\\") | replace(",", "\\,") | replace(";", "\\;") | replace("\n", "\\n") -%}
 {%- set _desc = (item.data.description or "") | replace("\\", "\\\\") | replace(",", "\\,") | replace(";", "\\;") | replace("\n", "\\n") -%}
 BEGIN:VEVENT
-UID:{{ item.url | urlencode }}@thefreethinkingtimes
+UID:{{ item.url | urlencode }}@theumamipost
 DTSTAMP:{{ _ts }}T000000Z
 DTSTART;VALUE=DATE:{{ _ts }}
 SUMMARY:{{ _summary }}

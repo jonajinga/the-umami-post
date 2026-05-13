@@ -1,8 +1,8 @@
 [
   {
-    "title": "The Freethought Glossary",
-    "description": "A proper philosophical glossary of terms that matter to the tradition, Freethought, Skepticism, Empiricism, Rationalism, Secular Humanism, Agnosticism, Atheism, Deism, Pantheism, Materialism, Determinism.",
-    "shortDescription": "The philosophical vocabulary of the freethinking tradition, defined rigorously.",
+    "title": "The Food Glossary",
+    "description": "A proper philosophical glossary of terms that matter to the tradition, Food, Skepticism, Empiricism, Rationalism, Secular Humanism, Agnosticism, Atheism, Deism, Pantheism, Materialism, Determinism.",
+    "shortDescription": "The philosophical vocabulary of the Umami tradition, defined rigorously.",
     "url": "/glossary/",
     "icon": "📖",
     "status": "Active",
@@ -18,8 +18,8 @@
     "launched": "2026"
   },
   {
-    "title": "The Freethinker's Bookshelf",
-    "description": "A curated, annotated reading list for the intellectually curious. Books that shaped the freethinking tradition, and books that should. Every entry tells you what the book does and where it goes wrong.",
+    "title": "The Cook's Bookshelf",
+    "description": "A curated, annotated reading list for the intellectually curious. Books that shaped the Umami tradition, and books that should. Every entry tells you what the book does and where it goes wrong.",
     "shortDescription": "A curated reading list for the intellectually curious. Every entry tells you what the book does and where it goes wrong.",
     "url": "/bookshelf/",
     "icon": "📚",

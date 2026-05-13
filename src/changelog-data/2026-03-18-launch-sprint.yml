@@ -1,11 +1,11 @@
-date: "2026-03-18"
+﻿date: "2026-03-18"
 title: Launch sprint
 sections:
   - label: Intellectual projects
     entries:
       - >-
-        Four new project sections launched: The Freethought Glossary (/glossary/), The Thought Experiment Library
-        (/thought-experiments/), The Freethinker's Bookshelf (/bookshelf/), The Trials of Thought (/trials/)
+        Four new project sections launched: The Food Glossary (/glossary/), The Thought Experiment Library
+        (/thought-experiments/), The Cook's Bookshelf (/bookshelf/), The Trials of Thought (/trials/)
       - >-
         34 content files written: 11 glossary terms, 5 thought experiment essays, 11 annotated bookshelf entries, 7
         trial essays
@@ -65,12 +65,12 @@ sections:
       - "Pansy favicon: SVG at 16 px; pansy icon in footer and masthead page"
       - GTranslate floating widget — nine languages, dark mode corrected, publication nameplate protected
       - Comments section (Cusdis) — dark mode synced, card-style layout
-      - Games section at /games/ — Fifteen Puzzle, Freethinking Trivia, Word Scramble, Crossy Road variant
+      - Games section at /games/ — Fifteen Puzzle, Umami Trivia, Word Scramble, Crossy Road variant
       - "Footer restructured into four columns: Sections, About, Transparency, Reader Tools"
       - Print CSS suppresses nav, sidebar, interactive elements, and all non-essential chrome
       - Header and footer span full viewport width; masthead converted from absolute to flex layout
       - "Mobile navigation: section nav collapses on small screens, subscribe form stacks correctly"
-      - Site URL corrected to https://thefreethinkingtimes.com — fixes canonical links, OG images, RSS
+      - Site URL corrected to https://theumamipost.com — fixes canonical links, OG images, RSS
   - label: SEO & discoverability
     entries:
       - XML sitemap at /sitemap.xml — all articles and key static pages with lastmod dates
@@ -92,4 +92,4 @@ sections:
         differences
       - All dropdown panels harmonised to the same background token
       - Section badge links fixed — Science & Technology and Arts & Culture now resolve correctly
-      - Freethinkers Map removed; Submit button removed from masthead
+      - Cooks Map removed; Submit button removed from masthead

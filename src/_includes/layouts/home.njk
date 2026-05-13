@@ -4,103 +4,86 @@ layout: layouts/base.njk
 
 <div class="container front-page">
 
-  {# ─── Lead / Hero ─────────────────────────────────────────── #}
-  <section class="front-hero" aria-label="Lead stories">
-    {% set leadStory = collections.featured | first or collections.allContent | first %}
-    {% if leadStory %}
-    {% set article = leadStory %}
-    {% set size = "lg" %}
-    {% set showImage = true %}
-    {% set priority = true %}
-    {% include "partials/article-card.njk" %}
-    {% set priority = false %}
-    {% endif %}
+  {# -- Hero / brand statement -- #}
+  <section class="recipe-hero" style="border-bottom: 0; padding: var(--space-12) 0 var(--space-6);">
+    <span class="recipe-hero__eyebrow">A community food publication &middot; Free and open source</span>
+    <h1 class="recipe-hero__title" style="max-width: 16ch;">Cook better. Together.</h1>
+    <p class="recipe-hero__dek">
+      Tested recipes, technique guides, food journalism, and reviews -- written by cooks, for cooks. Every recipe is licensed Creative Commons. Every line of code is on GitHub.
+    </p>
+    <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <a href="/recipes/" class="btn btn--primary" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;">Browse Recipes</a>
+      <a href="/submit/recipe/" class="btn" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);border:1px solid var(--color-rule);padding:10px 20px;text-decoration:none;display:inline-block;">Submit a Recipe</a>
+    </p>
   </section>
 
-  {# ─── Secondary Stories ────────────────────────────────────── #}
-  {% set secondaryStories = collections.allContent | limit(4) %}
-  {% if secondaryStories.length > 1 %}
-  <section class="front-secondary" aria-label="More stories">
-    {% for item in secondaryStories %}
-    {% if not loop.first %}
-    {% set article = item %}
-    {% set size = "sm" %}
-    {% include "partials/article-card.njk" %}
-    {% endif %}
-    {% endfor %}
+  {# -- Latest recipes -- #}
+  {% set latestRecipes = collections.recipes | reverse %}
+  {% if latestRecipes.length > 0 %}
+  <section class="front-section-strip" aria-label="Latest recipes" style="margin-top: var(--space-12);">
+    <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-accent); padding-bottom: var(--space-3); margin-bottom: var(--space-6);">
+      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0;">Latest Recipes</h2>
+      <a href="/recipes/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-accent); text-decoration: none;">All recipes &rarr;</a>
+    </header>
+    <div class="recipe-grid">
+      {% for recipe in latestRecipes | limit(6) %}
+        {% set recipe = recipe %}
+        {% include "partials/recipe-card.njk" %}
+      {% endfor %}
+    </div>
   </section>
   {% endif %}
 
-  {# ─── Section Strips ───────────────────────────────────────── #}
-  {% set frontSections = ["opinion", "analysis", "history"] %}
-  {% for sectionKey in frontSections %}
-  {% set sectionItems = collections[sectionKey] | limit(3) %}
-  {% if sectionItems and sectionItems.length > 0 %}
-  <section class="front-section-strip" aria-label="{{ sectionKey | title }} section">
-
-    {# Section label column #}
-    <div class="front-section-strip__label">
-      <a href="/{{ sectionKey }}/"
-         class="section-badge section-badge--{{ sectionKey }}"
-         style="font-size: var(--text-md); display: block; margin-bottom: var(--space-3);">
-        {{ sectionKey | replace("-", " ") | title }}
-      </a>
-      <p style="font-size: var(--text-sm); color: var(--color-ink-muted); font-style: italic; line-height: var(--leading-normal);">
-        {{ site.sections[sectionKey].description }}
-      </p>
-      <a href="/{{ sectionKey }}/" class="btn" style="margin-top: var(--space-4); font-size: var(--text-xs);"
-         aria-label="View all {{ sectionKey | replace('-', ' ') | title }} articles">
-        View All →
-      </a>
+  {# -- Techniques + Reviews two-column -- #}
+  <section style="margin-top: var(--space-12); display: grid; gap: var(--space-10); grid-template-columns: 1fr;">
+    {% set latestTechniques = collections.techniques | reverse | limit(3) %}
+    {% if latestTechniques.length > 0 %}
+    <div>
+      <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-techniques); padding-bottom: var(--space-3); margin-bottom: var(--space-5);">
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Techniques</h2>
+        <a href="/techniques/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-techniques); text-decoration: none;">All techniques &rarr;</a>
+      </header>
+      <ul style="list-style:none;padding:0;margin:0;">
+        {% for item in latestTechniques %}
+        <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-rule);">
+          <a href="{{ item.url }}" style="font-family: var(--font-headline); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); text-decoration: none; display: block; line-height: var(--leading-snug);">{{ item.data.title }}</a>
+          {% if item.data.dek %}<p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-muted); margin: 4px 0 0; font-style: italic;">{{ item.data.dek }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
     </div>
+    {% endif %}
 
-    {# Articles in this section #}
-    <div class="front-section-strip__articles">
-      {% for item in sectionItems %}
-      {% set article = item %}
-      {% set size = "sm" %}
-      {% include "partials/article-card.njk" %}
-      {% endfor %}
+    {% set latestReviews = collections.reviews | reverse | limit(3) %}
+    {% if latestReviews.length > 0 %}
+    <div>
+      <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-reviews); padding-bottom: var(--space-3); margin-bottom: var(--space-5);">
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Reviews</h2>
+        <a href="/reviews/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-reviews); text-decoration: none;">All reviews &rarr;</a>
+      </header>
+      <ul style="list-style:none;padding:0;margin:0;">
+        {% for item in latestReviews %}
+        <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-rule);">
+          <a href="{{ item.url }}" style="font-family: var(--font-headline); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); text-decoration: none; display: block; line-height: var(--leading-snug);">{{ item.data.title }}</a>
+          {% if item.data.dek %}<p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-muted); margin: 4px 0 0; font-style: italic;">{{ item.data.dek }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-
-  </section>
-  {% endif %}
-  {% endfor %}
-
-  {# ─── Subscribe via reader (open-web / RSS CTA) ──────────── #}
-  <section class="front-subscribe" aria-label="Subscribe by RSS">
-    <div class="front-subscribe__body">
-      <p class="front-subscribe__kicker">Follow the open way</p>
-      <h2 class="front-subscribe__title">Subscribe in any RSS reader</h2>
-      <p class="front-subscribe__lede">
-        No account. No algorithm. Every article, the moment it publishes, straight to your reader of choice. Pick the whole site, a section, an author, or a single topic.
-      </p>
-    </div>
-    <div class="front-subscribe__actions">
-      <a class="btn btn--primary" href="/feeds/" data-umami-event="subscribe-cta">Browse all feeds &rarr;</a>
-      <a class="btn btn--ghost" href="/feed.xml" data-umami-event="rss-sub" data-umami-event-feed="main">Grab the main feed</a>
-    </div>
+    {% endif %}
   </section>
 
-  {# ─── Quick Sections ──────────────────────────────────────── #}
-  <section class="front-quick" aria-label="More sections">
-    {% set quickSections = ["arts-culture", "science-technology", "letters"] %}
-    {% for sectionKey in quickSections %}
-    {% set sectionItems = collections[sectionKey] | limit(3) %}
-    <div class="front-quick__col">
-      <a href="/{{ sectionKey }}/"
-         class="section-badge section-badge--{{ sectionKey }} front-quick__badge">
-        {{ sectionKey | replace("-", " ") | title }}
-      </a>
-      {% for item in sectionItems %}
-      <div class="front-quick__item{% if not loop.last %} front-quick__item--border{% endif %}">
-        <a href="{{ item.url }}" class="front-quick__link">{{ item.data.title }}</a>
-        <time class="front-quick__date">{{ item.date | shortDate }}</time>
-      </div>
-      {% endfor %}
-    </div>
-    {% endfor %}
+  {# -- Community call-out -- #}
+  <section style="margin-top: var(--space-16); padding: var(--space-10) var(--space-8); background: var(--color-bg-alt); border-left: 4px solid var(--color-accent);">
+    <p style="font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 var(--space-3);">Built by readers</p>
+    <h2 style="font-family: var(--font-masthead); font-size: var(--text-xl); margin: 0 0 var(--space-3);">This site belongs to the people who cook from it.</h2>
+    <p style="font-family: var(--font-body); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-ink-muted); max-width: 60ch; margin: 0 0 var(--space-5);">
+      Every recipe is tested. Every contributor is credited. The whole codebase is open source on GitHub. Submit a recipe, pitch a story, or open a pull request -- whichever feels like your speed.
+    </p>
+    <p style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <a href="/submit/" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;">Ways to contribute</a>
+      <a href="https://github.com/jonajinga/the-umami-post" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);border:1px solid var(--color-rule);padding:10px 20px;text-decoration:none;display:inline-block;">View on GitHub</a>
+    </p>
   </section>
-
 
 </div>{# /.container #}

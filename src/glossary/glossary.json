@@ -1,5 +1,0 @@
-{
-  "layout": "layouts/glossary-entry",
-  "permalink": "/glossary/{{ page.fileSlug }}/",
-  "tags": ["glossary"]
-}

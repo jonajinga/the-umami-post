@@ -1,0 +1,3 @@
+{
+  "permalink": "/cooks-letters/{{ page.fileSlug }}/"
+}

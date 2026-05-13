@@ -1,0 +1,18 @@
+{# Recipe card for /recipes/ grid. Expects: recipe (collection item). #}
+<a class="recipe-card" href="{{ recipe.url }}"
+   {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
+  {% if recipe.data.hero %}
+  <div class="recipe-card__photo">
+    <img src="{{ recipe.data.hero }}" alt="{{ recipe.data.heroAlt or recipe.data.title }}" loading="lazy" decoding="async">
+  </div>
+  {% endif %}
+  <div class="recipe-card__body">
+    {% if recipe.data.course %}<span class="recipe-card__eyebrow">{{ recipe.data.course }}</span>{% endif %}
+    <h3 class="recipe-card__title">{{ recipe.data.title }}</h3>
+    <div class="recipe-card__meta">
+      {% if recipe.data.totalTime %}<span>{{ recipe.data.totalTime | duration }}</span>{% endif %}
+      {% if recipe.data.cuisine %}<span>{{ recipe.data.cuisine }}</span>{% endif %}
+      {% if recipe.data.difficulty %}<span>Difficulty {{ recipe.data.difficulty }}/5</span>{% endif %}
+    </div>
+  </div>
+</a>

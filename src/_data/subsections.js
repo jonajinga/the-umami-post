@@ -1,15 +1,17 @@
-// Subsection lists per section — keys MUST match the sectionSlug used in each
+// Subsection lists per section -- keys MUST match the sectionSlug used in each
 // content/<section>/index.njk front-matter, because section.njk looks these
 // up by sectionSlug. Values are the visible labels; on-article front-matter
 // uses the same label and the runtime slugifies for ?s= URLs and filtering.
 
 module.exports = {
-  "news":               ["U.S.", "World", "Politics", "Local", "Climate", "Education", "Health"],
-  "opinion":            ["Editorials", "Columns", "Letters to the Editor", "Guest Essays"],
-  "analysis":           ["Data", "Explainers", "Context", "Deep Dives"],
-  "arts-culture":       ["Books", "Film", "Music", "Television", "Visual Arts", "Theater"],
-  "science-technology": ["Science", "Technology", "Space", "Medicine", "Environment", "Climate"],
-  "history":            ["Ancient", "Medieval", "Modern", "U.S. History", "World History", "Ideas"],
-  "letters":            ["On the News", "On Opinion", "On Analysis", "On Culture", "On Science", "On History", "Expert Voices", "International", "Corrections Requested"],
-  "reviews":            ["Books", "Film", "Music", "Television", "Theater", "Games", "Podcasts", "Documentaries"]
+  "recipes":       ["Breakfast", "Lunch", "Dinner", "Sides", "Sauces", "Baking", "Drinks", "Dessert", "Snacks", "Preserves"],
+  "techniques":    ["Knife skills", "Heat", "Doughs & batters", "Stocks & sauces", "Fermentation", "Preservation", "Plating"],
+  "reviews":       ["Cookbooks", "Restaurants", "Equipment", "Pantry"],
+  "news":          ["Industry", "Policy", "Labor", "Supply chain", "Climate & food", "Local"],
+  "opinion":       ["Editorials", "Essays", "Cook's letters", "Guest voices"],
+  "deep-dives":    ["Investigations", "Origins", "Profiles", "Data"],
+  "food-culture":  ["Tradition", "Identity", "Diaspora", "Holidays", "Travel"],
+  "food-science":  ["Chemistry", "Nutrition", "Fermentation", "Food safety", "Sensory"],
+  "food-history":  ["Ancient", "Medieval", "Modern", "American", "Global", "Ideas"],
+  "cooks-letters": ["On recipes", "On techniques", "On reviews", "On policy", "Corrections"]
 };

@@ -1,12 +1,12 @@
-/**
- * The Freethinking Times — Public Domain Library
+﻿/**
+ * The Umami Post — Public Domain Library
  * Modules: ReadingPosition, ChapterCompletion, Bookmarks, Annotations
  * Context is read from #library-context (data-work-slug, data-chapter-slug, data-chapter-title).
  */
 (function () {
   'use strict';
 
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
 
   // ─── Context ──────────────────────────────────────────────
   var ctx = document.getElementById('library-context');

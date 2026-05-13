@@ -1,4 +1,4 @@
-# Contributing to The Freethinking Times
+﻿# Contributing to The Umami Post
 
 Thanks for your interest. This document covers the **process** for contributing —
 how to set up locally, how articles move from draft to published, how to add an
@@ -39,10 +39,10 @@ collections — no Git knowledge required.
 
 **Getting access:**
 
-1. Email [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com) to
+1. Email [hello@theumamipost.com](mailto:hello@theumamipost.com) to
    request contributor access. You will need a free GitHub account.
 2. Once your email and GitHub account are added, visit
-   [thefreethinkingtimes.com/admin/](https://thefreethinkingtimes.com/admin/).
+   [theumamipost.com/admin/](https://theumamipost.com/admin/).
 3. Enter the one-time PIN sent to your email, then sign in with GitHub.
 4. All collections appear in the left sidebar: News, Opinion, Analysis, Arts & Culture,
    Science & Technology, History, Letters, Reviews, Glossary, Bookshelf, and more.
@@ -335,8 +335,8 @@ The slug must match the `author:` field in the article frontmatter exactly.
 **Prerequisites:** Node.js 18+, npm, git.
 
 ```bash
-git clone https://github.com/jonajinga/the-freethinking-times.git
-cd the-freethinking-times
+git clone https://github.com/jonajinga/the-the-umami-post.git
+cd the-the-umami-post
 npm install
 cp .env.example .env       # all values optional for local builds
 npm start                  # → http://localhost:8080 with live reload
@@ -487,10 +487,10 @@ concerns, split it.
 - Search open and closed issues before filing a new one.
 - For security vulnerabilities, do not open a public issue — see [SECURITY.md](SECURITY.md).
 - For factual errors in published articles, use the Correction Report template or
-  email [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com).
+  email [hello@theumamipost.com](mailto:hello@theumamipost.com).
 
 ---
 
 ## Questions
 
-Open an issue or email [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com).
+Open an issue or email [hello@theumamipost.com](mailto:hello@theumamipost.com).

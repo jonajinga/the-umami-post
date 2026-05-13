@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Editorial Board — client-side filtering, real swim-lanes, card
  * flyout, persisted filter state (URL + localStorage), keyboard
  * shortcuts, and bulk export (Markdown / CSV).
@@ -17,7 +17,7 @@
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'tft-eb-filters';
+  var STORAGE_KEY = 'umami-eb-filters';
 
   function init() {
     var search   = document.getElementById('eb-search');
@@ -229,7 +229,7 @@
         // /section/slug/ → src/content/section/slug.md (best-effort link)
         var parts = d.url.replace(/^\/|\/$/g, '').split('/');
         if (parts.length === 2) {
-          srcA.setAttribute('href', 'https://github.com/jonajinga/the-freethinking-times/blob/main/src/content/' + parts[0] + '/' + parts[1] + '.md');
+          srcA.setAttribute('href', 'https://github.com/jonajinga/the-the-umami-post/blob/main/src/content/' + parts[0] + '/' + parts[1] + '.md');
         } else {
           srcA.style.display = 'none';
         }

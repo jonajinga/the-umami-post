@@ -1,7 +1,7 @@
----
+﻿---
 layout: base
 title: Archive Showcase
-description: A full-screen slideshow through The Freethinking Times archive. Filter by author, section, subsection, or topic.
+description: A full-screen slideshow through The Umami Post archive. Filter by author, section, subsection, or topic.
 permalink: /archives/showcase/
 eleventyExcludeFromCollections: true
 ---
@@ -339,7 +339,7 @@ eleventyExcludeFromCollections: true
 <div class="as-showcase" id="as-showcase">
   <div class="as-showcase__topbar">
     <a class="as-showcase__brand" href="/" data-no-spa>
-      <span class="as-showcase__brand-full">The Freethinking Times</span>
+      <span class="as-showcase__brand-full">The Umami Post</span>
       <span class="as-showcase__brand-short" aria-hidden="true">TFT</span>
     </a>
     <span class="as-showcase__filter" id="as-filter"></span>
@@ -475,7 +475,7 @@ eleventyExcludeFromCollections: true
   if (!articles.length) {
     showcase.innerHTML =
       '<div class="as-showcase__topbar">' +
-        '<a class="as-showcase__brand" href="/" data-no-spa>The Freethinking Times</a>' +
+        '<a class="as-showcase__brand" href="/" data-no-spa>The Umami Post</a>' +
         '<a class="as-showcase__exit" href="' + exitHref + '" data-no-spa>\u2190 Exit</a>' +
       '</div>' +
       '<p class="as-showcase__empty">No articles match this filter yet. <a href="' + exitHref + '" data-no-spa>Go back</a>.</p>';
@@ -576,14 +576,6 @@ eleventyExcludeFromCollections: true
       resetProgress();
     }
   }
-  document.addEventListener('tft:tts-playing', pauseShowcaseForAudio);
-  // Listen for the bar's audio pause/end so we can resume cycling
-  var barAudio = document.getElementById('audio-bar-source');
-  if (barAudio) {
-    barAudio.addEventListener('pause', resumeShowcaseAfterAudio);
-    barAudio.addEventListener('ended', resumeShowcaseAfterAudio);
-  }
-
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowLeft') show(idx - 1);
     else if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(idx + 1); }

@@ -1,4 +1,4 @@
-date: "2026-04-13"
+﻿date: "2026-04-13"
 title: SPA navigation, music player, gallery, reviews, audit fixes
 sections:
   - label: SPA navigation
@@ -26,7 +26,7 @@ sections:
       - Added to nav bar, Pagefind search, and CMS config
   - label: Footer & sitemap
     entries:
-      - Merged Explore into Projects — everything is now a Freethought Project
+      - Merged Explore into Projects — everything is now a Food Project
       - Split Submit into Get Involved + Suggest Content
       - Merged Transparency + Legal into one section
       - Every link has a title tooltip describing the destination

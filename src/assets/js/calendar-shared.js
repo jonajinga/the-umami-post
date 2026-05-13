@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Shared calendar engine — drives both /editorial-calendar/ and
  * /reading-calendar/. Owns:
  *
@@ -689,7 +689,7 @@
     try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; }
   }
   function buildReadingHistory() {
-    var PREFIX     = (window.__PREFIX || 'tft');
+    var PREFIX     = (window.__PREFIX || 'umami');
     var KEY_MANUAL = PREFIX + '-read-manual';
     var KEY_PCT    = PREFIX + '-read-pct';
     var manual = readLocalArr(KEY_MANUAL);

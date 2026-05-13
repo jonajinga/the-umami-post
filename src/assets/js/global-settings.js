@@ -1,11 +1,11 @@
-/**
+﻿/**
  * Global Display Settings — applies site-wide font, size, spacing, background.
  * Stored in localStorage. Loaded on every page via base.njk.
  */
 (function () {
   'use strict';
 
-  var _p = window.__PREFIX || 'tft';
+  var _p = window.__PREFIX || 'umami';
   var K = {
     fontSize: _p + '-gs-font-size',
     font:     _p + '-gs-font',
