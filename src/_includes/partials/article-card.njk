@@ -54,7 +54,7 @@
   <p class="article-card__byline">
     {% if article.data.author %}
     <span class="article-card__byline-item">By <a href="/author/{{ article.data.author | slugify }}/"
-      {% if authors[article.data.author] and authors[article.data.author].bio %}data-tippy-content="{{ authors[article.data.author].bio }}" data-tippy-theme="author-bio"{% endif %}>{{ authors[article.data.author].name or article.data.authorName or article.data.author }}</a></span>
+      {% if authors[article.data.author] and authors[article.data.author].bio %}data-tippy-content="{{ authors[article.data.author].bio }}"{% endif %}>{{ authors[article.data.author].name or article.data.authorName or article.data.author }}</a></span>
     {% endif %}
     {% if article.templateContent %}
     <span class="article-card__byline-item">{{ article.templateContent | readingTime }}</span>

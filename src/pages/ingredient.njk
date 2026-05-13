@@ -23,7 +23,7 @@ eleventyComputed:
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4);grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
       {% for r in ingredient.recipes %}
       <li>
-        <a href="{{ r.url }}" data-rough="frame" data-rough-color="ink" style="display:block;padding:var(--space-4);text-decoration:none;color:var(--color-ink);font-family:var(--font-headline);font-weight:600;line-height:var(--leading-snug);position:relative;">
+        <a href="{{ r.url }}" style="display:block;padding:var(--space-4);text-decoration:none;color:var(--color-ink);font-family:var(--font-headline);font-weight:600;line-height:var(--leading-snug);position:relative;">
           {{ r.title }}
         </a>
       </li>
@@ -33,4 +33,3 @@ eleventyComputed:
 
 </div>
 
-<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

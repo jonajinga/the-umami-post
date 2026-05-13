@@ -10,30 +10,30 @@ permalink: /search/
   {# ── Sticky search bar (input + section filters), sits flush below masthead ─── #}
   <div class="sp-sticky">
 
-    <div class="sp-input-wrap" data-rough="frame" data-rough-color="ink">
+    <div class="sp-input-wrap">
       <svg class="sp-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="sp-input" placeholder="Search recipes, techniques, reviews, glossary…" autocomplete="off" autofocus aria-keyshortcuts="/" data-rough-skip-frame>
+      <input type="search" id="sp-input" placeholder="Search recipes, techniques, reviews, glossary…" autocomplete="off" autofocus aria-keyshortcuts="/">
       <button type="button" id="sp-clear" class="sp-clear" hidden aria-label="Clear search">&#10005;</button>
       <div id="sp-autocomplete" class="sp-autocomplete" hidden></div>
     </div>
 
     <div id="sp-filters" class="sp-filters">
-      <button class="sp-filter is-active" data-section="" type="button" data-rough="frame" data-rough-color="ink">All</button>
-      <button class="sp-filter" data-section="Recipes" type="button" data-rough="frame" data-rough-color="ink">Recipes</button>
-      <button class="sp-filter" data-section="Techniques" type="button" data-rough="frame" data-rough-color="ink">Techniques</button>
-      <button class="sp-filter" data-section="Reviews" type="button" data-rough="frame" data-rough-color="ink">Reviews</button>
-      <button class="sp-filter" data-section="News" type="button" data-rough="frame" data-rough-color="ink">News</button>
-      <button class="sp-filter" data-section="Opinion" type="button" data-rough="frame" data-rough-color="ink">Opinion</button>
-      <button class="sp-filter" data-section="Deep Dives" type="button" data-rough="frame" data-rough-color="ink">Deep Dives</button>
-      <button class="sp-filter" data-section="Food & Culture" type="button" data-rough="frame" data-rough-color="ink">Food &amp; Culture</button>
-      <button class="sp-filter" data-section="Food Science" type="button" data-rough="frame" data-rough-color="ink">Food Science</button>
-      <button class="sp-filter" data-section="Food History" type="button" data-rough="frame" data-rough-color="ink">Food History</button>
-      <button class="sp-filter" data-section="Cook's Letters" type="button" data-rough="frame" data-rough-color="ink">Cook's Letters</button>
-      <button class="sp-filter" data-section="Quotes" type="button" data-rough="frame" data-rough-color="ink">Quotes</button>
-      <button class="sp-filter" data-section="Glossary" type="button" data-rough="frame" data-rough-color="ink">Glossary</button>
-      <button class="sp-filter" data-section="Bookshelf" type="button" data-rough="frame" data-rough-color="ink">Bookshelf</button>
-      <button class="sp-filter" data-section="Library" type="button" data-rough="frame" data-rough-color="ink">Library</button>
-      <button class="sp-filter" data-section="Authors" type="button" data-rough="frame" data-rough-color="ink">Authors</button>
+      <button class="sp-filter is-active" data-section="" type="button">All</button>
+      <button class="sp-filter" data-section="Recipes" type="button">Recipes</button>
+      <button class="sp-filter" data-section="Techniques" type="button">Techniques</button>
+      <button class="sp-filter" data-section="Reviews" type="button">Reviews</button>
+      <button class="sp-filter" data-section="News" type="button">News</button>
+      <button class="sp-filter" data-section="Opinion" type="button">Opinion</button>
+      <button class="sp-filter" data-section="Deep Dives" type="button">Deep Dives</button>
+      <button class="sp-filter" data-section="Food & Culture" type="button">Food &amp; Culture</button>
+      <button class="sp-filter" data-section="Food Science" type="button">Food Science</button>
+      <button class="sp-filter" data-section="Food History" type="button">Food History</button>
+      <button class="sp-filter" data-section="Cook's Letters" type="button">Cook's Letters</button>
+      <button class="sp-filter" data-section="Quotes" type="button">Quotes</button>
+      <button class="sp-filter" data-section="Glossary" type="button">Glossary</button>
+      <button class="sp-filter" data-section="Bookshelf" type="button">Bookshelf</button>
+      <button class="sp-filter" data-section="Library" type="button">Library</button>
+      <button class="sp-filter" data-section="Authors" type="button">Authors</button>
     </div>
 
   </div>
@@ -59,13 +59,13 @@ permalink: /search/
       <div class="sp-try">
         <p class="sp-try__label">Try searching for</p>
         <div class="sp-try__list">
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">brown butter</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">fermentation</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">weeknight</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">cast iron</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">vegan</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">seasonal</button>
-          <button class="sp-try__btn" type="button" data-rough="frame" data-rough-color="ink">sourdough</button>
+          <button class="sp-try__btn" type="button">brown butter</button>
+          <button class="sp-try__btn" type="button">fermentation</button>
+          <button class="sp-try__btn" type="button">weeknight</button>
+          <button class="sp-try__btn" type="button">cast iron</button>
+          <button class="sp-try__btn" type="button">vegan</button>
+          <button class="sp-try__btn" type="button">seasonal</button>
+          <button class="sp-try__btn" type="button">sourdough</button>
         </div>
       </div>
     </div>
@@ -79,11 +79,11 @@ permalink: /search/
         <span id="sp-count" aria-live="polite" aria-atomic="true"></span>
         <div id="sp-section-counts" class="sp-section-counts"></div>
         <div class="sp-sort">
-          <button type="button" id="sp-save" class="sp-save-btn" title="Save this search" data-rough="frame" data-rough-color="ink">
+          <button type="button" id="sp-save" class="sp-save-btn" title="Save this search">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
             Save
           </button>
-          <select id="sp-sort" class="sp-sort-select" aria-label="Sort results" data-rough-skip-frame>
+          <select id="sp-sort" class="sp-sort-select" aria-label="Sort results">
             <option value="relevance">Relevance</option>
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
@@ -92,7 +92,7 @@ permalink: /search/
       </div>
       <div id="sp-results"></div>
       <div id="sp-more" class="sp-more" hidden>
-        <button type="button" id="sp-more-btn" class="sp-more-btn" data-rough="frame" data-rough-color="accent">Load more results</button>
+        <button type="button" id="sp-more-btn" class="sp-more-btn">Load more results</button>
       </div>
     </div>
 
@@ -100,16 +100,16 @@ permalink: /search/
       <p class="sp-empty__title">No results found</p>
       <p class="sp-empty__lede">Try a different spelling, fewer words, or broaden the section filter. Or browse by project:</p>
       <div class="sp-empty__browse">
-        <a href="/recipes/" class="sp-browse" data-rough="frame" data-rough-color="ink">Recipes</a>
-        <a href="/techniques/" class="sp-browse" data-rough="frame" data-rough-color="ink">Techniques</a>
-        <a href="/reviews/" class="sp-browse" data-rough="frame" data-rough-color="ink">Reviews</a>
-        <a href="/stories/" class="sp-browse" data-rough="frame" data-rough-color="ink">Stories</a>
-        <a href="/archives/" class="sp-browse" data-rough="frame" data-rough-color="ink">Archives</a>
-        <a href="/topics/" class="sp-browse" data-rough="frame" data-rough-color="ink">Topics</a>
-        <a href="/quotes/" class="sp-browse" data-rough="frame" data-rough-color="ink">Quotes</a>
-        <a href="/library/" class="sp-browse" data-rough="frame" data-rough-color="ink">Library</a>
-        <a href="/glossary/" class="sp-browse" data-rough="frame" data-rough-color="ink">Glossary</a>
-        <a href="/bookshelf/" class="sp-browse" data-rough="frame" data-rough-color="ink">Bookshelf</a>
+        <a href="/recipes/" class="sp-browse">Recipes</a>
+        <a href="/techniques/" class="sp-browse">Techniques</a>
+        <a href="/reviews/" class="sp-browse">Reviews</a>
+        <a href="/stories/" class="sp-browse">Stories</a>
+        <a href="/archives/" class="sp-browse">Archives</a>
+        <a href="/topics/" class="sp-browse">Topics</a>
+        <a href="/quotes/" class="sp-browse">Quotes</a>
+        <a href="/library/" class="sp-browse">Library</a>
+        <a href="/glossary/" class="sp-browse">Glossary</a>
+        <a href="/bookshelf/" class="sp-browse">Bookshelf</a>
       </div>
     </div>
 

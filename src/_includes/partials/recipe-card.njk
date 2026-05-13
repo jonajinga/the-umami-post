@@ -4,7 +4,7 @@
    title, and byline are individually clickable so screen-reader
    users have direct links; click events that bubble out of those
    anchors are not overridden by the card-level click. #}
-<article class="card card--recipe" data-rough="frame" data-rough-color="accent"
+<article class="card card--recipe"
    data-card-link="{{ recipe.url }}"
    tabindex="0" role="link" aria-label="Open {{ recipe.data.title | escape }}"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
@@ -39,7 +39,7 @@
       {% if recipe.data.totalTime %}<span class="card__meta-time">{{ recipe.data.totalTime | duration }}</span>{% endif %}
       {% if recipe.data.cuisine %}<a class="card__meta-tag" href="/topics/{{ recipe.data.cuisine | slugify }}/">{{ recipe.data.cuisine }}</a>{% endif %}
       {% if recipe.data.difficulty %}
-      <span class="card__meta-difficulty" data-rough="difficulty" data-rough-level="{{ recipe.data.difficulty }}" aria-label="Difficulty {{ recipe.data.difficulty }} of 5"></span>
+      <span class="card__meta-difficulty" aria-label="Difficulty {{ recipe.data.difficulty }} of 5"></span>
       {% endif %}
     </div>
   </div>

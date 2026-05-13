@@ -46,8 +46,8 @@ permalink: /support/
           <div class="support-block__actions">
             <a class="tip-badge tip-badge--pub"
                href="{{ pubTipUrl }}" target="_blank" rel="noopener noreferrer"
-               data-tippy-content="Support {{ site.title }}. Reader contributions cover hosting, public-records fees, and reporting costs. We don&rsquo;t pay contributors a fee &mdash; tips sent through an author&rsquo;s individual link go directly to the writer."
-               data-tippy-theme="badge" data-tippy-placement="top">
+              
+              >
               <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ site.shortTitle or site.title }}</span>
             </a>
             <a class="support-block__learn" href="/transparency/">How we operate &rarr;</a>
@@ -65,8 +65,8 @@ permalink: /support/
               {% if slug != "staff" and a.tipping and (a.tipping.kofi or a.tipping.bmac or a.tipping.patreon) %}
               <a class="tip-badge"
                  href="{{ a.tipping.kofi or a.tipping.bmac or a.tipping.patreon }}" target="_blank" rel="noopener noreferrer"
-                 data-tippy-content="Support {{ a.name }} directly. Your tip goes entirely to the cook."
-                 data-tippy-theme="badge" data-tippy-placement="top">
+                
+                >
                 <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ a.name }}</span>
               </a>
               {% endif %}

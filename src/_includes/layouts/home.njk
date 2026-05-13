@@ -12,8 +12,8 @@ layout: layouts/base.njk
       Tested recipes, technique guides, food journalism, and reviews -- written by cooks, for cooks. Every recipe is licensed Creative Commons. Every line of code is on GitHub.
     </p>
     <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-      <a href="/recipes/" data-rough="frame" data-rough-color="accent" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-accent);color:var(--color-bg);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Browse recipes</a>
-      <a href="/submit/recipe/" data-rough="frame" data-rough-color="ink" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-bg);color:var(--color-ink);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Submit a recipe</a>
+      <a href="/recipes/" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-accent);color:var(--color-bg);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Browse recipes</a>
+      <a href="/submit/recipe/" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-bg);color:var(--color-ink);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Submit a recipe</a>
     </p>
   </section>
 
@@ -22,7 +22,7 @@ layout: layouts/base.njk
   {% if latestRecipes.length > 0 %}
   <section class="home-strip" aria-label="Latest recipes" style="margin-top: var(--space-12);">
     <header class="home-section-head" style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom: var(--space-4); margin-bottom: var(--space-6); position: relative;">
-      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0;" data-rough="underline" data-rough-color="accent">Latest Recipes</h2>
+      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0;">Latest Recipes</h2>
       <a href="/recipes/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-accent); text-decoration: none;">All recipes &rarr;</a>
     </header>
     <div class="recipe-grid">
@@ -40,7 +40,7 @@ layout: layouts/base.njk
     {% if latestTechniques.length > 0 %}
     <div>
       <header style="display:flex;justify-content:space-between;align-items:baseline; padding-bottom: var(--space-4); margin-bottom: var(--space-5);">
-        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="olive">Techniques</h2>
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Techniques</h2>
         <a href="/techniques/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-techniques); text-decoration: none;">All techniques &rarr;</a>
       </header>
       <div class="recipe-grid">
@@ -67,7 +67,7 @@ layout: layouts/base.njk
     {% if latestReviews.length > 0 %}
     <div>
       <header style="display:flex;justify-content:space-between;align-items:baseline; padding-bottom: var(--space-4); margin-bottom: var(--space-5);">
-        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="reviews">Reviews</h2>
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Reviews</h2>
         <a href="/reviews/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-reviews); text-decoration: none;">All reviews &rarr;</a>
       </header>
       <div class="recipe-grid">
@@ -90,18 +90,17 @@ layout: layouts/base.njk
   </section>
 
   {# -- Community call-out -- #}
-  <section data-rough="frame" data-rough-color="accent" style="margin-top: var(--space-16); padding: var(--space-10) var(--space-8); background: var(--color-bg-alt); position: relative;">
+  <section style="margin-top: var(--space-16); padding: var(--space-10) var(--space-8); background: var(--color-bg-alt); position: relative;">
     <p style="font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 var(--space-3);">Built by readers</p>
     <h2 style="font-family: var(--font-masthead); font-size: var(--text-xl); margin: 0 0 var(--space-3);">This site belongs to the people who cook from it.</h2>
     <p style="font-family: var(--font-body); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-ink-muted); max-width: 60ch; margin: 0 0 var(--space-5);">
       Every recipe is tested. Every contributor is credited. The whole codebase is open source on GitHub. Submit a recipe, pitch a story, or open a pull request -- whichever feels like your speed.
     </p>
     <p style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
-      <a href="/submit/" data-rough="frame" data-rough-color="accent" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-accent);color:var(--color-bg);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Ways to contribute</a>
-      <a href="https://github.com/jonajinga/the-umami-post" data-rough="frame" data-rough-color="ink" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-bg);color:var(--color-ink);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">View on GitHub</a>
+      <a href="/submit/" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-accent);color:var(--color-bg);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">Ways to contribute</a>
+      <a href="https://github.com/jonajinga/the-umami-post" style="font-family:var(--font-ui);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:var(--color-bg);color:var(--color-ink);padding:12px 24px;text-decoration:none;display:inline-block;position:relative;">View on GitHub</a>
     </p>
   </section>
 
 </div>{# /.container #}
 
-<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

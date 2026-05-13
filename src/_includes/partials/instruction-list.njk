@@ -6,7 +6,7 @@
 <ol class="instruction-list">
   {% for step in instructions %}
   <li class="instruction-list__item" id="step-{{ loop.index }}">
-    <div class="instruction-list__step" data-rough="circle" data-rough-text="{{ loop.index }}" data-rough-size="48"></div>
+    <div class="instruction-list__step"></div>
     <div class="instruction-list__body">{{ step.body | safe }}</div>
     {% if step.image %}
     <figure class="instruction-list__image">

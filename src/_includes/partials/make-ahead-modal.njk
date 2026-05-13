@@ -4,12 +4,12 @@
    recipe. Renders only when `makeAhead` is set on the recipe. #}
 
 {% if makeAhead %}
-<aside class="recipe-notes recipe-notes--makeahead" data-rough="frame" data-rough-color="paprika">
+<aside class="recipe-notes recipe-notes--makeahead">
   <h2>Make-ahead &amp; storage</h2>
   <div class="recipe-notes__preview">
     {{ makeAhead | safe }}
   </div>
-  <button type="button" class="recipe-action-btn makeahead-trigger" data-rough="frame" data-rough-color="paprika" aria-haspopup="dialog" aria-controls="makeahead-modal"
+  <button type="button" class="recipe-action-btn makeahead-trigger" aria-haspopup="dialog" aria-controls="makeahead-modal"
     onclick="var m=document.getElementById('makeahead-modal');var o=document.getElementById('makeahead-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
     <span>Full make-ahead plan</span>

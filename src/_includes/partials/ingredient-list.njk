@@ -3,20 +3,20 @@
    (label above, preset buttons + custom-multiplier input share a
    single wrap-friendly row; US / Metric below) plus the flat list. #}
 
-<div class="recipe-scaler serving-scaler" data-recipe-scaler data-base-servings="{{ servings or 4 }}" data-unit-system="us" data-rough="frame" data-rough-color="ink">
+<div class="recipe-scaler serving-scaler" data-recipe-scaler data-base-servings="{{ servings or 4 }}" data-unit-system="us">
 
   <div class="serving-scaler__multipliers">
     <span class="serving-scaler__label">Scale</span>
     <div class="serving-scaler__row">
-      <button type="button" class="serving-scaler__btn" data-scale="0.5" data-rough="frame" data-rough-color="ink">&half;&times;</button>
-      <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1" data-rough="frame" data-rough-color="yellow">1&times;</button>
-      <button type="button" class="serving-scaler__btn" data-scale="2" data-rough="frame" data-rough-color="ink">2&times;</button>
-      <button type="button" class="serving-scaler__btn" data-scale="3" data-rough="frame" data-rough-color="ink">3&times;</button>
+      <button type="button" class="serving-scaler__btn" data-scale="0.5">&half;&times;</button>
+      <button type="button" class="serving-scaler__btn serving-scaler__btn--active" data-scale="1">1&times;</button>
+      <button type="button" class="serving-scaler__btn" data-scale="2">2&times;</button>
+      <button type="button" class="serving-scaler__btn" data-scale="3">3&times;</button>
       <span class="serving-scaler__custom-stack">
         <span class="serving-scaler__custom-label">Custom</span>
-        <label class="serving-scaler__custom-wrap" data-rough="frame" data-rough-color="ink">
+        <label class="serving-scaler__custom-wrap">
           <span class="visually-hidden">Custom scale</span>
-          <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom scale multiplier (e.g. 1.5)" data-rough-skip-frame>
+          <input type="text" class="serving-scaler__custom" inputmode="decimal" placeholder="1.5&times;" aria-label="Custom scale multiplier (e.g. 1.5)">
         </label>
       </span>
     </div>
@@ -24,7 +24,7 @@
 
   <div class="unit-toggle">
     <span class="serving-scaler__label">Units</span>
-    <div class="unit-switch" role="group" aria-label="Measurement units" data-active="us" data-rough="frame" data-rough-color="ink">
+    <div class="unit-switch" role="group" aria-label="Measurement units" data-active="us">
       <span class="unit-switch__thumb" aria-hidden="true"></span>
       <button type="button" class="unit-switch__btn" data-target-unit="us" style="color:#faf6ef">US</button>
       <button type="button" class="unit-switch__btn" data-target-unit="metric" style="color:#2b1f18">Metric</button>

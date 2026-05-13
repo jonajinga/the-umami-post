@@ -11,7 +11,7 @@
           aria-expanded="false"
           aria-controls="nav-drawer"
           type="button"
-          data-rough="frame" data-rough-color="ink"
+         
           onclick="var d=document.getElementById('nav-drawer');d.classList.add('is-open');d.setAttribute('aria-hidden','false');this.setAttribute('aria-expanded','true');document.getElementById('nav-drawer-close').focus();">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -31,7 +31,7 @@
         </a>
         {% endif %}
       </div>
-      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home" data-rough-skip-underline data-rough="frame" data-rough-color="accent">
+      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home">
         {{ site.title }}
       </a>
       <button
@@ -39,7 +39,7 @@
         type="button"
         aria-label="Search"
         title="Search"
-        data-rough="frame" data-rough-color="ink"
+       
         onclick="var m=document.getElementById('search-modal'),o=document.getElementById('search-overlay');if(m){m.classList.add('is-open');m.setAttribute('aria-hidden','false');o&&o.classList.add('is-open');document.body.style.overflow='hidden';var i=document.getElementById('search-input');i&&i.focus();}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
@@ -47,7 +47,7 @@
 
         {# Search, primary discovery #}
         <button
-          class="masthead__icon-btn js-only" data-rough="frame" data-rough-color="ink"
+          class="masthead__icon-btn js-only"
           id="search-open"
           aria-label="Search"
           aria-expanded="false"
@@ -66,7 +66,7 @@
            previously lived here. #}
         <a href="/reader-tools/"
            class="masthead__icon-btn"
-           data-rough="frame" data-rough-color="ink"
+          
            aria-label="Reader tools"
            title="Reader tools">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -80,7 +80,7 @@
         {# Display settings, global (includes language, theme, font, spacing) #}
         <div class="masthead__settings-wrap" style="position:relative;">
           <button
-            class="masthead__icon-btn js-only" data-rough="frame" data-rough-color="ink"
+            class="masthead__icon-btn js-only"
             id="global-settings-btn"
             type="button"
             aria-label="Display settings"
@@ -326,7 +326,7 @@
             <a
               class="site-nav__link"
               href="{{ item.url }}"
-              data-rough="frame" data-rough-color="ink"
+             
               {% if hasDropdown %}id="nav-{{ item.key }}" aria-haspopup="true" aria-expanded="false"{% endif %}
               {% if page.url == item.url %}aria-current="page"{% endif %}>
               {{ item.label }}
@@ -467,7 +467,7 @@
   aria-label="Search"
   aria-hidden="true"
   aria-modal="true"
-  data-rough-skip-frame>
+ >
 
   <div class="search-modal__header">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;color:var(--color-ink-faint)">
@@ -541,7 +541,7 @@
         <span class="nav-drawer__edition" id="nd-edition" aria-label="Today's date"></span>
       </span>
     </a>
-    <button class="nav-drawer__close" id="nav-drawer-close" type="button" data-rough="frame" data-rough-color="ink" aria-label="Close navigation menu" onclick="var d=document.getElementById('nav-drawer');d.classList.remove('is-open');d.setAttribute('aria-hidden','true');document.getElementById('nav-drawer-toggle').setAttribute('aria-expanded','false');">
+    <button class="nav-drawer__close" id="nav-drawer-close" type="button" aria-label="Close navigation menu" onclick="var d=document.getElementById('nav-drawer');d.classList.remove('is-open');d.setAttribute('aria-hidden','true');document.getElementById('nav-drawer-toggle').setAttribute('aria-expanded','false');">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
@@ -562,7 +562,7 @@
         autocorrect="off"
         spellcheck="false"
         aria-label="Search query"
-        data-rough-skip-frame>
+       >
       <button type="submit" class="nav-drawer__search-submit" aria-label="Submit search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="5" y1="12" x2="19" y2="12"/>
@@ -573,16 +573,16 @@
 
     {# ── Quick actions grid ── #}
     <div class="nav-drawer__quick" role="group" aria-label="Quick actions">
-      <a href="/random/" class="nav-drawer__quick-btn" data-rough="frame" data-rough-color="ink">
+      <a href="/random/" class="nav-drawer__quick-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
         <span>Surprise me</span>
       </a>
-      <a href="/reader-tools/" class="nav-drawer__quick-btn" id="nd-readertools-link" data-rough="frame" data-rough-color="ink">
+      <a href="/reader-tools/" class="nav-drawer__quick-btn" id="nd-readertools-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Reader tools</span>
         <span class="nav-drawer__quick-badge" id="nd-readinglist-count" hidden></span>
       </a>
-      <button type="button" class="nav-drawer__quick-btn" aria-label="Display settings" data-rough="frame" data-rough-color="ink"
+      <button type="button" class="nav-drawer__quick-btn" aria-label="Display settings"
         onclick="var d=document.getElementById('nav-drawer'),t=document.getElementById('nav-drawer-toggle');if(d){d.classList.remove('is-open');d.setAttribute('aria-hidden','true');}if(t)t.setAttribute('aria-expanded','false');setTimeout(function(){var p=document.getElementById('global-settings-panel');if(p)p.classList.add('is-open');},150);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
         <span>Display</span>
@@ -596,7 +596,7 @@
       {% if item.collection %}
       {% set sec = site.sections[item.collection] %}
       <li>
-        <a class="nav-drawer__section-tile" href="{{ item.url }}" data-rough="frame" data-rough-color="accent"{% if sec and sec.description %} data-tippy-content="{{ sec.description }}"{% endif %}{% if page.url == item.url %} aria-current="page"{% endif %}>
+        <a class="nav-drawer__section-tile" href="{{ item.url }}"{% if sec and sec.description %}{% endif %}{% if page.url == item.url %} aria-current="page"{% endif %}>
           <span class="nav-drawer__section-name">{{ item.label }}</span>
         </a>
       </li>

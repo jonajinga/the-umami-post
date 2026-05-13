@@ -309,24 +309,38 @@ a.recipe-meta-bar__tag,
 a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
 .recipe-meta-bar__item--difficulty { flex-direction: column; align-items: flex-start; }
 
-/* Rough divider between hero and meta bar */
+/* Divider between hero and meta bar — was a rough.js SVG, now a
+ * simple horizontal rule. */
 .rough-divider {
   width: 100%;
-  height: 24px;
+  height: 0;
+  border-top: 2px solid var(--color-accent);
   margin: var(--space-4) 0 var(--space-6);
 }
-
-/* Rough.js removed — elements that used data-rough='frame' now get
- * a native 2px ink border so the visual structure stays. */
-[data-rough="frame"] {
-  border: 2px solid var(--color-ink);
-  position: relative;
+.rough-divider--prose {
+  max-width: var(--max-width-prose);
+  margin: var(--space-4) auto var(--space-6);
+  border-top-color: var(--color-rule);
+  border-top-width: 1px;
 }
-[data-rough="underline"] {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--color-accent);
+
+/* Native borders for the surfaces that used to carry rough.js
+ * frames. Each block reads as a clearly outlined card now. */
+.recipe-meta-bar,
+.recipe-notes,
+.recipe-scaler,
+.unit-switch,
+form.w3f,
+aside.subscribe-block,
+.card,
+.recipe-card,
+.article-comments,
+.site-footer__masthead,
+.nutrition,
+#nutrition-modal,
+#makeahead-modal,
+#republish-panel {
+  border: 2px solid var(--color-ink);
 }
 
 /* form-decorations.js wraps every text-ish control in a .rough-field

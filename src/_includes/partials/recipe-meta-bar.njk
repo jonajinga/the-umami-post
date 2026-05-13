@@ -2,17 +2,17 @@
    the left (Print / Cook mode / Keep screen awake), and a
    flexible right column carrying time chips, nutrition snapshot,
    and tag chips, in that vertical order. #}
-<div class="recipe-meta-bar" data-rough="frame" data-rough-color="ink">
+<div class="recipe-meta-bar">
   <div class="recipe-meta-bar__actions">
-    <a class="recipe-actions__btn" href="{{ page.url }}print/?auto=1" data-rough="frame" data-rough-color="ink" data-umami-event="recipe-print">
+    <a class="recipe-actions__btn" href="{{ page.url }}print/?auto=1" data-umami-event="recipe-print">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       <span>Print recipe</span>
     </a>
-    <a class="recipe-actions__btn" href="?cook=1" data-rough="frame" data-rough-color="accent" data-umami-event="recipe-cook-mode">
+    <a class="recipe-actions__btn" href="?cook=1" data-umami-event="recipe-cook-mode">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v8M5 10h14l-1 12H6L5 10z"/></svg>
       <span>Cook mode</span>
     </a>
-    <button type="button" class="wake-switch" data-wake-lock-toggle aria-pressed="false" aria-label="Keep screen awake" data-rough="frame" data-rough-color="ink" data-umami-event="recipe-wake-lock" data-tippy-content="Keep my screen awake while cooking">
+    <button type="button" class="wake-switch" data-wake-lock-toggle aria-pressed="false" aria-label="Keep screen awake" data-umami-event="recipe-wake-lock">
       <span class="wake-switch__track" aria-hidden="true">
         <span class="wake-switch__thumb"></span>
       </span>
@@ -55,7 +55,7 @@
     {% if difficulty %}
     <div class="recipe-meta-bar__item recipe-meta-bar__item--difficulty">
       <span class="recipe-meta-bar__label">Difficulty</span>
-      <span data-rough="difficulty" data-rough-level="{{ difficulty }}" aria-label="Difficulty {{ difficulty }} of 5"></span>
+      <span aria-label="Difficulty {{ difficulty }} of 5"></span>
     </div>
     {% endif %}
   </div>
@@ -66,7 +66,7 @@
   {% set _fat = nutrition.totalFat or nutrition.fat %}
   {% set _carbs = nutrition.totalCarbs or nutrition.carbs %}
   <div class="recipe-meta-bar__nutrition-group" aria-label="Nutrition per serving">
-    <button type="button" class="recipe-meta-bar__nutrition-btn" data-rough="frame" data-rough-color="accent" aria-haspopup="dialog" aria-controls="nutrition-modal"
+    <button type="button" class="recipe-meta-bar__nutrition-btn" aria-haspopup="dialog" aria-controls="nutrition-modal"
       onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       <span>Full label</span>
@@ -109,10 +109,10 @@
      and the time/nutrition column. #}
   {% if course or cuisine or diet or tags %}
   <div class="recipe-meta-bar__tags">
-    {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="accent">{{ course }}</a>{% endif %}
-    {% if cuisine %}<a href="/topics/{{ cuisine | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="olive">{{ cuisine }}</a>{% endif %}
-    {% for d in diet %}<a href="/topics/{{ d | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="plum">{{ d }}</a>{% endfor %}
-    {% for t in tags %}{% if t and t != "recipes" and t != "techniques" and t != "reviews" %}<a href="/topics/{{ t | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="paprika">{{ t }}</a>{% endif %}{% endfor %}
+    {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-meta-bar__tag">{{ course }}</a>{% endif %}
+    {% if cuisine %}<a href="/topics/{{ cuisine | slugify }}/" class="recipe-meta-bar__tag">{{ cuisine }}</a>{% endif %}
+    {% for d in diet %}<a href="/topics/{{ d | slugify }}/" class="recipe-meta-bar__tag">{{ d }}</a>{% endfor %}
+    {% for t in tags %}{% if t and t != "recipes" and t != "techniques" and t != "reviews" %}<a href="/topics/{{ t | slugify }}/" class="recipe-meta-bar__tag">{{ t }}</a>{% endif %}{% endfor %}
   </div>
   {% endif %}
 </div>

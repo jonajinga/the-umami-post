@@ -46,27 +46,27 @@ isReadingPage: true
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
-    <figure class="recipe-hero__photo" data-rough="frame" data-rough-color="ink">
+    <figure class="recipe-hero__photo">
       <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
       {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-rough="underline" data-rough-color="ink" data-tippy-content="{{ authors[author].bio or ('See all recipes and stories from ' + (authors[author].name or authorName or author)) }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
-      &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}" data-rough="underline" data-rough-color="ink">{{ page.date | readableDate }}</a>
-      {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}" data-rough="underline" data-rough-color="ink">{{ updated | readableDate }}</a>{% endif %}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
+      {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}">{{ updated | readableDate }}</a>{% endif %}
     </p>
   </header>
 
   {# Rough rule above the headnote — replaces the CSS border-top. #}
   {% if content and content.length > 0 %}
-  <div class="rough-divider rough-divider--prose" data-rough="divider" data-rough-color="ink" aria-hidden="true"></div>
+  <div class="rough-divider rough-divider--prose" aria-hidden="true"></div>
   <section class="recipe-headnote article-body">
     {{ content | safe }}
   </section>
   {% endif %}
 
-  <div class="rough-divider" data-rough="divider" data-rough-color="accent" aria-hidden="true"></div>
+  <div class="rough-divider" aria-hidden="true"></div>
 
   {% include "partials/recipe-meta-bar.njk" %}
 
@@ -96,7 +96,7 @@ isReadingPage: true
   {% if notes or makeAhead or source or nutrition %}
   <section class="recipe-footer">
     {% if notes %}
-    <div class="recipe-notes" data-rough="frame" data-rough-color="accent">
+    <div class="recipe-notes">
       <h2>Cook's notes</h2>
       {{ notes | safe }}
     </div>
@@ -105,7 +105,7 @@ isReadingPage: true
     {% include "partials/make-ahead-modal.njk" %}
 
     {% if source %}
-    <div class="recipe-notes recipe-notes--source" data-rough="frame" data-rough-color="olive">
+    <div class="recipe-notes recipe-notes--source">
       <h2>Source</h2>
       <p>{{ source | safe }}</p>
     </div>
@@ -142,5 +142,4 @@ document.addEventListener('keydown', function (e) {
 <script src="/assets/js/ingredient-checklist.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/cooking-mode.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/wake-lock.js?v={{ buildTime }}" defer></script>
-<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
 {% endblock %}

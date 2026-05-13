@@ -96,7 +96,7 @@ permalink: /contributors/
       </header>
 
       <h2 class="author-card__name"><a href="/author/{{ r.slug }}/"
-        {% if r.bio %}data-tippy-content="{{ r.bio }}" data-tippy-theme="author-bio"{% endif %}>{{ r.name }}</a></h2>
+        {% if r.bio %}data-tippy-content="{{ r.bio }}"{% endif %}>{{ r.name }}</a></h2>
 
       {% if r.bio %}
       <p class="author-card__bio">{{ r.bio }}</p>

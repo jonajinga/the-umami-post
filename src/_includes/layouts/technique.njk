@@ -53,19 +53,19 @@ isReadingPage: true
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
-    <figure class="recipe-hero__photo" data-rough="frame" data-rough-color="ink">
+    <figure class="recipe-hero__photo">
       <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
       {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tippy-content="{{ authors[author].bio or ('See all recipes and stories from ' + (authors[author].name or authorName or author)) }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
       &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
     </p>
   </header>
 
   {% if totalTime or level or prerequisites %}
-  <div class="recipe-meta-bar" data-rough="frame" data-rough-color="ink">
+  <div class="recipe-meta-bar">
     {% if totalTime %}
     <div class="recipe-meta-bar__item">
       <span class="recipe-meta-bar__label">Total time</span>
@@ -98,7 +98,7 @@ isReadingPage: true
       {% include "partials/instruction-list.njk" %}
 
       {% if commonMistakes %}
-      <aside class="recipe-notes" data-rough="frame" data-rough-color="paprika">
+      <aside class="recipe-notes">
         <h2>Common mistakes</h2>
         {{ commonMistakes | safe }}
       </aside>
@@ -135,4 +135,3 @@ isReadingPage: true
 
 {% include "partials/reader-chrome.njk" %}
 
-<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

@@ -33,7 +33,7 @@ eleventyExcludeFromCollections: true
       id="glossary-search"
       placeholder="Search the glossary"
       aria-label="Search glossary"
-      data-rough-skip-frame
+     
       class="glossary-search">
     <span class="glossary-count">{{ terms.length }} terms</span>
   </div>
@@ -45,7 +45,7 @@ eleventyExcludeFromCollections: true
     {% set alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"] %}
     {% for L in alphabet %}
       {% if L in populated %}
-      <a class="glossary-az__btn" href="#letter-{{ L }}" data-rough="frame" data-rough-color="ink">{{ L }}</a>
+      <a class="glossary-az__btn" href="#letter-{{ L }}">{{ L }}</a>
       {% else %}
       <span class="glossary-az__btn glossary-az__btn--disabled" aria-disabled="true">{{ L }}</span>
       {% endif %}
@@ -221,4 +221,3 @@ eleventyExcludeFromCollections: true
 })();
 </script>
 
-<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
