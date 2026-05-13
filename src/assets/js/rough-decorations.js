@@ -285,26 +285,30 @@
   }
 
   function drawUnderline(el, rough) {
-    // Insert an absolutely-positioned SVG behind the heading text
+    // Insert an absolutely-positioned SVG behind the heading text.
+    // Renders as a hand-drawn STRAIGHT line — slight roughness only,
+    // no bowing/wave (was previously a Q+T curve that looked too
+    // playful under section headings).
     var existing = el.querySelector('svg[data-rough-underline]');
     if (existing) existing.remove();
     el.style.position = el.style.position || 'relative';
     el.style.display = el.style.display || 'inline-block';
     var w = el.offsetWidth;
-    var h = 18;
+    var h = 10;
     var s = svg(w, h);
     s.setAttribute('data-rough-underline', 'true');
     s.style.position = 'absolute';
     s.style.left = '0';
-    s.style.bottom = '-12px';
+    s.style.bottom = '-8px';
     s.style.pointerEvents = 'none';
     el.appendChild(s);
     var rc = rough.svg(s);
     var color = colorFor(el.getAttribute('data-rough-color') || 'accent');
-    var d = 'M 0 8 Q ' + (w / 3) + ' 16, ' + (w / 2) + ' 8 T ' + w + ' 8';
-    s.appendChild(rc.path(d, {
-      stroke: color, strokeWidth: 2,
-      roughness: 0.5, bowing: 1
+    s.appendChild(rc.line(0, 5, w, 5, {
+      stroke: color,
+      strokeWidth: 2,
+      roughness: 0.5,
+      bowing: 0
     }));
   }
 

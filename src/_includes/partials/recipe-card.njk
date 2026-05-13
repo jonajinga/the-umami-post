@@ -1,17 +1,25 @@
-{# Recipe card for /recipes/ grid. The card's outer border is a
-   rough.js sketched rectangle (data-rough="frame") instead of a
-   solid 1px line, to match the warm-magazine handcrafted feel. #}
-<a class="recipe-card" href="{{ recipe.url }}" data-rough="frame" data-rough-color="ink"
+{# Recipe card. Photo on top with a save-to-reading-list heart in
+   the corner; section eyebrow, title, byline below. Rough.js
+   sketched outer frame matches the publication's hand-drawn skin.
+   Used on the home page grid and /recipes/ index. #}
+<a class="card card--recipe" href="{{ recipe.url }}" data-rough="frame" data-rough-color="ink"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
   {% if recipe.data.hero %}
-  <div class="recipe-card__photo">
+  <div class="card__photo">
     <img src="{{ recipe.data.hero }}" alt="{{ recipe.data.heroAlt or recipe.data.title }}" loading="lazy" decoding="async">
+    <button type="button" class="card__save" aria-label="Save {{ recipe.data.title | escape }} to your reading list"
+      onclick="event.preventDefault();event.stopPropagation();this.classList.toggle('is-saved');">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
   </div>
   {% endif %}
-  <div class="recipe-card__body">
-    {% if recipe.data.course %}<span class="recipe-card__eyebrow">{{ recipe.data.course }}</span>{% endif %}
-    <h3 class="recipe-card__title">{{ recipe.data.title }}</h3>
-    <div class="recipe-card__meta">
+  <div class="card__body">
+    {% if recipe.data.course %}<span class="card__eyebrow">{{ recipe.data.course }}</span>{% endif %}
+    <h3 class="card__title">{{ recipe.data.title }}</h3>
+    {% if recipe.data.author %}
+    <p class="card__byline">By {{ authors[recipe.data.author].name or recipe.data.author }}</p>
+    {% endif %}
+    <div class="card__meta">
       {% if recipe.data.totalTime %}<span>{{ recipe.data.totalTime | duration }}</span>{% endif %}
       {% if recipe.data.cuisine %}<span>{{ recipe.data.cuisine }}</span>{% endif %}
       {% if recipe.data.difficulty %}<span>Difficulty {{ recipe.data.difficulty }}/5</span>{% endif %}
