@@ -1,0 +1,95 @@
+---
+layout: base
+title: Feeds
+description: Subscribe to The Freethinking Times in any RSS reader — the whole
+  site, individual sections, your favourite author, or a single topic.
+permalink: /feeds/
+---
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Feeds</h1>
+    <p class="page-header__lede">
+      Subscribe in any RSS reader &mdash; the whole site, individual sections, your favourite author, or a single topic. No account, no tracking, no algorithm deciding what you should see.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#site">Whole site</a>
+      <a href="#sections">By section</a>
+      <a href="#authors">By author</a>
+      <a href="#topics">By topic</a>
+      <a href="#external">External feeds we follow</a>
+      <a href="#how">How to subscribe</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="site">Whole site</h2>
+      <p>Everything we publish, in reverse chronological order. Most readers want this one.</p>
+      <ul class="feeds-list">
+        <li><a href="/feed.xml" data-umami-event="rss-sub" data-umami-event-feed="main" class="feeds-list__link">
+          <span class="feeds-list__label">All articles</span>
+          <span class="feeds-list__url">/feed.xml</span>
+        </a></li>
+      </ul>
+
+      <h2 id="sections">By section</h2>
+      <p>Subscribe to a single editorial vertical. Useful if you only care about Opinion, or only Science.</p>
+      <ul class="feeds-list">
+        {% for secSlug in collections.sectionList %}
+        <li><a href="/feed-{{ secSlug }}.xml" data-umami-event="rss-sub" data-umami-event-feed="section-{{ secSlug }}" class="feeds-list__link">
+          <span class="feeds-list__label">{{ site.sections[secSlug].label }}</span>
+          <span class="feeds-list__url">/feed-{{ secSlug }}.xml</span>
+        </a></li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="authors">By author</h2>
+      <p>One feed per contributor. Useful if you follow a specific writer&rsquo;s beat.</p>
+      <ul class="feeds-list feeds-list--two-col">
+        {% for slug in authorList | sort %}
+        <li><a href="/feeds/{{ slug }}.xml" data-umami-event="rss-sub" data-umami-event-feed="author-{{ slug }}" class="feeds-list__link">
+          <span class="feeds-list__label">{{ authors[slug].name or slug }}</span>
+          <span class="feeds-list__url">/feeds/{{ slug }}.xml</span>
+        </a></li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="topics">By topic</h2>
+      <p>One feed per tag. We publish a feed for every topic a piece has ever been tagged with &mdash; find the topic on <a href="/topics/">the topics page</a> or pick from the list below.</p>
+      <ul class="feeds-list feeds-list--two-col">
+        {% for tag in collections.tagList %}
+        <li><a href="/feeds/topics/{{ tag | slugify }}.xml" data-umami-event="rss-sub" data-umami-event-feed="topic-{{ tag | slugify }}" class="feeds-list__link">
+          <span class="feeds-list__label">{{ tag }}</span>
+          <span class="feeds-list__url">/feeds/topics/{{ tag | slugify }}.xml</span>
+        </a></li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="external">External feeds we follow</h2>
+      <p>Our aggregated <a href="/wire/">wire page</a> pulls in other independent publications. Subscribe to them directly at the source:</p>
+      <ul class="feeds-list">
+        {% for feed in feeds %}
+        <li><a href="{{ feed.url }}" target="_blank" rel="noopener" data-umami-event="rss-sub" data-umami-event-feed="external-{{ feed.name | slugify }}" class="feeds-list__link">
+          <span class="feeds-list__label">{{ feed.name }}</span>
+          <span class="feeds-list__url">{{ feed.url }}</span>
+        </a></li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="how">How to subscribe</h2>
+      <p>Paste any feed URL from this page into an RSS reader:</p>
+      <ul>
+        <li><strong>Desktop:</strong> <a href="https://netnewswire.com" target="_blank" rel="noopener">NetNewsWire</a> (free, macOS/iOS), <a href="https://www.thunderbird.net" target="_blank" rel="noopener">Thunderbird</a>, or the <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener">RSS Feed Reader</a> browser extension.</li>
+        <li><strong>Hosted:</strong> <a href="https://feedly.com" target="_blank" rel="noopener">Feedly</a>, <a href="https://www.inoreader.com" target="_blank" rel="noopener">Inoreader</a>, <a href="https://newsblur.com" target="_blank" rel="noopener">NewsBlur</a>, <a href="https://feedbin.com" target="_blank" rel="noopener">Feedbin</a>.</li>
+        <li><strong>Self-hosted:</strong> <a href="https://miniflux.app" target="_blank" rel="noopener">Miniflux</a>, <a href="https://freshrss.org" target="_blank" rel="noopener">FreshRSS</a>, <a href="https://www.tt-rss.org" target="_blank" rel="noopener">Tiny Tiny RSS</a>.</li>
+      </ul>
+      <p>Why RSS? No algorithm. No tracking. No &ldquo;you missed the morning&rsquo;s top story.&rdquo; Just the articles, in order, when you open your reader.</p>
+
+    </div>
+
+  </div>
+</div>

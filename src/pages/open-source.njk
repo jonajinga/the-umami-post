@@ -1,0 +1,133 @@
+---
+layout: base
+title: Open Source
+description: The Freethinking Times is powered by Project Broadsheet, an open-source Eleventy publication system. Fork it and launch your own independent publication.
+permalink: /open-source/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Open Source</h1>
+    <p class="page-header__lede">
+      {{ site.title }} is powered by <a href="https://projectbroadsheet.com" target="_blank" rel="noopener noreferrer">Project Broadsheet</a>, a free, open-source publication system built on Eleventy. Fork it, customise it, and launch your own independent publication.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#project-broadsheet">Project Broadsheet</a>
+      <a href="#what-you-get">What you get</a>
+      <a href="#stack">Stack</a>
+      <a href="#how-to-use">How to use it</a>
+      <a href="#license">License</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="project-broadsheet">Project Broadsheet</h2>
+
+      <p>Project Broadsheet is a complete, production-grade static publication system designed for independent journalists, essayists, and editorial teams who want full control over their platform, no subscription fees, no algorithmic gatekeepers, no third-party CMS.</p>
+
+      <p>The full source code is available on GitHub:</p>
+
+      <p style="margin: var(--space-6) 0;">
+        <a href="https://github.com/jonajinga/project-broadsheet" target="_blank" rel="noopener noreferrer" class="btn btn--accent" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View Project Broadsheet on GitHub
+        </a>
+      </p>
+
+      <h2 id="what-you-get">What you get</h2>
+
+      <p>This is not a starter template with placeholder divs. It is a complete, production-grade publication system with every feature already built and tested:</p>
+
+      <ul>
+        <li><strong>7 editorial sections</strong> with per-section collections, pagination, and RSS feeds</li>
+        <li><strong>Full-text search</strong> via Pagefind with section filtering</li>
+        <li><strong>Dark mode</strong> with system preference detection and no flash</li>
+        <li><strong>Reader tools</strong> including reading list, highlights and annotations, download, print, and citations</li>
+        <li><strong>Global display settings</strong> with 27 fonts (system + Bunny web fonts loaded on demand), theme selector, spacing controls</li>
+        <li><strong>Per-page reading settings</strong> on articles and library pages: font, size, spacing, width, background, reading ruler, auto-scroll</li>
+        <li><strong>Public domain library</strong> with chapter navigation, floating TOC, bookmarks, annotations, and reading progress</li>
+        <li><strong>Resources hub</strong> with sub-pages for education, legal rights, personal support, and tools</li>
+        <li><strong>Interactive events calendar</strong> with recurrence engine, dot-based month grid, slide-in detail panel, sidebar, keyboard navigation, URL state persistence</li>
+        <li><strong>18 submission forms</strong> via Web3Forms with hCaptcha, articles, letters, quotes, events, timeline entries, books, texts, glossary terms, trials, thought experiments, corrections, feedback, tips, contact, gallery, community groups, and music suggestions</li>
+        <li><strong>Web Speech API</strong> integration, voice search, glossary pronunciation, and form dictation</li>
+        <li><strong>Highlight colours</strong>, 6 colour options with WYSIWYG rich-text note editor</li>
+        <li><strong>Interactive timelines</strong>, vertical alternating CSS timelines for freethought history, quotes, bookshelf, and trials</li>
+        <li><strong>Full-screen showcases</strong>, screensaver-style auto-advancing displays for quotes, timeline events, trials, glossary terms, thought experiments, and bookshelf entries</li>
+        <li><strong>A-Z glossary</strong> (86 terms) with sticky letter navigation, real-time search, individual term pages, and Tippy.js hover tooltips across all articles</li>
+        <li><strong>Hub pages</strong> for Explore, Submit, Reader Tools, Transparency, and Legal sections</li>
+        <li><strong>Daily quote bar</strong> in the masthead header with rotating quotes</li>
+        <li><strong>Reading ruler</strong>, customisable thickness, colour, and style (solid/dashed/dotted/glow)</li>
+        <li><strong>4 interactive games</strong></li>
+        <li><strong>Public JSON API</strong>, every content collection exposed as JSON at <code>/api/*</code> with CORS enabled</li>
+        <li><strong>Scheduled publishing</strong>, future-dated articles become visible automatically via daily GitHub Action</li>
+        <li><strong>Editorial tools</strong>, dashboard with status/author stats, Kanban-style editorial board, content templates, proofread mode, abbreviation dictionary, saved searches</li>
+        <li><strong>SPA-style navigation</strong>, pages load without full refresh; background music and global state persist across navigation</li>
+        <li><strong>Persistent music player</strong>, background YouTube player that continues playing across page navigation</li>
+        <li><strong>Photo gallery</strong>, nature photography with lightbox, zoom, download, and category/license/source filters</li>
+        <li><strong>Reviews section</strong>, book, film, podcast, and documentary reviews with ratings</li>
+        <li><strong>Instant page</strong>, prefetch on hover for instant navigation</li>
+        <li><strong>Newsletter integration</strong> via Buttondown</li>
+        <li><strong>SEO</strong> with JSON-LD structured data, Open Graph, sitemaps, and per-author RSS</li>
+        <li><strong>Privacy-first analytics</strong> via Umami</li>
+        <li><strong>Comments</strong> via Cusdis</li>
+        <li><strong>Translation</strong> via GTranslate</li>
+        <li><strong>Print CSS</strong> for articles and editions</li>
+        <li><strong>Progressive Web App</strong> with offline support</li>
+      </ul>
+
+      <p>See the full list at <a href="/features/">/features/</a>.</p>
+
+      <h2 id="stack">Stack</h2>
+
+      <ul>
+        <li><strong>Eleventy 3</strong> (static site generator)</li>
+        <li><strong>Nunjucks</strong> templates with Markdown content</li>
+        <li><strong>Vanilla CSS</strong> with custom properties (no frameworks)</li>
+        <li><strong>Vanilla JavaScript</strong> (no frameworks, no build step)</li>
+        <li><strong>Bunny Fonts</strong> (privacy-friendly font CDN)</li>
+        <li><strong>Cloudflare Pages</strong> for hosting</li>
+      </ul>
+
+      <p>No bundler, no React, no Tailwind, no CMS. Just HTML, CSS, and JavaScript that renders fast and works everywhere.</p>
+
+      <h2 id="how-to-use">How to use it</h2>
+
+      <p>Site-wide configuration lives in two files: <code>src/_data/site-settings.json</code> (editor-facing: title, tagline, tipping URLs, newsletter config, social links — editable via Pages CMS) and <code>src/_data/site.js</code> (secrets and environment overrides: API keys, analytics IDs, loaded from <code>.env</code> or CI). Change the values and the entire site updates on the next build.</p>
+
+      <p>Analytics is dual-layered: <strong>Umami</strong> as the primary cookieless pageview tracker and <strong>Cloudflare Web Analytics</strong> as a secondary cookieless measurement tool.</p>
+
+      <p>The visual design is controlled by CSS custom properties in <code>src/assets/css/tokens.css</code>. Swap the colours and fonts to match your brand.</p>
+
+      <p>Content lives in <code>src/content/</code> as Markdown files with YAML front matter. Each section has its own directory. Add a new article by creating a new <code>.md</code> file.</p>
+
+      <h2 id="license">License</h2>
+
+      <p>The code is released under the <strong>MIT License</strong>. Use it for personal projects, commercial publications, or anything else. No attribution required, though it is appreciated.</p>
+
+      <p>The editorial content (articles, essays, library commentary) published on {{ site.title }} is not part of the template and remains the property of its respective authors.</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

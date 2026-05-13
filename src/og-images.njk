@@ -1,0 +1,110 @@
+---
+pagination:
+  data: collections.allContent
+  size: 1
+  alias: article
+  addAllPagesToCollections: false
+permalink: "/og/{{ article.url | ogSlug }}.svg"
+layout: false
+eleventyExcludeFromCollections: true
+---
+{#- Resolve the author's display name. Articles store a slug on
+    `data.author`; the full name lives in authors[slug].name. -#}
+{%- set _slug = article.data.author -%}
+{%- set _authorName = (authors[_slug].name if (_slug and authors[_slug]) else (article.data.authorName or _slug or "")) -%}
+{%- set _section = article.data.section or "" -%}
+{%- set _subsection = article.data.subsection or "" -%}
+{%- set _title = article.data.title or "" -%}
+{%- set _desc = article.data.description or "" -%}
+{%- set _date = article.date | readableDate -%}
+{#- Pre-wrap title + description at build time because resvg-js (our
+    SVG→PNG rasteriser) doesn't support SVG <foreignObject>. Native
+    <text> + <tspan> is the only layout path that actually renders.
+    Title capped at 3 lines so author/date byline stays above X.com's
+    ~110px bottom overlay that hides anything past y≈520. -#}
+{%- set _titleLines = _title | wrap(30) | limit(3) -%}
+{%- set _descLines = _desc | wrap(62) | limit(3) -%}
+{%- set _kicker = _section -%}
+{%- if _section and _subsection %}{%- set _kicker = _section + " › " + _subsection -%}{%- endif -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200" height="630" viewBox="0 0 1200 630"
+     role="img" aria-label="{{ _title | escape }}">
+
+  <title>{{ _title | escape }}</title>
+
+  <!-- Canvas -->
+  <rect width="1200" height="630" fill="#F4F1EB"/>
+  <!-- Left accent rule -->
+  <rect x="0" y="0" width="10" height="630" fill="#C0392B"/>
+
+  <!-- Top masthead strip -->
+  <rect x="0" y="0" width="1200" height="68" fill="#1A1A1A"/>
+  <text x="80" y="44"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="26"
+        font-weight="700"
+        letter-spacing="0.04em"
+        fill="#FFFFFF">The Freethinking Times</text>
+  <text x="1120" y="44"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="16"
+        font-weight="700"
+        letter-spacing="0.2em"
+        fill="#FFFFFF"
+        text-anchor="end">INDEPENDENT JOURNALISM</text>
+
+  <!-- Section kicker -->
+  {% if _kicker %}
+  <text x="80" y="130"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="18"
+        font-weight="700"
+        letter-spacing="0.22em"
+        fill="#C0392B">{{ _kicker | upper | escape }}</text>
+  <line x1="80" y1="148" x2="200" y2="148" stroke="#C0392B" stroke-width="2"/>
+  {% endif %}
+
+  <!-- Inline byline (dateline style) — sits in X.com's safe zone so
+       author + publish date remain visible even when the platform
+       overlays the bottom ~110px of the card with its own strip. -->
+  <text x="80" y="190"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="17"
+        font-weight="700"
+        letter-spacing="0.18em"
+        fill="#1A1A1A">{% if _authorName %}BY {{ _authorName | upper | escape }}{% endif %}{% if _authorName and _date %} &#8212; {% endif %}{% if _date %}PUBLISHED {{ _date | upper | escape }}{% endif %}</text>
+
+  <!-- Title: native <text> with one <tspan> per wrapped line. -->
+  <text x="80" y="260"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="56"
+        font-weight="700"
+        letter-spacing="-0.01em"
+        fill="#1A1A1A">
+    {% for line in _titleLines %}
+    <tspan x="80" {% if not loop.first %}dy="68"{% endif %}>{{ line | escape }}</tspan>
+    {% endfor %}
+  </text>
+
+  <!-- Deck / description -->
+  {% if _descLines.length %}
+  {%- set _titleBottomY = 260 + ((_titleLines.length - 1) * 68) + 40 -%}
+  <text x="80" y="{{ _titleBottomY }}"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="24"
+        font-style="italic"
+        fill="#3D3B39">
+    {% for line in _descLines %}
+    <tspan x="80" {% if not loop.first %}dy="34"{% endif %}>{{ line | escape }}</tspan>
+    {% endfor %}
+  </text>
+  {% endif %}
+
+  <!-- Slim bottom ornament — sits entirely inside X.com's overlay zone
+       so it never competes with the platform's own title/author strip;
+       gives the card a finished bottom edge on LinkedIn, Slack, etc. -->
+  <rect x="0" y="597" width="1200" height="3" fill="#C0392B"/>
+  <rect x="0" y="600" width="1200" height="30" fill="#1A1A1A"/>
+
+</svg>

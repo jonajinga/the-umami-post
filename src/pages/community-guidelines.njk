@@ -1,0 +1,96 @@
+---
+layout: base
+title: Community Guidelines
+description: Standards for respectful, substantive conversation in the comments and community spaces of The Freethinking Times.
+permalink: /community-guidelines/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Community Guidelines</h1>
+    <p class="page-header__lede">
+      The comments section exists for readers who want to think together. These guidelines exist to keep that space worth reading.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#short-version">The short version</a>
+      <a href="#what-we-expect">What we expect</a>
+      <a href="#will-not-tolerate">What we won't tolerate</a>
+      <a href="#moderation">How moderation works</a>
+      <a href="#free-expression">A note on free expression</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="short-version">The short version</h2>
+
+      <p>Argue with ideas, not with people. Be honest. Be specific. If you would not say it to someone's face in a library, do not say it here.</p>
+
+      <h2 id="what-we-expect">What we expect</h2>
+
+      <h3>Engage with substance</h3>
+      <p>The best comments add something, a counterargument, a relevant source, a question that sharpens the discussion. You do not need to agree with the article to comment, but you do need to engage with what it actually says. "This is wrong" is not a comment; "This is wrong because..." is.</p>
+
+      <h3>Disagree well</h3>
+      <p>This publication covers topics where people hold deep convictions: religion, politics, ethics, history. Disagreement is not only expected but necessary. What matters is how you disagree. Challenge the argument. Cite your sources. Explain your reasoning. The goal is to persuade, not to silence.</p>
+
+      <h3>Be honest about who you are</h3>
+      <p>You may use a pseudonym, many freethinkers throughout history have had good reason to. But do not impersonate another person, organisation, or public figure. Do not pretend to be something you are not to lend false authority to your claims.</p>
+
+      <h3>Respect the conversation</h3>
+      <p>Stay on topic. Read the article before commenting on it. Read existing comments before repeating a point someone has already made. If you are responding to another commenter, address their actual argument rather than a caricature of it.</p>
+
+      <h2 id="will-not-tolerate">What we will not tolerate</h2>
+
+      <ul>
+        <li><strong>Personal attacks</strong>, Criticise ideas, not the people who hold them. No name-calling, no insults, no threats.</li>
+        <li><strong>Hate speech</strong>, No slurs, dehumanising language, or calls for violence against any person or group based on race, ethnicity, gender, sexual orientation, disability, religion, or national origin.</li>
+        <li><strong>Harassment</strong>, No repeated unwanted contact, doxxing, stalking, or intimidation of authors, commenters, or anyone else.</li>
+        <li><strong>Spam and self-promotion</strong>, No advertising, affiliate links, fundraising appeals, or repeated plugs for your own content. A relevant link to support an argument is fine; a comment that exists only to drive traffic is not.</li>
+        <li><strong>Misinformation</strong>, Deliberate falsehoods presented as fact, conspiracy theories without evidence, or claims that have been repeatedly debunked. Being wrong is human; being deliberately misleading is not welcome.</li>
+        <li><strong>Bad faith</strong>, Trolling, sealioning, gish galloping, or any tactic designed to waste other people's time rather than advance understanding.</li>
+      </ul>
+
+      <h2 id="moderation">How moderation works</h2>
+
+      <p>All comments are reviewed before publication. This is not censorship, it is editing. We are a publication, and the comments section is part of that publication.</p>
+
+      <ul>
+        <li>Comments that meet these guidelines are approved promptly.</li>
+        <li>Comments that violate these guidelines are not published. We do not notify you or explain individual moderation decisions.</li>
+        <li>Repeated violations may result in your comments being permanently filtered.</li>
+        <li>We do not edit comments. If a comment has a problem, it is either approved as written or not approved at all.</li>
+      </ul>
+
+      <h2 id="free-expression">A note on free expression</h2>
+
+      <p>This publication exists to defend the right to think freely. That right does not oblige us to amplify every thought. A comments section without standards is not a free forum, it is a forum that has been surrendered to whoever is loudest. We moderate so that the people with something worth saying are not drowned out by those who do not.</p>
+
+      <p>If you believe your comment was wrongly withheld, you are welcome to <a href="/contact/">contact us</a>. We read every message.</p>
+
+      <p><em>Last updated: {{ currentYear }}</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

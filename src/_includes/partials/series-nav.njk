@@ -1,0 +1,41 @@
+{#
+  Series Navigation Partial
+  Variables: seriesItems (array), series (title string), seriesPart (int), page.url
+#}
+{% if seriesItems and seriesItems.length > 1 %}
+{% set prevPart = null %}
+{% set nextPart = null %}
+{% for item in seriesItems %}
+  {% if item.data.seriesPart == seriesPart - 1 %}{% set prevPart = item %}{% endif %}
+  {% if item.data.seriesPart == seriesPart + 1 %}{% set nextPart = item %}{% endif %}
+{% endfor %}
+
+<nav class="series-nav" aria-label="Series navigation">
+  <p class="series-nav__label">Part of a series</p>
+  <p class="series-nav__title">{{ series }}</p>
+
+  <ol class="series-nav__list">
+    {% for item in seriesItems %}
+    <li class="series-nav__item{% if item.url == page.url %} is-current{% endif %}">
+      <span class="series-nav__part">Part {{ item.data.seriesPart }}</span>
+      {% if item.url == page.url %}
+      <span class="series-nav__link" aria-current="page">{{ item.data.title }}</span>
+      {% else %}
+      <a class="series-nav__link" href="{{ item.url }}">{{ item.data.title }}</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+
+  <div class="series-nav__prev-next">
+    {% if prevPart %}
+    <a class="series-nav__arrow" href="{{ prevPart.url }}">← Part {{ prevPart.data.seriesPart }}</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if nextPart %}
+    <a class="series-nav__arrow" href="{{ nextPart.url }}">Part {{ nextPart.data.seriesPart }} →</a>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

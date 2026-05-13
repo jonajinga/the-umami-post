@@ -1,0 +1,122 @@
+---
+layout: base
+title: "Cookies Policy"
+description: How The Freethinking Times uses (and mostly does not use) cookies and browser storage.
+permalink: /cookies/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Cookies Policy</h1>
+    <p class="page-header__lede">
+      Short version: we do not set any first-party cookies.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#what-are-cookies">What are cookies?</a>
+      <a href="#our-approach">Our approach</a>
+      <a href="#localstorage">What we store</a>
+      <a href="#third-party">Third-party cookies</a>
+      <a href="#what-we-dont-use">What we don't use</a>
+      <a href="#managing">Managing cookies</a>
+      <a href="#contact">Contact</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="what-are-cookies">What are cookies?</h2>
+
+      <p>Cookies are small text files that websites store in your browser. They are commonly used to remember preferences, track sessions, and serve targeted advertising. Many news sites use dozens of cookies from advertising networks and data brokers.</p>
+
+      <h2 id="our-approach">Our approach</h2>
+
+      <p>{{ site.title }} does not set any first-party cookies. We made a deliberate decision to avoid them entirely.</p>
+
+      <p>Instead of cookies, we use your browser's <strong>localStorage</strong> to save your preferences and reading data. localStorage is different from cookies in important ways:</p>
+
+      <ul>
+        <li>It is never sent to our server, it stays entirely on your device</li>
+        <li>It cannot be used to track you across websites</li>
+        <li>It is not accessible to third parties</li>
+        <li>You can view, export, and delete it at any time from the <a href="/your-data/">Your Data</a> page</li>
+      </ul>
+
+      <h2 id="localstorage">What we store in localStorage</h2>
+
+      <table style="width:100%;font-size:var(--text-sm);border-collapse:collapse;margin:var(--space-6) 0;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--color-ink);text-align:left;">
+            <th style="padding:var(--space-2);">Data</th>
+            <th style="padding:var(--space-2);">Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Theme preference</td><td style="padding:var(--space-2);">Light or dark mode</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Reading list</td><td style="padding:var(--space-2);">Articles you saved for later</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Highlights and notes</td><td style="padding:var(--space-2);">Text you highlighted or annotated</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Bookmarks</td><td style="padding:var(--space-2);">Scroll positions you saved</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Reading settings</td><td style="padding:var(--space-2);">Font size, typeface preference</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Library progress</td><td style="padding:var(--space-2);">Reading position in library texts</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Music player state</td><td style="padding:var(--space-2);">Playlist, track, position, volume</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="third-party">Third-party cookies</h2>
+
+      <p>Some third-party services we use may set their own cookies:</p>
+
+      <ul>
+        <li><strong>Cloudflare</strong> (hosting), may set a <code>__cf_bm</code> cookie for bot detection</li>
+        <li><strong>hCaptcha</strong> (form spam protection), sets cookies to verify you are human</li>
+        <li><strong>YouTube</strong> (video embeds), we use YouTube's enhanced privacy mode (<code>youtube-nocookie.com</code>), which does not set cookies until you click play on a video</li>
+        <li><strong>YouTube IFrame API</strong> (music player), the API script is loaded from Google's servers on every page to enable the background music player. Google may set cookies when the script loads, and standard YouTube cookies apply when you play a playlist</li>
+        <li><strong>GTranslate</strong> (translation), Google Translate may set cookies when you use the translation feature</li>
+      </ul>
+
+      <p>We do not control these cookies. They are set by the respective services and are subject to their privacy policies.</p>
+
+      <h2 id="what-we-dont-use">What we do NOT use</h2>
+
+      <ul>
+        <li>No advertising cookies</li>
+        <li>No tracking pixels</li>
+        <li>No session cookies</li>
+        <li>No analytics cookies (Umami is cookieless)</li>
+        <li>No social media tracking widgets</li>
+        <li>No retargeting or remarketing</li>
+      </ul>
+
+      <h2 id="managing">Managing cookies</h2>
+
+      <p>You can clear all cookies and localStorage data for this site through your browser settings. You can also manage your stored data from the <a href="/your-data/">Your Data</a> page, which provides export, import, and delete options.</p>
+
+      <h2 id="contact">Contact</h2>
+
+      <p>Questions about this policy: <a href="/contact/">our contact form</a>.</p>
+
+      <p><em>Last updated: {{ currentYear }}</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

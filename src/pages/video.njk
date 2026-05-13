@@ -1,0 +1,60 @@
+---
+layout: base
+pagination:
+  data: videos
+  size: 1
+  alias: v
+  addAllPagesToCollections: true
+eleventyComputed:
+  title: "{{ v.title | safe }}"
+  description: "{{ v.description | safe }}"
+permalink: /videos/{{ v.title | slugify }}/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div style="max-width: var(--max-width-prose); margin: 0 auto;">
+
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/videos/">Videos</a></li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ v.title }}</li>
+      </ol>
+    </nav>
+
+    <article data-pagefind-body>
+      <div aria-hidden="true" style="display:none">
+        <span data-pagefind-meta="section">Videos</span>
+        <span data-pagefind-filter="section">Videos</span>
+        <span data-pagefind-meta="speaker">{{ v.speaker }}</span>
+        {% for tag in v.tags %}
+        <span data-pagefind-filter="topic">{{ tag }}</span>
+        {% endfor %}
+      </div>
+
+      <h1 style="font-family:var(--font-headline);font-size:clamp(1.4rem,3vw,var(--text-xl));margin:0 0 var(--space-4);line-height:var(--leading-snug);">{{ v.title }}</h1>
+
+      <div style="position:relative;padding-bottom:56.25%;background:var(--color-ink);">
+        <iframe src="{{ v.embed }}" title="{{ v.title }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" loading="lazy" allowfullscreen></iframe>
+      </div>
+
+      <div style="margin-top:var(--space-4);">
+        <p style="font-family:var(--font-ui);font-size:var(--text-sm);color:var(--color-ink-faint);margin:0;">
+          {{ v.speaker }} &middot; {{ v.date }} &middot; {{ v.duration }}
+        </p>
+        <p style="font-family:var(--font-body);font-size:var(--text-md);color:var(--color-ink-muted);margin:var(--space-3) 0 0;line-height:var(--leading-normal);">
+          {{ v.description }}
+        </p>
+      </div>
+
+      {% if v.tags %}
+      <div style="margin-top:var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-1);">
+        {% for tag in v.tags %}
+        <span style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);border:1px solid var(--color-rule);padding:1px var(--space-2);">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+
+  </div>
+</div>

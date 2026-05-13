@@ -1,0 +1,76 @@
+---
+layout: base
+pagination:
+  data: library.authors
+  size: 1
+  alias: libraryAuthor
+permalink: /library/authors/{{ libraryAuthor.slug }}/
+eleventyComputed:
+  title: "{{ libraryAuthor.name | safe }}"
+  description: "{{ libraryAuthor.significance | safe }}"
+---
+<div class="library-author-page" data-pagefind-body>
+  <div class="container">
+
+    <header class="library-author-hero">
+      <a class="library-discovery__back" href="/library/authors/">&larr; All Authors</a>
+      <h1 class="library-author-hero__name">{{ libraryAuthor.name }}</h1>
+      {% if libraryAuthor.dates or libraryAuthor.nationality %}
+        <p class="library-author-hero__meta">
+          {% if libraryAuthor.nationality %}{{ libraryAuthor.nationality }}{% endif %}
+          {% if libraryAuthor.dates %} &middot; {{ libraryAuthor.dates }}{% endif %}
+        </p>
+      {% endif %}
+      {% if libraryAuthor.significance %}
+        <p class="library-author-hero__significance">{{ libraryAuthor.significance }}</p>
+      {% endif %}
+    </header>
+
+    {% if libraryAuthor.bio %}
+      <div class="library-author-bio prose">
+        {{ libraryAuthor.bio | md | safe }}
+      </div>
+    {% endif %}
+
+    {# ── Works in the library ── #}
+    {% set authorWorks = [] %}
+    {% for w in library.works %}
+      {% if w.authorSlug === libraryAuthor.slug and not w.parentWork %}
+        {% set authorWorks = authorWorks.concat([w]) %}
+      {% endif %}
+    {% endfor %}
+
+    {% if authorWorks.length %}
+      <section class="library-author-works" aria-labelledby="author-works-heading">
+        <h2 class="library-author-works__heading" id="author-works-heading">
+          Works in the Library
+        </h2>
+        <div class="library-featured__grid">
+          {% for w in authorWorks %}
+            <a class="library-work-card" href="/library/{{ w.slug }}/">
+              <p class="library-work-card__era">{{ w.era or "" }}</p>
+              <h3 class="library-work-card__title">{{ w.title }}</h3>
+              <p class="library-work-card__author">{{ w.author or "" }}</p>
+              {% if w.description %}
+                <p class="library-work-card__desc">{{ w.description }}</p>
+              {% endif %}
+              <div class="library-work-card__meta">
+                {% if w.year %}<span>{{ w.year }}</span>{% endif %}
+                {% if w.type %}<span>{{ w.type }}</span>{% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {# ── Freethinkers Map note ── #}
+    {% if libraryAuthor.freethinkerMapId %}
+      <p class="library-author-map-note">
+        {{ libraryAuthor.name }} appears in the
+        <a href="/timeline/">Freethought Timeline</a>.
+      </p>
+    {% endif %}
+
+  </div>
+</div>

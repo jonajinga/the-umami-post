@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose" data-pagefind-body>
+    <span data-pagefind-filter="section" hidden>Glossary</span>
+
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/glossary/">Glossary</a></li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ title }}</li>
+      </ol>
+    </nav>
+
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: var(--space-4);">{{ title }}</h1>
+
+    <p style="font-family: var(--font-body); font-size: var(--text-lg); line-height: var(--leading-relaxed);">{{ description }}</p>
+
+    <div style="margin-top: var(--space-8);">
+      <a href="/glossary/" class="btn">&larr; All Terms</a>
+    </div>
+  </div>
+</div>

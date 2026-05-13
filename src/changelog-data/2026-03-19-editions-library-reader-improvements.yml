@@ -1,0 +1,31 @@
+date: "2026-03-19"
+title: Editions, library & reader improvements
+sections:
+  - label: Editions
+    entries:
+      - Edition pages are now printable — Print / Save PDF button added to edition header
+      - >-
+        Printed editions include a table-of-contents listing followed by each article in full, one article per page,
+        with eyebrow, title, dek, byline, and complete body text
+      - >-
+        Print header shows publication name, edition number, date, and article count; print footer shows the canonical
+        URL
+  - label: Public Domain Library
+    entries:
+      - The Age of Reason and Common Sense added to Featured Works — all five library works are now featured
+      - >-
+        Library catalogue alphabetised A–Z by title (ignoring leading articles): The Age of Reason, Common Sense, An
+        Enquiry Concerning Human Understanding, On Liberty, Why I Am Not a Christian
+      - >-
+        Word count and reading time now displayed on library chapter and short-text reading pages, between the title and
+        the reader tools bar
+      - >-
+        Back-to-top button now works on library reading pages — progress.js previously gated floats visibility on the
+        article progress bar, which is absent from library layouts
+      - Reading percentage (% through) now shown on library reading pages alongside the back-to-top button
+      - >-
+        Floating within-chapter TOC max-height reduced to prevent it overlapping the back-to-top button at the
+        bottom-right of the screen
+  - label: Site
+    entries:
+      - Features page added at /features/ — complete inventory of every site feature organised by category

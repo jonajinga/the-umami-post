@@ -1,0 +1,75 @@
+---
+layout: base
+title: RSS Reader
+description: Follow freethought publications and add your own RSS feeds. All reading happens in your browser, no account required.
+permalink: /reader/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header style="padding-bottom: var(--space-8); border-bottom: 3px solid var(--color-ink); margin-bottom: var(--space-8);">
+    <h1 style="font-family: var(--font-masthead); font-size: var(--text-3xl); margin-bottom: var(--space-2);">RSS Reader</h1>
+    <p style="color: var(--color-ink-muted); font-size: var(--text-md); font-style: italic;">
+      Follow freethought publications. Feeds are updated at each site build.
+    </p>
+  </header>
+
+  {# Feed tabs #}
+  <div id="feed-tabs" style="display: flex; gap: var(--space-2); margin-bottom: var(--space-6); flex-wrap: wrap; overflow-x: auto;">
+    <button class="search-filter-btn is-active" data-feed="all" type="button">All</button>
+    {% for feed in feeds %}
+    <button class="search-filter-btn" data-feed="{{ feed.url }}" type="button">{{ feed.name }}</button>
+    {% endfor %}
+  </div>
+
+  {# Feed entries, pre-rendered from build-time data #}
+  <div id="feed-entries">
+    {% set allItems = [] %}
+    {% for feed in feeds %}
+      {% set items = feedCache[feed.url] %}
+      {% if items %}
+        {% for item in items %}
+          {% set allItems = (allItems.push({title: item.title, link: item.link, description: item.description, date: item.date, feedName: item.feedName, feedUrl: feed.url}), allItems) %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+    {% if allItems.length %}
+      {% for item in allItems | sort(true, false, 'date') %}
+      <div data-feed-url="{{ item.feedUrl }}" style="padding:var(--space-4);border-bottom:1px solid var(--color-rule);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-1);">
+          <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-headline);font-size:var(--text-md);font-weight:700;color:var(--color-ink);text-decoration:none;line-height:var(--leading-snug);">{{ item.title }}</a>
+          {% if item.date %}
+          <time style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);white-space:nowrap;">{{ item.date | readableDate }}</time>
+          {% endif %}
+        </div>
+        {% if item.description %}
+        <p style="font-size:var(--text-sm);color:var(--color-ink-muted);margin:0 0 var(--space-1);line-height:var(--leading-normal);">{{ item.description | truncate(200) }}</p>
+        {% endif %}
+        <span style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);">{{ item.feedName }}</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--color-ink-faint);font-style:italic;padding:var(--space-8) 0;">No feed articles available. Feeds will populate on the next site build.</p>
+    {% endif %}
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var tabsEl = document.getElementById('feed-tabs');
+  if (!tabsEl) return;
+
+  tabsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-feed]');
+    if (!btn) return;
+    tabsEl.querySelectorAll('.search-filter-btn').forEach(function (b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    var filter = btn.dataset.feed;
+    document.querySelectorAll('#feed-entries [data-feed-url]').forEach(function (el) {
+      el.style.display = (filter === 'all' || el.dataset.feedUrl === filter) ? '' : 'none';
+    });
+  });
+})();
+</script>

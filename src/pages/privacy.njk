@@ -1,0 +1,164 @@
+---
+layout: base
+title: Privacy Policy
+description: What data The Freethinking Times collects, stores, and shares, and what it does not.
+permalink: /privacy/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Privacy Policy</h1>
+    <p class="page-header__lede">
+      Short version: no first-party cookies, no tracking pixels, no data sold. Your reading stays on your device.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#cookies">First-party cookies</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#comments">Comments</a>
+      <a href="#translation">Translation</a>
+      <a href="#fonts">Fonts</a>
+      <a href="#hosting">Hosting</a>
+      <a href="#videos">Videos</a>
+      <a href="#contact-forms">Contact forms</a>
+      <a href="#web-speech">Web Speech API</a>
+      <a href="#music-player">Music player</a>
+      <a href="#tooltips">Glossary & navigation</a>
+      <a href="#offline">Offline / PWA</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#email">Email</a>
+      <a href="#what-we-dont-do">What we don't do</a>
+      <a href="#changes">Changes</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="cookies">First-Party Cookies</h2>
+
+      <p>The Freethinking Times sets <strong>no first-party cookies</strong>. Reader preferences and state are stored in your browser's <code>localStorage</code>, a mechanism that never leaves your device and is not transmitted to any server. The following features use it:</p>
+
+      <ul>
+        <li><strong>Dark / light mode preference</strong>, stored under the key <code>tft-theme</code></li>
+        <li><strong>Focus mode</strong>, stored under <code>tft-focus</code></li>
+        <li><strong>Reading settings</strong> (font, size, spacing, width, background, ruler, auto-scroll), stored under <code>tft-rs-*</code> keys</li>
+        <li><strong>Global display settings</strong> (font, size, spacing, theme), stored under <code>tft-gs-*</code> keys</li>
+        <li><strong>Reading list</strong>, articles you save via the bookmark button, stored under <code>tft-reading-list</code></li>
+        <li><strong>Library reading positions</strong>, where you left off in a library text, stored under <code>tft-lib-pos-*</code></li>
+        <li><strong>Library chapter completion</strong>, which chapters you have finished, stored under <code>tft-lib-completed-*</code></li>
+        <li><strong>Library bookmarks and annotations</strong>, highlights and notes you add to library texts, stored under <code>tft-lib-bookmarks-*</code> and <code>tft-lib-annotations-*</code></li>
+        <li><strong>Music player state</strong>, which playlist is playing, current track index, playback position, and volume, stored under <code>tft-music-*</code> keys so music can resume across page navigation</li>
+      </ul>
+
+      <p>All of this data lives entirely in your browser. Clearing your browser's local storage will erase it. We cannot access, view, or recover it.</p>
+
+      <h2 id="analytics">Analytics</h2>
+
+      <p>We use <a href="https://umami.is" target="_blank" rel="noopener noreferrer">Umami</a> as our primary site analytics. Umami is designed to be privacy-first: it collects no personally identifiable information, sets no cookies, and does not track visitors across sites or sessions. It records page views, referrer, browser type, and general country, in aggregate, never linked to an individual.</p>
+
+      <p>We also use <a href="https://www.cloudflare.com/web-analytics/" target="_blank" rel="noopener noreferrer">Cloudflare Web Analytics</a> as a secondary measurement tool. Like Umami, it is cookieless and privacy-preserving: it does not use fingerprinting, does not track visitors across sites, and does not build profiles of individual users. It reports aggregate page-view counts, referrers, and coarse geography derived from the same request metadata Cloudflare already processes to serve the site. Cloudflare&rsquo;s handling of this data is governed by <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">their privacy policy</a>.</p>
+
+      {% if site.analytics and site.analytics.dashboardUrl %}
+      <p>Our Umami analytics dashboard is public, you can view the same data we see at <a href="{{ site.analytics.dashboardUrl }}" target="_blank" rel="noopener noreferrer">our public analytics page</a>.</p>
+      {% endif %}
+
+      <h2 id="comments">Comments</h2>
+
+      <p>Article comment sections are powered by <a href="https://cusdis.com" target="_blank" rel="noopener noreferrer">Cusdis</a>. If you read an article without submitting a comment, Cusdis does not collect data about you. If you submit a comment, your name (as entered), comment text, and email address (optional) are sent to Cusdis's servers and are subject to <a href="https://cusdis.com/doc#/privacy" target="_blank" rel="noopener noreferrer">Cusdis's privacy policy</a>. Comments go live only after manual review.</p>
+
+      <h2 id="translation">Translation</h2>
+
+      <p>We use a widget from <a href="https://gtranslate.io" target="_blank" rel="noopener noreferrer">GTranslate</a> (a third-party service, not Google) to offer the site in nine languages. The widget script is loaded from <code>cdn.gtranslate.net</code>. GTranslate uses <strong>Google Translate</strong> as its translation engine, so when you select a language both GTranslate and Google are involved in processing the request.</p>
+
+      <p>GTranslate is likely to set a cookie to remember your selected language. If you do not interact with the language selector, no cookie is set. GTranslate's data practices are governed by <a href="https://gtranslate.io/privacy-policy" target="_blank" rel="noopener noreferrer">their privacy policy</a>; Google's by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a>.</p>
+
+      <h2 id="fonts">Fonts</h2>
+
+      <p>Typefaces are loaded from <a href="https://fonts.bunny.net" target="_blank" rel="noopener noreferrer">Bunny Fonts</a>, a privacy-friendly alternative to Google Fonts. Bunny Fonts does not log IP addresses, does not set cookies, and does not track users. Your browser requests font files directly from <code>fonts.bunny.net</code>, which sees your IP address as part of a standard HTTP request, the same as any web server you connect to.</p>
+
+      <p>The site's display settings offer 27 font choices. System fonts (Georgia, Arial, Verdana, etc.) require no network request. Web fonts (Inter, Merriweather, Roboto, Crimson Pro, Atkinson Hyperlegible, and others) are loaded from Bunny Fonts only when you select them, they are not downloaded until needed.</p>
+
+      <h2 id="hosting">Hosting</h2>
+
+      <p>The site is hosted on Cloudflare Pages. Cloudflare processes traffic as part of providing hosting and DDoS protection. Their infrastructure may log standard request metadata (IP address, user agent, page requested, timestamp) for security and operational purposes. We do not receive individually identifiable logs. Cloudflare's practices are governed by <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">their privacy policy</a>.</p>
+
+      <h2 id="videos">Videos (YouTube)</h2>
+
+      <p>Our <a href="/videos/">Videos</a> page embeds content from YouTube using YouTube's <strong>enhanced privacy mode</strong> (<code>youtube-nocookie.com</code>). In this mode, YouTube does not set cookies or collect data about you until you click play on a video. Once you play a video, YouTube's standard terms and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a> apply. We have no control over what Google collects during video playback.</p>
+
+      <h2 id="contact-forms">Contact Forms (Web3Forms)</h2>
+
+      <p>All forms on this site, including contact, article pitches, letters, quote submissions, event submissions, timeline suggestions, book recommendations, library text suggestions, glossary term suggestions, trial suggestions, thought experiment suggestions, corrections, tips, and feedback, are processed by <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer">Web3Forms</a>, a third-party form service. When you submit a form, your message is delivered directly to our editorial inbox. Web3Forms does not store your submission data after delivery. Forms use <a href="https://www.hcaptcha.com" target="_blank" rel="noopener noreferrer">hCaptcha</a> for spam protection, which processes limited data (browser, IP address) subject to <a href="https://www.hcaptcha.com/privacy" target="_blank" rel="noopener noreferrer">hCaptcha's privacy policy</a>.</p>
+
+      <p>Most forms allow anonymous submissions, name and email are optional unless otherwise marked. We do not log form submissions independently of the email delivery.</p>
+
+      <h2 id="web-speech">Web Speech API (Voice Search, Dictation)</h2>
+
+      <p>The site uses the <strong>Web Speech API</strong> built into your browser for two optional features: voice search and form dictation. No audio is recorded or transmitted to us. Depending on your browser and operating system, speech processing may be performed locally or routed through a cloud service provided by your browser vendor (for example, Google or Apple). We have no control over or visibility into that process. Both features can be declined without affecting other site functionality.</p>
+
+      <h2 id="music-player">Music Player (YouTube)</h2>
+
+      <p>The <a href="/music/">Freethought Music</a> feature uses the <strong>YouTube IFrame API</strong> to play curated playlists. The YouTube API script is loaded from Google's servers on every page. When you play a playlist, YouTube's standard terms and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a> apply. Playback state (which playlist, current track, and position) is stored in your browser's <code>localStorage</code> so music can resume when you navigate between pages. If you do not use the music player, no YouTube content is loaded beyond the API script itself.</p>
+
+      <h2 id="tooltips">Glossary Tooltips and Navigation</h2>
+
+      <p>Glossary term definitions appear as tooltips when you hover over terms in articles and library pages. The tooltip library (<strong>Tippy.js</strong> and <strong>Popper.js</strong>) is self-hosted on our servers, no requests are made to third-party services, no cookies are set, and no data is collected.</p>
+
+      <p>The site uses <strong>instant.page</strong> (self-hosted) to prefetch pages when you hover over a link, making navigation faster. This means your browser may request a page before you click on it. No data about prefetched pages is transmitted to us or any third party.</p>
+
+      <p>When navigating between pages, content is swapped without a full page reload (SPA-style navigation). Fetched pages are cached temporarily in your browser's memory and are cleared when you close the tab.</p>
+
+      <h2 id="offline">Offline / Progressive Web App</h2>
+
+      <p>The site installs a service worker that caches pages for offline reading. This cache is stored locally in your browser. No data about your offline reading is transmitted anywhere.</p>
+
+      <h2 id="newsletter">Newsletter</h2>
+
+      <p>Our newsletter is managed by <a href="https://buttondown.com" target="_blank" rel="noopener noreferrer">Buttondown</a>, a third-party newsletter platform. If you subscribe, Buttondown collects your email address and stores it on their servers. Buttondown does not track whether you open a newsletter or click links inside one, those features are disabled. Links in the newsletter include UTM parameters (e.g. <code>?utm_source=buttondown</code>) so our site analytics can attribute traffic to the newsletter in aggregate; this does not identify you individually. Your data is governed by <a href="https://buttondown.com/legal/privacy" target="_blank" rel="noopener noreferrer">Buttondown's privacy policy</a>.</p>
+
+      <p>We use your email address only to send the newsletter. We will never share it with advertisers or other third parties. Every newsletter includes an unsubscribe link; you can also use <a href="/contact/">our contact form</a> to be removed.</p>
+
+      <h2 id="email">Email</h2>
+
+      <p>If you contact us through <a href="/contact/">our contact form</a>, we receive your address and message. We use this only to respond to you. We do not add you to any mailing list without your explicit request, and we do not share your email with third parties.</p>
+
+      <h2 id="what-we-dont-do">What We Do Not Do</h2>
+
+      <ul>
+        <li>We do not use advertising networks or tracking pixels.</li>
+        <li>We do not sell, license, or share reader data with any third party for commercial purposes.</li>
+        <li>We do not require account creation to read anything on this site.</li>
+        <li>We do not build profiles of individual readers.</li>
+      </ul>
+
+      <h2 id="changes">Changes to This Policy</h2>
+
+      <p>If our data practices change in any material way, we will update this page and note the date of the change at the bottom. We will not adopt practices that contradict the principles stated above without prominent disclosure.</p>
+
+      <p>Questions: <a href="/contact/">our contact form</a></p>
+
+      <p><em>Last updated: April 20, 2026</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

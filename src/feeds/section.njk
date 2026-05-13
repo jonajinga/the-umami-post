@@ -1,0 +1,30 @@
+---
+pagination:
+  data: collections.sectionList
+  size: 1
+  alias: sectionSlug
+  addAllPagesToCollections: false
+permalink: "/feed-{{ sectionSlug }}.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.sections[sectionSlug].label }}, {{ site.title }}</title>
+    <link>{{ site.url }}/{{ sectionSlug }}/</link>
+    <atom:link href="{{ site.url }}/feed-{{ sectionSlug }}.xml" rel="self" type="application/rss+xml"/>
+    <description>{{ site.sections[sectionSlug].description }}</description>
+    <language>{{ site.language }}</language>
+    {% for post in collections[sectionSlug] %}
+    <item>
+      <title>{{ post.data.title | escape }}</title>
+      <link>{{ site.url }}{{ post.url }}</link>
+      <guid>{{ site.url }}{{ post.url }}</guid>
+      <pubDate>{{ post.date | dateToRfc822 }}</pubDate>
+      <description>{{ post.data.description | escape }}</description>
+      {% if post.data.subsection %}<category>{{ post.data.subsection }}</category>{% endif %}
+      <dc:creator>{{ post.data.authorName or post.data.author }}</dc:creator>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

@@ -1,0 +1,55 @@
+{#
+  site-announcement.njk — renders the editorial-state announcement strip
+  at the top of every page when site.announcement.active is true.
+
+  Severity drives colour (info / warning / breaking). Dismissible per
+  announcement-id via localStorage so a reader who dismisses the Tuesday
+  banner doesn't see it again until the id changes.
+
+  The watch-live element used to live here too. It now sits in the
+  masthead next to the hamburger (see partials/header.njk) — a quieter
+  red-dot button instead of a full-width strip.
+#}
+
+{% if site.announcement and site.announcement.active and site.announcement.text %}
+{% set _ann = site.announcement %}
+{% set _annId = _ann.id or (_ann.text | slugify | truncate(40, true, "")) %}
+<aside class="site-announce site-announce--{{ _ann.severity or 'info' }}"
+       id="site-announce"
+       data-announce-id="{{ _annId }}"
+       {% if not _ann.dismissible %}data-pinned="true"{% endif %}
+       role="status"
+       aria-live="polite">
+  <div class="site-announce__inner">
+    <span class="site-announce__badge" aria-hidden="true">
+      {% if _ann.severity == "breaking" %}Breaking
+      {% elif _ann.severity == "warning" %}Notice
+      {% else %}Update{% endif %}
+    </span>
+    <span class="site-announce__text">{{ _ann.text }}</span>
+    {% if _ann.linkUrl and _ann.linkText %}
+    <a class="site-announce__cta" href="{{ _ann.linkUrl }}" data-umami-event="announce-cta">
+      {{ _ann.linkText }}
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    {% endif %}
+    {% if _ann.dismissible %}
+    <button type="button" class="site-announce__close" aria-label="Dismiss announcement"
+      onclick="(function(b){var el=b.closest('.site-announce');if(!el)return;var id=el.dataset.announceId;var key='tft-announce-dismissed';var list=[];try{list=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}if(list.indexOf(id)===-1)list.push(id);try{localStorage.setItem(key,JSON.stringify(list));}catch(e){}el.hidden=true;})(this);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    {% endif %}
+  </div>
+</aside>
+<script>
+(function () {
+  var el = document.getElementById('site-announce');
+  if (!el || el.dataset.pinned === 'true') return;
+  var id = el.dataset.announceId;
+  var key = 'tft-announce-dismissed';
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  if (list.indexOf(id) !== -1) el.hidden = true;
+})();
+</script>
+{% endif %}

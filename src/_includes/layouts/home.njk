@@ -1,0 +1,106 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="container front-page">
+
+  {# ─── Lead / Hero ─────────────────────────────────────────── #}
+  <section class="front-hero" aria-label="Lead stories">
+    {% set leadStory = collections.featured | first or collections.allContent | first %}
+    {% if leadStory %}
+    {% set article = leadStory %}
+    {% set size = "lg" %}
+    {% set showImage = true %}
+    {% set priority = true %}
+    {% include "partials/article-card.njk" %}
+    {% set priority = false %}
+    {% endif %}
+  </section>
+
+  {# ─── Secondary Stories ────────────────────────────────────── #}
+  {% set secondaryStories = collections.allContent | limit(4) %}
+  {% if secondaryStories.length > 1 %}
+  <section class="front-secondary" aria-label="More stories">
+    {% for item in secondaryStories %}
+    {% if not loop.first %}
+    {% set article = item %}
+    {% set size = "sm" %}
+    {% include "partials/article-card.njk" %}
+    {% endif %}
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {# ─── Section Strips ───────────────────────────────────────── #}
+  {% set frontSections = ["opinion", "analysis", "history"] %}
+  {% for sectionKey in frontSections %}
+  {% set sectionItems = collections[sectionKey] | limit(3) %}
+  {% if sectionItems and sectionItems.length > 0 %}
+  <section class="front-section-strip" aria-label="{{ sectionKey | title }} section">
+
+    {# Section label column #}
+    <div class="front-section-strip__label">
+      <a href="/{{ sectionKey }}/"
+         class="section-badge section-badge--{{ sectionKey }}"
+         style="font-size: var(--text-md); display: block; margin-bottom: var(--space-3);">
+        {{ sectionKey | replace("-", " ") | title }}
+      </a>
+      <p style="font-size: var(--text-sm); color: var(--color-ink-muted); font-style: italic; line-height: var(--leading-normal);">
+        {{ site.sections[sectionKey].description }}
+      </p>
+      <a href="/{{ sectionKey }}/" class="btn" style="margin-top: var(--space-4); font-size: var(--text-xs);"
+         aria-label="View all {{ sectionKey | replace('-', ' ') | title }} articles">
+        View All →
+      </a>
+    </div>
+
+    {# Articles in this section #}
+    <div class="front-section-strip__articles">
+      {% for item in sectionItems %}
+      {% set article = item %}
+      {% set size = "sm" %}
+      {% include "partials/article-card.njk" %}
+      {% endfor %}
+    </div>
+
+  </section>
+  {% endif %}
+  {% endfor %}
+
+  {# ─── Subscribe via reader (open-web / RSS CTA) ──────────── #}
+  <section class="front-subscribe" aria-label="Subscribe by RSS">
+    <div class="front-subscribe__body">
+      <p class="front-subscribe__kicker">Follow the open way</p>
+      <h2 class="front-subscribe__title">Subscribe in any RSS reader</h2>
+      <p class="front-subscribe__lede">
+        No account. No algorithm. Every article, the moment it publishes, straight to your reader of choice. Pick the whole site, a section, an author, or a single topic.
+      </p>
+    </div>
+    <div class="front-subscribe__actions">
+      <a class="btn btn--primary" href="/feeds/" data-umami-event="subscribe-cta">Browse all feeds &rarr;</a>
+      <a class="btn btn--ghost" href="/feed.xml" data-umami-event="rss-sub" data-umami-event-feed="main">Grab the main feed</a>
+    </div>
+  </section>
+
+  {# ─── Quick Sections ──────────────────────────────────────── #}
+  <section class="front-quick" aria-label="More sections">
+    {% set quickSections = ["arts-culture", "science-technology", "letters"] %}
+    {% for sectionKey in quickSections %}
+    {% set sectionItems = collections[sectionKey] | limit(3) %}
+    <div class="front-quick__col">
+      <a href="/{{ sectionKey }}/"
+         class="section-badge section-badge--{{ sectionKey }} front-quick__badge">
+        {{ sectionKey | replace("-", " ") | title }}
+      </a>
+      {% for item in sectionItems %}
+      <div class="front-quick__item{% if not loop.last %} front-quick__item--border{% endif %}">
+        <a href="{{ item.url }}" class="front-quick__link">{{ item.data.title }}</a>
+        <time class="front-quick__date">{{ item.date | shortDate }}</time>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </section>
+
+
+</div>{# /.container #}

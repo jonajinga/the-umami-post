@@ -1,0 +1,32 @@
+---
+pagination:
+  data: authorList
+  size: 1
+  alias: authorSlug
+  addAllPagesToCollections: false
+permalink: "/feeds/{{ authorSlug }}.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ authors[authorSlug].name }}, {{ site.title }}</title>
+    <link>{{ site.url }}/author/{{ authorSlug }}/</link>
+    <atom:link href="{{ site.url }}/feeds/{{ authorSlug }}.xml" rel="self" type="application/rss+xml"/>
+    <description>Articles by {{ authors[authorSlug].name }} at {{ site.title }}</description>
+    <language>{{ site.language }}</language>
+    {% for post in collections.allContent %}
+    {% if post.data.author == authorSlug %}
+    <item>
+      <title>{{ post.data.title | escape }}</title>
+      <link>{{ site.url }}{{ post.url }}</link>
+      <guid>{{ site.url }}{{ post.url }}</guid>
+      <pubDate>{{ post.date | dateToRfc822 }}</pubDate>
+      <description>{{ post.data.description | escape }}</description>
+      {% if post.data.section %}<category>{{ post.data.section }}</category>{% endif %}
+      <dc:creator>{{ post.data.authorName or post.data.author }}</dc:creator>
+    </item>
+    {% endif %}
+    {% endfor %}
+  </channel>
+</rss>

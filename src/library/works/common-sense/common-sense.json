@@ -1,0 +1,18 @@
+{
+  "workSlug": "common-sense",
+  "workTitle": "Common Sense",
+  "author": "Thomas Paine",
+  "authorSlug": "thomas-paine",
+  "authorDates": "1737–1809",
+  "originalPublication": 1776,
+  "originalLanguage": "English",
+  "translator": null,
+  "edition": "Third edition, 1776",
+  "source": "Project Gutenberg",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/147",
+  "type": "pamphlet",
+  "subjects": ["Politics", "Revolution", "Democracy", "Reason"],
+  "difficulty": "Accessible",
+  "era": "18th Century",
+  "shortWork": true
+}

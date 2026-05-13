@@ -1,0 +1,822 @@
+---
+layout: base
+title: Style Guide
+description: Design tokens, typography, colour palette, components, and interaction patterns for The Freethinking Times.
+permalink: /style-guide/
+---
+
+<div class="container">
+  <div class="sg-layout">
+
+    {# ── Sticky TOC ───────────────────────────────────────── #}
+    <aside class="sg-nav" aria-label="Style guide sections">
+      <a href="#brand">Brand</a>
+      <a href="#colors">Colors</a>
+      <a href="#typography">Typography</a>
+      <a href="#scale">Type scale</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#badges">Badges</a>
+      <a href="#section-badges">Section badges</a>
+      <a href="#breadcrumbs">Breadcrumbs</a>
+      <a href="#article-cards">Article cards</a>
+      <a href="#author-cards">Author cards</a>
+      <a href="#forms">Forms</a>
+      <a href="#tables">Tables</a>
+      <a href="#icons">Icons</a>
+      <a href="#a11y">Accessibility</a>
+      <a href="#contrast">Contrast</a>
+      <a href="#naming">Naming</a>
+    </aside>
+
+    {# ── Content ──────────────────────────────────────────── #}
+    <div>
+
+      <header style="margin-bottom: var(--space-12); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
+        <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-3);">Style Guide</h1>
+        <p style="font-size: var(--text-lg); color: var(--color-ink-muted); line-height: var(--leading-relaxed); max-width: 60ch; font-style: italic; margin: 0;">
+          Every design token, typographic specimen, component, and interaction pattern for {{ site.title }}.
+        </p>
+      </header>
+
+      {# ── Brand ── #}
+      <section class="sg-section" id="brand">
+        <h2>Brand</h2>
+        <p class="lead">The publication name is always written in full, <strong>The Freethinking Times</strong>, capitalised, never abbreviated to "TFT" in reader-facing copy. The icon is a serif "F" on a dark square.</p>
+
+        <div class="sg-subsection">
+          <h4>Logotype</h4>
+          <div class="sg-demo sg-demo--row">
+            <img src="/assets/favicon.svg" alt="The Freethinking Times icon" width="48" height="48">
+            <span style="font-family: var(--font-masthead); font-size: var(--text-xl); font-weight: 700;">{{ site.title }}</span>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Tagline</h4>
+          <div class="sg-demo">
+            <p style="font-family: var(--font-body); font-style: italic; font-size: var(--text-md); margin: 0; color: var(--color-ink-muted);">{{ site.description }}</p>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Mascot</h4>
+          <p>The pansy flower, a historical symbol of freethought (from the French <em>pensée</em>, meaning "thought"), is the publication's mascot.</p>
+        </div>
+      </section>
+
+      {# ── Colors ── #}
+      <section class="sg-section" id="colors">
+        <h2>Colors</h2>
+        <p class="lead">A warm newsprint palette in light mode; deep charcoal in dark mode. Every value is a CSS custom property in <code>tokens.css</code>, change once, retheme everywhere.</p>
+
+        <div class="sg-subsection">
+          <h4>Surfaces, light mode</h4>
+          <div class="sg-color-grid">
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #F4F1EB;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Background</span>
+                <span class="sg-color__value">--color-bg · #F4F1EB</span>
+                <span class="sg-color__note">Primary page background</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #EAE6DE; border: 1px solid #C8C2B6;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Background alt</span>
+                <span class="sg-color__value">--color-bg-alt · #EAE6DE</span>
+                <span class="sg-color__note">Cards, panels, footer</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #E0DBCF; border: 1px solid #C8C2B6;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Background inset</span>
+                <span class="sg-color__value">--color-bg-inset · #E0DBCF</span>
+                <span class="sg-color__note">Code blocks, sunken areas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Text</h4>
+          <div class="sg-color-grid">
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #1A1A1A;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Ink</span>
+                <span class="sg-color__value">--color-ink · #1A1A1A</span>
+                <span class="sg-color__note">Primary text. 15.6:1 on bg</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #4A4845;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Ink muted</span>
+                <span class="sg-color__value">--color-ink-muted · #4A4845</span>
+                <span class="sg-color__note">Secondary text, datelines</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #5E5856;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Ink faint</span>
+                <span class="sg-color__value">--color-ink-faint · #5E5856</span>
+                <span class="sg-color__note">Captions, metadata. 5.1:1 on card bg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Accents &amp; UI</h4>
+          <div class="sg-color-grid">
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #C0392B;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Accent (Vermillion)</span>
+                <span class="sg-color__value">--color-accent · #C0392B</span>
+                <span class="sg-color__note">Breaking news, labels. 5.2:1</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #2C5F8A;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Link</span>
+                <span class="sg-color__value">--color-link · #2C5F8A</span>
+                <span class="sg-color__note">Body links. 6.8:1 on bg</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #C8C2B6; border: 1px solid #8A847A;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Rule</span>
+                <span class="sg-color__value">--color-rule · #C8C2B6</span>
+                <span class="sg-color__note">Borders, horizontal rules</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #8A847A;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Rule heavy</span>
+                <span class="sg-color__value">--color-rule-heavy · #8A847A</span>
+                <span class="sg-color__note">Strong dividers</span>
+              </div>
+            </div>
+            <div class="sg-color">
+              <div class="sg-color__swatch" style="background: #6A1B9A;"></div>
+              <div class="sg-color__body">
+                <span class="sg-color__name">Selection</span>
+                <span class="sg-color__value">--color-selection · #6A1B9A</span>
+                <span class="sg-color__note">Text selection highlight</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Section colors</h4>
+          <div class="sg-color-grid">
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#C0392B;"></div><div class="sg-color__body"><span class="sg-color__name">News</span><span class="sg-color__value">#C0392B</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#2C5F8A;"></div><div class="sg-color__body"><span class="sg-color__name">Opinion</span><span class="sg-color__value">#2C5F8A</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#5D4037;"></div><div class="sg-color__body"><span class="sg-color__name">Analysis</span><span class="sg-color__value">#5D4037</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#6A1B9A;"></div><div class="sg-color__body"><span class="sg-color__name">Arts &amp; Culture</span><span class="sg-color__value">#6A1B9A</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#1B5E20;"></div><div class="sg-color__body"><span class="sg-color__name">Science</span><span class="sg-color__value">#1B5E20</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#75540A;"></div><div class="sg-color__body"><span class="sg-color__name">History</span><span class="sg-color__value">#75540A</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#37474F;"></div><div class="sg-color__body"><span class="sg-color__name">Letters</span><span class="sg-color__value">#37474F</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#8B6914;"></div><div class="sg-color__body"><span class="sg-color__name">Reviews</span><span class="sg-color__value">#8B6914</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#1D5C6E;"></div><div class="sg-color__body"><span class="sg-color__name">Thought Experiments</span><span class="sg-color__value">#1D5C6E</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#6B2A2A;"></div><div class="sg-color__body"><span class="sg-color__name">Trials</span><span class="sg-color__value">#6B2A2A</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#3D5A47;"></div><div class="sg-color__body"><span class="sg-color__name">Glossary</span><span class="sg-color__value">#3D5A47</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#7A5232;"></div><div class="sg-color__body"><span class="sg-color__name">Bookshelf</span><span class="sg-color__value">#7A5232</span></div></div>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Dark mode surfaces</h4>
+          <div class="sg-color-grid">
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#141414; border: 1px solid #303030;"></div><div class="sg-color__body"><span class="sg-color__name">Background</span><span class="sg-color__value">#141414</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#1E1E1E;"></div><div class="sg-color__body"><span class="sg-color__name">Background alt</span><span class="sg-color__value">#1E1E1E</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#252525;"></div><div class="sg-color__body"><span class="sg-color__name">Background inset</span><span class="sg-color__value">#252525</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#E8E4DC;"></div><div class="sg-color__body"><span class="sg-color__name">Ink</span><span class="sg-color__value">#E8E4DC</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#A8A49C;"></div><div class="sg-color__body"><span class="sg-color__name">Ink muted</span><span class="sg-color__value">#A8A49C</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#9E9A96;"></div><div class="sg-color__body"><span class="sg-color__name">Ink faint</span><span class="sg-color__value">#9E9A96 · 5.5:1 on card bg</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#E05545;"></div><div class="sg-color__body"><span class="sg-color__name">Accent (text)</span><span class="sg-color__value">#E05545, text use only (4.9:1 on page bg). Do not use as a background with light text.</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#6B9EC7;"></div><div class="sg-color__body"><span class="sg-color__name">Link</span><span class="sg-color__value">#6B9EC7</span></div></div>
+            <div class="sg-color"><div class="sg-color__swatch" style="background:#B87ACC;"></div><div class="sg-color__body"><span class="sg-color__name">Selection</span><span class="sg-color__value">#B87ACC</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      {# ── Typography ── #}
+      <section class="sg-section" id="typography">
+        <h2>Typography</h2>
+        <p class="lead">Four typefaces do all the work. All served from <a href="https://fonts.bunny.net" target="_blank" rel="noopener noreferrer">Bunny Fonts</a>, privacy-friendly, no tracking, with system-font fallbacks.</p>
+
+        <div class="sg-subsection">
+          <h4>Families</h4>
+          <div class="sg-type-specimen">
+            <div class="sg-type-specimen__meta">--font-masthead · Playfair Display 900</div>
+            <div class="sg-type-specimen__sample" style="font-family: var(--font-masthead); font-weight: 900; font-size: var(--text-3xl); line-height: 1.05;">The Freethinking Times</div>
+            <p style="color: var(--color-ink-faint); font-size: 0.82rem; margin-top: 0.4rem;">Hero titles, masthead, page titles, decorative numerals.</p>
+          </div>
+          <div class="sg-type-specimen">
+            <div class="sg-type-specimen__meta">--font-headline · Lora 700</div>
+            <div class="sg-type-specimen__sample" style="font-family: var(--font-headline); font-weight: 700; font-size: var(--text-xl); line-height: 1.2;">Reason Against Orthodoxy</div>
+            <p style="color: var(--color-ink-faint); font-size: 0.82rem; margin-top: 0.4rem;">Article headlines, section headers, card titles.</p>
+          </div>
+          <div class="sg-type-specimen">
+            <div class="sg-type-specimen__meta">--font-body · Source Serif 4</div>
+            <div class="sg-type-specimen__sample" style="font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-relaxed); max-width: 48rem;">The examined life is the only one worth living. The Freethinking Times covers ideas, reason, and the long history of human beings trying to think their way past the official story, whatever the official story happens to be at the time.</div>
+            <p style="color: var(--color-ink-faint); font-size: 0.82rem; margin-top: 0.4rem;">Article and page body copy. 16px base, 1.7 line-height.</p>
+          </div>
+          <div class="sg-type-specimen">
+            <div class="sg-type-specimen__meta">--font-ui · DM Sans</div>
+            <div class="sg-type-specimen__sample" style="font-family: var(--font-ui); font-size: var(--text-base);">Navigation · Buttons · Labels · Metadata · Bylines</div>
+            <p style="color: var(--color-ink-faint); font-size: 0.82rem; margin-top: 0.4rem;">All UI chrome: nav, buttons, form labels, section badges, reading time.</p>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Dates</h4>
+          <p style="color: var(--color-ink-muted); font-size: 0.95rem;">Every human-readable date sitewide renders in <strong>Month DD, YYYY</strong> format — for example, "April 18, 2026". Server-side this is the <code>readableDate</code> and <code>shortDate</code> Eleventy filters (Luxon <code>LLLL d, yyyy</code>); client-side date renderers use <code>toLocaleDateString(undefined, &#123; year: 'numeric', month: 'long', day: 'numeric' &#125;)</code>. Abbreviated months ("Apr 18") and ISO ordering ("2026-04-18") are reserved for machine-readable contexts only — the <code>htmlDateString</code> filter and the <code>datetime</code> attribute on <code>&lt;time&gt;</code> elements.</p>
+        </div>
+      </section>
+
+      {# ── Type scale ── #}
+      <section class="sg-section" id="scale">
+        <h2>Type scale</h2>
+        <p class="lead">Major Third ratio (1.25×). Base size is 16px (1rem). Tokens are defined in <code>tokens.css</code>, never use raw pixel values in templates.</p>
+
+        <div class="sg-demo" style="gap: 0.25rem; padding: var(--space-4);">
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-xs</span><span class="sg-scale-row__value">0.75rem / ~12px</span><div class="sg-scale-row__bar" style="height: 0.75rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-sm</span><span class="sg-scale-row__value">0.875rem / ~14px</span><div class="sg-scale-row__bar" style="height: 0.875rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-base</span><span class="sg-scale-row__value">1rem / 16px</span><div class="sg-scale-row__bar" style="height: 1rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-md</span><span class="sg-scale-row__value">1.25rem / ~20px</span><div class="sg-scale-row__bar" style="height: 1.25rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-lg</span><span class="sg-scale-row__value">1.563rem / ~25px</span><div class="sg-scale-row__bar" style="height: 1.563rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-xl</span><span class="sg-scale-row__value">1.953rem / ~31px</span><div class="sg-scale-row__bar" style="height: 1.953rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-2xl</span><span class="sg-scale-row__value">2.441rem / ~39px</span><div class="sg-scale-row__bar" style="height: 2.441rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-3xl</span><span class="sg-scale-row__value">3.052rem / ~49px</span><div class="sg-scale-row__bar" style="height: 3.052rem;"></div></div>
+          <div class="sg-scale-row"><span class="sg-scale-row__token">--text-4xl</span><span class="sg-scale-row__value">3.815rem / ~61px</span><div class="sg-scale-row__bar" style="height: 3.815rem;"></div></div>
+        </div>
+      </section>
+
+      {# ── Spacing ── #}
+      <section class="sg-section" id="spacing">
+        <h2>Spacing</h2>
+        <p class="lead">A consistent rhythm from 4px to 6rem. Always use spacing tokens, never hardcode values in templates. The scale lives in <code>tokens.css</code>.</p>
+
+        <div class="sg-demo" style="gap: 0.25rem; padding: var(--space-4);">
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-1</span><span class="sg-scale-row__value">0.25rem / 4px</span><div class="sg-space-row__bar" style="width: 0.25rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-2</span><span class="sg-scale-row__value">0.5rem / 8px</span><div class="sg-space-row__bar" style="width: 0.5rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-3</span><span class="sg-scale-row__value">0.75rem / 12px</span><div class="sg-space-row__bar" style="width: 0.75rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-4</span><span class="sg-scale-row__value">1rem / 16px</span><div class="sg-space-row__bar" style="width: 1rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-6</span><span class="sg-scale-row__value">1.5rem / 24px</span><div class="sg-space-row__bar" style="width: 1.5rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-8</span><span class="sg-scale-row__value">2rem / 32px</span><div class="sg-space-row__bar" style="width: 2rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-10</span><span class="sg-scale-row__value">2.5rem / 40px</span><div class="sg-space-row__bar" style="width: 2.5rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-12</span><span class="sg-scale-row__value">3rem / 48px</span><div class="sg-space-row__bar" style="width: 3rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-16</span><span class="sg-scale-row__value">4rem / 64px</span><div class="sg-space-row__bar" style="width: 4rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-20</span><span class="sg-scale-row__value">5rem / 80px</span><div class="sg-space-row__bar" style="width: 5rem;"></div></div>
+          <div class="sg-space-row"><span class="sg-scale-row__token">--space-24</span><span class="sg-scale-row__value">6rem / 96px</span><div class="sg-space-row__bar" style="width: 6rem;"></div></div>
+        </div>
+      </section>
+
+      {# ── Buttons ── #}
+      <section class="sg-section" id="buttons">
+        <h2>Buttons</h2>
+        <p class="lead">Square corners (<code>border-radius: 0</code>). All buttons meet the 44×44px minimum touch target. Hover states have explicit <code>color</code> set to override parent link rules.</p>
+
+        <div class="sg-subsection">
+          <h4>Variants</h4>
+          <div class="sg-demo sg-demo--row">
+            <a href="#buttons" class="btn" onclick="return false;">Default</a>
+            <a href="#buttons" class="btn btn--accent" onclick="return false;">Accent</a>
+          </div>
+          <pre class="sg-code">&lt;a class="btn"&gt;Default&lt;/a&gt;
+&lt;a class="btn btn--accent"&gt;Accent&lt;/a&gt;</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>On dark backgrounds</h4>
+          <div class="sg-demo sg-demo--row sg-demo--dark">
+            <a href="#buttons" class="btn btn--accent" onclick="return false;">Accent on dark</a>
+          </div>
+        </div>
+      </section>
+
+      {# ── Support Badges ── #}
+      <section class="sg-section" id="badges">
+        <h2>Support badges</h2>
+        <p class="lead">Shields.io-style two-part flat badges used for reader support CTAs. Height is fixed at 20px with vertically centered text. Tippy.js tooltips provide context on hover.</p>
+
+        <div class="sg-subsection">
+          <h4>Variants</h4>
+          <div class="sg-demo sg-demo--row">
+            <a class="tip-badge" href="#badges" onclick="return false;"><span class="tip-badge__label">support</span><span class="tip-badge__value">Author Name</span></a>
+            <a class="tip-badge tip-badge--pub" href="#badges" onclick="return false;"><span class="tip-badge__label">support</span><span class="tip-badge__value">The Freethinking Times</span></a>
+            <a class="tip-badge tip-badge--info" href="#badges" onclick="return false;"><span class="tip-badge__label">transparency</span><span class="tip-badge__value">how we're funded</span></a>
+          </div>
+          <p style="font-size: var(--text-sm); color: var(--color-ink-muted); margin-top: var(--space-2);"><code>tip-badge--pub</code> value uses <code>background: #1E3A5F; color: #F4F1EB</code>, deep navy, hardcoded. 10.2:1 contrast. Visually distinct from both light card bg and dark page bg (#141414). Do not change to use accent tokens.</p>
+          <pre class="sg-code">&lt;a class="tip-badge" href="..."&gt;
+  &lt;span class="tip-badge__label"&gt;support&lt;/span&gt;
+  &lt;span class="tip-badge__value"&gt;Author Name&lt;/span&gt;
+&lt;/a&gt;</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>With Tippy tooltip</h4>
+          <div class="sg-demo sg-demo--row">
+            <a class="tip-badge"
+               href="#badges"
+               onclick="return false;"
+               data-tippy-content="Support the author directly. Your tip goes entirely to them via their own payment processor."
+               data-tippy-theme="badge"
+               data-tippy-placement="top">
+              <span class="tip-badge__label">support</span><span class="tip-badge__value">Author Name</span>
+            </a>
+          </div>
+          <pre class="sg-code">data-tippy-content="..."
+data-tippy-theme="badge"
+data-tippy-placement="top"</pre>
+        </div>
+
+      </section>
+
+      {# ── Section badges ── #}
+      <section class="sg-section" id="section-badges">
+        <h2>Section badges</h2>
+        <p class="lead">Small pill-style section labels used in article cards and eyebrows. Background color comes from the section-specific CSS custom property.</p>
+
+        <div class="sg-demo sg-demo--row">
+          <a href="/news/" class="section-badge section-badge--news">News</a>
+          <a href="/opinion/" class="section-badge section-badge--opinion">Opinion</a>
+          <a href="/analysis/" class="section-badge section-badge--analysis">Analysis</a>
+          <a href="/history/" class="section-badge section-badge--history">History</a>
+          <a href="/science/" class="section-badge section-badge--science">Science</a>
+          <a href="/arts-culture/" class="section-badge section-badge--arts-culture">Arts &amp; Culture</a>
+          <a href="/letters/" class="section-badge section-badge--letters">Letters</a>
+          <a href="/reviews/" class="section-badge section-badge--reviews">Reviews</a>
+        </div>
+        <pre class="sg-code">&lt;a class="section-badge section-badge--news" href="/news/"&gt;News&lt;/a&gt;</pre>
+      </section>
+
+      {# ── Breadcrumbs ── #}
+      <section class="sg-section" id="breadcrumbs">
+        <h2>Breadcrumbs</h2>
+        <p class="lead">Used on all sub-pages. Links render in the accent color; the current page is ink-faint. The <code>/</code> separator is injected via CSS <code>::before</code>.</p>
+
+        <div class="sg-demo">
+          <nav class="breadcrumbs" aria-label="Breadcrumb example">
+            <ol class="breadcrumbs__list">
+              <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#breadcrumbs">Home</a></li>
+              <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#breadcrumbs">Contributors</a></li>
+              <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Jon Ajinga</li>
+            </ol>
+          </nav>
+        </div>
+        <pre class="sg-code">&lt;nav class="breadcrumbs" aria-label="Breadcrumb"&gt;
+  &lt;ol class="breadcrumbs__list"&gt;
+    &lt;li class="breadcrumbs__item"&gt;&lt;a class="breadcrumbs__link" href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="breadcrumbs__item"&gt;&lt;a class="breadcrumbs__link" href="/contributors/"&gt;Contributors&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page"&gt;Jon Ajinga&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</pre>
+      </section>
+
+      {# ── Article cards ── #}
+      <section class="sg-section" id="article-cards">
+        <h2>Article cards</h2>
+        <p class="lead">The single canonical card component used across all section feeds, homepage grids, related-posts, author pages, tag pages, and editions. One partial, <code>partials/article-card.njk</code>, four size variants, consistent metadata everywhere.</p>
+
+        <div class="sg-subsection">
+          <h4>Metadata, always shown on every card</h4>
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead><tr><th>Field</th><th>Source</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Section badge</td><td><code>article.data.section</code></td><td>Links to section index</td></tr>
+                <tr><td>Date</td><td><code>article.date</code></td><td>Links to <code>/archives/#date</code></td></tr>
+                <tr><td>Headline</td><td><code>article.data.title</code></td><td>Size controlled by <code>size</code> variable</td></tr>
+                <tr><td>Description</td><td><code>article.data.description</code></td><td>Suppressed on <code>xs</code></td></tr>
+                <tr><td>Author</td><td><code>authors[slug].name</code></td><td>Links to <code>/author/slug/</code>; Tippy bio tooltip</td></tr>
+                <tr><td>Reading time</td><td><code>templateContent | readingTime</code></td><td>e.g. "6 min read"</td></tr>
+                <tr><td>Word count</td><td><code>templateContent | wordCount</code></td><td>e.g. "1,847 words"</td></tr>
+                <tr><td>Image</td><td><code>article.data.image</code></td><td>Only when <code>showImage=true</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Large, <code>size="lg"</code></h4>
+          <p>Homepage lead story, section lead. Used with <code>showImage=true</code>.</p>
+          <div class="sg-demo">
+            <article class="article-card">
+              <div class="article-card__eyebrow">
+                <a href="/news/" class="section-badge section-badge--news">News</a>
+                <a href="/archives/#2026-04-18" class="dateline"><time datetime="2026-04-18">April 18, 2026</time></a>
+              </div>
+              <a class="article-card__headline article-card__headline--lg" href="#article-cards">Federal Regulators Quietly Shelved Three Major Investigations Last Quarter</a>
+              <p class="article-card__dek">Documents obtained through FOIA requests reveal that enforcement actions against major financial institutions were dropped without explanation in the final weeks of the fiscal year.</p>
+              <p class="article-card__byline">
+                By <a href="/author/jon-ajinga/">Jon Ajinga</a>
+                <span class="article-card__reading-time">8 min read · 1,847 words</span>
+              </p>
+            </article>
+          </div>
+          <pre class="sg-code">{% set article = item %}{% set size = "lg" %}{% set showImage = true %}
+{% set priority = true %}
+{% include "partials/article-card.njk" %}
+{% set priority = false %}</pre>
+          <p style="font-size: var(--text-sm); color: var(--color-ink-muted); margin-top: var(--space-2);"><code>priority = true</code> sets <code>fetchpriority="high"</code> and <code>loading="eager"</code> on the image. Use only for the single above-fold hero card to improve LCP.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Medium, <code>size="md"</code></h4>
+          <p>Standard feed card. Default size.</p>
+          <div class="sg-demo" style="max-width: 400px;">
+            <article class="article-card">
+              <div class="article-card__eyebrow">
+                <a href="/opinion/" class="section-badge section-badge--opinion">Opinion</a>
+                <a href="/archives/#2026-03-12" class="dateline"><time datetime="2026-03-12">March 12, 2026</time></a>
+              </div>
+              <a class="article-card__headline article-card__headline--md" href="#article-cards">The Newspaper Didn't Die. It Was Sold for Parts.</a>
+              <p class="article-card__dek">The collapse of local journalism is not a market failure. It is the predictable outcome of private equity treating public institutions as inventory.</p>
+              <p class="article-card__byline">
+                By <a href="/author/jon-ajinga/">Jon Ajinga</a>
+                <span class="article-card__reading-time">6 min read · 1,241 words</span>
+              </p>
+            </article>
+          </div>
+          <pre class="sg-code">{% set article = item %}{% set size = "md" %}
+{% include "partials/article-card.njk" %}</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Small, <code>size="sm"</code></h4>
+          <p>Sidebar, related posts, article lists.</p>
+          <div class="sg-demo" style="max-width: 320px;">
+            <article class="article-card">
+              <div class="article-card__eyebrow">
+                <a href="/history/" class="section-badge section-badge--history">History</a>
+                <a href="/archives/#2026-04-11" class="dateline"><time datetime="2026-04-11">April 11, 2026</time></a>
+              </div>
+              <a class="article-card__headline article-card__headline--sm" href="#article-cards">The Vocabulary of Unbelief: How Freethinkers Named Their Own Tradition</a>
+              <p class="article-card__dek">From atheism to secular humanism, the terms we use to describe non-belief carry centuries of argument.</p>
+              <p class="article-card__byline">
+                By <a href="/author/jon-ajinga/">Jon Ajinga</a>
+                <span class="article-card__reading-time">5 min read · 980 words</span>
+              </p>
+            </article>
+          </div>
+          <pre class="sg-code">{% set article = item %}{% set size = "sm" %}
+{% include "partials/article-card.njk" %}</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Extra-small, <code>size="xs"</code></h4>
+          <p>Compact lists. Description suppressed.</p>
+          <div class="sg-demo" style="max-width: 280px;">
+            <article class="article-card">
+              <div class="article-card__eyebrow">
+                <a href="/letters/" class="section-badge section-badge--letters">Letters</a>
+                <a href="/archives/#2026-03-14" class="dateline"><time datetime="2026-03-14">March 14, 2026</time></a>
+              </div>
+              <a class="article-card__headline article-card__headline--xs" href="#article-cards">On Your Coverage of Regulatory Capture</a>
+              <p class="article-card__byline">
+                By <a href="/author/jon-ajinga/">Jon Ajinga</a>
+                <span class="article-card__reading-time">2 min read · 341 words</span>
+              </p>
+            </article>
+          </div>
+          <pre class="sg-code">{% set article = item %}{% set size = "xs" %}
+{% include "partials/article-card.njk" %}</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Horizontal, with thumbnail</h4>
+          <p>Used where a compact image + text side-by-side layout is needed. Add class <code>article-card--horizontal</code>.</p>
+          <div class="sg-demo" style="max-width: 480px;">
+            <article class="article-card article-card--horizontal">
+              <img class="article-card__image" src="/assets/img/placeholder-16x9.jpg" alt="Article thumbnail" width="140" height="100" loading="lazy" onerror="this.style.display='none'">
+              <div>
+                <div class="article-card__eyebrow">
+                  <a href="/analysis/" class="section-badge section-badge--analysis">Analysis</a>
+                  <a href="/archives/#2026-03-15" class="dateline"><time datetime="2026-03-15">March 15, 2026</time></a>
+                </div>
+                <a class="article-card__headline article-card__headline--sm" href="#article-cards">Federal Regulators Quietly Shelved Three Major Investigations</a>
+                <p class="article-card__byline">
+                  By <a href="/author/jon-ajinga/">Jon Ajinga</a>
+                  <span class="article-card__reading-time">8 min read · 1,847 words</span>
+                </p>
+              </div>
+            </article>
+          </div>
+          <pre class="sg-code">&lt;article class="article-card article-card--horizontal"&gt;
+  &lt;img class="article-card__image" src="..." ...&gt;
+  &lt;div&gt;...eyebrow, headline, byline...&lt;/div&gt;
+&lt;/article&gt;</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Usage guide</h4>
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead><tr><th>Size</th><th>Use when</th><th>showImage</th><th>Description shown</th></tr></thead>
+              <tbody>
+                <tr><td><code>lg</code></td><td>Homepage lead, section lead (1 per page)</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td><code>md</code></td><td>Section feeds, newsletter grids</td><td>No</td><td>Yes</td></tr>
+                <tr><td><code>sm</code></td><td>Sidebar, related posts, author page list</td><td>No</td><td>Yes</td></tr>
+                <tr><td><code>xs</code></td><td>Compact lists, "more from" rails</td><td>No</td><td>No</td></tr>
+                <tr><td>horizontal</td><td>Thumbnail + text rows</td><td>Yes (fixed)</td><td>No</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {# ── Author cards ── #}
+      <section class="sg-section" id="author-cards">
+        <h2>Author cards</h2>
+        <p class="lead">Used on the Contributors page. Centered column layout: avatar on top, body below. The avatar uses a stacked pattern, initials always rendered, photo absolutely positioned on top with <code>onerror</code> fallback.</p>
+
+        <div class="sg-demo">
+          <div style="max-width: 280px; margin: 0 auto;">
+            <article class="author-card">
+              <div class="author-card__avatar">
+                <div class="author-card__initials" aria-hidden="true">JA</div>
+              </div>
+              <div class="author-card__body">
+                <p class="author-card__role">Founding Editor</p>
+                <h2 class="author-card__name"><a href="/author/jon-ajinga/">Jon Ajinga</a></h2>
+                <p class="author-card__bio">Covering regulation, institutional power, and the life of ideas.</p>
+                <div class="author-card__stats">
+                  <span class="author-card__stat"><strong>15</strong> articles</span>
+                  <span class="author-card__stat"><strong>7.8k</strong> words</span>
+                  <span class="author-card__stat"><strong>~47m</strong> reading</span>
+                </div>
+                <div class="author-card__footer">
+                  <a class="author-card__link" href="/author/jon-ajinga/">View articles &rarr;</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Avatar stacking pattern</h4>
+          <pre class="sg-code">&lt;div class="author-card__avatar"&gt;
+  &lt;div class="author-card__initials" aria-hidden="true"&gt;JA&lt;/div&gt;
+  &lt;img src="photo.jpg" class="author-card__photo"
+       onerror="this.style.opacity=0"&gt;
+&lt;/div&gt;</pre>
+          <p>Initials always render. Photo is <code>position: absolute</code> on top. <code>onerror</code> hides the photo if it fails to load, revealing initials underneath.</p>
+        </div>
+      </section>
+
+      {# ── Forms ── #}
+      <section class="sg-section" id="forms">
+        <h2>Forms</h2>
+        <p class="lead">All inputs are minimum 44px tall, set in the UI typeface, and show a distinct focus ring. Forms are handled by embedded third-party providers (Web3Forms, Fillout, Zite), never custom backends.</p>
+
+        <div class="sg-demo">
+          <form class="form" onsubmit="event.preventDefault();">
+            <div class="form__row">
+              <label class="form__label form__label--required" for="sg-name">Name</label>
+              <input class="form__input" id="sg-name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form__row">
+              <label class="form__label" for="sg-email">Email</label>
+              <input class="form__input" id="sg-email" type="email" placeholder="you@example.com">
+              <p class="form__hint">We'll never share this.</p>
+            </div>
+            <div class="form__row">
+              <label class="form__label" for="sg-select">Section</label>
+              <select class="form__select" id="sg-select">
+                <option>Pick one</option>
+                <option>News</option>
+                <option>Opinion</option>
+                <option>Analysis</option>
+              </select>
+            </div>
+            <div class="form__row">
+              <label class="form__label" for="sg-textarea">Message</label>
+              <textarea class="form__textarea" id="sg-textarea" placeholder="Say something…"></textarea>
+            </div>
+            <div class="form__actions">
+              <button type="submit" class="btn btn--accent">Submit</button>
+              <button type="button" class="btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {# ── Tables ── #}
+      <section class="sg-section" id="tables">
+        <h2>Tables</h2>
+        <p class="lead">Data tables wrap in <code>.table-wrap</code> for horizontal scroll on narrow viewports. Use <code>scope="col"</code> on header cells and <code>scope="row"</code> on row headers.</p>
+
+        <div class="sg-demo" style="padding: 0;">
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th scope="col">Criterion</th>
+                  <th scope="col">{{ site.title }}<small>independent</small></th>
+                  <th scope="col">Ad-funded outlet<small>commercial</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Revenue model</th><td>Reader-funded</td><td>Advertisers</td></tr>
+                <tr><th scope="row">Editorial control</th><td>Full</td><td>Partial</td></tr>
+                <tr><th scope="row">Paywall</th><td>None</td><td>Often</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre class="sg-code">&lt;div class="table-wrap"&gt;
+  &lt;table class="compare-table"&gt;…&lt;/table&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      {# ── Icons ── #}
+      <section class="sg-section" id="icons">
+        <h2>Icons</h2>
+        <p class="lead">Icons are inline SVG, 24×24 viewBox, <code>stroke-width: 2</code>, <code>fill: none</code>, <code>currentColor</code>, they inherit text color automatically in light and dark modes.</p>
+
+        <div class="sg-demo">
+          <div class="sg-icon-grid">
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span class="sg-icon__name">menu</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M6 6l12 12M18 6l-12 12"/></svg><span class="sg-icon__name">close</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M6 9l6 6 6-6"/></svg><span class="sg-icon__name">chevron</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="24" height="24"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span class="sg-icon__name">arrow-up</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg><span class="sg-icon__name">sun</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span class="sg-icon__name">moon</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="sg-icon__name">search</span></div>
+            <div class="sg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="5" cy="19" r="2"/><path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4z"/><path d="M4 11a9 9 0 0 1 9 9H10a6 6 0 0 0-6-6v-3z"/></svg><span class="sg-icon__name">rss</span></div>
+          </div>
+        </div>
+        <pre class="sg-code">&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="2" aria-hidden="true"&gt;…&lt;/svg&gt;</pre>
+      </section>
+
+      {# ── Accessibility ── #}
+      <section class="sg-section" id="a11y">
+        <h2>Accessibility patterns</h2>
+        <p class="lead">WCAG 2.2 Level AA minimum across all pages. Most patterns exceed AA and reach AAA.</p>
+
+        <div class="sg-subsection">
+          <h4>Skip link</h4>
+          <p>Press <kbd>Tab</kbd> on any page. The first focusable element is a "Skip to content" link that jumps past navigation to <code>#main</code>.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Focus ring</h4>
+          <p>Every interactive element shows a 2px vermillion outline with 3px offset on keyboard focus.</p>
+          <div class="sg-demo sg-demo--row">
+            <button type="button" class="btn">Tab to focus me</button>
+            <a class="btn" href="#a11y">Tab to focus me</a>
+          </div>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Screen-reader-only content</h4>
+          <p>Use <code>.sr-only</code> to hide content visually while keeping it accessible to assistive technology.</p>
+          <pre class="sg-code">&lt;span class="sr-only"&gt;Opens in new tab&lt;/span&gt;</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Reduced motion</h4>
+          <p>All animations and scroll behavior honor <code>prefers-reduced-motion: reduce</code>. Duration drops to near-zero; auto-advance stops.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>ARIA landmarks &amp; labels</h4>
+          <ul style="list-style: disc; padding-left: 1.5rem; font-size: var(--text-sm); line-height: 2; color: var(--color-ink-muted);">
+            <li><code>role="banner"</code> on site header, <code>role="contentinfo"</code> on footer</li>
+            <li><code>aria-label</code> on every icon-only button and every navigation region</li>
+            <li><code>aria-current="page"</code> on the active nav link</li>
+            <li><code>aria-hidden="true"</code> on all decorative SVGs and avatar initials</li>
+            <li><code>&lt;main id="main"&gt;</code> as the skip-link target</li>
+          </ul>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Repeated link text</h4>
+          <p>When multiple links share the same visible text but go to different destinations, e.g. "View All →" buttons in section strips, add <code>aria-label</code> to give each a distinct accessible name:</p>
+          <pre class="sg-code">{# home.njk, section strip loop #}
+&lt;a href="/{{ sectionKey }}/" class="btn"
+   aria-label="View all {{ sectionKey | replace('-', ' ') | title }} articles"&gt;
+  View All →
+&lt;/a&gt;</pre>
+          <p style="font-size: var(--text-sm); color: var(--color-ink-muted); margin-top: var(--space-2);">This satisfies Lighthouse's "Links do not have descriptive text" audit and WCAG 2.4.6. The visible text stays short; the accessible name is descriptive.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Touch targets</h4>
+          <p>Every interactive element is a minimum of 44×44 CSS pixels, buttons, nav links, form inputs, theme toggle, hamburger, back-to-top, tip badges.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Glossary tooltips</h4>
+          <p>Glossary terms detected in article text receive a <span class="glossary-tip" data-tippy-content="This is how a glossary definition appears on hover or focus." tabindex="0">dotted underline</span>. Powered by Tippy.js. Keyboard accessible.</p>
+        </div>
+      </section>
+
+      {# ── Contrast ── #}
+      <section class="sg-section" id="contrast">
+        <h2>Contrast reference</h2>
+        <p class="lead">All pairings target WCAG AA: <strong>4.5:1 for normal text</strong>, <strong>3:1 for large text and UI</strong>. Light mode has two relevant backgrounds, page (#F4F1EB) and card (#E0DBCF). The card bg is the binding constraint and is used below. Dark mode verified independently.</p>
+
+        <div class="sg-demo" style="padding: 0;">
+          <div class="table-wrap">
+            <table class="sg-contrast-table">
+              <thead>
+                <tr><th>Pairing</th><th>Ratio</th><th>AA normal</th><th>AA large</th><th>AAA</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Ink on page bg (#F4F1EB)</th><td>15.6 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+                <tr><th scope="row">Ink muted on page bg</th><td>8.2 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+                <tr><th scope="row">Ink faint on card bg (#E0DBCF)</th><td>5.1 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td>, </td></tr>
+                <tr><th scope="row">Ink faint on page bg</th><td>6.3 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+                <tr><th scope="row">Accent on page bg</th><td>5.2 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td>, </td></tr>
+                <tr><th scope="row">Link on page bg</th><td>6.8 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+                <tr><th scope="row">White on Accent (#C0392B)</th><td>5.4 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td>, </td></tr>
+                <tr><th scope="row">Dark mode: Ink faint on card (#252525)</th><td>5.5 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td>, </td></tr>
+                <tr><th scope="row">Dark mode: Ink muted on page (#141414)</th><td>7.4 : 1</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="font-size: var(--text-sm); color: var(--color-ink-muted); margin-top: var(--space-4);">Note: dark mode accent (#E05545) is for text use only, do not use it as a background with light text (3.8:1 fail). The publication tip-badge uses <code>background: #1E3A5F; color: #F4F1EB</code>, deep navy at 10.2:1, visually distinct from both light card bg and dark page bg (#141414).</p>
+      </section>
+
+      {# ── Naming ── #}
+      <section class="sg-section" id="naming">
+        <h2>Naming conventions</h2>
+        <p class="lead">Consistent naming avoids confusion across templates, CSS, and JavaScript. These rules apply to every file in the project.</p>
+
+        <div class="sg-subsection">
+          <h4>Publication name</h4>
+          <ul style="list-style: disc; padding-left: 1.5rem; font-size: var(--text-sm); line-height: 2; color: var(--color-ink-muted);">
+            <li>Always written as <strong>The Freethinking Times</strong>, full, capitalised</li>
+            <li>Never abbreviated to "TFT" in reader-facing copy</li>
+            <li>Short context only: "The Times" is acceptable in conversational UI</li>
+          </ul>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>CSS class convention</h4>
+          <p>BEM-style: <code>.block__element--modifier</code>. No utility classes except where explicitly defined in <code>utilities.css</code>.</p>
+          <pre class="sg-code">.article-card__byline          /* element */
+.article-card__headline--lg    /* element + modifier */
+.section-badge--news           /* block + modifier */</pre>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>JavaScript</h4>
+          <ul style="list-style: disc; padding-left: 1.5rem; font-size: var(--text-sm); line-height: 2; color: var(--color-ink-muted);">
+            <li>One file per feature, deferred, no bundler</li>
+            <li>LocalStorage key prefix: <code>tft-</code> (e.g. <code>tft-theme</code>, <code>tft-reading-list</code>)</li>
+            <li>No inline event listeners on elements with custom <code>display</code> CSS, tinyHTML can mangle them. Use <code>onclick=""</code> as a fallback alongside deferred listeners.</li>
+          </ul>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Design tokens</h4>
+          <p>All tokens live in <code>src/assets/css/tokens.css</code>. Never use raw hex values or pixel sizes in templates or component CSS, always reference a token. Dark mode overrides are declared in the same file under <code>[data-theme="dark"]</code>.</p>
+        </div>
+
+        <div class="sg-subsection">
+          <h4>Content naming</h4>
+          <ul style="list-style: disc; padding-left: 1.5rem; font-size: var(--text-sm); line-height: 2; color: var(--color-ink-muted);">
+            <li>The bookshelf project: <strong>Recommended Freethought Reading</strong> (compact: <em>Recommended Reading</em>)</li>
+            <li>The music feature: <strong>Freethought Music</strong> (never "Music Player")</li>
+            <li>Layouts directory: <code>src/_includes/layouts/</code></li>
+            <li>Partials directory: <code>src/_includes/partials/</code></li>
+          </ul>
+        </div>
+      </section>
+
+    </div>{# /.content #}
+  </div>{# /.sg-layout #}
+</div>{# /.container #}
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

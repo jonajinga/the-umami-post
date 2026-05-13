@@ -1,0 +1,139 @@
+{#
+  article-webmentions.njk — renders webmentions for the current page.
+
+  Usage: include this partial inside an article / author layout. It
+  reads `webmentions[page.url]` (populated by _data/webmentions.js) and
+  prints three sections:
+    - Replies: full cards with author + excerpt + link
+    - Likes:   facepile of author avatars linking out
+    - Reposts: same facepile treatment
+
+  If no mentions yet, renders nothing (silent empty state) rather than
+  an empty "No mentions" block, so fresh articles don't carry dead space.
+#}
+{% set _wm = webmentions[page.url] %}
+{# Demo fallback: when WEBMENTIONS_DEMO=1 is set at build time, the data
+   file injects a __demo bundle. Show it on any article that has no
+   real mentions so the layout can be previewed. Never fires in
+   production because the env var is not set there. #}
+{% if (not _wm or _wm.total == 0) and webmentions.__demo and section %}
+  {% set _wm = webmentions.__demo %}
+  {% set _isDemo = true %}
+{% endif %}
+{% if _wm and _wm.total > 0 %}
+{% if _isDemo %}<p style="max-width:62ch;margin:var(--space-8) auto 0;padding:var(--space-3) var(--space-4);background:#fef3c7;color:#78350f;font-family:var(--font-ui);font-size:0.78rem;border-left:3px solid #d97706;">Preview mode. These mentions are synthesised; real ones arrive via webmention.io once the site receives them.</p>{% endif %}
+<section class="wm" aria-label="Webmentions" data-wm-collapsed="false">
+  <header class="wm__header">
+    <p class="wm__kicker">Elsewhere on the web</p>
+    <h2 class="wm__title">
+      {{ _wm.total }}
+      {% if _wm.total == 1 %}mention{% else %}mentions{% endif %}
+      of this piece
+    </h2>
+    <p class="wm__lede">
+      Replies, bookmarks, and shares collected via
+      <a href="https://webmention.io" target="_blank" rel="noopener" data-umami-event="webmention-learn">webmention.io</a>.
+      <a href="https://indieweb.org/Webmention" target="_blank" rel="noopener" data-umami-event="webmention-learn">What&rsquo;s a webmention?</a>
+    </p>
+    <button type="button" class="wm__toggle" aria-expanded="true" aria-controls="wm-body" data-wm-toggle>Hide</button>
+  </header>
+  <div id="wm-body" class="wm__body">
+
+  {% if _wm.replies.length %}
+  <div class="wm-block" aria-labelledby="wm-replies-head">
+    <p class="wm-block__head" id="wm-replies-head">
+      Replies
+      <span class="wm-block__count">{{ _wm.replies.length }}</span>
+    </p>
+    <ul class="wm-replies" role="list">
+      {% for r in _wm.replies %}
+      <li class="wm-reply">
+        <div class="wm-reply__meta">
+          {% if r.author.photo %}
+          <img class="wm-reply__avatar" src="{{ r.author.photo }}" alt="" width="32" height="32" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          {% else %}
+          <span class="wm-reply__avatar wm-reply__avatar--placeholder" aria-hidden="true">{{ (r.author.name or r.author.url or '?') | first | upper }}</span>
+          {% endif %}
+          <span class="wm-reply__author">
+            {% if r.author.url %}<a href="{{ r.author.url }}" target="_blank" rel="noopener ugc">{{ r.author.name or r.author.url | replace('https://', '') | replace('http://', '') }}</a>{% else %}{{ r.author.name or 'Anonymous' }}{% endif %}
+          </span>
+          {% if r.published %}
+          <time class="wm-reply__time" datetime="{{ r.published }}">{{ r.published | readableDate }}</time>
+          {% endif %}
+          <a class="wm-reply__link" href="{{ r.url }}" target="_blank" rel="noopener ugc" aria-label="View original reply">&nearr;</a>
+        </div>
+        {% if r.content %}
+        <div class="wm-reply__content">{{ r.content | striptags(true) | truncate(500) }}</div>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if _wm.likes.length or _wm.reposts.length %}
+  <div class="wm-block">
+    <p class="wm-block__head">
+      Shares &amp; likes
+      <span class="wm-block__count">{{ _wm.likes.length + _wm.reposts.length }}</span>
+    </p>
+    <ul class="wm-facepile" role="list">
+      {% for face in _wm.likes | concat(_wm.reposts) %}
+      <li class="wm-facepile__item">
+        <a href="{{ face.url }}" target="_blank" rel="noopener ugc" title="{{ (face.author.name or face.author.url or 'Anonymous') | replace('"', '') }}{% if face.property == 'repost-of' %} reposted this{% else %} liked this{% endif %}" aria-label="{{ face.author.name or 'Anonymous' }}{% if face.property == 'repost-of' %} reposted this{% else %} liked this{% endif %}">
+          {% if face.author.photo %}
+          <img class="wm-facepile__avatar" src="{{ face.author.photo }}" alt="{{ face.author.name or '' }}" width="32" height="32" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          {% else %}
+          <span class="wm-facepile__avatar wm-facepile__avatar--placeholder" aria-hidden="true">{{ (face.author.name or face.author.url or '?') | first | upper }}</span>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if _wm.mentions.length %}
+  <div class="wm-block">
+    <p class="wm-block__head">
+      Linked from
+      <span class="wm-block__count">{{ _wm.mentions.length }}</span>
+    </p>
+    <ul class="wm-mentions" role="list">
+      {% for m in _wm.mentions %}
+      <li class="wm-mention">
+        <a href="{{ m.url }}" target="_blank" rel="noopener ugc">
+          <span class="wm-mention__author">{{ m.author.name or m.author.url | replace('https://', '') | replace('http://', '') or 'A page' }}</span>
+          <span class="wm-mention__chev" aria-hidden="true">&nearr;</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  </div>{# /.wm__body #}
+</section>
+<script>
+(function () {
+  var section = document.currentScript && document.currentScript.previousElementSibling;
+  if (!section || !section.matches || !section.matches('.wm')) return;
+  var toggle = section.querySelector('[data-wm-toggle]');
+  var body   = section.querySelector('.wm__body');
+  if (!toggle || !body) return;
+  var prefix = (window.__PREFIX || 'tft');
+  var key    = prefix + '-wm-collapsed';
+  function apply(collapsed) {
+    section.setAttribute('data-wm-collapsed', collapsed ? 'true' : 'false');
+    toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    toggle.textContent = collapsed ? 'Show' : 'Hide';
+    body.hidden = collapsed;
+  }
+  try { apply(localStorage.getItem(key) === 'true'); } catch (e) { apply(false); }
+  toggle.addEventListener('click', function () {
+    var next = section.getAttribute('data-wm-collapsed') !== 'true';
+    apply(next);
+    try { localStorage.setItem(key, next ? 'true' : 'false'); } catch (e) {}
+  });
+})();
+</script>
+{% endif %}

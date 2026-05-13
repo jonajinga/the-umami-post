@@ -1,0 +1,781 @@
+---
+layout: base
+title: Knowledge map
+description: A force-directed map of every article on the site, linked by shared topics and authors. Hover any node to see the piece, drag to rearrange, scroll to zoom, click to read.
+permalink: /knowledge-map/
+---
+
+{% set _items = collections.allContent %}
+
+{# Collect unique tags + authors. #}
+{% set tagSet = [] %}
+{% set authorSet = [] %}
+{% set sectionSet = [] %}
+{% for item in _items %}
+  {% if item.data.tags %}
+    {% for t in item.data.tags %}
+      {% if t != "post" and t not in tagSet %}{% set tagSet = (tagSet.push(t), tagSet) %}{% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if item.data.author and item.data.author not in authorSet %}{% set authorSet = (authorSet.push(item.data.author), authorSet) %}{% endif %}
+  {% if item.data.section and item.data.section not in sectionSet %}{% set sectionSet = (sectionSet.push(item.data.section), sectionSet) %}{% endif %}
+{% endfor %}
+
+<div class="container km-container" style="padding-top: var(--space-6); padding-bottom: var(--space-6); max-width: 1400px;">
+
+  <header class="km-header" style="margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-ink);">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Knowledge map</li>
+      </ol>
+    </nav>
+    <h1 id="km-title" style="font-family: var(--font-masthead); font-size: clamp(1.6rem, 4vw, 2.8rem); margin-bottom: var(--space-2);">Knowledge map</h1>
+    <p id="km-subtitle" style="font-family: var(--font-body); font-size: var(--text-base); color: var(--color-ink-muted); line-height: var(--leading-snug); max-width: 64ch;">
+      Every published piece, plotted by topic and byline. Articles cluster around the topics they share. Drag any node, scroll to zoom, click an article to read it.
+    </p>
+    <div id="km-filter-banner" hidden style="margin-top: var(--space-3); padding: var(--space-2) var(--space-3); border-left: 3px solid var(--color-accent); background: var(--color-bg-alt); font-family: var(--font-ui); font-size: var(--text-sm); display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span><strong>Filtered:</strong> <span id="km-filter-label"></span></span>
+      <a href="/knowledge-map/" style="margin-left: auto; color: var(--color-ink-muted); text-decoration: underline;">Clear filter</a>
+    </div>
+  </header>
+
+  <div class="km-controls">
+    <div class="km-controls__group">
+      <input type="search" id="km-search" placeholder="Filter by title…" class="km-search">
+    </div>
+    <div class="km-controls__group km-controls__filters">
+      <label class="km-toggle"><input type="checkbox" id="km-show-tags" checked> Topics</label>
+      <label class="km-toggle"><input type="checkbox" id="km-show-authors" checked> Authors</label>
+      <label class="km-toggle"><input type="checkbox" id="km-show-articles" checked> Articles</label>
+    </div>
+    <div class="km-controls__group km-controls__legend" aria-label="Legend">
+      <span class="km-legend-item"><span class="km-swatch km-swatch--article"></span>Article</span>
+      <span class="km-legend-item"><span class="km-swatch km-swatch--tag"></span>Topic</span>
+      <span class="km-legend-item"><span class="km-swatch km-swatch--author"></span>Author</span>
+    </div>
+    <div class="km-controls__group km-controls__buttons">
+      <button type="button" class="km-btn" id="km-zoom-in"  aria-label="Zoom in">+</button>
+      <button type="button" class="km-btn" id="km-zoom-out" aria-label="Zoom out">&minus;</button>
+      <button type="button" class="km-btn" id="km-reset"    aria-label="Reset view" title="Reset">&#x21BB;</button>
+      <button type="button" class="km-btn" id="km-pause"    aria-label="Pause physics" title="Freeze layout">II</button>
+    </div>
+    <div class="km-controls__group km-controls__count">
+      <span id="km-count" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <div class="km-stage">
+    <div id="km-canvas" class="km-canvas">
+      <div id="km-loading" class="km-loading">Loading map…</div>
+      <svg id="km-svg" width="100%" height="100%" style="display: block;"></svg>
+      <div id="km-tooltip" class="km-tooltip" hidden></div>
+    </div>
+
+    <aside class="km-side" id="km-side" aria-label="Selected article">
+      <div class="km-side__placeholder">
+        <h2>Click any node</h2>
+        <p>Articles open in this panel. Topics and authors highlight their cluster — and list every connected piece below.</p>
+      </div>
+      <div class="km-side__content" hidden></div>
+    </aside>
+  </div>
+
+  <p class="km-footnote">
+    Built with <a href="https://d3js.org/" rel="noopener">D3.js</a>. Force-directed layout, articles clustered by shared topics. Total: <strong id="km-stats"></strong>.
+  </p>
+</div>
+
+<script id="km-data" type="application/json">
+{
+  "nodes": [
+    {% set _firstNode = true %}
+    {% for item in _items %}
+      {% if _firstNode == false %},{% endif %}
+      {"id": {{ item.url | dump | safe }}, "label": {{ item.data.title | dump | safe }}, "type": "article", "url": {{ item.url | dump | safe }}, "section": {{ (item.data.section or "") | dump | safe }}, "date": {{ (item.date | htmlDateString) | dump | safe }}, "author": {{ (authors[item.data.author].name or item.data.author or "") | dump | safe }}}
+      {% set _firstNode = false %}
+    {% endfor %}
+    {% for t in tagSet %},{"id": "tag:{{ t | slugify }}", "label": {{ t | dump | safe }}, "type": "tag", "url": "/topics/{{ t | slugify }}/"}{% endfor %}
+    {% for a in authorSet %},{"id": "author:{{ a | slugify }}", "label": {{ (authors[a].name or a) | dump | safe }}, "type": "author", "url": "/author/{{ a | slugify }}/"}{% endfor %}
+  ],
+  "links": [
+    {% set _firstLink = true %}
+    {% for item in _items %}
+      {% if item.data.tags %}
+        {% for t in item.data.tags %}
+          {% if t != "post" %}
+            {% if _firstLink == false %},{% endif %}
+            {"source": {{ item.url | dump | safe }}, "target": "tag:{{ t | slugify }}"}
+            {% set _firstLink = false %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if item.data.author %}
+        {% if _firstLink == false %},{% endif %}
+        {"source": {{ item.url | dump | safe }}, "target": "author:{{ item.data.author | slugify }}"}
+        {% set _firstLink = false %}
+      {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<style>
+.km-container { display: flex; flex-direction: column; }
+.km-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  align-items: center;
+  padding: var(--space-2) 0;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--color-rule);
+}
+.km-controls__group { display: flex; align-items: center; gap: var(--space-2); }
+.km-controls__count { margin-left: auto; color: var(--color-ink-muted); font-size: var(--text-xs); }
+.km-search {
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: inherit;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  width: 220px;
+  max-width: 100%;
+}
+.km-search:focus { border-color: var(--color-ink); outline: 0; }
+.km-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.km-toggle input { accent-color: var(--color-ink); }
+.km-controls__legend { gap: var(--space-3); flex-wrap: wrap; }
+.km-legend-item { display: inline-flex; align-items: center; gap: 4px; color: var(--color-ink-muted); font-size: var(--text-xs); }
+.km-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.km-swatch--article { background: var(--color-ink); }
+.km-swatch--tag     { background: var(--color-link); }
+.km-swatch--author  { background: var(--color-accent); }
+.km-controls__buttons { gap: 4px; }
+.km-btn {
+  width: 32px; height: 32px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.km-btn:hover { background: var(--color-bg-alt); border-color: var(--color-ink); }
+.km-btn[aria-pressed="true"] { background: var(--color-ink); color: var(--color-bg); }
+
+.km-stage {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-4);
+  height: 70vh;
+  min-height: 520px;
+}
+@media (max-width: 1024px) {
+  .km-stage { grid-template-columns: 1fr; height: auto; }
+  .km-canvas { height: 60vh; min-height: 420px; }
+  .km-side { max-height: 50vh; overflow: auto; }
+}
+
+.km-canvas {
+  position: relative;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg-alt);
+  overflow: hidden;
+}
+.km-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  z-index: 2;
+}
+.km-canvas svg text {
+  font-family: var(--font-ui);
+  pointer-events: none;
+  user-select: none;
+}
+
+.km-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--color-bg);
+  border: 1px solid var(--color-ink);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  max-width: min(280px, calc(100% - 16px));
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 5;
+}
+@media (max-width: 640px) {
+  .km-tooltip {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+    max-width: calc(100% - 16px);
+  }
+}
+.km-tooltip__sub {
+  display: block;
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  margin-top: 2px;
+}
+
+.km-side {
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  padding: var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  overflow: auto;
+}
+.km-side__placeholder { color: var(--color-ink-muted); }
+.km-side__placeholder h2 {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+.km-side__content h2 {
+  font-family: var(--font-headline);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-snug);
+}
+.km-side__content h2 a { color: var(--color-ink); text-decoration: none; }
+.km-side__content h2 a:hover { color: var(--color-accent); }
+.km-side__meta {
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+.km-side__heading {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: var(--color-ink-faint);
+  margin: var(--space-3) 0 var(--space-1);
+}
+.km-side__chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.km-side__chip {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid var(--color-rule);
+  font-size: 0.72rem;
+  text-decoration: none;
+  color: var(--color-ink-muted);
+}
+.km-side__chip:hover { color: var(--color-accent); border-color: var(--color-accent); }
+.km-side__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.km-side__list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.km-side__list a {
+  color: var(--color-ink);
+  text-decoration: none;
+  display: block;
+  font-family: var(--font-headline);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.km-side__list a:hover { color: var(--color-accent); }
+.km-side__list-listen { margin-top: 6px; display: block; }
+.km-side__actions {
+  margin-top: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.km-side__read {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 1px;
+}
+.km-side__read:hover { color: var(--color-accent); }
+.km-side__list-meta {
+  display: block;
+  color: var(--color-ink-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.km-footnote {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  margin-top: var(--space-3);
+}
+
+/* node states */
+.km-svg-link { stroke-opacity: 0.4; }
+.km-svg-link.is-dim { stroke-opacity: 0.08; }
+.km-svg-link.is-hi { stroke-opacity: 0.85; stroke: var(--color-accent); }
+.km-svg-node { cursor: pointer; }
+.km-svg-node.is-dim { opacity: 0.18; }
+.km-svg-node.is-hi  { opacity: 1; }
+.km-svg-node.is-selected circle {
+  stroke: var(--color-accent);
+  stroke-width: 3;
+}
+</style>
+
+<script defer>
+(function () {
+  'use strict';
+
+  // Load D3 with explicit onload + a backup CDN, so the SPA-nav code
+  // path (which appends script tags but doesn't await them) doesn't
+  // race with my init code. Without this we'd give up at 6 s on a
+  // slow CDN response and show the offline fallback even when the
+  // user is online.
+  function loadD3() {
+    return new Promise(function (resolve, reject) {
+      if (typeof d3 !== 'undefined') return resolve();
+      var primary = 'https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js';
+      var backup  = 'https://unpkg.com/d3@7.9.0/dist/d3.min.js';
+      function load(src, onerror) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = true;
+        s.onload = function () { resolve(); };
+        s.onerror = onerror;
+        document.head.appendChild(s);
+      }
+      load(primary, function () {
+        load(backup, function () { reject(new Error('Both D3 CDNs failed.')); });
+      });
+    });
+  }
+
+  function startInit() {
+    var loadingEl = document.getElementById('km-loading');
+    if (loadingEl) loadingEl.textContent = 'Loading D3.js…';
+    loadD3()
+      .then(function () { init(); })
+      .catch(function () {
+        if (loadingEl) loadingEl.innerHTML =
+          'D3.js failed to load from both CDNs. Check your network or a content blocker. ' +
+          '<a href="' + location.pathname + '" style="text-decoration: underline;">Retry</a>';
+      });
+  }
+
+  function init() {
+    var loadingEl = document.getElementById('km-loading');
+    if (typeof d3 === 'undefined') {
+      // Defensive: if somehow we got here without d3, kick off the loader.
+      startInit();
+      return;
+    }
+    var raw = document.getElementById('km-data');
+    var canvas = document.getElementById('km-canvas');
+    var svgEl = document.getElementById('km-svg');
+    var tipEl = document.getElementById('km-tooltip');
+    var countEl = document.getElementById('km-count');
+    var statsEl = document.getElementById('km-stats');
+    var sideEl = document.getElementById('km-side');
+    if (!raw || !canvas) return;
+    var data;
+    try { data = JSON.parse(raw.textContent); } catch (e) {
+      if (loadingEl) loadingEl.textContent = 'Map data failed to parse.';
+      return;
+    }
+    if (!data.nodes || !data.nodes.length) {
+      if (loadingEl) loadingEl.textContent = 'No content to map yet — publish an article first.';
+      return;
+    }
+
+    // ── URL-based filter: ?author=foo, ?section=foo, ?topic=foo ──
+    function slugify(s) {
+      return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+    var params = new URLSearchParams(location.search);
+    var filterAuthor  = params.get('author');
+    var filterSection = params.get('section');
+    var filterTopic   = params.get('topic');
+    if (filterAuthor || filterSection || filterTopic) {
+      var keepArticleIds = new Set();
+      data.nodes.forEach(function (n) {
+        if (n.type !== 'article') return;
+        var match = true;
+        if (filterAuthor)  match = match && slugify(n.author)  === slugify(filterAuthor);
+        if (filterSection) match = match && slugify(n.section) === slugify(filterSection);
+        if (match) keepArticleIds.add(n.id);
+      });
+      if (filterTopic) {
+        // Articles linked to that tag node
+        var tagId = 'tag:' + slugify(filterTopic);
+        var topicArticles = new Set();
+        data.links.forEach(function (l) {
+          var s = (typeof l.source === 'object') ? l.source.id : l.source;
+          var t = (typeof l.target === 'object') ? l.target.id : l.target;
+          if (t === tagId) topicArticles.add(s);
+          if (s === tagId) topicArticles.add(t);
+        });
+        // intersect: only articles that pass other filters AND are in the topic
+        if (filterAuthor || filterSection) {
+          keepArticleIds = new Set([...keepArticleIds].filter(function (x) { return topicArticles.has(x); }));
+        } else {
+          keepArticleIds = topicArticles;
+        }
+      }
+      // Keep article nodes + any tag/author nodes connected to surviving articles
+      var keepIds = new Set(keepArticleIds);
+      data.links.forEach(function (l) {
+        var s = (typeof l.source === 'object') ? l.source.id : l.source;
+        var t = (typeof l.target === 'object') ? l.target.id : l.target;
+        if (keepArticleIds.has(s)) keepIds.add(t);
+        if (keepArticleIds.has(t)) keepIds.add(s);
+      });
+      data.nodes = data.nodes.filter(function (n) { return keepIds.has(n.id); });
+      data.links = data.links.filter(function (l) {
+        var s = (typeof l.source === 'object') ? l.source.id : l.source;
+        var t = (typeof l.target === 'object') ? l.target.id : l.target;
+        return keepIds.has(s) && keepIds.has(t);
+      });
+      // Banner + page title update
+      var banner = document.getElementById('km-filter-banner');
+      var label  = document.getElementById('km-filter-label');
+      var title  = document.getElementById('km-title');
+      var sub    = document.getElementById('km-subtitle');
+      var parts = [];
+      if (filterAuthor)  parts.push('author = ' + filterAuthor);
+      if (filterSection) parts.push('section = ' + filterSection);
+      if (filterTopic)   parts.push('topic = ' + filterTopic);
+      if (banner) banner.hidden = false;
+      if (label)  label.textContent = parts.join(' · ');
+      if (title && parts.length === 1 && filterTopic)   title.textContent = 'Knowledge map: #' + filterTopic;
+      if (title && parts.length === 1 && filterAuthor)  title.textContent = 'Knowledge map: ' + filterAuthor;
+      if (title && parts.length === 1 && filterSection) title.textContent = 'Knowledge map: ' + filterSection;
+      if (sub) sub.textContent = keepArticleIds.size + ' articles in this slice, plus the topics and authors that connect them.';
+    }
+
+    if (loadingEl) loadingEl.remove();
+
+    // ── Stable section colour palette (deterministic by section name) ──
+    var sectionColors = {};
+    var palette = ['#C0392B', '#2C5F8A', '#7B4F2A', '#0F6E5C', '#5B3D8C', '#A85A2E', '#1F6F8B', '#6E5B2A'];
+    var sIdx = 0;
+    data.nodes.forEach(function (n) {
+      if (n.type === 'article' && n.section && !sectionColors[n.section]) {
+        sectionColors[n.section] = palette[sIdx % palette.length]; sIdx += 1;
+      }
+    });
+
+    var w = canvas.clientWidth || 800;
+    var h = canvas.clientHeight || 600;
+
+    var svg = d3.select(svgEl);
+    svg.attr('viewBox', '0 0 ' + w + ' ' + h);
+    var rootG = svg.append('g');
+    var zoom = d3.zoom().scaleExtent([0.2, 6]).on('zoom', function (e) {
+      rootG.attr('transform', e.transform);
+    });
+    svg.call(zoom);
+
+    var color = function (d) {
+      if (d.type === 'tag')    return 'var(--color-link)';
+      if (d.type === 'author') return 'var(--color-accent)';
+      return d.section && sectionColors[d.section] ? sectionColors[d.section] : 'var(--color-ink)';
+    };
+    var radius = function (d) {
+      if (d.type === 'tag')    return 6;
+      if (d.type === 'author') return 8;
+      return 4 + Math.min(6, Math.sqrt(deg[d.id] || 1));
+    };
+
+    // Pre-compute degree
+    var deg = {};
+    data.links.forEach(function (l) {
+      deg[l.source] = (deg[l.source] || 0) + 1;
+      deg[l.target] = (deg[l.target] || 0) + 1;
+    });
+
+    // Adjacency for highlight + side panel related-articles
+    var adj = {};
+    data.links.forEach(function (l) {
+      (adj[l.source] = adj[l.source] || []).push(l.target);
+      (adj[l.target] = adj[l.target] || []).push(l.source);
+    });
+
+    var sim = d3.forceSimulation(data.nodes)
+      .force('link', d3.forceLink(data.links).id(function (d) { return d.id; }).distance(function (l) {
+        if (l.target.type === 'tag')    return 70;
+        if (l.target.type === 'author') return 100;
+        return 50;
+      }).strength(0.45))
+      .force('charge', d3.forceManyBody().strength(-90))
+      .force('center', d3.forceCenter(w / 2, h / 2))
+      .force('collide', d3.forceCollide().radius(function (d) { return radius(d) + 4; }))
+      .force('x', d3.forceX(w / 2).strength(0.05))
+      .force('y', d3.forceY(h / 2).strength(0.05));
+
+    var link = rootG.append('g').attr('stroke', 'var(--color-rule)')
+      .selectAll('line').data(data.links).enter().append('line')
+      .attr('class', 'km-svg-link')
+      .attr('stroke-width', 1);
+
+    var node = rootG.append('g').selectAll('g').data(data.nodes).enter().append('g')
+      .attr('class', function (d) { return 'km-svg-node km-svg-node--' + d.type; })
+      .call(d3.drag()
+        .on('start', function (e, d) { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+        .on('drag',  function (e, d) { d.fx = e.x; d.fy = e.y; })
+        .on('end',   function (e, d) { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }))
+      .on('mouseover', function (e, d) {
+        tipEl.hidden = false;
+        var sub = '';
+        if (d.type === 'article' && d.section) sub = '<span class="km-tooltip__sub">' + d.section + (d.author ? ' &middot; ' + d.author : '') + '</span>';
+        if (d.type === 'tag')    sub = '<span class="km-tooltip__sub">topic — ' + ((deg[d.id] || 0)) + ' articles</span>';
+        if (d.type === 'author') sub = '<span class="km-tooltip__sub">author — ' + ((deg[d.id] || 0)) + ' pieces</span>';
+        tipEl.innerHTML = '<strong>' + (d.label || d.id) + '</strong>' + sub;
+        highlightNeighbours(d.id);
+      })
+      .on('mousemove', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        var tw = tipEl.offsetWidth, th = tipEl.offsetHeight;
+        // On narrow viewports anchor the tooltip to the bottom-center
+        // of the canvas so a finger-tap doesn't push it off-screen.
+        if (rect.width < 600) {
+          tipEl.style.left = Math.max(8, (rect.width - tw) / 2) + 'px';
+          tipEl.style.top  = Math.max(8, rect.height - th - 12) + 'px';
+          return;
+        }
+        var x = e.clientX - rect.left + 14;
+        var y = e.clientY - rect.top + 14;
+        if (x + tw > rect.width)  x = e.clientX - rect.left - tw - 12;
+        if (y + th > rect.height) y = e.clientY - rect.top - th - 12;
+        if (x < 8) x = 8;
+        if (y < 8) y = 8;
+        tipEl.style.left = x + 'px';
+        tipEl.style.top  = y + 'px';
+      })
+      .on('mouseout', function () {
+        tipEl.hidden = true;
+        clearHighlight();
+      })
+      .on('click', function (e, d) { selectNode(d); });
+
+    node.append('circle')
+      .attr('r', radius)
+      .attr('fill', color)
+      .attr('stroke', 'var(--color-bg)')
+      .attr('stroke-width', 1.5);
+
+    node.filter(function (d) { return d.type !== 'article'; })
+      .append('text')
+      .text(function (d) { return d.label; })
+      .attr('x', 10).attr('y', 4)
+      .attr('font-size', '11px')
+      .attr('fill', 'var(--color-ink)');
+
+    sim.on('tick', function () {
+      link.attr('x1', function (d) { return d.source.x; })
+          .attr('y1', function (d) { return d.source.y; })
+          .attr('x2', function (d) { return d.target.x; })
+          .attr('y2', function (d) { return d.target.y; });
+      node.attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+    });
+
+    // ── Highlight neighbour nodes & their links ──
+    function highlightNeighbours(id) {
+      var keep = { [id]: true };
+      (adj[id] || []).forEach(function (n) { keep[n] = true; });
+      node.classed('is-dim', function (d) { return !keep[d.id]; })
+          .classed('is-hi',  function (d) { return !!keep[d.id]; });
+      link.classed('is-dim', function (l) {
+        var s = l.source.id || l.source, t = l.target.id || l.target;
+        return !(keep[s] && keep[t]);
+      }).classed('is-hi', function (l) {
+        var s = l.source.id || l.source, t = l.target.id || l.target;
+        return s === id || t === id;
+      });
+    }
+    function clearHighlight() {
+      node.classed('is-dim', false).classed('is-hi', false);
+      link.classed('is-dim', false).classed('is-hi', false);
+    }
+
+    // ── Side panel: select a node and render rich context ──
+    var selectedId = null;
+    function selectNode(d) {
+      selectedId = d.id;
+      node.classed('is-selected', function (n) { return n.id === d.id; });
+
+      var ph = sideEl.querySelector('.km-side__placeholder');
+      var content = sideEl.querySelector('.km-side__content');
+      ph.hidden = true;
+      content.hidden = false;
+
+      var listen = (window.__tftAudioBar && window.__tftAudioBar.renderListenButton) || function () { return ''; };
+      if (d.type === 'article') {
+        var related = (adj[d.id] || [])
+          .map(function (id) { return data.nodes.find(function (n) { return n.id === id; }); })
+          .filter(Boolean);
+        var topics  = related.filter(function (n) { return n.type === 'tag'; });
+        var authors = related.filter(function (n) { return n.type === 'author'; });
+        // Articles that share at least one topic with this article
+        var topicIds = topics.map(function (t) { return t.id; });
+        var seen = {};
+        var siblings = [];
+        topicIds.forEach(function (tid) {
+          (adj[tid] || []).forEach(function (aid) {
+            if (aid === d.id || seen[aid]) return;
+            seen[aid] = true;
+            var n = data.nodes.find(function (x) { return x.id === aid && x.type === 'article'; });
+            if (n) siblings.push(n);
+          });
+        });
+        siblings = siblings.slice(0, 8);
+        content.innerHTML =
+          '<h2><a href="' + d.url + '">' + d.label + '</a></h2>' +
+          '<div class="km-side__meta">' +
+            (d.section ? d.section : '') +
+            (d.author  ? (d.section ? ' &middot; ' : '') + d.author : '') +
+            (d.date    ? ((d.section || d.author) ? ' &middot; ' : '') + d.date : '') +
+          '</div>' +
+          (topics.length ? '<div class="km-side__heading">Topics</div><div class="km-side__chips">' + topics.map(function (t) { return '<a class="km-side__chip" href="' + t.url + '">' + t.label + '</a>'; }).join('') + '</div>' : '') +
+          (siblings.length ? '<div class="km-side__heading">Related articles</div><ul class="km-side__list">' + siblings.map(function (s) {
+            var slbtn = listen(s.url, s.label);
+            return '<li>' +
+              '<a href="' + s.url + '">' + s.label + '</a>' +
+              (s.section ? '<span class="km-side__list-meta">' + s.section + '</span>' : '') +
+              (slbtn ? '<div class="km-side__list-listen">' + slbtn + '</div>' : '') +
+            '</li>';
+          }).join('') + '</ul>' : '') +
+          '<div class="km-side__actions">' + listen(d.url, d.label) +
+          ' <a href="' + d.url + '" class="km-side__read">Read &rarr;</a></div>';
+      } else if (d.type === 'tag') {
+        var pieces = (adj[d.id] || [])
+          .map(function (id) { return data.nodes.find(function (n) { return n.id === id; }); })
+          .filter(function (n) { return n && n.type === 'article'; });
+        content.innerHTML =
+          '<h2><a href="' + d.url + '">#' + d.label + '</a></h2>' +
+          '<div class="km-side__meta">Topic &middot; ' + pieces.length + ' articles</div>' +
+          '<div class="km-side__heading">Articles in this topic</div>' +
+          '<ul class="km-side__list">' + pieces.slice(0, 12).map(function (p) {
+            var pListen = listen(p.url, p.label);
+            return '<li>' +
+              '<a href="' + p.url + '">' + p.label + '</a>' +
+              (p.section ? '<span class="km-side__list-meta">' + p.section + '</span>' : '') +
+              (pListen ? '<div class="km-side__list-listen">' + pListen + '</div>' : '') +
+            '</li>';
+          }).join('') + '</ul>' +
+          (pieces.length > 12 ? '<p style="margin-top: var(--space-2); font-size: var(--text-xs); color: var(--color-ink-muted);">+ ' + (pieces.length - 12) + ' more on the topic page</p>' : '');
+      } else if (d.type === 'author') {
+        var pieces = (adj[d.id] || [])
+          .map(function (id) { return data.nodes.find(function (n) { return n.id === id; }); })
+          .filter(function (n) { return n && n.type === 'article'; });
+        content.innerHTML =
+          '<h2><a href="' + d.url + '">' + d.label + '</a></h2>' +
+          '<div class="km-side__meta">Author &middot; ' + pieces.length + ' pieces</div>' +
+          '<div class="km-side__heading">By this author</div>' +
+          '<ul class="km-side__list">' + pieces.slice(0, 12).map(function (p) {
+            var pListen = listen(p.url, p.label);
+            return '<li>' +
+              '<a href="' + p.url + '">' + p.label + '</a>' +
+              (p.section ? '<span class="km-side__list-meta">' + p.section + '</span>' : '') +
+              (pListen ? '<div class="km-side__list-listen">' + pListen + '</div>' : '') +
+            '</li>';
+          }).join('') + '</ul>';
+      }
+    }
+
+    // ── Filters
+    var showTags     = document.getElementById('km-show-tags');
+    var showAuthors  = document.getElementById('km-show-authors');
+    var showArticles = document.getElementById('km-show-articles');
+    var search       = document.getElementById('km-search');
+
+    function applyFilters() {
+      var q = (search.value || '').toLowerCase().trim();
+      var tagOn = showTags.checked, authorOn = showAuthors.checked, articleOn = showArticles.checked;
+      var counts = { article: 0, tag: 0, author: 0 };
+      node.style('display', function (d) {
+        if (d.type === 'tag'     && !tagOn)     return 'none';
+        if (d.type === 'author'  && !authorOn)  return 'none';
+        if (d.type === 'article' && !articleOn) return 'none';
+        if (q && (d.label || '').toLowerCase().indexOf(q) === -1) return 'none';
+        counts[d.type] += 1;
+        return null;
+      });
+      link.style('display', function (l) {
+        var s = l.source && l.source.type ? l.source : { type: 'article' };
+        var t = l.target && l.target.type ? l.target : { type: 'tag' };
+        if (t.type === 'tag'    && !tagOn)    return 'none';
+        if (t.type === 'author' && !authorOn) return 'none';
+        if (s.type === 'article' && !articleOn) return 'none';
+        if (q && (s.label || '').toLowerCase().indexOf(q) === -1) return 'none';
+        return null;
+      });
+      countEl.textContent = counts.article + ' articles · ' + counts.tag + ' topics · ' + counts.author + ' authors';
+    }
+    showTags.addEventListener('change', applyFilters);
+    showAuthors.addEventListener('change', applyFilters);
+    showArticles.addEventListener('change', applyFilters);
+    search.addEventListener('input', applyFilters);
+    applyFilters();
+
+    // Stats line at the bottom
+    var totals = data.nodes.reduce(function (a, n) { a[n.type] = (a[n.type] || 0) + 1; return a; }, {});
+    statsEl.textContent = (totals.article || 0) + ' articles · ' + (totals.tag || 0) + ' topics · ' + (totals.author || 0) + ' authors · ' + data.links.length + ' connections';
+
+    // ── Buttons
+    document.getElementById('km-zoom-in').addEventListener('click',  function () { svg.transition().duration(180).call(zoom.scaleBy, 1.4); });
+    document.getElementById('km-zoom-out').addEventListener('click', function () { svg.transition().duration(180).call(zoom.scaleBy, 1 / 1.4); });
+    document.getElementById('km-reset').addEventListener('click',    function () {
+      svg.transition().duration(220).call(zoom.transform, d3.zoomIdentity);
+      sim.alpha(0.6).restart();
+    });
+    var pauseBtn = document.getElementById('km-pause');
+    var paused = false;
+    pauseBtn.addEventListener('click', function () {
+      paused = !paused;
+      pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      if (paused) sim.stop(); else sim.alpha(0.4).restart();
+    });
+
+    // Resize
+    window.addEventListener('resize', function () {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      svg.attr('viewBox', '0 0 ' + w + ' ' + h);
+      sim.force('center', d3.forceCenter(w / 2, h / 2)).alpha(0.3).restart();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startInit);
+  else startInit();
+})();
+</script>

@@ -1,0 +1,9 @@
+---
+permalink: /api/thought-experiments.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ collections["thought-experiments"].length }},
+  "thoughtExperiments": {{ collections["thought-experiments"] | toApiItems(site.url) | toJSON | safe }}
+}

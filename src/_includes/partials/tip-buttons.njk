@@ -1,0 +1,48 @@
+{# Tip CTA — single smart link per author.
+
+   Resolves the author's first available tipping platform (Ko-fi →
+   Buy Me a Coffee → Patreon, in priority order) and renders one button
+   labelled "Tip {{ name }} on {{ Platform }}". The platform name is
+   derived from the key, not the URL hostname, so a custom-domain
+   Ko-fi page still reads as "on Ko-fi".
+
+   Set tipAuthor to an author record. Set tipHidePublication = true on
+   surfaces where the publication-level button would be redundant
+   (article cards, author pages). #}
+{% set authorTipUrl = "" %}
+{% set authorTipPlatform = "" %}
+{% if tipAuthor and tipAuthor.tipping %}
+  {% if tipAuthor.tipping.kofi %}
+    {% set authorTipUrl = tipAuthor.tipping.kofi %}
+    {% set authorTipPlatform = "Ko-fi" %}
+  {% elif tipAuthor.tipping.bmac %}
+    {% set authorTipUrl = tipAuthor.tipping.bmac %}
+    {% set authorTipPlatform = "Buy Me a Coffee" %}
+  {% elif tipAuthor.tipping.patreon %}
+    {% set authorTipUrl = tipAuthor.tipping.patreon %}
+    {% set authorTipPlatform = "Patreon" %}
+  {% endif %}
+{% endif %}
+
+{% set pubTipUrl = "" %}
+{% if site.tipping %}
+  {% set pubTipUrl = site.tipping.kofi or site.tipping.bmac or site.tipping.patreon %}
+{% endif %}
+
+{% if authorTipUrl or (pubTipUrl and not tipHidePublication) %}
+<div class="tip-buttons">
+  {% if authorTipUrl and tipAuthor %}
+  <a class="tip-badge" href="{{ authorTipUrl }}" target="_blank" rel="noopener noreferrer"
+     data-umami-event="support-author"
+     aria-label="Tip {{ tipAuthor.name }} on {{ authorTipPlatform }}">
+    Tip {{ tipAuthor.name }} on {{ authorTipPlatform }}
+  </a>
+  {% endif %}
+  {% if pubTipUrl and not tipHidePublication %}
+  <a class="tip-badge" href="/support/"
+     aria-label="Support {{ site.title }}">
+    Support {{ site.title }}
+  </a>
+  {% endif %}
+</div>
+{% endif %}

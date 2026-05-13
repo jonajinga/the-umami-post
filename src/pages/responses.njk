@@ -1,0 +1,82 @@
+---
+layout: base
+title: Responses
+description: Every article that responds to another piece — internal threads and external pieces our writers have answered.
+permalink: /responses/
+---
+<main class="container responses-page">
+
+  <header class="responses-page__header">
+    <p class="responses-page__kicker">Reader tools</p>
+    <h1 class="responses-page__title">Responses</h1>
+    <p class="responses-page__lede">
+      Pieces that answer other pieces. Internal threads under originals
+      we&rsquo;ve published, plus our writers&rsquo; replies to articles
+      from elsewhere on the web.
+    </p>
+  </header>
+
+  {% if collections.responseThreads and collections.responseThreads.length %}
+  <ul class="responses-list" role="list">
+    {% for thread in collections.responseThreads %}
+    <li class="responses-thread{% if thread.isExternal %} responses-thread--external{% endif %}">
+
+      <div class="responses-thread__target">
+        <span class="responses-thread__label">
+          {% if thread.isExternal %}External piece{% else %}Original{% endif %}
+        </span>
+        {% if thread.isExternal %}
+        <a class="responses-thread__title" href="{{ thread.targetUrl }}" target="_blank" rel="noopener">
+          {{ thread.targetTitle }}
+        </a>
+        {% if thread.targetAuthor or thread.targetPublisher or thread.targetDate %}
+        <p class="responses-thread__meta">
+          {% if thread.targetAuthor %}<span>{{ thread.targetAuthor }}</span>{% endif %}
+          {% if thread.targetPublisher %}<span class="responses-thread__publisher">{{ thread.targetPublisher }}</span>{% endif %}
+          {% if thread.targetDate %}<time datetime="{{ thread.targetDate | htmlDateString }}">{{ thread.targetDate | readableDate }}</time>{% endif %}
+        </p>
+        {% endif %}
+        {% else %}
+        <a class="responses-thread__title" href="{{ thread.targetUrl }}">
+          {{ thread.targetTitle }}
+        </a>
+        {% if thread.targetItem %}
+        <p class="responses-thread__meta">
+          {% if thread.targetItem.data.section %}<span>{{ thread.targetItem.data.section }}</span>{% endif %}
+          {% if thread.targetItem.data.authorName %}<span>{{ thread.targetItem.data.authorName }}</span>{% endif %}
+          {% if thread.targetItem.date %}<time datetime="{{ thread.targetItem.date | htmlDateString }}">{{ thread.targetItem.date | readableDate }}</time>{% endif %}
+        </p>
+        {% endif %}
+        {% endif %}
+      </div>
+
+      <ol class="responses-thread__list" role="list">
+        {% for resp in thread.responses %}
+        <li class="responses-thread__item">
+          <a class="responses-thread__response" href="{{ resp.url }}">
+            <span class="responses-thread__response-meta">
+              {% if resp.data.section %}<span class="responses-thread__response-kicker">{{ resp.data.section }}</span>{% endif %}
+              {% if resp.data.authorName %}<span>{{ resp.data.authorName }}</span>{% endif %}
+              <time datetime="{{ resp.date | htmlDateString }}">{{ resp.date | readableDate }}</time>
+            </span>
+            <span class="responses-thread__response-title">{{ resp.data.title }}</span>
+            {% if resp.data.description %}
+            <span class="responses-thread__response-dek">{{ resp.data.description }}</span>
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="responses-page__empty">
+    No response threads yet. Articles can declare themselves a response
+    via the <code>responseTo</code> front-matter field &mdash; and once
+    they do, they&rsquo;ll show up here.
+  </p>
+  {% endif %}
+
+</main>

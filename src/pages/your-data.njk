@@ -1,0 +1,123 @@
+---
+layout: base
+title: Your Data
+description: How your reading list, highlights, notes, bookmarks, and preferences are stored, and how to export, import, or delete them.
+permalink: /your-data/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Your Data</h1>
+    <p class="page-header__lede">
+      Everything you save on this site stays in your browser. No accounts. No servers. No tracking.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#what-is-stored">What is stored</a>
+      <a href="#what-you-can-do">What you can do</a>
+      <a href="#specific-data">Specific data stored</a>
+      <a href="#moving-devices">Moving to another device</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="what-is-stored">What is stored</h2>
+
+      <p>When you use features like the reading list, highlights, notes, bookmarks, dark mode, or reading settings, your data is saved in your browser's <strong>localStorage</strong>. This means:</p>
+
+      <ul>
+        <li>Your data never leaves your device</li>
+        <li>No one else can see it, not us, not advertisers, not anyone</li>
+        <li>It persists between visits (until you clear your browser data)</li>
+        <li>It is specific to this browser on this device</li>
+      </ul>
+
+      <h2 id="what-you-can-do">What you can do</h2>
+
+      <h3>Export</h3>
+      <p>Download all your data as a JSON file. This includes your reading list, highlights (with colours), notes (with rich text), bookmarks, theme preference, global display settings, reading settings (font, spacing, ruler), highlight colour preference, reader panel state, RSS feeds, and library reading positions.</p>
+      <div style="margin: var(--space-4) 0;">
+        <button class="btn btn--accent" type="button" style="font-size: var(--text-xs);" onclick="var eb=document.getElementById('data-export-btn');if(eb)eb.click();">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export All Data
+        </button>
+      </div>
+
+      <h3>Import</h3>
+      <p>Restore your data from a previously exported JSON file. This lets you transfer your data to a new browser or device.</p>
+      <div style="margin: var(--space-4) 0;">
+        <button class="btn btn--accent" type="button" style="font-size: var(--text-xs);" onclick="var ib=document.getElementById('data-import-btn');if(ib)ib.click();">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import Data
+        </button>
+      </div>
+
+      <h3>Delete</h3>
+      <p>You can delete individual items from the <a href="/notes/">Notes & Highlights</a> or <a href="/reading-list/">Reading List</a> pages. To delete everything at once, use the "Clear all" button on those pages, or clear your browser's site data in your browser settings.</p>
+
+      <h2 id="specific-data">Specific data stored</h2>
+
+      <table style="width:100%;font-size:var(--text-sm);border-collapse:collapse;margin:var(--space-6) 0;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--color-ink);text-align:left;">
+            <th style="padding:var(--space-2);">Feature</th>
+            <th style="padding:var(--space-2);">What is saved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Dark / light mode</td><td style="padding:var(--space-2);">Your theme preference</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Reading list</td><td style="padding:var(--space-2);">Article titles, URLs, dates, and reading times</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Highlights</td><td style="padding:var(--space-2);">Selected text, colour, and the page it came from</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Notes</td><td style="padding:var(--space-2);">Rich-text notes attached to highlighted text (stored as HTML)</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Bookmarks</td><td style="padding:var(--space-2);">Scroll positions and text excerpts</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Highlight colour</td><td style="padding:var(--space-2);">Last-used colour (yellow, pink, blue, green, orange, purple)</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Reading settings</td><td style="padding:var(--space-2);">Font, size, line spacing, text width, word spacing, ruler thickness/colour/style, paragraph numbers, auto-scroll speed</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Global display settings</td><td style="padding:var(--space-2);">Font, size, spacing, word spacing, theme (Auto/Light/Sepia/Cream/Dark)</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Focus mode</td><td style="padding:var(--space-2);">On/off state</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Reader panel</td><td style="padding:var(--space-2);">Open/closed preference</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Library positions</td><td style="padding:var(--space-2);">Where you left off in each chapter</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Library completion</td><td style="padding:var(--space-2);">Which chapters you have finished</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">RSS feeds</td><td style="padding:var(--space-2);">Custom feed URLs you have added</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);">Text-to-speech</td><td style="padding:var(--space-2);">Speed and voice preferences</td></tr>
+          <tr><td style="padding:var(--space-2);">Music player</td><td style="padding:var(--space-2);">Current playlist ID, playlist name, track index, playback position, volume, and playing state</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="moving-devices">Moving to another device</h2>
+
+      <ol>
+        <li>On your current device, open the menu and tap <strong>Export</strong> (download arrow icon)</li>
+        <li>Save the <code>tft-backup.json</code> file</li>
+        <li>Transfer the file to your new device (email, cloud storage, USB, etc.)</li>
+        <li>On your new device, open the menu and tap <strong>Import</strong> (upload arrow icon)</li>
+        <li>Select the file, all your data will be restored</li>
+      </ol>
+
+      <p style="margin-top: var(--space-8); font-size: var(--text-sm); color: var(--color-ink-faint);">
+        For more on how we handle privacy, see our <a href="/privacy/">Privacy Policy</a>.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

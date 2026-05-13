@@ -1,0 +1,925 @@
+# Pages CMS Configuration
+# https://pagescms.org/docs/configuration/
+#
+# This file defines all content collections editable via Pages CMS. Each
+# collection maps to a folder under src/content/ (articles) or a top-level
+# project folder (glossary, bookshelf, thought-experiments, trials, library).
+#
+# For forks: change the `author` default value (jon-ajinga) to match
+# a slug in src/authors-data/ — or remove the default and make it required.
+
+media:
+  input: src/assets/img
+  output: /assets/img
+
+content:
+  # ── Group 1: Site Setup ──────────────────────────────────────────────────────
+  # Configure these first before adding any content.
+
+  - name: site-settings
+    label: Site Settings
+    path: src/_data/site-settings.json
+    type: file
+    format: json
+    fields:
+      - { name: title, type: string, required: true, label: "Publication Name" }
+      - { name: description, type: text, required: true, label: "Site Description (shown in SEO and social previews)" }
+      - { name: tagline, type: text, label: "Tagline (shown below publication name in the footer)" }
+      - { name: author, type: string, required: true, label: "Publication Byline (used in RSS, JSON-LD, etc.)" }
+      - { name: email, type: string, label: "Contact Email Address" }
+      - { name: founded, type: number, label: "Year Founded" }
+      - { name: footerByline, type: string, label: "Footer Byline (overrides the auto-generated 'Founded X. Tagline' text)" }
+      - { name: gtranslate, type: boolean, label: "Enable Google Translate Widget" }
+      - name: tipping
+        type: object
+        label: "Reader Support Links (Ko-fi, BMAC, or Patreon — first non-empty wins)"
+        fields:
+          - { name: kofi, type: string, label: "Ko-fi URL" }
+          - { name: bmac, type: string, label: "Buy Me A Coffee URL" }
+          - { name: patreon, type: string, label: "Patreon URL" }
+      - name: newsletter
+        type: object
+        label: "Newsletter (Buttondown)"
+        fields:
+          - { name: provider, type: string, label: "Provider (enter: buttondown)" }
+          - { name: username, type: string, label: "Buttondown Username" }
+      - name: social
+        type: object
+        label: "Social Media Links"
+        fields:
+          - { name: twitter, type: string, label: "Twitter / X URL" }
+          - { name: mastodon, type: string, label: "Mastodon URL" }
+          - { name: rss, type: string, label: "RSS Feed Path (default: /feed.xml)" }
+      - name: subscribe
+        type: object
+        label: "Newsletter Subscribe Block Copy"
+        fields:
+          - { name: eyebrow,       type: string, label: "Eyebrow Line (inline newsletter block)" }
+          - { name: heading,       type: string, label: "Heading (inline newsletter block)" }
+          - { name: body,          type: text,   label: "Body Copy (inline newsletter block)" }
+          - { name: notice,        type: string, label: "Notice Line (below the signup form)" }
+          - { name: sidebarBody,   type: string, label: "Sidebar Widget Copy" }
+          - { name: footerHeading, type: string, label: "Footer Block Heading" }
+          - { name: footerBody,    type: string, label: "Footer Block Body Copy" }
+      - { name: contactSubjects, type: string, list: true, label: "Contact Form Subject Options" }
+
+  - name: authors
+    label: Authors
+    path: src/authors-data
+    type: collection
+    extension: yml
+    filename: "{fields.slug}"
+    fields:
+      - { name: slug, type: string, required: true, label: "Slug (e.g. jane-doe — used in articles and author page URL)" }
+      - { name: name, type: string, required: true, label: "Display Name" }
+      - { name: role, type: string, label: "Role (e.g. Founding Editor, Staff Reporter)" }
+      - { name: title, type: string, label: "Professional Title" }
+      - { name: location, type: string, label: "Location (e.g. Denver, Colorado)" }
+      - { name: bio, type: text, label: "Short Bio (shown in byline tooltips)" }
+      - { name: bioLong, type: rich-text, label: "Full Bio (shown on author page)" }
+      - { name: photo, type: image, label: "Author Photo" }
+      - name: social
+        type: object
+        label: "Social Media Links"
+        fields:
+          - { name: x, type: string, label: "X / Twitter URL" }
+          - { name: bluesky, type: string, label: "Bluesky URL" }
+          - { name: mastodon, type: string, label: "Mastodon URL" }
+          - { name: linkedin, type: string, label: "LinkedIn URL" }
+          - { name: github, type: string, label: "GitHub URL" }
+          - { name: threads, type: string, label: "Threads URL" }
+          - { name: instagram, type: string, label: "Instagram URL" }
+          - { name: website, type: string, label: "Personal Website URL" }
+          - { name: email, type: string, label: "Public Email Address" }
+      - name: tipping
+        type: object
+        label: "Support / Donation Links"
+        fields:
+          - { name: kofi, type: string, label: "Ko-fi URL" }
+          - { name: bmac, type: string, label: "Buy Me A Coffee URL" }
+          - { name: patreon, type: string, label: "Patreon URL" }
+
+  - name: nav
+    label: Main Navigation
+    path: src/_data/nav.json
+    type: file
+    format: json
+    list: true
+    fields:
+      - { name: label, type: string, required: true, label: "Link Label" }
+      - { name: url, type: string, required: true, label: "URL" }
+      - { name: key, type: string, required: true, label: "Unique Key (slug, no spaces — used for dropdown IDs)" }
+      - { name: collection, type: string, label: "Eleventy Collection Name (e.g. news, opinion) — enables section dropdown" }
+      - { name: type, type: string, label: "Special Type: 'more' (mega-menu) or 'library'" }
+
+  - name: footerLinks
+    label: Footer Navigation
+    path: src/_data/footerLinks.json
+    type: file
+    format: json
+    list: true
+    fields:
+      - { name: heading, type: string, required: true, label: "Column Heading" }
+      - { name: headingUrl, type: string, label: "Heading URL (optional — makes the heading a link)" }
+      - name: links
+        type: object
+        list: true
+        label: "Links"
+        fields:
+          - { name: label, type: string, required: true, label: "Link Text" }
+          - { name: url, type: string, required: true, label: "URL" }
+          - { name: title, type: string, label: "Tooltip (title attribute)" }
+
+  - name: megaMenu
+    label: '"More" Mega Menu'
+    path: src/_data/megaMenu.json
+    type: file
+    format: json
+    list: true
+    fields:
+      - { name: heading, type: string, required: true, label: "Column Heading" }
+      - name: links
+        type: object
+        list: true
+        label: "Links"
+        fields:
+          - { name: title, type: string, required: true, label: "Link Title" }
+          - { name: url, type: string, required: true, label: "URL" }
+          - { name: desc, type: string, required: true, label: "Short Description (shown below the link title)" }
+
+  - name: drawerLinks
+    label: Mobile Drawer Navigation
+    path: src/_data/drawerLinks.json
+    type: file
+    format: json
+    list: true
+    fields:
+      - { name: heading, type: string, label: "Section Heading (leave blank for no heading)" }
+      - { name: showSupportBadgeAfter, type: boolean, label: "Show Support Badge After This Group" }
+      - { name: small, type: boolean, label: "Use Small Link Style" }
+      - name: links
+        type: object
+        list: true
+        label: "Links"
+        fields:
+          - { name: label, type: string, required: true, label: "Link Text" }
+          - { name: url, type: string, required: true, label: "URL" }
+
+  # ── Group 2: Write Articles ──────────────────────────────────────────────────
+  #
+  # Field reference for all article sections:
+  #   edition     — which print/web edition this belongs to
+  #   location    — dateline shown in byline (e.g. "Denver, Colorado")
+  #   responseTo  — URL of the article this responds to
+  #   series      — series title for multi-part articles
+  #   seriesPart  — part number within the series
+  #   corrections — post-publication corrections log
+  #   profile     — content format (standard, interview, longread, etc.)
+  #   status      — editorial workflow: draft → review → published
+  #   draft       — when true, excluded from live site
+  #   featured    — shown in featured slots when true
+  #   emailOnly   — newsletter only, no public page
+
+  - name: news
+    label: News
+    path: src/content/news
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: News, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: opinion
+    label: Opinion
+    path: src/content/opinion
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: Opinion, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: analysis
+    label: Analysis
+    path: src/content/analysis
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: Analysis, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: arts-culture
+    label: Arts & Culture
+    path: src/content/arts-culture
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: "Arts & Culture", hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: science-technology
+    label: Science & Tech
+    path: src/content/science-technology
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: "Science & Technology", hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: history
+    label: History
+    path: src/content/history
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: History, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: letters
+    label: Letters
+    path: src/content/letters
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: Letters, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: location, type: string, label: "Dateline (e.g. Denver, Colorado)" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: responseTo, type: string, label: "Response To (URL of the article this replies to)" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: reviews
+    label: Reviews
+    path: src/content/reviews
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: Reviews, hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: jon-ajinga, label: "Author Slug (must match an entry in Authors)" }
+      - { name: authorName, type: string, default: "Jon Ajinga", label: "Author Display Name" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: mediaType, type: select, options: [Book, Film, Podcast, Documentary, Series], required: true, label: "Media Type" }
+      - { name: creator, type: string, required: true, label: "Creator / Director / Author" }
+      - { name: year, type: number, label: "Year of Release" }
+      - { name: rating, type: number, label: "Rating (1–5)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: series, type: string, label: "Series Title (optional)" }
+      - { name: seriesPart, type: number, label: "Part Number in Series" }
+      - { name: edition, type: number, label: "Edition Number" }
+      - { name: featured, type: boolean, default: false, label: "Featured" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: emailOnly, type: boolean, default: false, label: "Email Only (newsletter — no public page)" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - name: attachments
+        type: object
+        list: true
+        label: "File Attachments"
+        fields:
+          - { name: name, type: string, required: true, label: "File Name" }
+          - { name: path, type: string, required: true, label: "File Path or URL" }
+          - { name: description, type: string, label: "Description" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  # ── Group 3: Curated Collections ─────────────────────────────────────────────
+
+  - name: glossary
+    label: Glossary
+    path: src/glossary
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: "layouts/glossary-entry", hidden: true }
+      - { name: title, type: string, required: true, label: "Term" }
+      - { name: description, type: text, required: true, label: "Short Definition" }
+      - { name: etymology, type: text, label: "Etymology" }
+      - name: keyFigures
+        type: string
+        list: true
+        label: "Key Figures"
+      - name: relatedTerms
+        type: object
+        list: true
+        label: "Related Terms"
+        fields:
+          - { name: title, type: string, required: true, label: "Term Name" }
+          - { name: url, type: string, required: true, label: "URL" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: date, type: date, label: "Date Added" }
+      - { name: body, type: rich-text, label: "Full Definition" }
+
+  - name: bookshelf
+    label: Recommended Reading
+    path: src/bookshelf
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: book-entry, hidden: true }
+      - { name: title, type: string, required: true, label: "Book Title" }
+      - { name: bookAuthor, type: string, required: true, label: "Author" }
+      - { name: year, type: number, label: "Year Published" }
+      - { name: publisher, type: string, label: "Publisher" }
+      - { name: category, type: string, label: "Category" }
+      - { name: difficulty, type: select, options: [Accessible, Intermediate, Advanced], label: "Difficulty Level" }
+      - { name: description, type: text, required: true, label: "Short Description" }
+      - { name: bestFor, type: text, label: "Best For (describe the ideal reader)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: date, type: date, label: "Date Added" }
+      - { name: body, type: rich-text, label: "Full Review / Notes" }
+
+  - name: thought-experiments
+    label: Thought Experiments
+    path: src/thought-experiments
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: "Thought Experiments", hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: staff, label: "Author Slug (must match an entry in Authors)" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: philosopher, type: string, label: "Philosopher / Originator" }
+      - { name: yearProposed, type: string, label: "Year Proposed" }
+      - { name: field, type: string, label: "Field (e.g. Epistemology, Ethics)" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: trials
+    label: Trials of Thought
+    path: src/trials
+    type: collection
+    filename: "{fields.title|slugify}.md"
+    fields:
+      - { name: layout, type: string, default: article, hidden: true }
+      - { name: section, type: string, default: "Trials of Thought", hidden: true }
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: description, type: text, required: true, label: "Description (shown in search results and social previews)" }
+      - { name: author, type: string, default: staff, label: "Author Slug (must match an entry in Authors)" }
+      - { name: date, type: date, required: true, label: "Publish Date" }
+      - { name: updated, type: date, label: "Last Updated Date (optional)" }
+      - { name: year, type: number, label: "Year of Trial" }
+      - { name: yearLabel, type: string, label: "Year Label (display, e.g. 1895 or c. 399 BCE)" }
+      - { name: jurisdiction, type: string, label: "Jurisdiction" }
+      - { name: defendant, type: string, label: "Defendant" }
+      - { name: charge, type: text, label: "Charge" }
+      - { name: verdict, type: string, label: "Verdict" }
+      - { name: outcome, type: text, label: "Outcome" }
+      - { name: image, type: image, label: "Cover Image" }
+      - { name: imageAlt, type: string, label: "Image Alt Text (required for accessibility)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: profile, type: select, options: [standard, interview, longread, photoessay, podcast, datavisualization, brief, explainer], default: standard, label: "Content Format" }
+      - { name: audioUrl, type: string, label: "Audio URL (podcast format only)" }
+      - { name: embedUrl, type: string, label: "Embed URL (data visualisation format only)" }
+      - { name: draft, type: boolean, default: true, label: "Draft" }
+      - { name: status, type: select, options: [draft, review, published], default: draft, label: "Status" }
+      - { name: assignedTo, type: string, label: "Assigned To (author slug)" }
+      - { name: dueDate, type: date, label: "Due Date" }
+      - name: corrections
+        type: object
+        list: true
+        label: "Corrections"
+        fields:
+          - { name: description, type: text, required: true, label: "What Was Corrected" }
+          - { name: date, type: date, required: true, label: "Correction Date" }
+      - { name: body, type: rich-text, label: "Article Body" }
+
+  - name: library-chapters
+    label: Library Chapters
+    path: src/library/works
+    type: collection
+    filename: "{fields.workSlug}-chapter-{fields.chapterNumber}.md"
+    fields:
+      - { name: layout, type: string, hidden: true }
+      - { name: title, type: string, required: true, label: "Work Title (parent book or text)" }
+      - { name: chapterTitle, type: string, label: "Chapter Title" }
+      - { name: chapterNumber, type: number, label: "Chapter Number" }
+      - { name: chapterSlug, type: string, label: "Chapter Slug (used in URL)" }
+      - { name: workSlug, type: string, label: "Work Slug (e.g. age-of-reason)" }
+      - { name: readingTimeMinutes, type: number, label: "Reading Time (minutes)" }
+      - { name: permalink, type: string, label: "Permalink (leave blank to auto-generate)" }
+      - { name: body, type: rich-text, label: "Chapter Body" }
+
+  # ── Group 4: Resources & Media ───────────────────────────────────────────────
+
+  - name: timeline
+    label: Timeline
+    path: src/timeline-data
+    type: collection
+    extension: yml
+    filename: "{fields.year}-{fields.title|slugify}"
+    fields:
+      - { name: title, type: string, required: true, label: "Event Title" }
+      - { name: year, type: number, required: true, label: "Year (use negative for BCE, e.g. -399)" }
+      - { name: description, type: text, required: true, label: "Description" }
+      - { name: era, type: select, options: ["Ancient", "Early Modern", "Enlightenment", "18th Century", "19th Century", "20th Century", "21st Century"], required: true, label: "Era" }
+
+  - name: events
+    label: Events
+    path: src/events-data
+    type: collection
+    extension: yml
+    filename: "{fields.date}-{fields.name|slugify}"
+    fields:
+      - { name: name, type: string, required: true, label: "Event Name" }
+      - { name: date, type: date, required: true, label: "Date" }
+      - { name: endDate, type: date, label: "End Date (optional)" }
+      - { name: location, type: string, label: "Location" }
+      - { name: region, type: select, options: [National, Northeast, Southeast, Midwest, Southwest, West, Pacific, International, Online], label: "Region" }
+      - { name: type, type: select, options: [Convention, Conference, Meetup, Observance, Workshop, Lecture, Online], label: "Event Type" }
+      - { name: url, type: string, label: "Website URL" }
+      - { name: description, type: text, label: "Description" }
+      - { name: recurrence, type: select, options: ["", annual, monthly, weekly], label: "Recurrence" }
+      - { name: recurrenceMonth, type: number, label: "Recurrence Month (1–12)" }
+      - { name: recurrenceWeek, type: number, label: "Recurrence Week (1–5)" }
+      - { name: recurrenceDay, type: number, label: "Recurrence Day (0 = Sun, 6 = Sat)" }
+
+  - name: quotes
+    label: Quotes
+    path: src/quotes-data
+    type: collection
+    extension: yml
+    filename: "{fields.author|slugify}-{fields.quote|truncate(20)|slugify}"
+    fields:
+      - { name: author, type: string, required: true, label: "Author" }
+      - { name: quote, type: text, required: true, label: "Quote" }
+      - { name: source, type: string, label: "Source (book, speech, or publication)" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: era, type: select, options: ["Ancient", "Early Modern", "Enlightenment", "18th Century", "19th Century", "20th Century", "21st Century"], label: "Era" }
+
+  - name: videos
+    label: Videos
+    path: src/videos-data
+    type: collection
+    extension: yml
+    filename: "{fields.speaker|slugify}-{fields.title|slugify}"
+    fields:
+      - { name: title, type: string, required: true, label: "Title" }
+      - { name: speaker, type: string, label: "Speaker / Creator" }
+      - { name: url, type: string, required: true, label: "YouTube URL" }
+      - { name: embed, type: string, required: true, label: "Embed URL (use youtube-nocookie.com)" }
+      - { name: duration, type: string, label: "Duration (e.g. 58:00)" }
+      - { name: date, type: string, label: "Year" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: description, type: text, label: "Description" }
+
+  - name: gallery
+    label: Gallery
+    path: src/gallery-data
+    type: collection
+    extension: yml
+    filename: "{fields.alt|slugify}"
+    fields:
+      - { name: src, type: image, required: true, label: "Photo" }
+      - { name: alt, type: string, required: true, label: "Alt Text (required for accessibility)" }
+      - { name: credit, type: string, label: "Credit (photographer or source)" }
+      - { name: license, type: select, options: ["Public Domain", "CC0", "CC BY", "CC BY-SA", "CC BY-NC", "All Rights Reserved"], label: "License" }
+      - { name: category, type: string, label: "Category" }
+
+  - name: playlists
+    label: Music Playlists
+    path: src/playlists-data
+    type: collection
+    extension: yml
+    filename: "{fields.name|slugify}"
+    fields:
+      - { name: name, type: string, required: true, label: "Playlist Name" }
+      - { name: description, type: text, label: "Description" }
+      - { name: playlistId, type: string, required: true, label: "YouTube Playlist ID (the part after list= in the URL)" }
+      - { name: category, type: select, options: [Mixed, Focus, Ambient, Classical, Jazz, Electronic], label: "Category" }
+
+  - name: songs
+    label: Songs
+    path: src/songs-data
+    type: collection
+    extension: yml
+    filename: "{fields.artist|slugify}-{fields.title|slugify}"
+    fields:
+      - { name: title, type: string, required: true, label: "Song Title" }
+      - { name: artist, type: string, required: true, label: "Artist" }
+      - { name: album, type: string, label: "Album" }
+      - { name: year, type: number, label: "Year Released" }
+      - { name: genre, type: string, label: "Genre" }
+      - { name: tags, type: string, list: true, label: "Tags" }
+      - { name: url, type: string, label: "YouTube URL" }
+
+  - name: feeds
+    label: RSS Feeds
+    path: src/feeds-data
+    type: collection
+    extension: yml
+    filename: "{fields.name|slugify}"
+    fields:
+      - { name: name, type: string, required: true, label: "Feed Name" }
+      - { name: url, type: string, required: true, label: "Feed URL" }
+      - { name: category, type: select, options: [Organizations, Publications], label: "Category" }
+
+  - name: games
+    label: Games
+    path: src/games-data
+    type: collection
+    extension: yml
+    filename: "{fields.slug}"
+    fields:
+      - { name: slug, type: string, required: true, label: "Slug (e.g. fifteen-puzzle — used in URL)" }
+      - { name: title, type: string, required: true, label: "Game Title" }
+      - { name: description, type: text, required: true, label: "Description" }
+      - { name: icon, type: string, label: "Emoji Icon" }
+      - { name: url, type: string, required: true, label: "Game URL or Path" }
+
+  # ── Group 5: Page Copy ───────────────────────────────────────────────────────
+
+  - name: aboutContent
+    label: About Page Content
+    path: src/_data/aboutContent.json
+    type: file
+    format: json
+    fields:
+      - { name: whatWeAre,      type: text, list: true, label: "What We Are" }
+      - { name: whyWeExist,     type: text, list: true, label: "Why We Exist" }
+      - { name: whatWeStandFor, type: text, list: true, label: "What We Stand For" }
+      - { name: whatWeWillNotDo, type: text, list: true, label: "What We Will Not Do" }
+
+  - name: supportContent
+    label: Support Page Content
+    path: src/_data/supportContent.json
+    type: file
+    format: json
+    fields:
+      - { name: headerHeading,        type: string, required: true, label: "Page Heading" }
+      - { name: headerSubtitle,       type: text,   required: true, label: "Header Subtitle (italic intro)" }
+      - { name: howFunded,            type: text,   list: true,     label: "How We're Funded" }
+      - { name: whereSupportGoes,     type: text,   list: true,     label: "Where Your Support Goes" }
+      - { name: publicationBlockBody, type: text,   required: true, label: "Publication Support Block Body" }
+      - { name: authorBlockBody,      type: text,   required: true, label: "Author Support Block Body" }
+      - { name: nobudgetHeading,      type: string, required: true, label: "Subscribe-Instead Heading" }
+      - { name: nobudgetBody,         type: text,   required: true, label: "Subscribe-Instead Body" }
+      - { name: closingNote,          type: text,   required: true, label: "Footer Closing Note (displayed in italics)" }
+
+  - name: contributeContent
+    label: Contribute Page Content
+    path: src/_data/contributeContent.json
+    type: file
+    format: json
+    fields:
+      - name: tiers
+        type: object
+        list: true
+        label: "Contributor Tiers"
+        fields:
+          - { name: name, type: string, required: true, label: "Tier Name" }
+          - { name: desc, type: text, required: true, label: "Description" }
+      - { name: lookingFor, type: string, list: true, label: "What We Look For" }
+      - { name: topics, type: string, list: true, label: "Topics of Particular Interest" }
+      - name: otherWays
+        type: object
+        list: true
+        label: "Other Ways to Contribute"
+        fields:
+          - { name: label, type: string, required: true, label: "Link Text" }
+          - { name: url, type: string, required: true, label: "URL" }
+      - { name: writingStyle, type: string, list: true, label: "Writing Style Guidelines" }
+
+  # ── Group 6: Advanced / Rarely Touched ──────────────────────────────────────
+
+  - name: changelog
+    label: Changelog
+    path: src/changelog-data
+    type: collection
+    extension: yml
+    filename: "{fields.date}-{fields.title|slugify}"
+    fields:
+      - { name: title, type: string, required: true, label: "Version Title" }
+      - { name: date, type: date, required: true, label: "Release Date" }
+      - name: sections
+        type: object
+        list: true
+        label: "Sections"
+        fields:
+          - { name: label, type: string, required: true, label: "Section Label (e.g. Added, Fixed, Changed)" }
+          - { name: entries, type: string, list: true, label: "Changes" }
+
+  - name: profiles
+    label: Content Profiles
+    path: src/_data/profiles.json
+    type: file
+    format: json
+
+  # ── Static Pages (.njk) ─────────────────────────────────────────────────────
+  # Caution: editing Nunjucks templates requires knowledge of the template
+  # language. The body field here is a raw code editor, not a rich-text field.
+
+  - name: pages
+    label: Pages
+    path: src/pages
+    type: collection
+    format: yaml-frontmatter
+    extension: njk
+    fields:
+      - { name: layout, type: string, default: base, hidden: true }
+      - { name: title, type: string, required: true, label: "Page Title" }
+      - { name: description, type: text, label: "SEO Description" }
+      - { name: permalink, type: string, label: "Permalink (e.g. /about/)" }
+      - { name: body, type: text, label: "Page Body (Nunjucks — edit with care)" }

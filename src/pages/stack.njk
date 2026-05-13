@@ -1,0 +1,148 @@
+---
+layout: base
+title: "How This Site Is Built"
+description: The tools and services behind The Freethinking Times, what we use, why we chose it, and what it means for you.
+permalink: /stack/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">How This Site Is Built</h1>
+    <p class="page-header__lede">
+      Built to be fast, private, and independent. Here is what powers it.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#project-broadsheet">Project Broadsheet</a>
+      <a href="#approach">Our approach</a>
+      <a href="#pages-content">Pages & content</a>
+      <a href="#design">Design</a>
+      <a href="#interactive">Interactive features</a>
+      <a href="#search">Search</a>
+      <a href="#hosting">Hosting</a>
+      <a href="#forms">Forms</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#comments">Comments</a>
+      <a href="#translation">Translation</a>
+      <a href="#voice">Voice features</a>
+      <a href="#nav-speed">Navigation speed</a>
+      <a href="#tooltips">Glossary tooltips</a>
+      <a href="#music">Music player</a>
+      <a href="#offline">Offline support</a>
+      <a href="#cms">Content management</a>
+      <a href="#api">Public API</a>
+      <a href="#scheduled">Scheduled publishing</a>
+      <a href="#source-code">Source code</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="project-broadsheet">Project Broadsheet</h2>
+
+      <p>This site is built on <a href="https://projectbroadsheet.com" target="_blank" rel="noopener noreferrer">Project Broadsheet</a>, a free, open-source publication system designed for independent journalists and editorial teams who want full control over their platform without subscription fees, algorithmic gatekeepers, or third-party CMS lock-in. The source code is available on <a href="https://github.com/jonajinga/project-broadsheet" target="_blank" rel="noopener noreferrer">GitHub</a> under the MIT license.</p>
+
+      <h2 id="approach">Our approach</h2>
+
+      <p>Every page on this site is pre-built before you visit it. There is no server generating pages on the fly, no database to query, and no loading spinner while content renders in your browser. When you click a link, you get a finished page immediately. This makes the site fast, reliable, and cheap to run, which means we do not need advertising revenue to keep it online.</p>
+
+      <h2 id="pages-content">Pages and content</h2>
+
+      <p>Articles are written as plain text files with simple formatting. A tool called <strong>Eleventy</strong> takes those files and turns them into the web pages you see. The entire site, all 500+ pages, builds in roughly ten seconds. We publish by pushing a button, and the new version is live within a minute.</p>
+
+      <h2 id="design">Design</h2>
+
+      <p>The look and feel is built with standard web styles, no design framework or theme. Every colour, font size, and spacing value is defined once and reused everywhere, so the site looks consistent whether you are reading an article, browsing the library, or filling out a form. Typefaces are served by <strong>Bunny Fonts</strong>, a privacy-friendly alternative to Google Fonts that does not track visitors. Web fonts are loaded on demand, only when a reader selects them in the display settings panel.</p>
+
+      <h2 id="interactive">Interactive features</h2>
+
+      <p>All interactive features, search, voice search, annotations, the events calendar, reading settings, and form dictation, are written in plain browser code with no external framework. They load only when needed and work offline once cached. Total size across all features: about 200 KB, smaller than most single images.</p>
+
+      <h2 id="search">Search</h2>
+
+      <p>Search is powered by <strong>Pagefind</strong>, which builds a search index alongside the site. When you search, your query is matched against a small index file already on the page, no request is sent to a search engine or third-party service.</p>
+
+      <h2 id="hosting">Hosting</h2>
+
+      <p>The site is hosted on <strong>Cloudflare Pages</strong>, which serves pages from data centres around the world. This means the site loads fast regardless of where you are. Cloudflare also provides protection against attacks and automatically encrypts all connections.</p>
+
+      <h2 id="forms">Forms</h2>
+
+      <p>Contact forms, submissions, tips, and feedback are handled by <strong>Web3Forms</strong>. When you submit a form, your message is delivered to our email inbox. Nothing is stored in a database. Spam is filtered by <strong>hCaptcha</strong>, a privacy-respecting alternative to Google's reCAPTCHA.</p>
+
+      <h2 id="newsletter">Newsletter</h2>
+
+      <p>The newsletter is managed by <strong>Buttondown</strong>. We have disabled open tracking and click tracking, we do not know whether you opened a particular email or clicked a particular link. You can unsubscribe at any time from any email.</p>
+
+      <h2 id="analytics">Analytics</h2>
+
+      <p>We use <strong>Umami</strong>, a privacy-first analytics tool. It tells us how many people visit the site and which pages are popular, but it does not use cookies, does not collect personal information, and cannot identify individual visitors. Our analytics dashboard is <a href="{{ site.analytics.dashboardUrl }}" target="_blank" rel="noopener noreferrer">public</a>, you can see exactly what we see.</p>
+
+      <h2 id="comments">Comments</h2>
+
+      <p><strong>Cusdis</strong> provides the comment system. You do not need an account to leave a comment. Comments are moderated before they appear.</p>
+
+      <h2 id="translation">Translation</h2>
+
+      <p><strong>GTranslate</strong> provides machine translation into nine languages via a small widget. Translation is performed by Google Translate.</p>
+
+      <h2 id="voice">Voice features</h2>
+
+      <p>The read-aloud, voice search, and dictation features all use your browser's built-in speech capabilities. No audio is recorded or sent to us. Depending on your browser, speech processing may happen on your device or through your browser maker's servers (Apple, Google, or Microsoft).</p>
+
+      <h2 id="nav-speed">Navigation speed</h2>
+
+      <p>Links are prefetched on hover using <a href="https://instant.page" target="_blank" rel="noopener noreferrer">instant.page</a> (~3 KB, self-hosted). For most pages, navigation is handled SPA-style, when you click a link, only the main content area is swapped without a full page reload. This makes transitions feel nearly instant and allows background features like the music player to continue uninterrupted.</p>
+
+      <h2 id="tooltips">Glossary tooltips</h2>
+
+      <p>When you hover over a glossary term in an article or library page, a tooltip shows the definition. This is powered by <strong>Tippy.js</strong> and <strong>Popper.js</strong>, both self-hosted (~45 KB combined). No requests are made to external servers, and no data is collected.</p>
+
+      <h2 id="music">Music player</h2>
+
+      <p>The <a href="/music/">Freethought Music</a> player uses the <strong>YouTube IFrame API</strong> to play curated playlists in the background. The API script is loaded from Google's servers. Playback state is saved in localStorage so music can resume across page navigation.</p>
+
+      <h2 id="offline">Offline support</h2>
+
+      <p>The site can work without an internet connection. Once you have visited a page, it is cached in your browser and available offline. On mobile, you can install the site as an app from your browser's menu.</p>
+
+      <h2 id="cms">Content management</h2>
+
+      <p>Editors use <strong>Decap CMS</strong>, a browser-based tool that reads and writes directly to the site's source files. There is no separate database or content management server.</p>
+
+      <h2 id="api">Public API</h2>
+
+      <p>Every piece of content on this site is also available as JSON through our <a href="/api/">public API</a>. Articles, quotes, glossary terms, events, timeline entries, and more are exposed as static JSON files on a global CDN. No authentication, no rate limits, CORS enabled. See the <a href="/api/">API index</a> for all endpoints.</p>
+
+      <h2 id="scheduled">Scheduled publishing</h2>
+
+      <p>Articles can be scheduled to publish at a future date by setting the <code>date</code> field in the front matter. A GitHub Action runs daily and triggers a Cloudflare Pages rebuild, making scheduled content visible as soon as its publish date arrives.</p>
+
+      <h2 id="source-code">Source code</h2>
+
+      <p>The full source code is available as <a href="https://projectbroadsheet.com" target="_blank" rel="noopener noreferrer">Project Broadsheet</a>, free to use under the MIT license. Anyone can fork it and launch their own publication. See <a href="/open-source/">open source</a> for details.</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

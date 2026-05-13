@@ -1,0 +1,9 @@
+---
+permalink: /api/timeline.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ timeline.length }},
+  "timeline": {{ timeline | toJSON | safe }}
+}

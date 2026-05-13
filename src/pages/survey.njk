@@ -1,0 +1,240 @@
+---
+layout: base
+title: Reader Survey
+description: A short survey for readers of The Freethinking Times. What you read, what you want more of, and what would actually make the site better. Anonymous unless you want a reply.
+permalink: /survey/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/reader/">Reader</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Survey</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Reader survey</h1>
+      <p class="page-header__lede">
+        Five minutes, mostly optional. Tell us what you read, what's missing, and what would make the site genuinely better. We use this to plan coverage, not to build a marketing funnel.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <p>Every question is optional except the last one. Skip anything that doesn't apply. We don't track responses to you unless you give us your email and ask for a reply.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" data-umami-event="survey-submit">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Reader survey response, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/?from=survey">
+        <input type="hidden" name="from_name" value="{{ site.title }} Reader Survey">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">About you</h2>
+        <p class="w3f__hint" style="margin-top: 0;">All optional. Helps us understand who's actually reading.</p>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-frequency">How often do you visit the site?</label>
+          <select class="w3f__select" name="frequency" id="sv-frequency">
+            <option value="">— Pick one —</option>
+            <option value="Daily">Daily</option>
+            <option value="A few times a week">A few times a week</option>
+            <option value="Weekly">Weekly</option>
+            <option value="A few times a month">A few times a month</option>
+            <option value="First visit">This is my first visit</option>
+            <option value="Rarely">Rarely / when something circulates</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-found">How did you find us?</label>
+          <select class="w3f__select" name="found_via" id="sv-found">
+            <option value="">— Pick one —</option>
+            <option value="Search engine">Search engine (Google, DuckDuckGo, etc.)</option>
+            <option value="Social media">Social media (Mastodon, Bluesky, X, etc.)</option>
+            <option value="Word of mouth">Word of mouth, a friend sent it</option>
+            <option value="Newsletter or RSS">A newsletter or RSS aggregator</option>
+            <option value="Linked from another site">Linked from another site</option>
+            <option value="Don't remember">Don't remember</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="sv-age">Age range</label>
+            <select class="w3f__select" name="age_range" id="sv-age">
+              <option value="">— Skip if you'd rather —</option>
+              <option value="Under 18">Under 18</option>
+              <option value="18–24">18–24</option>
+              <option value="25–34">25–34</option>
+              <option value="35–44">35–44</option>
+              <option value="45–54">45–54</option>
+              <option value="55–64">55–64</option>
+              <option value="65+">65+</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="sv-region">Where are you reading from?</label>
+            <input class="w3f__input" type="text" name="region" id="sv-region" placeholder="Country, region, or city" maxlength="120">
+          </div>
+        </div>
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">What you read</h2>
+
+        <div class="w3f__group">
+          <fieldset style="border: none; padding: 0; margin: 0;">
+            <legend class="w3f__label" style="margin-bottom: var(--space-2);">Which sections do you actually read? <span class="w3f__optional">(check any)</span></legend>
+            <div class="w3f__checklist">
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="News"> News</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Features"> Features</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Notes"> Notes / short pieces</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Quotes"> Quotes</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Bookshelf"> Bookshelf</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Trials"> Trials</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Timeline"> Timeline</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Thought experiments"> Thought experiments</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Glossary"> Glossary</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Resources"> Resources</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Editorial dashboard"> Editorial dashboard</label>
+              <label class="w3f__check"><input type="checkbox" name="sections[]" value="Other"> Other / unsure</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-topics-more">Topics you wish we covered more</label>
+          <span class="w3f__hint" id="sv-topics-more-hint">Beats, themes, geographies. Specific is more useful than general.</span>
+          <textarea class="w3f__textarea" name="topics_more" id="sv-topics-more" rows="3" aria-describedby="sv-topics-more-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-topics-less">Topics you wish we covered less</label>
+          <textarea class="w3f__textarea" name="topics_less" id="sv-topics-less" rows="2" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-format">Which formats do you actually finish?</label>
+          <select class="w3f__select" name="format_pref" id="sv-format">
+            <option value="">— Pick one —</option>
+            <option value="Short articles (≤ 800 words)">Short articles (≤ 800 words)</option>
+            <option value="Medium articles (800–2,000 words)">Medium articles (800–2,000 words)</option>
+            <option value="Long features (2,000+ words)">Long features (2,000+ words)</option>
+            <option value="Notes and quotes">Notes and quotes</option>
+            <option value="Mixed, depends on the topic">Mixed, depends on the topic</option>
+          </select>
+        </div>
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">The site itself</h2>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-easy">How easy is the site to use?</label>
+          <select class="w3f__select" name="usability" id="sv-easy">
+            <option value="">— Pick one —</option>
+            <option value="Very easy">Very easy</option>
+            <option value="Mostly easy">Mostly easy</option>
+            <option value="Mixed">Mixed — some things work, some don't</option>
+            <option value="Frustrating">Frustrating</option>
+            <option value="Haven't formed an opinion">Haven't formed an opinion</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-friction">What's the single biggest friction you've hit?</label>
+          <span class="w3f__hint" id="sv-friction-hint">Specific is gold. "Search didn't find X", "couldn't read on phone", "couldn't tell when this was published", etc.</span>
+          <textarea class="w3f__textarea" name="biggest_friction" id="sv-friction" rows="3" aria-describedby="sv-friction-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <fieldset style="border: none; padding: 0; margin: 0;">
+            <legend class="w3f__label" style="margin-bottom: var(--space-2);">Features you'd actually use <span class="w3f__optional">(check any)</span></legend>
+            <div class="w3f__checklist">
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Email newsletter"> Email newsletter (weekly digest)</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Per-author RSS"> Per-author RSS feeds</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Per-topic RSS"> Per-topic RSS feeds</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Audio versions"> Audio versions of articles</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="PDF / print"> PDF / print-friendly versions</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Comments"> Article comments</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Reader letters"> Reader letters / responses</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Annotations"> Annotation / highlighting</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Translations"> Translations</label>
+              <label class="w3f__check"><input type="checkbox" name="features[]" value="Live events"> Live events / Q&amp;As</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">Editorial trust</h2>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-trust">How much do you trust what you read here?</label>
+          <select class="w3f__select" name="trust" id="sv-trust">
+            <option value="">— Pick one —</option>
+            <option value="High">High — I treat it as a primary source</option>
+            <option value="Moderate">Moderate — I cross-check with others</option>
+            <option value="Low">Low — I read but don't rely on it</option>
+            <option value="Don't know yet">Don't know yet</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-distinct">What makes us different from other outlets you read?</label>
+          <textarea class="w3f__textarea" name="distinct" id="sv-distinct" rows="3" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-fail">Where have we failed you?</label>
+          <span class="w3f__hint" id="sv-fail-hint">A piece that missed, a stance you disagreed with, a beat we ignored. Honesty is more useful than politeness.</span>
+          <textarea class="w3f__textarea" name="failure" id="sv-fail" rows="3" aria-describedby="sv-fail-hint" maxlength="2000"></textarea>
+        </div>
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">Support</h2>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-support">Would you support the site financially?</label>
+          <select class="w3f__select" name="support_willing" id="sv-support">
+            <option value="">— Pick one —</option>
+            <option value="Already do">Already do</option>
+            <option value="Yes, one-time">Yes, one-time</option>
+            <option value="Yes, recurring small">Yes, recurring (small)</option>
+            <option value="Yes, recurring larger">Yes, recurring (larger)</option>
+            <option value="Maybe, depends on coverage">Maybe, depends on coverage</option>
+            <option value="No, but I'd share work">No, but I'd share work</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-share">What would make you share an article?</label>
+          <textarea class="w3f__textarea" name="share_trigger" id="sv-share" rows="2" maxlength="2000"></textarea>
+        </div>
+
+        <h2 style="font-family: var(--font-display); margin-top: var(--space-10);">Last bit</h2>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="sv-anything">Anything else you want us to know? <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="sv-anything-hint">Even one sentence. "Keep going", "the headline format is annoying", whatever.</span>
+          <textarea class="w3f__textarea" name="anything_else" id="sv-anything" rows="4" required aria-required="true" aria-describedby="sv-anything-hint" maxlength="5000" data-dictation></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="sv-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="sv-name" autocomplete="name" maxlength="120">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="sv-email">Email <span class="w3f__optional">(optional, only if you want a reply)</span></label>
+            <input class="w3f__input" type="email" name="email" id="sv-email" autocomplete="email" maxlength="240">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Send my answers</button>
+        <p class="w3f__privacy">Responses go to our editorial inbox and stay there. We do not sell, share, or correlate them with anything else. Read our <a href="/privacy/#contact-forms">privacy policy</a>.</p>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+name: Build & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build site
+        run: npx @11ty/eleventy
+
+      - name: Check output
+        run: |
+          echo "Pages built: $(find _site -name '*.html' | wc -l)"
+          echo "CSS size: $(wc -c < _site/assets/css/main.css) bytes"
+
+      - name: Validate HTML (sample)
+        run: |
+          # Check a few key pages for basic issues
+          for page in index.html news/index.html library/index.html quotes/index.html; do
+            if [ -f "_site/$page" ]; then
+              echo "✓ $page exists ($(wc -c < "_site/$page") bytes)"
+            else
+              echo "✗ $page MISSING" && exit 1
+            fi
+          done
+
+      - name: Check for broken internal links
+        run: |
+          # Find all href="/..." links and verify the target exists
+          grep -roh 'href="/[^"]*"' _site/*.html _site/**/*.html 2>/dev/null | \
+            sort -u | head -50 | while read href; do
+            path=$(echo "$href" | sed 's/href="//;s/"$//' | sed 's/#.*//')
+            if [ -n "$path" ] && [ "$path" != "/" ]; then
+              target="_site${path}"
+              if [ -d "$target" ]; then
+                [ -f "${target}index.html" ] || echo "⚠ Missing: $path"
+              elif [ ! -f "$target" ]; then
+                echo "⚠ Missing: $path"
+              fi
+            fi
+          done

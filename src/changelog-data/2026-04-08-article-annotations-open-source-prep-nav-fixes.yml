@@ -1,0 +1,33 @@
+date: "2026-04-08"
+title: Article annotations, open-source prep & nav fixes
+sections:
+  - label: Article annotations
+    entries:
+      - >-
+        Highlight and annotate selected text on any article page — select text and choose Highlight or Add Note from the
+        toolbar that appears
+      - Position bookmarks on articles — save your scroll position to return to later
+      - >-
+        Notes panel on articles — slide-out panel listing all highlights, annotations, and bookmarks for the current
+        article
+      - All annotation data persists in localStorage, keyed per article
+  - label: Open source
+    entries:
+      - New /open-source/ page describing the site's availability as an open-source template
+      - >-
+        All brand-specific values (analytics, comments, newsletter, fonts, localStorage prefix, section definitions)
+        moved from hardcoded templates to site.json data file
+      - Sections in .eleventy.js now read dynamically from site.json instead of a hardcoded array
+      - Search filter buttons generated from site.json section definitions instead of hardcoded HTML
+      - GTranslate and analytics scripts now conditional — only render when configured in site.json
+      - robots.txt converted from static file to Nunjucks template using site.url
+      - Service worker cache name uses configurable prefix from site.json
+      - Newsletter subscribe URL injected via data attribute from site.json instead of hardcoded in JS
+      - Cusdis comments configuration read from site.json with conditional rendering
+  - label: Fixes
+    entries:
+      - >-
+        Nav drawer action buttons (hamburger menu icons) now properly centered — changed from inline-flex to flex, added
+        display:block on SVGs, increased touch target to 2rem
+      - "humans.txt corrected: fixed misspelled contact email, updated font attribution from Google Fonts to Bunny Fonts"
+      - Three hardcoded email addresses in templates replaced with {{ site.email }} data reference

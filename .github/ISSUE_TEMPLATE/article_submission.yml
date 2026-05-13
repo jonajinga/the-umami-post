@@ -1,0 +1,140 @@
+name: Article Pitch or Submission
+description: Pitch a story idea or submit a complete article for editorial review.
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to pitch a story idea or submit a draft for editorial review.
+
+        If you don't have a GitHub account, you can submit via the
+        [on-site form](https://thefreethinkingtimes.com/contribute/) instead.
+
+        Before submitting, please read [EDITORIAL.md](../../EDITORIAL.md) — it covers
+        what belongs in each section, sourcing standards, and voice expectations.
+
+  - type: input
+    id: title
+    attributes:
+      label: Working title
+      placeholder: "The Quiet Defunding of the EPA's Science Advisory Board"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: section
+    attributes:
+      label: Target section
+      description: Which section does this piece belong in?
+      options:
+        - News
+        - Opinion
+        - Analysis
+        - Arts & Culture
+        - Science & Technology
+        - History
+        - Letters
+        - Reviews
+    validations:
+      required: true
+
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Article type
+      description: What kind of piece is this?
+      options:
+        - Standard article
+        - Interview / profile
+        - Longread (2,000+ words)
+        - Explainer
+        - Review (book, film, podcast, etc.)
+        - Brief (under 400 words)
+        - Photo essay
+        - Podcast / audio
+        - Data visualization
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: 2–4 sentences describing the piece. What is the central claim or finding?
+      placeholder: |
+        This piece investigates how the EPA's Science Advisory Board has been
+        systematically defunded over the past eight years through a series of
+        budget maneuvers that received almost no press coverage. Drawing on
+        budget documents and interviews with former board members, it argues
+        that the board is now functionally inoperative.
+    validations:
+      required: true
+
+  - type: textarea
+    id: hook
+    attributes:
+      label: Why this piece, why now?
+      description: What is the news hook, urgency, or reason for publishing at this particular time?
+      placeholder: |
+        The EPA just announced a new round of staff reductions, and the Board's
+        annual report (due in March) was never released. This is the right moment
+        to explain how the institution was hollowed out before this crisis hit.
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources and research base
+      description: |
+        What primary sources, interviews, or data does this piece draw on?
+        You don't need everything lined up for a pitch — but for a completed
+        draft, sourcing should be documented here or in the PR.
+      placeholder: |
+        - 2019–2024 EPA budget justification documents (public record)
+        - Interviews with two former Board members (one on record, one background)
+        - Board meeting minutes from 2022–2023
+    validations:
+      required: false
+
+  - type: input
+    id: wordcount
+    attributes:
+      label: Estimated word count
+      placeholder: "~2,400 words"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Where is this in the process?
+      options:
+        - Pitch — idea only, no draft yet
+        - Draft in progress
+        - Draft complete, ready for editorial review
+    validations:
+      required: true
+
+  - type: input
+    id: author
+    attributes:
+      label: Your name and contact
+      description: |
+        Full name and preferred contact (email or social handle). Or confirm that
+        you already have an author profile in `src/_data/authorProfiles/`.
+      placeholder: "Jane Smith — jane@example.com — or I'm already in authorProfiles/ as jane-smith"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: acknowledgments
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have read EDITORIAL.md and my submission fits within its standards.
+          required: true
+        - label: I understand submitted content is subject to editorial review and may be edited, held, or declined.
+          required: true
+        - label: This is original work not published or under active consideration elsewhere.
+          required: true

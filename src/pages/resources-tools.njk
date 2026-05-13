@@ -1,0 +1,90 @@
+---
+layout: base
+title: "Media & Tools, Resources"
+description: Logical fallacy guides, counter-apologetics, fact-checking resources, podcasts, and debate preparation tools.
+permalink: /resources/tools/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/resources/">Resources</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Media &amp; Tools</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">Media & Tools</h1>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#fact-checking">Fact-checking</a>
+      <a href="#fallacies">Fallacies & biases</a>
+      <a href="#counter-apologetics">Counter-apologetics</a>
+      <a href="#podcasts">Podcasts</a>
+      <a href="#publications">Publications</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="fact-checking">Fact-checking</h2>
+      <ul>
+        <li><strong><a href="https://www.snopes.com" target="_blank" rel="noopener noreferrer">Snopes</a></strong>, The internet's oldest fact-checking site. Covers religious claims, urban legends, and misinformation.</li>
+        <li><strong><a href="https://www.politifact.com" target="_blank" rel="noopener noreferrer">PolitiFact</a></strong>, Fact-checking political claims, including those involving religion in public policy.</li>
+        <li><strong><a href="https://skepticalscience.com" target="_blank" rel="noopener noreferrer">Skeptical Science</a></strong>, Evidence-based responses to climate change denial.</li>
+      </ul>
+
+      <h2 id="fallacies">Logical fallacies & biases</h2>
+      <ul>
+        <li><strong><a href="https://yourlogicalfallacyis.com" target="_blank" rel="noopener noreferrer">Your Logical Fallacy Is</a></strong>, Beautifully designed fallacy reference with examples.</li>
+        <li><strong><a href="https://yourbias.is" target="_blank" rel="noopener noreferrer">Your Bias Is</a></strong>, Cognitive bias reference companion.</li>
+        <li><strong><a href="https://www.txstate.edu/philosophy/resources/fallacy-definitions.html" target="_blank" rel="noopener noreferrer">Texas State Fallacy Definitions</a></strong>, Academic definitions with formal and informal fallacy categories.</li>
+      </ul>
+
+      <h2 id="counter-apologetics">Counter-apologetics</h2>
+      <ul>
+        <li><strong><a href="https://www.ironchariots.wiki" target="_blank" rel="noopener noreferrer">Iron Chariots</a></strong>, Wiki covering arguments for and against the existence of God.</li>
+        <li><strong><a href="https://infidels.org/library/" target="_blank" rel="noopener noreferrer">Internet Infidels Library</a></strong>, Extensive essay library on atheism, naturalism, and secular ethics.</li>
+        <li><strong><a href="https://www.skepticsannotatedbible.com" target="_blank" rel="noopener noreferrer">Skeptic's Annotated Bible</a></strong>, The Bible with annotations highlighting contradictions, absurdities, and cruelties.</li>
+      </ul>
+
+      <h2 id="podcasts">Podcasts</h2>
+      <ul>
+        <li><strong><a href="https://ffrf.org/news/radio" target="_blank" rel="noopener noreferrer">Freethought Radio</a></strong>, Weekly from the Freedom From Religion Foundation.</li>
+        <li><strong><a href="https://www.atheist-experience.com" target="_blank" rel="noopener noreferrer">The Atheist Experience</a></strong>, Live call-in show discussing atheism and theism.</li>
+        <li><strong><a href="https://www.pointofinquiry.org" target="_blank" rel="noopener noreferrer">Point of Inquiry</a></strong>, CFI's podcast on science, secularism, and society.</li>
+        <li><strong><a href="https://www.youarenotaloneshow.com" target="_blank" rel="noopener noreferrer">You Are Not Alone</a></strong>, Stories of leaving religion and finding community.</li>
+      </ul>
+
+      <h2 id="publications">Publications</h2>
+      <ul>
+        <li><strong><a href="https://secularhumanism.org/free-inquiry/" target="_blank" rel="noopener noreferrer">Free Inquiry</a></strong>, Bimonthly magazine of secular humanism.</li>
+        <li><strong><a href="https://skepticalinquirer.org" target="_blank" rel="noopener noreferrer">Skeptical Inquirer</a></strong>, Magazine for science and reason.</li>
+        <li><strong><a href="https://thehumanist.com" target="_blank" rel="noopener noreferrer">The Humanist</a></strong>, Published since 1941 by the American Humanist Association.</li>
+        <li><strong><a href="https://newhumanist.org.uk" target="_blank" rel="noopener noreferrer">New Humanist</a></strong>, UK-based magazine on ideas and culture.</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

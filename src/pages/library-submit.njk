@@ -1,0 +1,77 @@
+---
+layout: base
+title: "Suggest a Public Domain Text"
+description: Know of a public domain text that belongs in our library? Tell us about it.
+permalink: /library/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/library/">Library</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Suggest a Text</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Suggest a Public Domain Text</h1>
+      <p class="page-header__lede">
+        Our library publishes key texts from the freethought tradition. If you know a public domain work we should include, let us know.
+      </p>
+    </header>
+
+    <div class="article-body">
+      <p>We look for works that are in the public domain (generally published before 1929 in the US), relevant to freethought, and significant enough to warrant full editorial treatment with introductions and annotations.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Library text suggestion, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Library Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="lib-title">Title <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="title" id="lib-title" required aria-required="true" placeholder="e.g. A System of Logic">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="lib-author">Author <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="author" id="lib-author" required aria-required="true" placeholder="e.g. John Stuart Mill">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="lib-year">Year published <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="year" id="lib-year" placeholder="e.g. 1843">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="lib-source">Source link <span class="w3f__optional">(optional)</span></label>
+          <span class="w3f__hint" id="lib-source-hint">Link to the text on Project Gutenberg, Internet Archive, Wikisource, etc.</span>
+          <input class="w3f__input" type="url" name="source_url" id="lib-source" aria-describedby="lib-source-hint" placeholder="https://www.gutenberg.org/...">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="lib-why">Why should we publish this? <span class="w3f__required">*</span></label>
+          <textarea class="w3f__textarea" name="reason" id="lib-why" rows="4" required aria-required="true" maxlength="2000" placeholder="What makes this text important to the freethought tradition?"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="lib-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="lib-name" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="lib-email">Email <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="email" name="email" id="lib-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Suggestion</button>
+      </form>
+    </div>
+  </div>
+</div>

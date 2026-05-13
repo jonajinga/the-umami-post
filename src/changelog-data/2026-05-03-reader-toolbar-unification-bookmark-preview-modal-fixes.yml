@@ -1,0 +1,118 @@
+date: "2026-05-03"
+title: Reader toolbar unification, bookmark placement preview, modal fixes
+sections:
+  - label: Reader toolbar
+    entries:
+      - >-
+        Article and library reader toolbars now render from a single
+        shared partial (partials/annotation-toolbar.njk). Library
+        chapters and short works gained the buttons they were missing
+        — back-to-top, percent-through pill, like, mark-read, pdf
+        basket, comments slot, feedback slot — and the article toolbar
+        no longer drifts independently of the library variant.
+      - >-
+        Library readers don't see Info or Comments — the compact-
+        header pattern those buttons control doesn't apply to public-
+        domain texts and library pages don't host article comments.
+        Both are suppressed at template time, not hidden by JS.
+      - >-
+        Highlight button commits a yellow highlight on the first click
+        instead of opening a colour picker. The earlier picker added a
+        modal step every time and most readers stuck with yellow
+        anyway. Existing non-yellow highlights still render in their
+        original colour — only new highlights default to yellow.
+      - >-
+        Scroll-triggered article reading header retired. Articles
+        keep the masthead visible on scroll instead of fading it for
+        a duplicate section + title bar. Library chapters keep their
+        sticky reading header — the work title is the primary anchor
+        for long-form public-domain texts.
+  - label: Bookmark placement
+    entries:
+      - >-
+        Hovering or focusing the in-text bookmark button now reveals
+        a thin accent rule at the exact Y coordinate where the
+        bookmark will land, with a pin glyph anchored in the gutter
+        to the left of the prose. Touch users get a brief flash on
+        touchstart so the landing point is visible before the click
+        commits. The preview and the saved bookmark always agree on
+        position because both call the same anchor calculation.
+      - >-
+        Duplicate bookmarks at the same scroll position are now
+        suppressed. Articles dedupe within ±2 percentage points OR
+        ±60 px of body offset. Library chapters dedupe within ±2
+        percentage points in the same chapter. Double-taps and
+        thumb-jitter no longer stack identical pins.
+  - label: Library + republish modal fixes
+    entries:
+      - >-
+        Library chapter and short layouts were rendering as a blank
+        page on direct load. A truncated focus-mode inline script
+        opened a <script> tag that never closed, so every byte after
+        it parsed as JavaScript and the DOM never rendered. Removing
+        the dead script restored 95 chapters to the search index
+        (251 → 346 indexed pages).
+      - >-
+        Republish modal now opens fullscreen as intended. It
+        previously rendered inside the article header's stacking
+        context (z-index 10), so the masthead and bottom toolbar
+        painted over its top and bottom halves and the close button
+        was unreachable. Moved the panel to the document top level so
+        its z-index resolves against the viewport.
+      - >-
+        Republish modal pins its header at the top while the body
+        scrolls, so the close button stays reachable regardless of
+        where the reader has scrolled inside the modal. The
+        grab-code textarea also expanded from 10 rows to 30 so the
+        full embed snippet is visible without manual resize.
+  - label: Highlights in dark mode
+    entries:
+      - >-
+        Highlight wash opacities bumped from 0.15-0.20 to 0.38-0.40
+        on dark backgrounds — the previous values disappeared into
+        the surrounding paragraph. Hover variants added for every
+        colour. The note-attached dotted underline tracks brighter
+        palette hues at 0.85-0.95 alpha so the dot pattern reads
+        through the saturated highlight.
+  - label: Style + navigation polish
+    entries:
+      - >-
+        Date format unified site-wide. Five client-side renderers
+        (annotations, library notes, revision history, archives
+        timeline, notes page) were using month:'short'. All now use
+        month:'long' to match the canonical Month DD, YYYY format
+        the readableDate / shortDate filters produce server-side.
+      - >-
+        Breadcrumb path collapses the trailing crumb when its label
+        duplicates the previous one — so /library/common-sense/
+        full-text/ now reads "Home / Library / Common Sense" instead
+        of the duplicated "Home / Library / Common Sense / Common
+        Sense" that occurred when chapter and work titles matched.
+      - >-
+        Explore mega menu expanded to surface every hub on the site
+        — Read (13), Tools (13), Community (11), About (16) —
+        without the per-link descriptions that crowded the dropdown.
+        Each link is now a single line so the full inventory fits
+        without scrolling.
+  - label: Responsive audit (foundations)
+    entries:
+      - >-
+        Five inline ad-hoc breakpoints in template <style> blocks
+        (700, 600, 900, 520, 600) snapped to the canonical seven-band
+        scale (360 / 480 / 640 / 768 / 1024 / 1180 / 1280) documented
+        in tokens.css.
+      - >-
+        Drawer + global-settings panel + editorial flyout hardened
+        with min-width: 0 and overflow-x: hidden so descendant content
+        that overflows horizontally can't push the panel sideways.
+      - >-
+        Front-page section strips collapse to single-column at 1024
+        px (was 640 px), removing the 768-px tablet-portrait dead
+        zone where a 220-px label column starved the inner cards row.
+      - >-
+        Author hero photo scales with clamp(120px, 40vw, 184px) so
+        the avatar shrinks gracefully under 360-px viewports.
+      - >-
+        article-action-btn floored at 44 × 44 (was 32 × 32) for WCAG
+        2.2 AA touch-target compliance on layouts where the buttons
+        render inline rather than migrate to the bottom toolbar.

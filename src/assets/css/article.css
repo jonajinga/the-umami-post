@@ -1,0 +1,3818 @@
+/* ============================================================
+   THE FREETHINKING TIMES — Article / Long-form Reading Styles
+   ============================================================ */
+
+/* ── Bookmark indicators (margin markers) ──────────────────── */
+.bookmark-indicator {
+  position: absolute;
+  left: -2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250, 204, 21, 0.15);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 50%;
+  color: rgba(212, 160, 23, 0.9);
+  cursor: pointer;
+  z-index: 10;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.bookmark-indicator:hover {
+  background: rgba(250, 204, 21, 0.3);
+  color: rgba(212, 160, 23, 1);
+}
+
+@media (max-width: 1024px) {
+  .bookmark-indicator {
+    left: -1rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: rgba(250, 204, 21, 0.3);
+    border-color: rgba(250, 204, 21, 0.5);
+  }
+  .bookmark-indicator svg {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Hide masthead content when reading header takes over (library only —
+ * the article variant was retired). */
+.masthead.is-replaced {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* ── Article Header ─────────────────────────────────────────── */
+.article-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+  position: relative;
+  z-index: 10;
+}
+
+/* Compact-header pattern: when collapsed, the eyebrow / byline /
+ * stats / topics blocks are hidden so the article opens cleanly with
+ * just the headline + dek visible. The toolbar `i` button toggles
+ * data-meta-collapsed and persists the preference site-wide. */
+.article-header[data-meta-collapsed="true"] .article-header__eyebrow,
+.article-header[data-meta-collapsed="true"] .article-header__byline-block,
+.article-header[data-meta-collapsed="true"] .article-header__meta-row,
+.article-header[data-meta-collapsed="true"] .article-topics {
+  display: none;
+}
+
+.article-header__eyebrow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+/* Unified `|` separator across the article-meta band — eyebrow,
+ * byline, stat row, and topics all use the same pseudo-element so
+ * the dividers read as one consistent visual token regardless of
+ * the parent's own font-family or font-size. Explicit font + size
+ * here so a pipe inside a serif byline looks the same as a pipe
+ * inside the sans-serif topics row. */
+.article-header__eyebrow > * + *::before,
+.article-header__byline-meta > * + *:not(.republish-badge)::before,
+.article-meta-item + .article-meta-item::before,
+.article-topics > * + *::before,
+.article-topics__list li + li::before {
+  content: "|";
+  /* Equal margin on both sides so the pipe sits balanced between the
+   * two adjacent phrases. With padding gone from .article-meta-item,
+   * the pipe's margins are the only thing creating the gap. */
+  margin: 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  /* Inherit the parent's line-height so the pipe sits on the same
+   * baseline as the surrounding text — explicit line-height: 1 +
+   * inline-block was misaligning the topics row, where label and
+   * list both have line-height: 1.5 and the pipe was being pulled
+   * to a tighter line-box. */
+  color: var(--color-ink-faint);
+  opacity: 0.55;
+}
+
+.article-header__headline {
+  font-family: var(--font-headline);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-bottom: var(--space-3);
+  text-wrap: balance;
+}
+
+.article-header__dek {
+  font-size: clamp(1.05rem, 0.85rem + 0.7vw, 1.4rem);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-muted);
+  max-width: 60ch;
+  font-style: italic;
+  margin-bottom: var(--space-3);
+}
+
+.article-header__byline-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.article-header__byline-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+/* `|` between author / date / updated / location handled by the
+ * unified separator block near the top of the article-header
+ * styles. Excludes .republish-badge if still present (legacy). */
+.article-header__support-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-top: var(--space-2);
+  min-height: 0;
+}
+.article-header__support-divider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: var(--color-rule);
+  flex-shrink: 0;
+}
+
+.article-header__author {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.article-header__author:hover { color: var(--color-accent); }
+
+.article-header__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.article-header__date:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* ── Date popover ────────────────────────────────────────────── */
+.date-popover-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.date-popover {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  min-width: 200px;
+  max-width: 300px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + 0.5rem);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 20;
+}
+
+.date-popover-wrap:hover .date-popover,
+.date-popover-wrap:focus-within .date-popover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.date-popover__label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.date-popover__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.date-popover__list a {
+  font-family: var(--font-headline);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+  display: block;
+}
+
+.date-popover__list a:hover {
+  color: var(--color-accent);
+}
+
+/* ── Lead Image ─────────────────────────────────────────────── */
+.article-lead-image {
+  margin-bottom: var(--space-6);
+}
+
+.article-lead-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;  /* reserves space before load — prevents CLS */
+  max-height: 560px;
+  object-fit: cover;
+}
+
+.article-lead-image figcaption {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-top: var(--space-2);
+  line-height: var(--leading-normal);
+}
+
+/* ── Article Body ───────────────────────────────────────────── */
+.article-body {
+  position: relative;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  line-height: var(--leading-loose);
+  max-width: var(--max-width-prose);
+}
+
+.article-body > * + * {
+  margin-top: var(--space-6);
+}
+
+.article-body h2 {
+  font-size: clamp(1.35rem, 1rem + 1.5vw, 1.953rem);
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+  scroll-margin-top: var(--space-16);
+}
+
+.article-body h3 {
+  font-size: clamp(1.15rem, 0.9rem + 1vw, 1.563rem);
+  margin-top: var(--space-8);
+  scroll-margin-top: var(--space-16);
+}
+
+/* Drop cap for first paragraph — suppressed in glossary and bookshelf layouts */
+.glossary-body.article-body > p:first-of-type::first-letter,
+.book-body.article-body > p:first-of-type::first-letter { font-size: 1em; float: none; line-height: inherit; margin: 0; }
+
+.article-body > p:first-of-type::first-letter {
+  font-family: var(--font-masthead);
+  font-size: 4.5em;
+  line-height: 0.8;
+  float: left;
+  margin-right: 0.05em;
+  margin-top: 0.05em;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* Inline image within article */
+.article-body figure {
+  margin: var(--space-8) 0;
+}
+
+.article-body figure img {
+  width: 100%;
+}
+
+.article-body figure figcaption {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-top: var(--space-2);
+}
+
+/* ── Article Footer ─────────────────────────────────────────── */
+.article-footer {
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 3px double var(--color-rule-heavy);
+}
+
+.article-footer__tags {
+  margin-bottom: var(--space-6);
+}
+
+.article-footer__tags-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-3);
+}
+
+/* ── Author long bio (author page) ─────────────────────────── */
+.author-bio-long {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 72ch;
+  margin: 0 0 var(--space-10);
+  padding: var(--space-6) var(--space-8);
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-rule-heavy);
+}
+.author-bio-long p {
+  margin: 0 0 var(--space-4);
+}
+.author-bio-long p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Author Bio Block ───────────────────────────────────────── */
+.author-bio {
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-rule-heavy);
+  padding: var(--space-4) var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.author-bio__name {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.author-bio__text {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-normal);
+  max-width: none;
+  margin: 0;
+}
+
+/* ── Related Articles ───────────────────────────────────────── */
+.related-articles {
+  margin-top: var(--space-10);
+}
+
+.related-articles__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.related-articles__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .related-articles__list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .related-articles__list { grid-template-columns: 1fr; }
+}
+
+/* ── Article byline extras ──────────────────────────────────── */
+.article-header__reading-time {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.article-header__reading-time::before {
+  content: "·";
+  margin: 0 0.4em;
+  color: var(--color-ink-faint);
+}
+
+/* ── Article footnotes (visible section) ───────────────────── */
+.article-footnotes:empty { display: none; }
+
+.article-footnotes {
+  max-width: var(--max-width-prose);
+  margin: var(--space-8) auto 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.article-footnotes__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.article-footnotes__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+}
+
+.article-footnotes__toggle {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.article-footnotes__toggle:hover { background: var(--color-accent); }
+
+.article-footnotes__list {
+  /* Drop the default list marker — the clickable [N] link IS the marker,
+     and we don't want two numbers (1. and [1]) stacked next to each other. */
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.article-footnotes__list li {
+  margin-bottom: var(--space-2);
+}
+.article-footnotes__num {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
+  margin-right: var(--space-1);
+}
+.article-footnotes__num:hover,
+.article-footnotes__num:focus-visible {
+  text-decoration: underline;
+}
+.article-footnotes__text > :first-child { display: inline; }
+
+@media print {
+  /* Hide the markdown-it-footnote output and the panel-feeder slot
+     by default; the article body already inlines superscripts. */
+  .article-footnotes,
+  section.footnotes,
+  .footnotes { display: none !important; }
+  /* Opt-in: when the body has print-include-footnotes (set by the
+     "Article with footnotes" share-popover button), surface the
+     real footnote list back into the printout. */
+  body.print-include-footnotes .article-footnotes,
+  body.print-include-footnotes section.footnotes,
+  body.print-include-footnotes .footnotes {
+    display: block !important;
+    page-break-before: always;
+    margin-top: 2em;
+    border-top: 1px solid #ccc;
+    padding-top: 1em;
+  }
+  body.print-include-footnotes .footnotes ol { padding-left: 1.4em; }
+  /* Support / funding / republish badges and their disclosure panels
+     are publication-state UI, not editorial content — never print them.
+     Applies to single-article browser print, single-article PDF
+     downloads, and any other print path that uses the live page. */
+  .tip-buttons,
+  .tip-badge,
+  .article-header__support-row,
+  .author-hero__support-badges,
+  #author-support-panel,
+  #funding-panel,
+  #republish-panel,
+  [data-article-disclosure],
+  .pdf-basket-tray,
+  .masthead__live { display: none !important; }
+}
+
+/* Comments placeholder (shown when comments provider isn't configured) */
+.article-comments__placeholder {
+  margin: 0;
+  padding: var(--space-6);
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  font-style: italic;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+}
+
+/* ── Article feedback popup ─────────────────────────────────── */
+.article-feedback-wrap { position: relative; }
+/* Fullscreen modal — covers the whole viewport so the form has
+ * plenty of room for the captcha + select + textarea + submit, and
+ * the close button in the header is the only way out. The popup is
+ * re-parented to <body> by reader-panel-migrate.js so the toolbar's
+ * z-index stacking context can't trap it. */
+.article-feedback-popup {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  overflow-y: auto;
+  background: var(--color-bg);
+  border: 0;
+  border-top: 4px solid var(--color-accent);
+  box-shadow: none;
+  padding: 0;
+  z-index: var(--z-modal);
+  font-family: var(--font-ui);
+}
+
+.article-feedback-popup__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+  /* Fullscreen popup — cap the header so it doesn't span an entire
+   * 1920 px desktop. Same cap as the form below. */
+  max-width: 640px;
+  width: 100%;
+}
+.article-feedback-popup__head-text { min-width: 0; }
+.article-feedback-popup__kicker {
+  margin: 0 0 4px;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.article-feedback-popup__title {
+  margin: 0;
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-ink);
+  line-height: 1.15;
+}
+.article-feedback-popup__footer {
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-6) var(--space-8);
+  border-top: 1px solid var(--color-rule);
+  text-align: center;
+  max-width: 640px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.article-feedback-popup__footer-mark {
+  margin: 0 0 4px;
+  font-family: var(--font-masthead);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+.article-feedback-popup__footer-tag {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-style: italic;
+  color: var(--color-ink-faint);
+}
+.article-feedback-popup__close {
+  background: none;
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  /* Compact close button — opt out of the universal 44 floor;
+   * the surrounding header padding gives the parent enough mass. */
+  min-width: 0;
+  min-height: 0;
+  border-radius: 4px;
+}
+.article-feedback-popup__close svg { display: block; }
+.article-feedback-popup__close:hover {
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+
+.article-feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  /* Fullscreen popup — keep the form readable: cap width and centre. */
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.article-feedback-form__botcheck { display: none; }
+
+.article-feedback-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.article-feedback-form__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+}
+.article-feedback-form__label-hint {
+  font-weight: 400;
+  color: var(--color-ink-faint);
+}
+
+.article-feedback-form__input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  padding: 12px 14px;
+  border: 1px solid var(--color-rule);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.article-feedback-form__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(198, 32, 44, 0.1);
+}
+.article-feedback-form__textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.article-feedback-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.article-feedback-form__submit {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.article-feedback-form__submit:hover,
+.article-feedback-form__submit:focus-visible {
+  background: var(--color-accent);
+  outline: none;
+}
+
+.article-feedback-form__footer {
+  margin-top: var(--space-2);
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  line-height: var(--leading-normal);
+}
+.article-feedback-form__footer p { margin: 0 0 8px; }
+.article-feedback-form__footer p:last-child { margin-bottom: 0; }
+.article-feedback-form__footer p:first-child { font-style: italic; }
+.article-feedback-form__footer a { color: var(--color-link); }
+
+.article-feedback-popup .h-captcha {
+  transform: scale(0.9);
+  transform-origin: left;
+}
+
+.article-header__meta-row {
+  display: flex;
+  /* Single line on every viewport — metadata reads cleaner as a chip
+   * row and was wrapping ugly on mobile. Horizontal scroll fallback
+   * for the rare 360 px viewport where 4+ stats can't all fit. */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  align-items: center;
+  gap: var(--space-2) 0;
+  margin-top: var(--space-2);
+  /* Separator removed — the meta-row flows directly out of the byline
+   * row above it; the next horizontal rule above the topic chips is
+   * the section break. Keeps the title block reading as one unit
+   * instead of two adjacent separators stacked. */
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.article-meta-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  /* Padding removed — the unified `|` separator below carries the
+   * spacing on both sides. The previous 0 var(--space-3) added
+   * 12 px of empty space before *and* after each pipe, on top of
+   * the pipe's own 8 px margin-right, so "WORDS | MIN READ" had
+   * ~32 px between phrases. Now: 8 px before pipe + pipe + 8 px after. */
+  padding: 0;
+  flex-shrink: 0;
+}
+.article-header__meta-row::-webkit-scrollbar { display: none; }
+
+.article-meta-item:first-child { padding-left: 0; }
+.article-meta-item:last-child  { padding-right: 0; }
+
+/* `|` between meta items handled by the unified separator block
+ * near the top of the article-header styles. */
+
+/* Word count, reading time, and stat (views / shares / likes) all
+ * share the same colour + weight now. The previous bold treatment
+ * on word count made it look like a section header instead of one
+ * of the meta items. */
+.article-meta-item--length,
+.article-meta-item--time,
+.article-meta-item--stat { color: var(--color-ink-muted); font-weight: 400; }
+
+.article-header__meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.article-header__meta-tags a {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--color-rule);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.article-header__meta-tags a:hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+/* article-audio — now just an inline listen-btn pill rendered
+ * inside the byline support row. The full-width card wrapper is
+ * retired; see partials/article-audio.njk. */
+@media print { .listen-btn { display: none !important; } }
+
+/* ── Article topics section (article tags) ──────────────────── */
+/* Replaces the inline tags row with a properly bracketed section
+ * sandwiched by horizontal rules so it reads as a discrete block. */
+.article-topics {
+  /* Topics block carries the only separator in the meta band — the
+   * border-top above it serves as the section break between the
+   * byline / stats unit and the tags. Align both label + list to
+   * the same baseline so they sit on the same horizontal line; with
+   * align-items: center the list (a flex container) had a different
+   * line-box centre from the inline-block label, leaving the label
+   * visually 1–2 px above the chips. */
+  margin: var(--space-3) 0 var(--space-3);
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-rule);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+  min-width: 0;
+  line-height: 1.5;
+}
+/* Topics row — label + tag links share the same uppercase, letter-
+ * spaced UI style. Bordered chips retired in favour of plain text +
+ * `|` separators, matching the eyebrow / byline / meta-row pattern.
+ * The label still reads slightly heavier (bold) so the section is
+ * legible at a glance. */
+.article-topics__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Accent-coloured so the label reads as a section header rather
+   * than as another clickable chip — in dark mode the previous
+   * --color-ink-faint sat too close to --color-ink-muted (the chip
+   * colour) and the label visually merged with the row. */
+  color: var(--color-accent);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.article-topics__label:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-topics__list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  /* Match the .article-topics__label letter-spacing so label + chips
+   * read as a single uniform line. */
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+  /* Same line-height as the label keeps both on the same baseline. */
+  line-height: 1.5;
+}
+.article-topics__list::-webkit-scrollbar { display: none; }
+.article-topics__list li { flex-shrink: 0; }
+/* `|` between the label and the first topic, then between every
+ * pair of topics — handled by the unified separator block near the
+ * top of the article-header styles. */
+.article-topics__list a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+/* Sync to var(--color-accent) so all article-meta links hover red —
+ * matches author, date, subsection (.dateline), edition, and section.
+ * Was using var(--color-ink) which inverted the colour relationship
+ * (red→ink) compared to every other meta link (ink→red). */
+.article-topics__list a:hover {
+  color: var(--color-accent);
+}
+
+
+.article-header__updated {
+  /* Match the published-date treatment so the byline reads as one
+   * uniform meta line rather than mixing italic + non-italic items
+   * with different letter-spacing. */
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-style: normal;
+}
+
+/* ── Article action buttons (copy link / print) ─────────────── */
+/* The article action bar is consolidated into the Reader panel.
+   Hide the original inline bar — its buttons are moved into the panel
+   at load time by reader-panel-migrate.js. */
+.article-header__actions {
+  display: none;
+}
+
+.article-action-btn .btn-label,
+.article-action-btn span:not([aria-hidden]) {
+  display: none;
+}
+
+/* Engagement buttons (like / mark-read / pdf-basket / tts) get migrated
+   into the bottom annotation toolbar by reader-panel-migrate.js, where
+   they should be icons only — same convention as the rest of the
+   toolbar. */
+.annotation-toolbar__btn .btn-label,
+.annotation-toolbar #like-btn .like-count {
+  display: none;
+}
+
+/* The .annotation-toolbar is a grid container in library.css; this old
+ * media-query block applied flex-only properties (flex-wrap,
+ * justify-content) and overflow-x:auto to the whole toolbar, which
+ * conflicted with the grid layout and was overriding the toolbar's
+ * own padding-bottom (the safe-area-inset calc). The horizontal scroll
+ * lives on .annotation-toolbar__main, not on the toolbar itself.
+ * Restrict the leftover rule to .library-reader-actions (the article-
+ * header inline action row, which is still flex). */
+@media (max-width: 768px) {
+  .library-reader-actions {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: var(--space-1);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--space-1);
+  }
+  .library-reader-actions::-webkit-scrollbar { display: none; }
+}
+
+/* When reading-settings, share, or download panels are relocated into a
+   Reader panel tab section, strip their dropdown/fixed positioning so
+   they render inline as tab content. */
+.library-panel__section #reading-settings-panel,
+.library-panel__section #share-panel,
+.library-panel__section #download-panel {
+  position: static;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  z-index: auto;
+  display: block !important;
+}
+
+.library-panel__section #reading-settings-panel .rs-panel-close {
+  display: none;
+}
+
+/* Strip the dropdown-row horizontal padding on share/download items when
+   they render inside a tab section (the section body already has padding). */
+.library-panel__section .share-panel__item,
+.library-panel__section .download-panel__item {
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+/* When the feedback popup is rendered inside the Reader panel footer,
+   its original position: absolute; top:100% would push it out of the
+   narrow panel. Render it as a centered fixed dialog instead. */
+.library-panel__footer-links .article-feedback-wrap {
+  position: static;
+  display: flex;
+  flex: 1;
+}
+.library-panel__footer-links .article-feedback-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  width: min(440px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: var(--space-6);
+}
+
+.article-action-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-ink-faint);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-heavy);
+  border-radius: var(--radius-sm);
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.article-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Override library-panel-toggle pill shape when used as an action button */
+.article-action-btn.library-panel-toggle {
+  padding: 0;
+  font-size: 0;
+  gap: 0;
+  border-radius: var(--radius-sm);
+}
+
+.article-action-btn::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: calc(100% + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.article-action-btn:hover,
+.article-action-btn:focus-visible {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.article-action-btn:hover::after,
+.article-action-btn:focus-visible::after,
+.article-action-btn.is-copied::after {
+  opacity: 1;
+}
+
+/* Hide tooltips on small screens to prevent overflow */
+@media (max-width: 640px) {
+  .article-action-btn::after {
+    display: none;
+  }
+}
+
+.article-action-btn.is-copied {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.article-action-btn.is-speaking {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ── Reading Progress ───────────────────────────────────────── */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--color-accent);
+  z-index: var(--z-overlay);
+  transition: width 100ms linear;
+}
+
+
+/* ── Floating reading tools (progress % + back to top) ─────── */
+/* ── Per-paragraph permalinks (¶ hover anchor) ─────────────── */
+/*
+ * Each top-level <p> in .article-body / .library-body gets an
+ * id="pN" assigned by paragraph-anchors.js, plus an appended
+ * <a class="para-anchor">¶</a>. The anchor stays inline at the end
+ * of the paragraph and reveals on hover / focus-within. The "Copied"
+ * tooltip floats absolutely so clicking the anchor never causes the
+ * paragraph to reflow / push content downward.
+ *
+ * scroll-margin-top sits on the <p>, not on the anchor — that's the
+ * element the browser scrolls to when arriving at #pN.
+ */
+.article-body > p,
+.library-body > p {
+  position: relative;
+}
+.article-body > p[id],
+.library-body > p[id] {
+  scroll-margin-top: 5rem;
+}
+.para-anchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-family: var(--font-ui);
+  font-size: 0.7em;
+  line-height: 1;
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  opacity: 0;
+  margin-left: 0.4em;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+  /* Override base.css universal touch-target floor — pilcrow is an
+   * intentionally small inline affordance that surfaces on hover. */
+  min-width: 0;
+  min-height: 0;
+  transition: opacity 120ms ease, color 120ms ease, background-color 120ms ease;
+}
+.para-anchor svg { display: block; }
+.article-body > p:hover .para-anchor,
+.article-body > p:focus-within .para-anchor,
+.library-body > p:hover .para-anchor,
+.library-body > p:focus-within .para-anchor {
+  opacity: 0.7;
+}
+.para-anchor:hover,
+.para-anchor:focus-visible {
+  opacity: 1 !important;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  outline: none;
+}
+.para-anchor--copied {
+  opacity: 1 !important;
+  color: var(--color-accent);
+}
+.para-anchor--copied::after {
+  /* Float the "Copied" cue above the anchor so it never pushes
+     content around or shifts the paragraph height when the user
+     clicks. The anchor itself stays in normal flow. */
+  content: "Copied";
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 2px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* Anchor stays inline at the end of the paragraph on every viewport
+   width — no sidenote-style margin position. Only visible on hover or
+   keyboard focus, on every device that supports either. On pure-touch
+   devices the anchor stays hidden by default and reveals when the
+   reader long-presses or focuses the paragraph (any browser that
+   sets :focus-within on tap).
+*/
+
+/* Brief flash when arriving via a #pN URL. */
+.para-anchor-target {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  transition: background-color 600ms ease;
+}
+
+/* Hide the pilcrow when printing — paragraphs aren't clickable on paper. */
+@media print {
+  .para-anchor { display: none !important; }
+}
+
+/* The wrapper is presentational only — both children are independently
+   fixed-positioned (% pill on the left, back-to-top on the right). */
+.reading-floats {
+  display: contents;
+}
+
+/* %-through pill — left side, mirrors the back-to-top dimensions and
+   border so the two read as a matched pair anchored to opposite edges
+   of the article column. */
+.reading-pct {
+  position: fixed;
+  bottom: 6rem;
+  left: var(--space-6);
+  z-index: var(--z-nav);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-heavy);
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    visibility 0s linear var(--transition-fast);
+}
+
+.reading-floats.is-visible .reading-pct {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 6rem;
+  right: var(--space-6);
+  z-index: var(--z-nav);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-heavy);
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  cursor: pointer;
+  opacity: 0;
+  /* visibility: hidden removes the button from the tab order AND the
+     accessibility tree until .is-visible is set. Previously opacity:0 +
+     pointer-events:none only hid it visually; keyboard users could still
+     tab into an invisible control, and Lighthouse flagged the
+     aria-hidden wrapper around a focusable descendant. */
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    visibility 0s linear var(--transition-fast);
+}
+
+.back-to-top:hover {
+  border-color: var(--color-ink);
+}
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 3;
+}
+
+.reading-floats.is-visible .back-to-top {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  /* When becoming visible, swap visibility immediately so the fade-in
+     starts with the button already in the tree. */
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    visibility 0s linear 0s;
+}
+
+/* Phones: the % pill + back-to-top compete for the same bottom-right
+ * corner at 360 px. Hide the pct pill on the smallest screens —
+ * back-to-top alone is enough. */
+@media (max-width: 640px) {
+  .reading-pct { display: none; }
+  .back-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: var(--space-5);
+    right: var(--space-4);
+  }
+}
+
+/* ── Series navigation ──────────────────────────────────────── */
+.series-nav {
+  border: 1px solid var(--color-rule-heavy);
+  border-top: 3px solid var(--color-ink);
+  padding: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.series-nav__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-1);
+}
+
+.series-nav__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+}
+
+.series-nav__list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+}
+
+.series-nav__item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.series-nav__item.is-current .series-nav__link {
+  font-weight: 700;
+  color: var(--color-ink);
+  cursor: default;
+}
+
+.series-nav__part {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-faint);
+  flex-shrink: 0;
+  min-width: 3.5rem;
+}
+
+.series-nav__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+}
+
+.series-nav__link:hover { color: var(--color-ink); text-decoration: underline; }
+
+.series-nav__prev-next {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.series-nav__arrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+}
+
+.series-nav__arrow:hover { color: var(--color-ink); }
+
+/* ── Table of contents ──────────────────────────────────────── */
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list__item { padding: var(--space-1) 0; }
+
+.toc-list__item--h3 { padding-left: var(--space-3); }
+
+.toc-list__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  line-height: var(--leading-normal);
+  display: block;
+  transition: color var(--transition-fast);
+  border-left: 2px solid transparent;
+  padding-left: var(--space-2);
+}
+
+.toc-list__link:hover { color: var(--color-ink); }
+
+.toc-list__link.is-active {
+  color: var(--color-ink);
+  border-left-color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ── Reading time on article cards ─────────────────────────── */
+.article-card__reading-time {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  font-style: normal;
+}
+
+.article-card__reading-time::before {
+  content: "·";
+  margin-left: var(--space-2);
+  margin-right: var(--space-2);
+  color: var(--color-ink-faint);
+}
+
+/* ── Section filter bars (subsection + reading time) ──────────
+   Both bars share the same visual DNA — squared layout, rounded pills.
+   Subsection uses the accent color for active; reading-time uses ink.
+   Subsection sits above reading-time, separated by a hairline rule. */
+
+/* Filter-row wrapper: bar + optional "next" arrow button.
+   Multiple filter-rows read as ONE grouped control cluster — a single
+   hairline closes the group at the bottom, with no inter-row dividers. */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  min-width: 0;
+}
+/* Only the last filter-row in a group gets a bottom rule; any preceding
+   filter-rows sit flush with it. Uses :has() so we don't need to mark
+   the last row in the template. */
+.filter-row:not(:has(+ .filter-row)) {
+  border-bottom: 1px solid var(--color-rule);
+  margin-bottom: var(--space-6);
+}
+
+.filter-row__next {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-muted);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast), opacity 0.2s;
+}
+.filter-row__next:hover,
+.filter-row__next:focus-visible {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+  outline: none;
+}
+.filter-row__next[hidden] { display: none; }
+.filter-row__next--back svg { transform: scaleX(-1); }
+
+.subsection-filter,
+.reading-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: nowrap;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.subsection-filter::-webkit-scrollbar,
+.reading-filter::-webkit-scrollbar { display: none; }
+
+/* filter-row's own border-bottom replaces the bar-level border */
+.subsection-filter,
+.reading-filter { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+
+.subsection-filter {
+  padding: var(--space-3) 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.reading-filter {
+  padding: var(--space-3) 0 var(--space-5);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.subsection-filter__label,
+.reading-filter__label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-faint);
+  margin-right: var(--space-2);
+  flex-shrink: 0;
+  line-height: 1.8;
+}
+
+/* Unified pill styling — fully-rounded, airy, low-contrast default */
+.subsection-filter__btn,
+.reading-filter__btn {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  min-height: 30px;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.subsection-filter__btn:hover,
+.reading-filter__btn:hover {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+
+/* Active: accent red for subsection, ink for reading-time */
+.subsection-filter__btn.is-active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+  box-shadow: 0 1px 4px rgba(192, 57, 43, 0.25);
+}
+.reading-filter__btn.is-active {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+
+.reading-filter__hint {
+  font-weight: 400;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+/* Drop the "(<5 min)" / "(>15 min)" hints + tighten spacing on small viewports */
+@media (max-width: 480px) {
+  .reading-filter__hint { display: none; }
+  .subsection-filter,
+  .reading-filter {
+    gap: var(--space-2);
+    margin-inline: calc(-1 * var(--space-4)); /* escape container padding so pills reach edges */
+    padding-inline: var(--space-4);
+  }
+  .subsection-filter__label,
+  .reading-filter__label {
+    margin-right: var(--space-1);
+    font-size: 0.62rem;
+  }
+  .subsection-filter__btn,
+  .reading-filter__btn {
+    padding: 0.35rem 0.7rem;
+    min-height: 28px;
+  }
+}
+
+.reading-filter__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  padding: var(--space-6) 0;
+}
+
+/* ── Pullquote share tooltip ────────────────────────────────── */
+.pullquote-share {
+  position: absolute;
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  transform: translateX(-50%);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  border: none;
+  padding: var(--space-1) var(--space-3);
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: var(--z-overlay);
+  transition: background var(--transition-fast);
+}
+
+.pullquote-share::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--color-ink);
+}
+
+.pullquote-share:hover { background: var(--color-accent); }
+.pullquote-share:hover::after { border-top-color: var(--color-accent); }
+
+/* ── Content profile badge ──────────────────────────────────── */
+/* Stripped chrome (no border, no padding, no radius) so the badge
+ * blends into the eyebrow's `|`-separated text row. The colour-by-
+ * profile rules below still tint the label by content type. */
+.profile-badge {
+  display: inline;
+  font-family: var(--font-ui);
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  color: var(--color-ink-muted);
+  cursor: help;
+}
+.profile-badge[data-profile="podcast"] { color: #6B2A2A; border-color: #6B2A2A; }
+.profile-badge[data-profile="longread"] { color: var(--color-opinion); border-color: var(--color-opinion); }
+.profile-badge[data-profile="photoessay"] { color: var(--color-arts-culture); border-color: var(--color-arts-culture); }
+.profile-badge[data-profile="datavisualization"] { color: var(--color-science); border-color: var(--color-science); }
+.profile-badge[data-profile="brief"] { color: var(--color-accent); border-color: var(--color-accent); }
+.profile-badge[data-profile="interview"] { color: var(--color-history); border-color: var(--color-history); }
+.profile-badge[data-profile="explainer"] { color: var(--color-glossary); border-color: var(--color-glossary); }
+
+/* ── Profile-specific content blocks ────────────────────────── */
+.profile-audio {
+  margin: var(--space-8) 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg-alt);
+}
+.profile-audio audio {
+  width: 100%;
+  margin-bottom: var(--space-2);
+}
+.profile-audio figcaption {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+.profile-embed {
+  margin: var(--space-8) 0;
+}
+
+/* ── Argument map ───────────────────────────────────────────── */
+.argument-map {
+  border: 1px solid var(--color-rule-heavy);
+  border-left: 3px solid var(--color-ink);
+  margin-bottom: var(--space-8);
+  overflow: hidden;
+}
+
+.argument-map__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  padding: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.argument-map__row {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  align-items: start;
+}
+
+.argument-map__row:first-of-type { border-top: none; }
+
+.argument-map__step {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-top: 2px;
+}
+
+.argument-map__step--claim      { color: var(--color-ink-faint); }
+.argument-map__step--evidence   { color: var(--color-ink-faint); }
+.argument-map__step--conclusion { color: var(--color-accent); }
+
+.argument-map__text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.argument-map__list {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  padding-left: var(--space-5);
+  margin: 0;
+}
+
+.argument-map__list li + li { margin-top: var(--space-2); }
+
+@media (max-width: 480px) {
+  .argument-map__row { grid-template-columns: 1fr; gap: var(--space-2); }
+}
+
+/* ── Edition badge (in article eyebrow) ─────────────────────── */
+/* Plain inline label — same letter-spacing / colour as the
+ * section + subsection text so the eyebrow row reads as one
+ * tight `|`-separated meta line. The bordered-chip treatment
+ * was retired with the eyebrow restyle. */
+.edition-badge {
+  font-family: var(--font-ui);
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  color: var(--color-ink-faint);
+  text-decoration: none;
+}
+
+.edition-badge:hover { color: var(--color-accent); }
+
+/* ── Corrections log (in article footer) ────────────────────── */
+.corrections-log {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.corrections-log__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-3);
+}
+
+.corrections-log__entry {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.corrections-log__date {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-1);
+}
+
+.corrections-log__text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+/* ── Heading anchor links ───────────────────────────────────── */
+.article-body h2,
+.article-body h3 { position: relative; }
+
+.heading-anchor {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4em;
+  color: var(--color-ink-faint);
+  opacity: 0;
+  text-decoration: none;
+  vertical-align: middle;
+  transition: opacity 0.15s;
+}
+
+.article-body h2:hover .heading-anchor,
+.article-body h3:hover .heading-anchor,
+.heading-anchor:focus {
+  opacity: 1;
+}
+
+/* ── Comments section (Cusdis) ──────────────────────────────── */
+/* The Cusdis iframe uses its own fonts. Rather than fight it,
+   we frame the section as a clearly separate zone.
+   Near-white (#FFFDF9) lifts the section above the warm newsprint page bg (#F4F1EB). */
+.article-comments {
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+}
+
+.article-comments__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.article-comments__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.article-comments__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+}
+
+.article-comments__guidelines {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-decoration: none;
+}
+.article-comments__guidelines:hover { color: var(--color-link); text-decoration: underline; }
+
+.article-comments__toggle {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.article-comments__toggle:hover { background: var(--color-accent); }
+
+[data-theme="dark"] .comments-section {
+  background: var(--color-bg-inset);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .comments-section {
+    background: var(--color-bg-inset);
+  }
+}
+
+.comments-section__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* Cusdis renders in a cross-origin iframe. CSS vars must be concrete values —
+   no var() references. 'Source Serif 4' is not available inside the iframe
+   (Google Fonts only loads in our document), so Georgia is the closest match.
+   Light-mode vars only — dark mode is handled natively by data-theme="dark". */
+:root:not([data-theme="dark"]) #cusdis_thread {
+  --cusdis-font-family: Georgia, serif;
+  --cusdis-text-color: #1A1A1A;
+  --cusdis-muted-color: #6B6864;
+  --cusdis-bg-color: #F4F1EB;       /* warm — stands out from near-white section bg */
+  --cusdis-border-color: #4A4845;   /* very dark so input borders are unmistakable */
+  --cusdis-primary-color: #8B0000;
+}
+
+#cusdis_thread {
+  position: relative;
+}
+
+/* Tall enough that users don't scroll inside the widget */
+#cusdis_thread iframe {
+  width: 100% !important;
+  min-height: 640px !important;
+}
+
+/* Cover the "Powered by Cusdis" attribution row with a same-background overlay.
+   A positioned ::after sits above the iframe in the stacking order. */
+#cusdis_thread::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: #FFFDF9;
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="dark"] #cusdis_thread::after {
+  background: var(--color-bg-inset);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) #cusdis_thread::after {
+    background: var(--color-bg-inset);
+  }
+}
+
+/* ── Share panel ─────────────────────────────────────────────── */
+.share-wrap {
+  position: relative;
+}
+
+.share-panel {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule-heavy);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  min-width: 170px;
+  z-index: var(--z-overlay);
+  padding: var(--space-2) 0;
+}
+
+@media (max-width: 640px) {
+  .share-panel {
+    position: fixed;
+    top: auto;
+    bottom: 3.5rem;
+    left: 0;
+    right: 0;
+    transform: none;
+    min-width: 0;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.15);
+    z-index: var(--z-modal);
+  }
+}
+
+.share-panel__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  transition: background 0.1s;
+}
+.share-panel__item:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-ink);
+}
+.share-panel__item svg { flex-shrink: 0; color: var(--color-ink-faint); }
+
+.share-panel__divider {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: var(--space-2) 0;
+}
+
+/* ── Cite modal ──────────────────────────────────────────────── */
+.cite-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: calc(var(--z-overlay) - 1);
+}
+
+.cite-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-overlay);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-heavy);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: min(560px, calc(100vw - 2rem));
+  padding: var(--space-6);
+}
+
+.cite-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.cite-modal__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+.cite-modal__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-ink-faint);
+  padding: var(--space-1);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+}
+.cite-modal__close:hover { color: var(--color-ink); }
+
+.cite-modal__tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-rule);
+  margin-bottom: var(--space-4);
+}
+
+.cite-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.1s;
+}
+.cite-tab:hover { color: var(--color-ink); }
+.cite-tab.is-active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.cite-modal__text {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4);
+  user-select: all;
+  min-height: 4rem;
+}
+
+.cite-modal__copy-btn {
+  display: block;
+  width: 100%;
+  padding: var(--space-3);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.cite-modal__copy-btn:hover { opacity: 0.85; }
+
+/* ── Suggest a correction ───────────────────────────────────── */
+.suggest-correction {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+}
+
+.suggest-correction__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.suggest-correction__link:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ── Bookmark button state ──────────────────────────────────── */
+.bookmark-btn.is-saved {
+  color: var(--color-accent);
+}
+/* Fill the bookmark icon entirely red when saved — same treatment as
+ * the like-btn heart. The inline SVG ships with fill="none" on its
+ * path so we have to target the path directly to override. */
+.bookmark-btn.is-saved .bookmark-icon,
+.bookmark-btn.is-saved .bookmark-icon path {
+  fill: var(--color-accent);
+  stroke: var(--color-accent);
+}
+
+/* ── Inline footnotes ───────────────────────────────────────── */
+.fn-ref {
+  font-size: 0.72em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.fn-btn {
+  font-family: var(--font-ui);
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 1px;
+  line-height: 1;
+}
+
+.fn-btn:hover { text-decoration: underline; }
+
+.fn-content { display: none; } /* content reservoir; tooltip reads from here */
+
+.fn-tooltip {
+  position: absolute;
+  /* Sits above the bottom annotation toolbar (which is at --z-overlay)
+     so footnote popups near the bottom of the viewport aren't covered. */
+  z-index: calc(var(--z-overlay) + 20);
+  /* Fluid width — never shrinks below 260px (keeps the popup readable on
+     phones where `width: max-content` used to produce a tiny blank square
+     for short footnote text) and never exceeds 360px or the viewport. */
+  box-sizing: border-box;
+  width: min(calc(100vw - 32px), 360px);
+  min-width: 260px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule-heavy);
+  border-top: 2px solid var(--color-accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  padding: var(--space-3) var(--space-4);
+}
+.fn-tooltip[hidden] { display: none; }
+.fn-tooltip__body > :first-child { margin-top: 0; }
+.fn-tooltip__body > :last-child  { margin-bottom: 0; }
+
+.fn-tooltip__close {
+  float: right;
+  background: none;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: 0 0 var(--space-1) var(--space-3);
+  line-height: 1;
+}
+
+.fn-tooltip__close:hover { color: var(--color-ink); }
+
+.fn-tooltip__body {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  clear: both;
+}
+
+/* ── Sidenotes (margin notes on screens ≥ 1400px) ───────────── */
+/* Default: hidden — the tooltip is used on narrow screens       */
+.sidenote {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  /* Make the prose column the positioning context */
+  .article-body {
+    position: relative;
+    overflow: visible;
+  }
+
+  .sidenote {
+    display: block;
+    position: absolute;
+    /* Start just past the prose max-width with a 1.5rem gutter */
+    left: calc(var(--max-width-prose) + var(--space-6));
+    width: 152px; /* body col (~908px) − 720px prose − 24px gap − 8px safety */
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    line-height: var(--leading-normal);
+    color: var(--color-ink-muted);
+    border-left: 2px solid var(--color-rule);
+    padding-left: var(--space-3);
+    transition: border-left-color 0.3s, background 0.3s;
+  }
+
+  .sidenote__number {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .sidenote__text {
+    margin: 0;
+  }
+
+  /* Brief highlight when user clicks the corresponding fn-btn */
+  .sidenote--highlight {
+    border-left-color: var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  /* Disable sidenotes when reading width is set to "wide" (prose fills the column) */
+  .article-body[data-rs-width="wide"] + * .sidenote,
+  [data-rs-width="wide"] .sidenote { display: none; }
+
+}
+
+/* ── Reading list page ──────────────────────────────────────── */
+/* Cards are emitted as canonical .article-card markup by reading-list.js
+ * so they share the home / section / topic page chrome. The grid below
+ * is a one-off wrapper that gives the saved items a card-grid feel
+ * (matches .front-section-strip__articles). */
+.reading-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-8) var(--space-6);
+  margin-top: var(--space-4);
+}
+@media (min-width: 768px) {
+  /* Vertical hairline between adjacent saved cards, matching the
+   * home-page section-strip pattern. */
+  .reading-list-grid > * + * {
+    border-left: 1px solid var(--color-rule);
+    padding-left: var(--space-6);
+  }
+}
+.reading-list-card__remove {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+.reading-list-card__remove:hover { color: var(--color-accent); }
+
+/* Legacy reading-list classes (.reading-list__item, .reading-list__title,
+ * .reading-list__section, etc.) used to be the only chrome on this page
+ * and were imported elsewhere. They're kept around for any external
+ * caller, but the page itself now ships canonical .article-card markup. */
+.reading-list { list-style: none; padding: 0; }
+.reading-list__item { padding: var(--space-5) 0; border-bottom: 1px solid var(--color-rule); }
+
+.reading-list__remove:hover { color: var(--color-ink); text-decoration: underline; }
+
+.reading-list-clear {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-faint);
+  background: none;
+  border: 1px solid var(--color-rule-heavy);
+  padding: var(--space-1) var(--space-3);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.reading-list-clear:hover { color: var(--color-ink); border-color: var(--color-ink); }
+
+/* ── Corrections page ───────────────────────────────────────── */
+.correction-entry {
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.correction-entry__article {
+  margin-bottom: var(--space-4);
+}
+
+.correction-entry__title {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  margin-bottom: var(--space-1);
+}
+
+.correction-entry__title:hover { color: var(--color-accent); }
+
+.correction-entry__section {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+
+.correction-entry__item {
+  padding: var(--space-3) 0 var(--space-3) var(--space-8);
+  border-left: 2px solid var(--color-rule-heavy);
+  margin-bottom: var(--space-2);
+}
+
+.correction-entry__date {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-1);
+}
+
+.correction-entry__desc {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+/* ── Editions index ─────────────────────────────────────────── */
+.editions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+
+.edition-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: 1px solid var(--color-rule-heavy);
+  border-top: 3px solid var(--color-ink);
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: border-top-color var(--transition-fast);
+}
+
+.edition-card:hover { border-top-color: var(--color-accent); }
+
+.edition-card__number {
+  font-family: var(--font-masthead);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.edition-card__count,
+.edition-card__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.edition-card__titles {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ── Individual edition page ────────────────────────────────── */
+.edition-header {
+  padding-bottom: var(--space-8);
+  max-width: 760px;
+}
+
+.edition-back {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  margin-bottom: var(--space-6);
+}
+
+.edition-back:hover { color: var(--color-ink); }
+
+.edition-header__number {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.edition-header__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-3);
+}
+
+.edition-header__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+
+.edition-header__count {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+
+.edition-rule {
+  height: 3px;
+  background: var(--color-ink);
+  margin-bottom: var(--space-10);
+  border: none;
+}
+
+.edition-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.edition-nav__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+}
+
+.edition-nav__link:hover { color: var(--color-ink); }
+
+/* ── Changelog page ─────────────────────────────────────────── */
+.changelog__entry {
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.changelog__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.changelog__version {
+  font-family: var(--font-masthead);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.changelog__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.changelog__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  width: 100%;
+}
+
+.changelog__list {
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.changelog__list li {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+}
+
+/* ── Inter-article response system ─────────────────────────── */
+.response-banner {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-ink-faint);
+  background: var(--color-bg-alt);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.response-banner__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.response-banner__link {
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+}
+
+.response-banner__link:hover { color: var(--color-accent); }
+
+/* External-response variant: dashed border + meta line below */
+.response-banner--external {
+  border-left-style: dashed;
+  border-left-color: var(--color-accent);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+.response-banner--external .response-banner__label {
+  color: var(--color-accent);
+}
+.response-banner__meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  letter-spacing: 0.04em;
+}
+.response-banner__publisher {
+  font-style: italic;
+  color: var(--color-ink-faint);
+}
+
+.responses-section {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.responses-section__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-4);
+}
+
+.responses-section__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.responses-section__item {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.responses-section__section {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.responses-section__link {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-1);
+}
+
+.responses-section__link:hover { color: var(--color-accent); }
+
+.responses-section__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+
+/* Header-variant: sits right under the byline tags, above the reading
+   actions. Tighter spacing, no standalone border — the header already
+   has a bottom rule — and a muted callout box so it reads as context,
+   not a wall of extra content. */
+.responses-section--header {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-top: none;
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-accent);
+}
+.responses-section--header .responses-section__title { margin-bottom: var(--space-2); }
+.responses-section--header .responses-section__list  { gap: var(--space-2); }
+.responses-section--header .responses-section__item  {
+  padding: var(--space-1) 0;
+  border-bottom: none;
+}
+.responses-section--header .responses-section__link  { font-size: var(--text-sm); }
+
+/* ── Backlinks (Digital Garden) ─────────────────────────────── */
+.backlinks-section {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.backlinks-section__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-4);
+}
+
+.backlinks-section__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.backlinks-section__item {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.backlinks-section__section {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-1);
+}
+
+.backlinks-section__link {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-1);
+}
+
+.backlinks-section__link:hover { color: var(--color-accent); }
+
+.backlinks-section__date {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+
+/* ── Start Here page ────────────────────────────────────────── */
+.start-here-layout {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-block: var(--space-10);
+}
+
+.start-here-header {
+  padding-bottom: var(--space-8);
+  border-bottom: 3px solid var(--color-ink);
+  margin-bottom: var(--space-8);
+}
+
+.start-here-header__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.start-here-header__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: var(--space-5);
+}
+
+.start-here-header__body {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 62ch;
+}
+
+.start-here-section {
+  margin-bottom: var(--space-10);
+}
+
+.start-here-section__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.start-here-section__intro {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-6);
+  font-style: italic;
+}
+
+.start-here-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  counter-reset: start-here-counter attr(start);
+}
+
+.start-here-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 var(--space-5);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.start-here-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.start-here-item__meta {
+  grid-column: 2;
+  margin-bottom: var(--space-1);
+}
+
+.start-here-item__section {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.start-here-item__title {
+  grid-column: 2;
+  font-family: var(--font-headline);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-2);
+}
+
+.start-here-item__title a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.start-here-item__title a:hover { color: var(--color-accent); }
+
+.start-here-item__desc {
+  grid-column: 2;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+}
+
+.start-here-footer {
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 3px solid var(--color-ink);
+}
+
+.start-here-footer__text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-5);
+}
+
+.start-here-footer__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* ── Editorial handbook page ────────────────────────────────── */
+.editorial-layout {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  padding-block: var(--space-10);
+}
+
+.editorial-nav {
+  position: sticky;
+  top: 7rem; /* full masthead clearance (nameplate + site-nav) */
+  max-height: calc(100vh - 7rem - var(--space-4));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-top: var(--space-2);
+  padding-right: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+}
+@media (max-width: 1180px) {
+  .editorial-nav { max-height: calc(100vh - 4.5rem - var(--space-4)); }
+}
+
+.editorial-nav a {
+  display: block;
+  padding: 0.5rem 0.65rem;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color var(--transition-fast), background var(--transition-fast), border-left-color var(--transition-fast);
+}
+
+.editorial-nav a:hover,
+.editorial-nav a:focus-visible,
+.editorial-nav a.is-active {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+  background: var(--color-bg-alt);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .editorial-nav a:hover,
+[data-theme="dark"] .editorial-nav a:focus-visible,
+[data-theme="dark"] .editorial-nav a.is-active { background: var(--color-bg-inset); }
+
+@media (max-width: 1180px) {
+  .editorial-nav { top: 4.5rem; }
+  .editorial-body section[id] { scroll-margin-top: 5rem; }
+}
+
+@media (max-width: 1024px) {
+  .editorial-layout { grid-template-columns: 1fr; }
+  .editorial-nav {
+    position: static !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    max-height: none;
+    padding: var(--space-3);
+    border: 1px solid var(--color-rule-heavy);
+    background: var(--color-bg-alt);
+    margin-bottom: var(--space-6);
+  }
+  .editorial-nav a {
+    flex: 0 0 auto;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 0.35rem 0.65rem;
+  }
+  .editorial-nav a:hover,
+  .editorial-nav a:focus-visible,
+  .editorial-nav a.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--color-accent);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Keep TOC visible on mobile — horizontally scrollable pill row. */
+  .editorial-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--space-2);
+    gap: 0.25rem;
+  }
+  .editorial-nav a {
+    white-space: nowrap;
+    font-size: 0.82rem;
+  }
+}
+
+.editorial-header {
+  padding-bottom: var(--space-8);
+  border-bottom: 3px solid var(--color-ink);
+  margin-bottom: var(--space-8);
+}
+
+.editorial-header__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.editorial-header__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: var(--space-5);
+}
+
+.editorial-header__body {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 62ch;
+  margin-bottom: var(--space-4);
+}
+
+.editorial-header__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+
+.editorial-toc__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-3);
+}
+
+.editorial-toc__list {
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.editorial-toc__list a {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-link);
+}
+
+.editorial-body {
+  max-width: 68ch;
+}
+
+.editorial-body section {
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-rule);
+  scroll-margin-top: 8rem;
+}
+
+.editorial-body section:last-child {
+  border-bottom: none;
+}
+
+.editorial-body h2 {
+  font-family: var(--font-headline);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+  scroll-margin-top: var(--space-16);
+}
+
+.editorial-body h3 {
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.editorial-body p,
+.editorial-body ul,
+.editorial-body ol {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.editorial-body ul,
+.editorial-body ol {
+  padding-left: var(--space-6);
+}
+
+.editorial-body li {
+  margin-bottom: var(--space-2);
+}
+
+.editorial-body strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* ── Document library ───────────────────────────────────────── */
+.doc-type-badge {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  padding: 0.15em 0.6em;
+  margin-bottom: var(--space-3);
+}
+
+/* Document index */
+.doc-index-layout {
+  max-width: 900px;
+  margin-inline: auto;
+  padding-block: var(--space-10);
+}
+
+.doc-index-header {
+  padding-bottom: var(--space-8);
+  border-bottom: 3px solid var(--color-ink);
+  margin-bottom: var(--space-8);
+}
+
+.doc-index-header__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.doc-index-header__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+
+.doc-index-header__body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  max-width: 62ch;
+}
+
+.doc-index-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.doc-card {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.doc-card:first-child { border-top: 1px solid var(--color-rule); }
+
+.doc-card__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-2);
+}
+
+.doc-card__title a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.doc-card__title a:hover { color: var(--color-accent); }
+
+.doc-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-3);
+}
+
+.doc-card__meta {
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Document page */
+.doc-layout {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-block: var(--space-8) var(--space-16);
+}
+
+.doc-back {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-6);
+}
+
+.doc-back:hover { color: var(--color-accent); }
+
+.doc-header {
+  padding-bottom: var(--space-6);
+  border-bottom: 3px solid var(--color-ink);
+  margin-bottom: var(--space-8);
+}
+
+.doc-header__eyebrow { margin-bottom: var(--space-3); }
+
+.doc-header__title {
+  font-family: var(--font-headline);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-4);
+}
+
+.doc-header__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  margin-bottom: var(--space-5);
+}
+
+.doc-header__meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  border: 1px solid var(--color-rule);
+  padding: var(--space-4);
+  background: var(--color-bg-alt);
+}
+
+.doc-meta-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+}
+
+.doc-meta-row dt {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-faint);
+}
+
+.doc-meta-row dd {
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.doc-related-articles {
+  margin-top: var(--space-4);
+}
+
+.doc-related-articles__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+
+.doc-related-articles ul {
+  list-style: none;
+  padding: 0;
+}
+
+.doc-related-articles a {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-link);
+}
+
+.doc-body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+.doc-body p,
+.doc-body ul,
+.doc-body ol {
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.doc-body h2 {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+  color: var(--color-ink);
+}
+
+.doc-body h3 {
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+  color: var(--color-ink);
+}
+
+.doc-body hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: var(--space-6) 0;
+}
+
+.doc-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
+}
+
+.doc-body th {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--color-ink);
+  color: var(--color-ink-faint);
+}
+
+.doc-body td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+}
+
+.doc-body code {
+  font-family: monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-inset);
+  padding: 0.1em 0.3em;
+}
+
+/* ─── Word Count ─────────────────────────────────────────────────────────── */
+
+.article-header__word-count {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  letter-spacing: 0.03em;
+}
+
+.article-header__word-count::after {
+  content: "";
+}
+
+/* ─── Download Panel ─────────────────────────────────────────────────────── */
+
+.download-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.download-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 160px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  z-index: 200;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .download-panel {
+    position: fixed;
+    top: auto;
+    bottom: 3.5rem;
+    left: 0;
+    right: 0;
+    min-width: 0;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.15);
+    z-index: var(--z-modal);
+  }
+}
+
+.download-panel__item {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.download-panel__item:hover,
+.download-panel__item:focus-visible {
+  background: var(--color-bg-inset);
+  outline: none;
+}
+
+.download-panel__item + .download-panel__item {
+  border-top: 1px solid var(--color-rule);
+}
+
+/* ─── Reading Settings Panel ─────────────────────────────────────────────── */
+
+.reading-settings-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.reading-settings-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 260px;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  z-index: 200;
+  padding: var(--space-3) var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .reading-settings-panel {
+    position: fixed;
+    top: auto;
+    bottom: 3.25rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 65vh;
+    padding-bottom: var(--space-6);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.15);
+    z-index: var(--z-modal);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+.rs-panel-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  background: none;
+  border: none;
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: var(--space-1);
+  line-height: 1;
+}
+
+.rs-panel-close:hover {
+  color: var(--color-ink);
+}
+
+.rs-group {
+  margin-bottom: var(--space-3);
+}
+
+.rs-group:last-child {
+  margin-bottom: 0;
+}
+
+.rs-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+/* Compact Display tab on mobile so users don't have to scroll through
+   every control. Reduces vertical rhythm, inlines label + buttongroup
+   on one row for the 3-wide controls (spacing / width / wordspace). */
+@media (max-width: 640px) {
+  .library-panel__section .reading-settings-panel .rs-group {
+    margin-bottom: var(--space-2);
+  }
+  .library-panel__section .reading-settings-panel .rs-label {
+    font-size: var(--text-xs);
+    margin-bottom: 4px;
+  }
+  .library-panel__section .reading-settings-panel .rs-btn {
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+  .library-panel__section .reading-settings-panel .rs-icon-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+  /* Inline label + buttongroup on one row for the small 3/4-button picks */
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-spacing]),
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-width]),
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-wordspace]) {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-spacing]) .rs-label,
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-width]) .rs-label,
+  .library-panel__section .reading-settings-panel .rs-group:has([data-rs-wordspace]) .rs-label {
+    margin: 0;
+  }
+  .library-panel__section .reading-settings-panel .rs-toggles {
+    gap: 6px;
+  }
+  .library-panel__section .reading-settings-panel .rs-toggle {
+    font-size: var(--text-xs);
+  }
+  .library-panel__section .reading-settings-panel .rs-select {
+    padding: 6px 8px;
+    font-size: var(--text-xs);
+  }
+}
+
+/* Font size row */
+.rs-size-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rs-small {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rs-large {
+  font-size: var(--text-lg);
+  color: var(--color-ink-faint);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rs-slider {
+  flex: 1;
+  height: 4px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* Button groups */
+.rs-btngroup {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--color-rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.rs-btn {
+  flex: 1;
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  background: none;
+  border: none;
+  border-right: 1px solid var(--color-rule);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+}
+
+.rs-btn:last-child {
+  border-right: none;
+}
+
+.rs-btn:hover {
+  background: var(--color-bg-inset);
+}
+
+.rs-btn.is-active {
+  background: var(--color-ink) !important;
+  color: var(--color-bg) !important;
+}
+
+/* Ruler colour swatches — sized to keep all 7 swatches on a single row
+   inside the ~280px Reader-panel Display tab. */
+.rs-btngroup:has(.rs-swatch) {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  gap: var(--space-2);
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.rs-swatch {
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.rs-swatch.is-active {
+  border-color: var(--color-ink);
+  transform: scale(1.15);
+}
+
+.rs-swatch:hover { transform: scale(1.1); }
+
+.rs-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-2);
+}
+
+.rs-icon-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Reading settings select ── */
+.rs-select {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+/* ── Toggle switches ── */
+.rs-toggles { display: flex; flex-direction: column; gap: var(--space-2); }
+.rs-toggle { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; font-family: var(--font-ui); font-size: var(--text-xs); color: var(--color-ink-muted); }
+.rs-toggle__input { accent-color: var(--color-accent); }
+
+/* ── Article body — reading preference overrides ── */
+
+/* Font — site fonts */
+.article-body[data-rs-font="sans"] { font-family: var(--font-ui); }
+.article-body[data-rs-font="lora"] { font-family: 'Lora', Georgia, serif; }
+.article-body[data-rs-font="playfair"] { font-family: 'Playfair Display', Georgia, serif; }
+/* Font — system serif */
+.article-body[data-rs-font="georgia"] { font-family: Georgia, 'Times New Roman', serif; }
+.article-body[data-rs-font="palatino"] { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; }
+.article-body[data-rs-font="times"] { font-family: 'Times New Roman', Times, serif; }
+.article-body[data-rs-font="garamond"] { font-family: Garamond, 'EB Garamond', Georgia, serif; }
+.article-body[data-rs-font="bookman"] { font-family: 'Bookman Old Style', Georgia, serif; }
+/* Font — system sans */
+.article-body[data-rs-font="system"] { font-family: system-ui, -apple-system, sans-serif; }
+.article-body[data-rs-font="arial"] { font-family: Arial, Helvetica, sans-serif; }
+.article-body[data-rs-font="verdana"] { font-family: Verdana, Geneva, sans-serif; }
+.article-body[data-rs-font="trebuchet"] { font-family: 'Trebuchet MS', Helvetica, sans-serif; }
+.article-body[data-rs-font="tahoma"] { font-family: Tahoma, Geneva, sans-serif; }
+.article-body[data-rs-font="century"] { font-family: 'Century Gothic', 'Apple Gothic', sans-serif; }
+/* Font — system mono */
+.article-body[data-rs-font="mono"] { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 0.95em; }
+.article-body[data-rs-font="courier"] { font-family: 'Courier New', Courier, monospace; font-size: 0.95em; }
+.article-body[data-rs-font="lucida"] { font-family: 'Lucida Console', Monaco, monospace; font-size: 0.95em; }
+/* Font — web fonts (loaded on demand via Bunny Fonts) */
+.article-body[data-rs-font="inter"] { font-family: 'Inter', system-ui, sans-serif; }
+.article-body[data-rs-font="merriweather"] { font-family: 'Merriweather', Georgia, serif; }
+.article-body[data-rs-font="roboto"] { font-family: 'Roboto', system-ui, sans-serif; }
+.article-body[data-rs-font="opensans"] { font-family: 'Open Sans', system-ui, sans-serif; }
+.article-body[data-rs-font="baskerville"] { font-family: 'Libre Baskerville', Georgia, serif; }
+.article-body[data-rs-font="crimson"] { font-family: 'Crimson Pro', Georgia, serif; }
+.article-body[data-rs-font="ibmplex"] { font-family: 'IBM Plex Serif', Georgia, serif; }
+.article-body[data-rs-font="literata"] { font-family: 'Literata', Georgia, serif; }
+.article-body[data-rs-font="atkinson"] { font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; }
+
+/* Width — also expand/contract the layout container so the prose
+   actually changes width. The layout's --max-width-prose constraint
+   would otherwise dominate. */
+.article-body[data-rs-width="narrow"] { max-width: 560px; }
+.article-body[data-rs-width="wide"]   { max-width: 100%; }
+.article-layout__inner:has(.article-body[data-rs-width="narrow"]) { max-width: 600px; }
+.article-layout__inner:has(.article-body[data-rs-width="wide"])   { max-width: min(1100px, 92vw); }
+
+/* Background presets */
+[data-rs-bg="sepia"] { --color-bg: #f4ecd8; --color-bg-alt: #ede4cc; --color-ink: #5b4636; }
+[data-rs-bg="cream"] { --color-bg: #fefcf0; --color-bg-alt: #f8f5e8; --color-ink: #333; }
+[data-rs-bg="dark"] { --color-bg: #1a1a1a; --color-bg-alt: #222; --color-ink: #e0e0e0; --color-ink-muted: #aaa; --color-ink-faint: #666; --color-rule: #333; }
+
+/* Reading ruler */
+.rs-ruler-line {
+  position: fixed;
+  height: 2px;
+  background: var(--color-accent);
+  opacity: 0.6;
+  z-index: 50;
+  pointer-events: none;
+  transition: top 0.04s linear, opacity 0.15s ease;
+}
+
+
+/* Paragraph numbers */
+.rs-para-numbers { counter-reset: paragraph; }
+.rs-para-numbers > p { counter-increment: paragraph; position: relative; }
+.rs-para-numbers > p::before {
+  content: counter(paragraph);
+  position: absolute;
+  left: -2.5rem;
+  top: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  opacity: 0.5;
+  width: 2rem;
+  text-align: right;
+}
+

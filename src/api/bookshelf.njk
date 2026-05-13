@@ -1,0 +1,9 @@
+---
+permalink: /api/bookshelf.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ collections.bookshelf.length }},
+  "bookshelf": {{ collections.bookshelf | toApiItems(site.url) | toJSON | safe }}
+}

@@ -1,0 +1,113 @@
+---
+layout: base
+title: "Legal Rights, Resources"
+description: Know your rights as a nonbeliever, church-state separation, workplace protections, school prayer, and how to report violations.
+permalink: /resources/legal/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/resources/">Resources</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Legal Rights</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">Legal Rights</h1>
+    <p class="page-header__lede">
+      Your rights as a nonbeliever are protected by the Constitution. Here is what you need to know.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#first-amendment">The First Amendment</a>
+      <a href="#workplace">Workplace rights</a>
+      <a href="#schools">Rights in public schools</a>
+      <a href="#exemptions">Religious exemptions</a>
+      <a href="#legal-orgs">Legal organizations</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="first-amendment">The First Amendment</h2>
+
+      <p>The Establishment Clause and the Free Exercise Clause of the First Amendment form the constitutional basis for the separation of church and state in the United States:</p>
+
+      <blockquote>Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof.</blockquote>
+
+      <p>This means the government cannot promote, endorse, or fund religious activities, and it cannot penalize you for your lack of belief.</p>
+
+      <h2 id="workplace">Your rights in the workplace</h2>
+
+      <p>Title VII of the Civil Rights Act of 1964 protects employees from discrimination based on religion, including the lack of religion. Your employer cannot:</p>
+
+      <ul>
+        <li>Require you to participate in prayers, religious activities, or devotionals</li>
+        <li>Discriminate against you in hiring, promotion, or termination because of your beliefs</li>
+        <li>Create a hostile work environment based on your religious views or lack thereof</li>
+        <li>Deny reasonable accommodations for your secular beliefs</li>
+      </ul>
+
+      <p><strong>If you experience workplace discrimination:</strong></p>
+      <ol>
+        <li>Document everything, dates, witnesses, exact words</li>
+        <li>File a complaint with HR</li>
+        <li>If unresolved, file a charge with the <a href="https://www.eeoc.gov" target="_blank" rel="noopener noreferrer">EEOC</a></li>
+        <li>Contact the <a href="https://ffrf.org/legal" target="_blank" rel="noopener noreferrer">FFRF Legal Department</a> for free legal advice</li>
+      </ol>
+
+      <h2 id="schools">Your rights in public schools</h2>
+
+      <ul>
+        <li><strong>No government-sponsored prayer</strong>, Teachers and administrators cannot lead, organize, or encourage prayer (Engel v. Vitale, 1962)</li>
+        <li><strong>No religious instruction</strong>, Schools cannot teach creationism as science (Edwards v. Aguillard, 1987; Kitzmiller v. Dover, 2005)</li>
+        <li><strong>Students can pray privately</strong>, Students are free to pray on their own; the restriction is on government-led prayer</li>
+        <li><strong>Equal access</strong>, If schools allow non-curricular clubs, they must allow secular and atheist clubs on the same terms</li>
+      </ul>
+
+      <p><strong>If your child's school violates these rights:</strong> Contact the <a href="https://ffrf.org/legal/report" target="_blank" rel="noopener noreferrer">FFRF</a> or <a href="https://www.aclu.org/report-civil-liberties-violation" target="_blank" rel="noopener noreferrer">ACLU</a> to report the violation.</p>
+
+      <h2 id="exemptions">Religious exemptions</h2>
+
+      <p>Religious exemptions allow individuals and organizations to opt out of generally applicable laws on religious grounds. As a nonbeliever, you should know:</p>
+
+      <ul>
+        <li>Religious exemptions to vaccination requirements vary by state, check your <a href="https://www.ncsl.org/health/states-with-religious-and-philosophical-exemptions-from-school-immunization-requirements" target="_blank" rel="noopener noreferrer">state's policy</a></li>
+        <li>The Religious Freedom Restoration Act (RFRA) can be used to exempt businesses from anti-discrimination laws</li>
+        <li>Secular alternatives to religious oaths exist for courtroom testimony and public office</li>
+      </ul>
+
+      <h2 id="legal-orgs">Legal organizations</h2>
+
+      <ul>
+        <li><strong><a href="https://ffrf.org/legal" target="_blank" rel="noopener noreferrer">FFRF Legal</a></strong>, Free legal help for church-state violations. The largest law firm devoted exclusively to this issue.</li>
+        <li><strong><a href="https://www.aclu.org" target="_blank" rel="noopener noreferrer">ACLU</a></strong>, Defends civil liberties including freedom of and from religion.</li>
+        <li><strong><a href="https://www.au.org" target="_blank" rel="noopener noreferrer">Americans United for Separation of Church and State</a></strong>, Nonpartisan advocacy and litigation.</li>
+        <li><strong><a href="https://www.atheists.org/activism/legal/" target="_blank" rel="noopener noreferrer">American Atheists Legal Center</a></strong>, Legal advocacy for atheist rights.</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

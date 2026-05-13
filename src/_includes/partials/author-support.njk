@@ -1,0 +1,63 @@
+{#
+  author-support.njk — disclosure panel for the per-author Support
+  button in the article-header__support-row. Hidden by default; the
+  matching tip-badge button (rendered by partials/tip-buttons.njk)
+  toggles [hidden] + aria-expanded.
+
+  Surfaces the author's photo, name, role, short bio, social links,
+  and a tipping CTA pointing at whichever payout url is configured
+  (kofi, bmac, patreon). Includes a fixed paragraph explaining how
+  contributor support works at this publication.
+#}
+{% set asAuthor = authors[author] if author and authors[author] else null %}
+{% if asAuthor %}
+{% set asAuthorTipUrl = asAuthor.tipping.kofi or asAuthor.tipping.bmac or asAuthor.tipping.patreon %}
+{% set asTipPlatform = "Ko-fi" if asAuthor.tipping.kofi else ("Buy Me a Coffee" if asAuthor.tipping.bmac else ("Patreon" if asAuthor.tipping.patreon else "")) %}
+<div id="author-support-panel" class="author-support author-support--panel" data-article-disclosure hidden aria-labelledby="author-support-heading">
+  <div class="author-support__body">
+    <div class="author-support__head">
+      {% if asAuthor.photo %}
+      <img class="author-support__photo" src="{{ asAuthor.photo | replace('src/', '/') }}" alt="" width="56" height="56" loading="lazy" decoding="async">
+      {% endif %}
+      <div class="author-support__head-text">
+        <p class="author-support__kicker">Direct reader support</p>
+        <h2 id="author-support-heading" class="author-support__heading">Support {{ asAuthor.name }}</h2>
+        {% if asAuthor.role %}
+        <p class="author-support__role">{{ asAuthor.role }}{% if asAuthor.location %} &middot; {{ asAuthor.location }}{% endif %}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if asAuthor.bio %}
+    <p class="author-support__bio">{{ asAuthor.bio }}</p>
+    {% endif %}
+
+    {% if asAuthor.social %}
+    <div class="author-support__social">
+      {% set social = asAuthor.social %}
+      {% include "partials/social-icons.njk" %}
+    </div>
+    {% endif %}
+
+    <p class="author-support__how">
+      Contributions sent to {{ asAuthor.name }} go <strong>directly to the author</strong> &mdash; {{ site.title }} takes no cut, no platform fee, no retention. {{ site.title }} <strong>does not pay contributors a fee or salary</strong>; reader tips are how writers are compensated for what they publish here. If a piece was worth your time, a tip is the most direct way to thank the author and help them keep writing.
+    </p>
+
+    <div class="author-support__actions">
+      {% if asAuthorTipUrl %}
+      <a class="author-support__action author-support__action--primary" href="{{ asAuthorTipUrl }}" target="_blank" rel="noopener noreferrer" data-umami-event="support-author">
+        Tip {{ asAuthor.name }} on {{ asTipPlatform }}
+      </a>
+      {% endif %}
+      <a class="author-support__action" href="/author/{{ author }}/" data-umami-event="author-page">
+        Read {{ asAuthor.name }}&rsquo;s archive &rsaquo;
+      </a>
+      {% if site.tipping.kofi or site.tipping.bmac or site.tipping.patreon %}
+      <a class="author-support__action author-support__action--ghost" href="{{ site.tipping.kofi or site.tipping.bmac or site.tipping.patreon }}" target="_blank" rel="noopener noreferrer" data-umami-event="support-publication">
+        Or support {{ site.title }} as a whole &rsaquo;
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}

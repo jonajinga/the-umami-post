@@ -1,0 +1,275 @@
+---
+layout: layouts/base.njk
+title: Timeline Showcase
+description: The freethought timeline, one event at a time.
+permalink: /timeline/showcase/
+eleventyExcludeFromCollections: true
+---
+
+{% block head %}
+<style>
+.tl-showcase {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--gutter);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.tl-showcase__year {
+  font-family: var(--font-ui);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tl-showcase__year.is-visible {
+  opacity: 0.2;
+  transform: scale(1);
+}
+
+.tl-showcase__title {
+  font-family: var(--font-headline);
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  text-align: center;
+  max-width: 20em;
+  margin-top: var(--space-4);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.tl-showcase__title.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tl-showcase__desc {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  text-align: center;
+  max-width: 36em;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+  margin-top: var(--space-4);
+  opacity: 0;
+  transition: opacity 0.6s ease 0.4s;
+}
+
+.tl-showcase__desc.is-visible {
+  opacity: 1;
+}
+
+.tl-showcase__era {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-faint);
+  margin-top: var(--space-6);
+  opacity: 0;
+  transition: opacity 0.5s ease 0.5s;
+}
+
+.tl-showcase__era.is-visible { opacity: 1; }
+
+.tl-showcase__nav {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.tl-showcase__nav:hover { opacity: 0.7; }
+
+.tl-showcase__nav button {
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.tl-showcase__nav button:hover { background: rgba(128,128,128,0.1); }
+
+.tl-showcase__counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.tl-showcase__home {
+  position: fixed;
+  top: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+.tl-showcase__home:hover { opacity: 0.6; }
+
+.tl-showcase__home-name {
+  font-family: var(--font-headline, Georgia, serif);
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tl-showcase__progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-accent);
+  opacity: 0.3;
+  transition: width linear;
+}
+</style>
+{% endblock %}
+
+<div class="tl-showcase" id="tl-showcase">
+  <div class="tl-showcase__year" id="tls-year"></div>
+  <div class="tl-showcase__title" id="tls-title"></div>
+  <div class="tl-showcase__desc" id="tls-desc"></div>
+  <div class="tl-showcase__era" id="tls-era"></div>
+
+  <a class="tl-showcase__home" href="/timeline/" data-no-spa aria-label="Exit showcase">
+    <span class="tl-showcase__home-name">&larr; Exit showcase</span>
+  </a>
+
+  <div class="tl-showcase__nav">
+    <button id="tls-prev" type="button" aria-label="Previous">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <span class="tl-showcase__counter" id="tls-counter"></span>
+    <button id="tls-next" type="button" aria-label="Next">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button id="tls-pause" type="button" aria-label="Pause">
+      <svg id="tls-pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      <svg id="tls-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+  </div>
+
+  <div class="tl-showcase__progress" id="tls-progress"></div>
+</div>
+
+{% block scripts %}
+<script>
+(function () {
+  var events = {{ timeline | dump | safe }};
+  if (!events || !events.length) return;
+
+  // Sort chronologically
+  events.sort(function (a, b) { return a.year - b.year; });
+
+  var idx = 0;
+  var paused = false;
+  var INTERVAL = 12000;
+  var timer = null;
+
+  var elYear = document.getElementById('tls-year');
+  var elTitle = document.getElementById('tls-title');
+  var elDesc = document.getElementById('tls-desc');
+  var elEra = document.getElementById('tls-era');
+  var elCounter = document.getElementById('tls-counter');
+  var elProgress = document.getElementById('tls-progress');
+  var elPause = document.getElementById('tls-pause');
+  var pauseIcon = document.getElementById('tls-pause-icon');
+  var playIcon = document.getElementById('tls-play-icon');
+
+  function show(i) {
+    idx = ((i % events.length) + events.length) % events.length;
+    var ev = events[idx];
+
+    // Fade out
+    elYear.classList.remove('is-visible');
+    elTitle.classList.remove('is-visible');
+    elDesc.classList.remove('is-visible');
+    elEra.classList.remove('is-visible');
+
+    setTimeout(function () {
+      elYear.textContent = ev.year < 0 ? (ev.year * -1) + ' BCE' : ev.year;
+      elTitle.textContent = ev.title;
+      elDesc.textContent = ev.description;
+      elEra.textContent = ev.era;
+      elCounter.textContent = (idx + 1) + ' / ' + events.length;
+
+      elYear.classList.add('is-visible');
+      elTitle.classList.add('is-visible');
+      elDesc.classList.add('is-visible');
+      elEra.classList.add('is-visible');
+    }, 400);
+
+    resetProgress();
+  }
+
+  function resetProgress() {
+    elProgress.style.transition = 'none';
+    elProgress.style.width = '0';
+    if (!paused) {
+      clearTimeout(timer);
+      requestAnimationFrame(function () {
+        elProgress.style.transition = 'width ' + (INTERVAL / 1000) + 's linear';
+        elProgress.style.width = '100%';
+      });
+      timer = setTimeout(function () { show(idx + 1); }, INTERVAL);
+    }
+  }
+
+  function togglePause() {
+    paused = !paused;
+    pauseIcon.style.display = paused ? 'none' : '';
+    playIcon.style.display = paused ? '' : 'none';
+    if (paused) {
+      clearTimeout(timer);
+      elProgress.style.transition = 'none';
+      elProgress.style.width = '0';
+    } else { resetProgress(); }
+  }
+
+  document.getElementById('tls-prev').addEventListener('click', function (e) { e.stopPropagation(); show(idx - 1); });
+  document.getElementById('tls-next').addEventListener('click', function (e) { e.stopPropagation(); show(idx + 1); });
+  elPause.addEventListener('click', function (e) { e.stopPropagation(); togglePause(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(idx + 1); }
+    else if (e.key === 'p') togglePause();
+    else if (e.key === 'Escape') window.location.href = '/timeline/';
+  });
+
+  var wrapper = document.querySelector('.site-wrapper');
+  if (wrapper) {
+    document.body.appendChild(document.getElementById('tl-showcase'));
+    wrapper.style.display = 'none';
+  }
+  document.body.style.overflow = 'hidden';
+
+  show(0);
+})();
+</script>
+{% endblock %}

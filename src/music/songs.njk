@@ -1,0 +1,332 @@
+---
+layout: base
+title: Songs — Freethought Music
+description: Hand-picked songs whose lyrics reflect freethought, humanist, and rationalist ideas. Click play on any song to listen in the persistent background player.
+permalink: /music/songs/
+---
+
+<div class="container music-sub">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/music/">Freethought Music</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Songs</li>
+    </ol>
+  </nav>
+
+  <header class="music-sub__header">
+    <p class="music-sub__kicker">Songs</p>
+    <h1 class="music-sub__title">{{ songs | length }} hand-picked tracks</h1>
+    <p class="music-sub__lede">
+      Songs with lyrics that reflect freethought, humanist, and rationalist ideas &mdash; from questioning faith to celebrating reason and human dignity. Click play on any card to start listening in the persistent background player.
+    </p>
+    <p class="music-sub__meta">
+      Know a track we should include? <a href="/music/submit/">Suggest a song &rarr;</a>
+    </p>
+  </header>
+
+  {# Search + filters #}
+  <div class="music-sub__controls">
+    <div class="music-sub__search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="song-search" placeholder="Filter by title, artist, album…" autocomplete="off">
+    </div>
+    <select id="song-genre" aria-label="Genre">
+      <option value="">All genres</option>
+      {% set genres = [] %}
+      {% for s in songs %}{% if s.genre and s.genre not in genres %}{% set genres = genres.concat([s.genre]) %}{% endif %}{% endfor %}
+      {% for g in genres | sort %}<option>{{ g }}</option>{% endfor %}
+    </select>
+    <select id="song-tag" aria-label="Tag">
+      <option value="">All tags</option>
+      {% set allTags = [] %}
+      {% for s in songs %}{% for t in s.tags %}{% if t not in allTags %}{% set allTags = allTags.concat([t]) %}{% endif %}{% endfor %}{% endfor %}
+      {% for t in allTags | sort %}<option>{{ t }}</option>{% endfor %}
+    </select>
+  </div>
+
+  <p id="song-status" class="music-sub__status" aria-live="polite"></p>
+
+  <div class="song-grid" id="song-grid">
+    {% for s in songs | sort(false, false, 'artist') %}
+    {% set vid = s.url | ytVideoId %}
+    <article class="song-card" data-search="{{ s.title | lower }} {{ s.artist | lower }} {{ s.album | lower }}" data-genre="{{ s.genre }}" data-tags="{{ s.tags | join(',') }}">
+      <div class="song-card__body">
+        {% if s.genre %}<span class="song-card__genre">{{ s.genre }}</span>{% endif %}
+        <h2 class="song-card__title">{{ s.title }}</h2>
+        <p class="song-card__meta">
+          <span class="song-card__artist">{{ s.artist }}</span>
+          {% if s.album %}<span class="song-card__sep">&middot;</span><em>{{ s.album }}</em>{% endif %}
+          {% if s.year %}<span class="song-card__sep">&middot;</span>{{ s.year }}{% endif %}
+        </p>
+        {% if s.tags.length %}
+        <div class="song-card__tags">
+          {% for t in s.tags %}<span class="song-card__tag">{{ t }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="song-card__actions">
+        {% if vid %}
+        <button type="button" class="song-card__play" data-vid="{{ vid }}" data-name="{{ s.title | escape }} &mdash; {{ s.artist | escape }}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21"/></svg>
+          Play
+        </button>
+        {% endif %}
+        {% if s.url %}
+        <a href="{{ s.url }}" target="_blank" rel="noopener" class="song-card__link">YouTube &nearr;</a>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <p id="song-empty" class="music-sub__empty" hidden>No songs match your filters.</p>
+</div>
+
+<style>
+.music-sub { padding-top: var(--space-10); padding-bottom: var(--space-20); }
+
+.music-sub__header {
+  max-width: 780px;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 3px solid var(--color-ink);
+}
+.music-sub__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+.music-sub__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+}
+.music-sub__lede {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+  max-width: 62ch;
+}
+.music-sub__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+.music-sub__meta a { color: var(--color-link); }
+
+/* Controls */
+.music-sub__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+.music-sub__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 260px;
+  min-width: 200px;
+  max-width: 460px;
+  padding: 0 var(--space-3);
+  min-height: 44px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-faint);
+}
+.music-sub__search:focus-within { border-color: var(--color-ink); background: var(--color-bg); color: var(--color-ink); }
+.music-sub__search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  min-height: 44px;
+}
+.music-sub__search input:focus { outline: none; }
+.music-sub__search input::placeholder { color: var(--color-ink-faint); font-style: italic; }
+.music-sub__controls select {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+.music-sub__status {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-4);
+  min-height: 1.2em;
+}
+.music-sub__status:empty { display: none; }
+
+.music-sub__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  padding: var(--space-10) 0;
+  text-align: center;
+}
+
+/* Song grid */
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+.song-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-left: 3px solid var(--color-accent);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.song-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+.song-card--hidden { display: none; }
+.song-card__body {
+  flex: 1;
+  padding: var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.song-card__genre {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+.song-card__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  margin: 0;
+  color: var(--color-ink);
+}
+.song-card__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+.song-card__artist { font-weight: 600; }
+.song-card__sep { color: var(--color-ink-faint); margin: 0 var(--space-1); }
+.song-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+.song-card__tag {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+  border: 1px solid var(--color-rule);
+  padding: 2px var(--space-2);
+}
+.song-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-rule);
+}
+.song-card__play {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.song-card__play:hover { background: var(--color-accent); }
+.song-card__play svg { display: block; }
+.song-card__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-link);
+  text-decoration: none;
+  margin-left: auto;
+}
+.song-card__link:hover { text-decoration: underline; }
+</style>
+
+<script>
+(function () {
+  var search = document.getElementById('song-search');
+  var genre  = document.getElementById('song-genre');
+  var tag    = document.getElementById('song-tag');
+  var cards  = document.querySelectorAll('.song-card');
+  var empty  = document.getElementById('song-empty');
+  var status = document.getElementById('song-status');
+
+  function apply() {
+    var q = (search.value || '').toLowerCase().trim();
+    var g = genre.value;
+    var t = tag.value;
+    var n = 0;
+    cards.forEach(function (c) {
+      var okQ = !q || c.dataset.search.indexOf(q) !== -1;
+      var okG = !g || c.dataset.genre === g;
+      var okT = !t || c.dataset.tags.indexOf(t) !== -1;
+      var show = okQ && okG && okT;
+      c.classList.toggle('song-card--hidden', !show);
+      if (show) n++;
+    });
+    if (empty) empty.hidden = n > 0;
+    if (status) {
+      if (!q && !g && !t) status.textContent = '';
+      else status.textContent = n + ' of ' + cards.length + ' song' + (cards.length === 1 ? '' : 's') + ' match.';
+    }
+  }
+
+  search.addEventListener('input', apply);
+  genre.addEventListener('change', apply);
+  tag.addEventListener('change', apply);
+
+  // Wire play buttons to the persistent music player
+  document.querySelectorAll('.song-card__play').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var vid  = btn.getAttribute('data-vid');
+      var name = btn.getAttribute('data-name');
+      if (vid && window.musicPlayer && window.musicPlayer.loadSong) {
+        window.musicPlayer.loadSong(vid, name);
+      }
+    });
+  });
+}());
+</script>

@@ -1,0 +1,55 @@
+date: "2026-03-19"
+title: Public Domain Library launch
+sections:
+  - label: Public Domain Library
+    entries:
+      - New /library/ section launched — curated public domain texts from the freethought tradition
+      - >-
+        Five works published at launch: Common Sense (Paine), Why I Am Not a Christian (Russell), On Liberty (Mill), The
+        Age of Reason (Paine), An Enquiry Concerning Human Understanding (Hume)
+      - Work landing pages with chapter list, reading progress indicators, and Continue Reading detection
+      - Browse by Subject at /library/subjects/ — tag cloud and per-subject work listings
+      - Browse by Author at /library/authors/ — author biographies and collected works
+      - Library column added to site footer
+      - Library navbar dropdown — featured works, Browse by Subject, Browse by Author links
+  - label: Library reader experience
+    entries:
+      - >-
+        All eight article reader tools available on library reading pages: Save, Share, Listen (TTS), Focus, Reading
+        settings, Download, Print, Cite
+      - >-
+        Within-chapter floating table of contents on wide screens (≥1200px) — auto-populated from headings with
+        scroll-spy highlighting
+      - Focus mode on library pages hides the site masthead, leaving the reading header as sole navigation chrome
+      - Sticky reading header with back link, chapter title, Bookmark and Panel toggle
+      - Reading panel with Contents (chapter list), Bookmarks, and Notes tabs
+      - Annotation toolbar for highlighting and note-taking on selected text
+      - Reading progress bar and back-to-top button
+      - Print CSS hides all reading chrome and renders clean text for PDF saving
+      - "Mobile reading overrides: reduced padding, fixed annotation toolbar positioning"
+  - label: Library infrastructure
+    entries:
+      - JSON-LD Book and Chapter structured data on all library pages for schema.org compatibility
+      - Pagefind search indexing for library content with work title and author metadata
+      - >-
+        scripts/split-gutenberg.js — CLI tool to strip Gutenberg boilerplate and split a plain-text source into numbered
+        chapter Markdown files with frontmatter
+      - libraryChapters, libraryByWork, libraryWorks, and libraryFeatured Eleventy collections
+      - Computed data file (src/_data/library/subjects.js) for unique sorted subject list
+  - label: Bug fixes & polish
+    entries:
+      - >-
+        Library index.md files were appearing in chapter lists — Eleventy sets fileSlug to empty string for index files,
+        defeating the prior regex filter; fixed by filtering on inputPath instead
+      - >-
+        Enquiry section TOC showed duplicate numbers (chapterNumber + 'Section N:' in title) — stripped numeric prefix
+        from all 12 section titles
+      - >-
+        Library navbar dropdown appeared at far left — drawer.js keys array was missing 'library', so positionDropdown()
+        was never called for it
+      - >-
+        Library within-chapter TOC appeared even with no headings — CSS display:block overrides the browser's [hidden]
+        attribute; fixed with :not([hidden]) selector
+      - >-
+        Switched from Google Fonts to Bunny Fonts — same typefaces, privacy-friendly CDN, no tracking; moved from
+        @import in CSS to <link> in <head>

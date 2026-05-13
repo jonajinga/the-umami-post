@@ -1,0 +1,95 @@
+date: "2026-03-18"
+title: Launch sprint
+sections:
+  - label: Intellectual projects
+    entries:
+      - >-
+        Four new project sections launched: The Freethought Glossary (/glossary/), The Thought Experiment Library
+        (/thought-experiments/), The Freethinker's Bookshelf (/bookshelf/), The Trials of Thought (/trials/)
+      - >-
+        34 content files written: 11 glossary terms, 5 thought experiment essays, 11 annotated bookshelf entries, 7
+        trial essays
+      - Glossary terms include etymology, key figures, related terms, and A–Z browse sidebar
+      - Bookshelf entries include category, difficulty, best-for metadata, and annotated prose
+      - Trials timeline spans 399 BCE to present — integer year field (negative for BCE) drives chronological ordering
+  - label: Article reader tools
+    entries:
+      - Word count displayed next to reading time in the article byline
+      - Download button — exports article as plain text (.txt) or Markdown (.md)
+      - >-
+        Reading settings panel — font size slider (14–24 px) and font choice (Serif / Sans / OpenDyslexic); preferences
+        persisted in localStorage
+      - OpenDyslexic font loaded on demand from CDN when selected
+      - Surprise Me button in masthead — redirects to a random article
+      - >-
+        Article action buttons reorganised by purpose: Save → Share → Listen → Focus → Reading settings → Download →
+        Print → Cite
+  - label: Reader experience
+    entries:
+      - Reading time on every article, calculated from word count at build time; displayed on all article cards
+      - "Reading time filter on section pages: All / Short reads (<5 min) / Long reads (>15 min)"
+      - Reading progress bar on article pages; stops at end of article body
+      - Back to top button appears after scrolling 400 px
+      - Table of contents auto-generated from h2/h3 headings with scroll-spy highlighting
+      - Heading anchor links on h2/h3 — link icon on hover for deep-linking to any section
+      - Focus / reading mode — wider margins, larger type, sidebar hidden, persisted in localStorage
+      - "Read aloud (Web Speech API): play/pause/stop, speed presets (0.75×–2×), voice selector"
+      - Pullquote sharing — select any text in an article body, share via Web Share API or clipboard
+      - Related articles ranked by shared tags with section fallback
+      - Article series support with numbered parts and previous/next navigation
+  - label: Publishing & editorial
+    entries:
+      - "Share panel: X/Twitter, Facebook, LinkedIn, Reddit, Bluesky, Mastodon, copy link, email"
+      - Cite this source modal — APA, MLA, and Chicago formats with one-click copy
+      - Reading list — browser-based bookmarking, no account required; accessible at /reading-list/
+      - Corrections log — articles carry corrections in front matter; aggregate view at /corrections/
+      - Annotation footnotes via shortcode — inline tooltip, no jump to page bottom
+      - Argument map — structured Claim → Evidence → Conclusion box for opinion pieces
+      - Inter-article response system — responseTo front matter links articles with banners on both
+      - Edition format — articles belong to numbered editions, browsable at /editions/
+      - Dates on articles and cards link to /archives/#YYYY-MM-DD
+      - Suggest a correction — mailto link on every article
+      - /start-here/ page — curated entry point for new readers
+      - /editorial/ handbook — public standards covering accuracy, sourcing, corrections, AI use, and complaints
+      - /documents/ section — primary source library for FOIA responses and public records
+      - Contributors / authors index at /contributors/ with bio cards and article links
+      - Per-author RSS feeds at /feeds/[author-slug].xml with link autodiscovery
+      - Site changelog at /changelog/, backed by src/_data/changelog.json
+  - label: Site & infrastructure
+    entries:
+      - Full-site search via Pagefind with section filter bar
+      - "Progressive Web App: web manifest, cache-first service worker, offline fallback at /offline.html"
+      - JSON-LD NewsArticle structured data in every article — improves Google Top Stories eligibility
+      - Open Graph social card images auto-generated per article at build time
+      - Umami privacy-first analytics installed
+      - "Pansy favicon: SVG at 16 px; pansy icon in footer and masthead page"
+      - GTranslate floating widget — nine languages, dark mode corrected, publication nameplate protected
+      - Comments section (Cusdis) — dark mode synced, card-style layout
+      - Games section at /games/ — Fifteen Puzzle, Freethinking Trivia, Word Scramble, Crossy Road variant
+      - "Footer restructured into four columns: Sections, About, Transparency, Reader Tools"
+      - Print CSS suppresses nav, sidebar, interactive elements, and all non-essential chrome
+      - Header and footer span full viewport width; masthead converted from absolute to flex layout
+      - "Mobile navigation: section nav collapses on small screens, subscribe form stacks correctly"
+      - Site URL corrected to https://thefreethinkingtimes.com — fixes canonical links, OG images, RSS
+  - label: SEO & discoverability
+    entries:
+      - XML sitemap at /sitemap.xml — all articles and key static pages with lastmod dates
+      - Google News sitemap at /news-sitemap.xml — news:news namespace with publication, language, date, title
+      - robots.txt — allows all crawlers including Googlebot-News; declares both sitemaps
+      - >-
+        OG article meta tags: article:published_time, article:modified_time, article:author, article:section,
+        article:tag
+      - news_keywords meta tag on article pages — comma-separated tags
+      - Sitemap link added to footer Reader Tools column
+      - Backlinks — each article shows other articles that link to it, discovered at build time
+  - label: Bug fixes & polish
+    entries:
+      - "Header scroll stutter resolved — dual watermark hysteresis: 10 px down to compact, 30 px up to restore"
+      - slugify filter hardened against undefined input — resolves build crash on tag pages
+      - Article header given stacking context so dropdown panels float above article body
+      - >-
+        All article action buttons given explicit background and appearance: none to eliminate cross-browser rendering
+        differences
+      - All dropdown panels harmonised to the same background token
+      - Section badge links fixed — Science & Technology and Arts & Culture now resolve correctly
+      - Freethinkers Map removed; Submit button removed from masthead

@@ -1,0 +1,404 @@
+---
+layout: base
+title: "Message Received"
+description: Your message has been received. Here's what happens next.
+permalink: /thank-you/
+eleventyExcludeFromCollections: true
+---
+
+<div class="container ty-page">
+  <div class="ty-wrap">
+
+    {# ── Hero ── #}
+    <header class="ty-hero">
+      <span class="ty-hero__check" aria-hidden="true">
+        <svg viewBox="0 0 52 52" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="26" cy="26" r="24" stroke-width="2" opacity="0.25"/>
+          <path d="M14 27l8 8 16-18" class="ty-hero__check-path"/>
+        </svg>
+      </span>
+      <p class="ty-hero__kicker">Received</p>
+      <h1 class="ty-hero__title">Your message is in good hands.</h1>
+      <p class="ty-hero__lede">
+        Thank you for writing. Every message is read by an editor, not a bot, not a template filter.
+      </p>
+    </header>
+
+    {# ── What happens next ── #}
+    <section class="ty-steps" aria-label="What happens next">
+      <h2 class="ty-section__heading">What happens next</h2>
+      <ol class="ty-steps__list">
+        <li class="ty-step">
+          <span class="ty-step__num" aria-hidden="true">1</span>
+          <div class="ty-step__body">
+            <p class="ty-step__title">An editor reads it</p>
+            <p class="ty-step__desc">Usually within one business day. We read in the order received.</p>
+          </div>
+        </li>
+        <li class="ty-step">
+          <span class="ty-step__num" aria-hidden="true">2</span>
+          <div class="ty-step__body">
+            <p class="ty-step__title">We decide if it needs a reply</p>
+            <p class="ty-step__desc">Questions and correction requests always get a response. Tips and feedback are logged even when we don&rsquo;t write back.</p>
+          </div>
+        </li>
+        <li class="ty-step">
+          <span class="ty-step__num" aria-hidden="true">3</span>
+          <div class="ty-step__body">
+            <p class="ty-step__title">If a reply is coming, it&rsquo;s from a person</p>
+            <p class="ty-step__desc">Expect an email within a few business days, signed by the editor who picked it up.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    {# ── Subscribe card, matches site subscribe-block pattern ── #}
+    <aside class="ty-subscribe" aria-label="Subscribe to the newsletter">
+      <p class="ty-subscribe__eyebrow">While you&rsquo;re here</p>
+      <h2 class="ty-subscribe__heading">Get our next piece in your inbox</h2>
+      <p class="ty-subscribe__body">One email, occasionally. No tracking pixels, no third-party data sharing, unsubscribe with one click.</p>
+      <form class="ty-form subscribe-form" data-action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" novalidate>
+        <label for="ty-subscribe-email" class="visually-hidden">Your email address</label>
+        <input
+          class="ty-form__input subscribe-form__input"
+          id="ty-subscribe-email"
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required>
+        <button class="ty-form__btn subscribe-form__btn" type="submit">Subscribe</button>
+      </form>
+      <div class="subscribe-status ty-subscribe__status" role="alert" aria-live="polite"></div>
+    </aside>
+
+    {# ── Read next grid, matches .article-card editorial pattern ── #}
+    <section class="ty-next" aria-label="Read next">
+      <h2 class="ty-section__heading">Read next</h2>
+      <div class="ty-next__grid">
+
+        <article class="ty-next__card">
+          <p class="ty-next__eyebrow">
+            <span class="section-badge section-badge--news">Orientation</span>
+          </p>
+          <a href="/start-here/" class="ty-next__headline">Start here</a>
+          <p class="ty-next__dek">What this publication is, who pays for it, and how it works.</p>
+        </article>
+
+        <article class="ty-next__card">
+          <p class="ty-next__eyebrow">
+            <span class="section-badge section-badge--analysis">Policy</span>
+          </p>
+          <a href="/editorial/" class="ty-next__headline">Editorial handbook</a>
+          <p class="ty-next__dek">Our standards for accuracy, sourcing, corrections, and tone.</p>
+        </article>
+
+        <article class="ty-next__card">
+          <p class="ty-next__eyebrow">
+            <span class="section-badge section-badge--history">Deep reading</span>
+          </p>
+          <a href="/library/" class="ty-next__headline">The library</a>
+          <p class="ty-next__dek">Public-domain works of freethought, philosophy, and dissent.</p>
+        </article>
+
+        <article class="ty-next__card">
+          <p class="ty-next__eyebrow">
+            <span class="section-badge section-badge--opinion">Everything</span>
+          </p>
+          <a href="/archives/" class="ty-next__headline">Browse archives</a>
+          <p class="ty-next__dek">Search and filter by section, author, and year.</p>
+        </article>
+
+      </div>
+    </section>
+
+    {# ── Quick links ── #}
+    <nav class="ty-quicklinks" aria-label="Quick links">
+      <a href="/">Home</a>
+      <span class="ty-quicklinks__sep" aria-hidden="true">&middot;</span>
+      <a href="/corrections/">Corrections log</a>
+      <span class="ty-quicklinks__sep" aria-hidden="true">&middot;</span>
+      <a href="/contact/">Contact desk</a>
+      <span class="ty-quicklinks__sep" aria-hidden="true">&middot;</span>
+      <a href="/random/">Surprise me</a>
+    </nav>
+
+  </div>
+</div>
+
+<style>
+.ty-page { padding-block: clamp(var(--space-10), 7vw, var(--space-20)); }
+.ty-wrap { max-width: 720px; margin-inline: auto; }
+
+/* ── Hero ── */
+.ty-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+}
+.ty-hero__check {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  color: var(--color-accent);
+  margin-bottom: var(--space-5);
+}
+.ty-hero__check svg { width: 64px; height: 64px; }
+.ty-hero__check-path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: ty-draw 0.6s ease-out 0.2s forwards;
+}
+@keyframes ty-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ty-hero__check-path { animation: none; stroke-dashoffset: 0; }
+}
+.ty-hero__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+.ty-hero__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+  max-width: 18ch;
+}
+.ty-hero__lede {
+  font-family: var(--font-body);
+  font-size: clamp(var(--text-md), 2vw, var(--text-lg));
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 52ch;
+  margin: 0 auto;
+}
+
+/* ── Section heading (small label above sections) ── */
+.ty-section__heading {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-6);
+  border-bottom: 2px solid var(--color-ink);
+}
+
+/* ── Steps ── */
+.ty-steps { margin-bottom: clamp(var(--space-10), 6vw, var(--space-16)); }
+.ty-steps__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-6);
+}
+.ty-step {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: var(--space-4);
+  align-items: start;
+}
+.ty-step__num {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 50%;
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: var(--text-md);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  line-height: 1;
+}
+.ty-step__body { padding-top: 4px; /* optical alignment with circle */ }
+.ty-step__title {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: var(--text-md);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-1);
+  line-height: var(--leading-snug);
+}
+.ty-step__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ── Subscribe block, borderless, matches site .subscribe-block pattern ── */
+.ty-subscribe {
+  padding: var(--space-8) 0;
+  margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+  border-top: 3px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-rule);
+}
+.ty-subscribe__eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-2);
+}
+.ty-subscribe__heading {
+  font-family: var(--font-headline);
+  font-size: clamp(var(--text-lg), 2.6vw, var(--text-xl));
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: var(--leading-snug);
+  margin: 0 0 var(--space-3);
+  max-width: 22ch;
+}
+.ty-subscribe__body {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-4);
+  max-width: 55ch;
+}
+
+/* Inline form, clean, borderless wrapper, just the input + submit */
+.ty-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+  border: 1px solid var(--color-ink);
+  background: var(--color-bg);
+  max-width: 460px;
+}
+.ty-form__input.ty-form__input {
+  border: none;
+  background: transparent;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  min-height: 44px;
+}
+.ty-form__input:focus { outline: none; box-shadow: none; }
+.ty-form__input::placeholder { color: var(--color-ink-faint); font-style: italic; }
+.ty-form__btn.ty-form__btn {
+  border: none;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 var(--space-5);
+  min-height: 44px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.ty-form__btn:hover,
+.ty-form__btn:focus-visible {
+  background: var(--color-accent);
+  color: #fff;
+  outline: none;
+}
+@media (max-width: 480px) {
+  .ty-form { grid-template-columns: 1fr; }
+  .ty-form__btn { padding-block: var(--space-3); }
+}
+.ty-subscribe__status:empty { display: none; }
+.ty-subscribe__status {
+  margin-top: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+/* ── Read next grid, uses .article-card editorial pattern ── */
+.ty-next { margin-bottom: var(--space-12); }
+.ty-next__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-6);
+}
+@media (max-width: 640px) {
+  .ty-next__grid { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+.ty-next__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+.ty-next__eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.ty-next__headline {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+  text-decoration: none;
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+.ty-next__headline:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.ty-next__dek {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+/* ── Quick links ── */
+.ty-quicklinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-rule);
+}
+.ty-quicklinks a {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
+  padding: var(--space-2) var(--space-1);
+}
+.ty-quicklinks a:hover { color: var(--color-ink); text-decoration: underline; }
+.ty-quicklinks__sep { color: var(--color-rule); }
+@media (max-width: 480px) {
+  .ty-quicklinks__sep { display: none; }
+  .ty-quicklinks {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .ty-quicklinks a { width: 100%; text-align: center; padding-block: var(--space-2); }
+}
+</style>

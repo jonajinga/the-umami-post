@@ -1,0 +1,26 @@
+---
+permalink: /editorial-calendar/calendar.ics
+eleventyExcludeFromCollections: true
+---
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Freethinking Times//Editorial Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:{{ site.title }} — Editorial Calendar
+X-WR-CALDESC:Publish dates for every article in {{ site.title }}.
+{% for item in collections.allContent -%}
+{%- set _ts = item.date | htmlDateString | replace("-", "") -%}
+{%- set _summary = (item.data.section or "Article") + ": " + (item.data.title or "(untitled)") -%}
+{%- set _summary = _summary | replace("\\", "\\\\") | replace(",", "\\,") | replace(";", "\\;") | replace("\n", "\\n") -%}
+{%- set _desc = (item.data.description or "") | replace("\\", "\\\\") | replace(",", "\\,") | replace(";", "\\;") | replace("\n", "\\n") -%}
+BEGIN:VEVENT
+UID:{{ item.url | urlencode }}@thefreethinkingtimes
+DTSTAMP:{{ _ts }}T000000Z
+DTSTART;VALUE=DATE:{{ _ts }}
+SUMMARY:{{ _summary }}
+DESCRIPTION:{{ _desc }}
+URL:{{ site.url }}{{ item.url }}
+END:VEVENT
+{% endfor -%}
+END:VCALENDAR

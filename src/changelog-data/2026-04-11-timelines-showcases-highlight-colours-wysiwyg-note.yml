@@ -1,0 +1,50 @@
+date: "2026-04-11"
+title: Timelines, showcases, highlight colours, WYSIWYG notes, submission forms, hub pages
+sections:
+  - label: Timelines & showcases
+    entries:
+      - >-
+        Freethought Timeline rebuilt as vertical alternating CSS timeline with era markers, scroll-reveal animation, and
+        era filter
+      - >-
+        Timeline Showcase at /timeline/showcase/ — full-screen screensaver cycling through events with auto-advance
+        (12s)
+      - >-
+        Quotes Timeline at /quotes/timeline/ — quotes arranged chronologically with years extracted from source
+        citations
+      - Bookshelf Timeline at /bookshelf/timeline/ — annotated bookshelf entries in chronological order
+      - Trials of Thought Timeline at /trials/timeline/ — landmark trials from 399 BCE to 1989
+      - Trials Showcase at /trials/showcase/ — full-screen screensaver cycling through trial events (15s)
+      - Shared timeline CSS partial for consistent styling across all timeline pages
+  - label: Highlights & notes
+    entries:
+      - "6 highlight colours: yellow, pink, blue, green, orange, purple — colour picker popup on highlight button"
+      - Highlight colours adapt to all themes (light, dark, sepia, cream) with per-theme CSS
+      - WYSIWYG note editor replaces prompt() dialog — formatting toolbar (bold, italic, lists, quotes, links)
+      - Notes render as rich text in the reader panel (was plain text)
+      - "Reading ruler: customisable thickness (1–8px), 7 colours, 4 styles (solid, dashed, dotted, glow)"
+      - Ruler fixed at 40% viewport on mobile (was following finger on scroll)
+      - Ruler hides during text selection, reappears when deselected
+      - Highlight and note features enabled on library pages (was article-only)
+  - label: Submission forms
+    entries:
+      - >-
+        6 new submission forms: timeline entry, book recommendation, public domain text, glossary term, trial, thought
+        experiment
+      - Submit hub page at /submit/ — card grid linking to all 10 submission forms
+      - >-
+        Submit links added to all section index pages (timeline, glossary, bookshelf, library, trials, thought
+        experiments)
+  - label: Hub pages
+    entries:
+      - Explore hub at /explore/ — links to Library, Quotes, Videos, Timeline, Games, Resources
+      - Transparency hub at /transparency/ — links to Features, Stack, Changelog, Corrections, Open Source
+      - Legal hub at /legal/ — links to Privacy, Terms, Cookies, Accessibility, Guidelines, Site Map
+      - Reader Tools hub at /reader-tools/ — links to Search, Notes, Reading List, Archives, etc.
+      - Community Guidelines at /community-guidelines/ — comment standards with link from article comments
+  - label: Footer & typography
+    entries:
+      - "Footer restructured: brand row + 5-column grid (two rows), all 9 sections separate"
+      - Footer section headings link to their hub pages
+      - instant.page added for near-instant navigation via hover prefetch
+      - "Base font sizes increased: --text-xs 10px→12px, --text-sm 13px→14px"

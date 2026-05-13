@@ -1,0 +1,96 @@
+---
+layout: base
+title: Language
+description: How to read The Freethinking Times in your language, translation options, how it works, and privacy information.
+permalink: /language/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Language</h1>
+    <p class="page-header__lede">
+      Read {{ site.title }} in your preferred language.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#how-to-translate">How to translate</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#supported-languages">Supported languages</a>
+      <a href="#quality">Quality</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#disabling">Disabling translation</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="how-to-translate">How to translate</h2>
+
+      <p>Use the language selector in the navigation menu to translate any page into your preferred language. The translation happens instantly in your browser.</p>
+
+      <p>You can also use the selector below:</p>
+
+      <div style="margin: var(--space-6) 0;">
+        <div class="gtranslate_wrapper"></div>
+      </div>
+
+      <h2 id="how-it-works">How it works</h2>
+
+      <p>We use <a href="https://gtranslate.io" target="_blank" rel="noopener noreferrer">GTranslate</a>, a third-party translation service. When you select a language:</p>
+
+      <ol>
+        <li>The GTranslate widget loads a small script from <code>cdn.gtranslate.net</code></li>
+        <li>The page content is sent to Google Translate for processing</li>
+        <li>The translated text replaces the original on your screen</li>
+        <li>Your language preference is remembered for future visits</li>
+      </ol>
+
+      <h2 id="supported-languages">Supported languages</h2>
+
+      <p>Over 100 languages are supported, including Arabic, Chinese (Simplified and Traditional), French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish, and many more.</p>
+
+      <h2 id="quality">Quality</h2>
+
+      <p>Machine translation has improved dramatically but is not perfect. Nuances, idioms, and rhetorical style may not translate precisely. For the most accurate reading experience, we recommend English where possible. Our library texts (Ingersoll, Paine, Hume, Mill, Russell) were written in English and are best experienced in the original.</p>
+
+      <h2 id="privacy">Privacy</h2>
+
+      <p>When you use the translation feature:</p>
+
+      <ul>
+        <li>The GTranslate script is loaded from <code>cdn.gtranslate.net</code> (a third-party CDN)</li>
+        <li><strong>Google Translate</strong> processes the page content for translation</li>
+        <li>Both GTranslate and Google may receive your IP address and the page content</li>
+        <li>We do not control what data Google or GTranslate collect during translation</li>
+        <li>If you do not use the translation feature, no data is sent to these services</li>
+      </ul>
+
+      <p>For full details, see our <a href="/privacy/">Privacy Policy</a>.</p>
+
+      <h2 id="disabling">Disabling translation</h2>
+
+      <p>To return to English at any time, select "English" from the language dropdown. To prevent the translation script from loading entirely, you can use a browser extension that blocks third-party scripts from <code>cdn.gtranslate.net</code>.</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

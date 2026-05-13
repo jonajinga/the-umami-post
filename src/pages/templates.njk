@@ -1,0 +1,414 @@
+---
+layout: base
+title: "Content Templates"
+description: "See exactly what we expect when you pitch an article, ready-to-use Markdown templates for every content type we publish."
+permalink: /templates/
+---
+
+{% set today = "" %}{% set today %}{{ "now" | readableDate }}{% endset %}
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <h1 class="page-header__title">Content Templates</h1>
+      <p class="page-header__lede">
+        Here's exactly what we expect when you pitch an article. Start from any of these templates, fill in your content, and paste it into your editor or Decap CMS.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <p>These are the starting points for every content type we publish. Each template shows the required front matter fields, the structure we find works well, and what belongs in each section. The prose in italics is guidance, replace it with your actual writing.</p>
+
+      <p>If you're writing for us: read our <a href="/contribute/">contributor guidelines</a> and <a href="/ethics/">editorial ethics</a> first, then pick the template that matches what you're pitching.</p>
+
+    </div>
+
+    <div id="tmpl-list" style="display:flex;flex-direction:column;gap:var(--space-6);margin-top:var(--space-10);"></div>
+
+    <div id="tmpl-toast" hidden style="position:fixed;bottom:var(--space-8);left:50%;transform:translateX(-50%);background:var(--color-ink);color:var(--color-bg);font-family:var(--font-ui);font-size:var(--text-sm);padding:var(--space-2) var(--space-6);z-index:var(--z-modal);border-radius:var(--radius-md);">Copied to clipboard</div>
+
+  </div>
+</div>
+
+<style>
+.tmpl-card {
+  border: 1px solid var(--color-rule);
+  border-top: 3px solid var(--color-ink);
+  padding: var(--space-6);
+}
+.tmpl-card[open] {
+  border-top-color: var(--color-accent);
+}
+.tmpl-card > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+.tmpl-card > summary::-webkit-details-marker { display: none; }
+.tmpl-card__heading {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin: 0;
+  line-height: var(--leading-snug);
+}
+.tmpl-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin: var(--space-2) 0 0;
+  line-height: var(--leading-normal);
+}
+.tmpl-card__toggle {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tmpl-card[open] .tmpl-card__toggle::before { content: "Hide"; }
+.tmpl-card:not([open]) .tmpl-card__toggle::before { content: "Show"; }
+.tmpl-card__body {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-rule);
+}
+.tmpl-card__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.tmpl-card pre {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  padding: var(--space-4);
+  overflow-x: auto;
+  font-family: var(--font-ui), monospace;
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  white-space: pre;
+  color: var(--color-ink);
+}
+.tmpl-card code { font-family: inherit; background: none; padding: 0; }
+</style>
+
+<script>
+(function () {
+  var today = new Date().toISOString().slice(0, 10);
+
+  // Reusable front-matter snippets so every template surfaces every
+  // optional field. `commonFm()` returns the standard "everything an
+  // author can use" block; per-template we only override section /
+  // subsection options and any genre-specific fields (mediaType,
+  // rating, profile, etc.). Comment lines starting with `# ` are
+  // guidance the author can keep or delete.
+  function commonFm(opts) {
+    return [
+      '---',
+      'layout: article',
+      'title: ""',
+      'description: ""',
+      'section: ' + opts.section,
+      'subsection: ""              # ' + (opts.subsections || 'optional, e.g. "Local", "Politics"'),
+      'author: your-slug           # must match a key in src/_data/authors-data',
+      'authorName: "Your Name"     # display override; remove to use authors-data name',
+      'date: ' + today,
+      '# location: "City, State"  # dateline; surfaced in the byline row',
+      '# edition: 1                 # group this piece into edition N',
+      '# cover_image: "/assets/img/articles/your-slug-cover.jpg"  # OG card override',
+      '# featured: false            # set true to surface on the homepage hero strip',
+      '# syndicate: false           # set false to hide the CC BY-NC-ND grab-code on this piece',
+      '# profile: ""                # "podcast" | "datavisualization" | "" (default)',
+      '# audioUrl: ""               # required when profile is "podcast"',
+      '# embedUrl: ""               # required when profile is "datavisualization"',
+      '# lastUpdated: ' + today + '  # bump when you make a substantive edit; surfaces "Updated"',
+      '# inResponseTo: "/section/original-slug/"  # URL of a piece this directly responds to',
+      'tags:                       # cross-cutting topics; lower-case, drive /topics/ pages',
+      '  -',
+      '  -',
+      '# corrections:',
+      '#   - date: ' + today,
+      '#     description: "Original copy said X; updated to say Y."',
+      'draft: true                 # remove or set false when ready to publish',
+      'status: draft               # editorial workflow status',
+      '---',
+      ''
+    ].join('\n');
+  }
+
+  // Inline shortcode examples \u2014 the author can copy these into the body.
+  var SHORTCODES_EXAMPLES = [
+    '{# \u2500 Inline shortcodes you can use anywhere in the body \u2500 #}',
+    '',
+    '{# Footnote: superscript number, hover/tap to reveal full text. #}',
+    '{# Each footnote is collected into the article footer + the     #}',
+    '{# Reader panel\'s Footnotes tab.                                #}',
+    '{% raw %}Some claim that needs sourcing.{% fn 1 %}Author, *Book Title* (Publisher, 2024), p. 42.{% endfn %}{% endraw %}',
+    '',
+    '{# Pull quote: visually emphasised quotation lifted from body.  #}',
+    '{% raw %}{% pullquote "A short, punchy quotation that distils the argument." "Optional attribution" %}{% endraw %}',
+    ''
+  ].join('\n');
+
+  var templates = [
+    {
+      id: "news",
+      title: "News Article",
+      desc: "Breaking news or reported story. Inverted-pyramid structure: most important facts first, context and analysis later. Includes every optional front-matter field commented in.",
+      body:
+commonFm({ section: 'News', subsections: '"U.S.", "World", "Politics", "Local", "Climate", "Education", "Health"' }) +
+'**CITY** \u2014 Lead paragraph with the most important information first. Who, what, when, where, why.{% raw %}{% fn 1 %}Source attribution for the lead.{% endfn %}{% endraw %}\n\
+\n\
+## Background\n\
+\n\
+Context and history that helps the reader understand the significance.\n\
+\n\
+{% raw %}{% pullquote "A vivid sentence from the reporting that frames the stakes." "Source title" %}{% endraw %}\n\
+\n\
+## What happened\n\
+\n\
+Detailed account of events in chronological order.\n\
+\n\
+## What it means\n\
+\n\
+Analysis of implications and what to watch for next.\n\
+\n\
+## Sources\n\
+\n\
+- Source 1\n\
+- Source 2\n'
+    },
+    {
+      id: "opinion",
+      title: "Opinion / Essay",
+      desc: "Argument-driven essay. State your thesis, present evidence, address the strongest counterargument, restate in light of what you've shown.",
+      body:
+commonFm({ section: 'Opinion', subsections: '"Editorials", "Columns", "Guest Essays"' }) +
+'*Thesis statement in one or two sentences. What are you arguing, and why does it matter?*\n\
+\n\
+## The problem\n\
+\n\
+Describe the issue clearly and fairly. Steel-man the opposing view.\n\
+\n\
+{% raw %}{% pullquote "The single sentence that captures the argument." "\u2014" %}{% endraw %}\n\
+\n\
+## The evidence\n\
+\n\
+Present your evidence. Be specific. Cite sources with footnotes:{% raw %}{% fn 1 %}Author, *Source*, year, page.{% endfn %}{% endraw %}\n\
+\n\
+## The counterargument\n\
+\n\
+Address the strongest objection to your position.\n\
+\n\
+## Conclusion\n\
+\n\
+Restate your argument in light of the evidence. What should change?\n'
+    },
+    {
+      id: "analysis",
+      title: "Long-form Analysis",
+      desc: "Deep-dive investigation with sections, evidence, and explicit methodology. Use footnotes liberally so readers can verify; pullquotes for vivid lifts.",
+      body:
+commonFm({ section: 'Analysis', subsections: '"Data", "Explainers", "Context", "Deep Dives"' }) +
+'Introduction. What question does this piece investigate? Why does it matter now?{% raw %}{% fn 1 %}Original tip or reporting that prompted the investigation.{% endfn %}{% endraw %}\n\
+\n\
+## Background\n\
+\n\
+Historical context and prior reporting.\n\
+\n\
+{% raw %}{% pullquote "A finding worth surfacing visually before the reader hits the section it lives in." "Internal note" %}{% endraw %}\n\
+\n\
+## Findings\n\
+\n\
+Present what you found, organized by theme or chronology.\n\
+\n\
+## Analysis\n\
+\n\
+What do the findings mean? What patterns emerge?\n\
+\n\
+## Implications\n\
+\n\
+What are the consequences? Who is affected? What should happen next?\n\
+\n\
+## Methodology\n\
+\n\
+How did you conduct your investigation? What sources did you use? Be explicit about limits and what you couldn\'t answer.\n'
+    },
+    {
+      id: "review",
+      title: "Book / Film / Podcast Review",
+      desc: "Honest assessment with rating. Brief summary (no spoilers), what works, what doesn't, who it's for, verdict.",
+      body:
+commonFm({ section: 'Reviews', subsections: '"Books", "Film", "Music", "Television", "Podcasts", "Theater"' }).replace('---\n\n', [
+  '# Review-only fields \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500',
+  'mediaType: Book              # Book | Film | Music | Television | Podcast | Theater',
+  'creator: ""                  # Author / director / artist',
+  'year:                        # Year of release',
+  'rating:                      # 1\u20135 stars',
+  '---',
+  ''
+].join('\n')) +
+'**Title** by *Creator* (Year). Publisher.\n\
+\n\
+## Summary\n\
+\n\
+What is this work about? (No spoilers.)\n\
+\n\
+{% raw %}{% pullquote "A line from the work, or a sentence summing up its central insight." "Page 42" %}{% endraw %}\n\
+\n\
+## What works\n\
+\n\
+Strengths of the work.{% raw %}{% fn 1 %}Specific passage or example.{% endfn %}{% endraw %}\n\
+\n\
+## What doesn\'t\n\
+\n\
+Weaknesses or missed opportunities.\n\
+\n\
+## Who should read this\n\
+\n\
+Target audience and what they will get from it.\n\
+\n\
+## Verdict\n\
+\n\
+One-paragraph assessment.\n'
+    },
+    {
+      id: "response",
+      title: "Response to a Piece",
+      desc: "Article that directly responds to one we (or someone else) published. Wires the inResponseTo link so the original surfaces a 'Responses to this piece' callout pointing back at you.",
+      body:
+commonFm({ section: 'Opinion', subsections: '"Letters to the Editor", "Guest Essays"' }).replace('# inResponseTo: "/section/original-slug/"  # URL of a piece this directly responds to', 'inResponseTo: "/section/original-slug/"  # canonical path on this site OR full external URL') +
+'**Re: "[Original Article Title]({{ inResponseTo or \'/path/to/original/\' }})" by Original Author** ({{ "now" | readableDate }})\n\
+\n\
+*One-paragraph summary of what the original argued and where you agree or disagree.*\n\
+\n\
+## Where the original gets it right\n\
+\n\
+Steel-man, briefly, before pushing back.\n\
+\n\
+## Where I disagree\n\
+\n\
+Your actual argument. Be specific about which claim, in which paragraph.\n\
+\n\
+{% raw %}{% pullquote "The crux of your disagreement, distilled to one sentence." "\u2014" %}{% endraw %}\n\
+\n\
+## What I think follows\n\
+\n\
+The implications if your reading is right.\n'
+    },
+    {
+      id: "interview",
+      title: "Interview / Q&A",
+      desc: "Structured conversation. Brief introduction, Q&A block, standard edit note. Keep questions short; let the subject do the talking.",
+      body:
+commonFm({ section: 'News', subsections: '"Politics", "World", "Culture"' }) +
+'*Introduction: who is the subject, why this conversation matters, and how it came about.*\n\
+\n\
+---\n\
+\n\
+**Q: Opening question \u2014 broad, sets the context.**\n\
+\n\
+**A:** Response.\n\
+\n\
+**Q: Follow-up \u2014 more specific.**\n\
+\n\
+**A:** Response.{% raw %}{% fn 1 %}Background context the reader needs to evaluate the answer.{% endfn %}{% endraw %}\n\
+\n\
+**Q: The hard question.**\n\
+\n\
+**A:** Response.\n\
+\n\
+{% raw %}{% pullquote "The most quotable line from the conversation, lifted to anchor the piece." "Subject Name" %}{% endraw %}\n\
+\n\
+**Q: Closing \u2014 forward-looking or reflective.**\n\
+\n\
+**A:** Response.\n\
+\n\
+---\n\
+\n\
+*This interview has been edited for length and clarity.*\n'
+    },
+    {
+      id: "letter",
+      title: "Letter to the Editor",
+      desc: "Short response to something we published. Quote or link to the original, make your point clearly, sign off with your name and city.",
+      body:
+commonFm({ section: 'Letters', subsections: '"Letters to the Editor"' }).replace('# inResponseTo: "/section/original-slug/"  # URL of a piece this directly responds to', 'inResponseTo: "/section/original-slug/"  # the article being responded to') +
+'**Re: "[Original Article Title]({{ inResponseTo or \'/path/to/original/\' }})"**\n\
+\n\
+Dear Editors,\n\
+\n\
+Your letter text here. Reference the original article and make your point clearly.\n\
+\n\
+*\u2014 Reader Name, City*\n'
+    },
+    {
+      id: "correction",
+      title: "Correction Demo (front-matter only)",
+      desc: "How to log a correction on an existing piece. Add a `corrections:` block to the article's front matter; the corrections log renders automatically in the article footer and on /corrections/.",
+      body:
+'---\n\
+# Add this block to an existing article\'s front matter to log a correction.\n\
+# The correction surface auto-renders at the bottom of the article and is\n\
+# pulled into the public /corrections/ feed. Bump `lastUpdated` whenever you\n\
+# add a correction so readers see the article was edited.\n\
+lastUpdated: ' + today + '\n\
+corrections:\n\
+  - date: ' + today + '\n\
+    description: "An earlier version of this article said X. The correct figure is Y; the source has been re-checked. The piece has been updated."\n\
+  - date: ' + today + '\n\
+    description: "An earlier version misspelled the subject\'s name as Smyth. The correct spelling is Smith."\n\
+---\n'
+    },
+    {
+      id: "shortcodes",
+      title: "Inline Shortcodes Reference",
+      desc: "Copyable examples of every inline shortcode an author can drop into the body \u2014 footnotes, pullquotes \u2014 with the exact syntax.",
+      body: SHORTCODES_EXAMPLES
+    }
+  ];
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  var list = document.getElementById('tmpl-list');
+  list.innerHTML = templates.map(function (t) {
+    return '<details class="tmpl-card" id="tmpl-' + t.id + '">' +
+      '<summary>' +
+        '<div>' +
+          '<h2 class="tmpl-card__heading">' + esc(t.title) + '</h2>' +
+          '<p class="tmpl-card__desc">' + esc(t.desc) + '</p>' +
+        '</div>' +
+        '<span class="tmpl-card__toggle"></span>' +
+      '</summary>' +
+      '<div class="tmpl-card__body">' +
+        '<div class="tmpl-card__actions">' +
+          '<button type="button" class="btn btn--accent tmpl-copy" data-id="' + t.id + '" style="font-size:var(--text-xs);">Copy Markdown</button>' +
+          '<a href="/submit/" class="btn" style="font-size:var(--text-xs);">Pitch this &rarr;</a>' +
+        '</div>' +
+        '<pre><code>' + esc(t.body) + '</code></pre>' +
+      '</div>' +
+    '</details>';
+  }).join('');
+
+  var toast = document.getElementById('tmpl-toast');
+  document.querySelectorAll('.tmpl-copy').forEach(function (btn) {
+    btn.onclick = function (e) {
+      e.preventDefault();
+      var id = btn.dataset.id;
+      var t = templates.find(function (x) { return x.id === id; });
+      if (!t) return;
+      navigator.clipboard.writeText(t.body).then(function () {
+        toast.hidden = false;
+        setTimeout(function () { toast.hidden = true; }, 2000);
+      });
+    };
+  });
+})();
+</script>

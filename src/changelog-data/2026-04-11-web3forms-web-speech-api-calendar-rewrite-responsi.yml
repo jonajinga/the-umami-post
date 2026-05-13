@@ -1,0 +1,59 @@
+date: "2026-04-11"
+title: Web3Forms, Web Speech API, calendar rewrite, responsive and performance fixes
+sections:
+  - label: Contact forms (Web3Forms)
+    entries:
+      - >-
+        8 contact forms: Contact Us, Submit a Piece, Report a Correction, Submit an Event, Submit a Tip, Send Feedback,
+        Write a Letter, Submit a Quote — all with hCaptcha spam protection
+      - >-
+        Forms accessible from contact page card grid, article 'Suggest a correction' links, Letters section header,
+        Quotes page header, and Events page footer
+      - Shared /thank-you/ page with newsletter CTA
+      - >-
+        Form CSS: accent top border, font-ui throughout, required field indicators, disabled submit state, auto-fill
+        referrer on correction and feedback forms
+      - >-
+        Submit button disables on click to prevent double submissions; textarea maxlength on all forms; print styles
+        hide forms
+  - label: Web Speech API
+    entries:
+      - >-
+        Voice search: microphone button in search modal — speak to search, real-time transcription, pulsing animation
+        while listening (Chrome, Edge, Safari)
+      - "Glossary pronunciation: speaker icon next to every glossary term title — click to hear the term spoken aloud"
+      - >-
+        Form dictation: 'Dictate' button on tip line, letter, and feedback textareas — speak to type with continuous
+        recognition
+      - >-
+        TTS voice selector fixed on mobile — was hidden at ≤640px, now shows full-width below speed buttons with retry
+        logic for Chrome async voice loading
+  - label: Events calendar rewrite
+    entries:
+      - Full rewrite of calendar.js, calendar.css, and events.njk for editorial aesthetic
+      - "Recurrence engine: weekly, monthly, and annual events now generate concrete instances across a 1-year horizon"
+      - Compact month grid (48px cells) with colored dots instead of text labels; hover tooltips showing event names
+      - Editorial event cards with kicker/headline/dek pattern matching article cards
+      - Slide-in detail panel (right on desktop, bottom sheet on mobile) replaces modal popup
+      - "Sidebar on all views: Next Up (5 events), This Month (counts by type), Organizations"
+      - "URL hash state: view, date, and filters persist across page refresh; back button navigates between views"
+      - "Keyboard navigation: arrow keys in month grid, Enter to open events, Escape to close detail panel"
+      - Touch swipe on mobile month grid to navigate months; compact mobile month with dots
+      - Filters now work across all views (type, region, upcoming/past)
+  - label: Navigation and content
+    entries:
+      - >-
+        Hamburger drawer reorganized into 5 labeled groups: Sections, Explore, Community & Events, Resources & Tools,
+        About
+      - Footer reorganized from 4 mixed columns to 5 semantic columns with responsive 5→3→2→1 grid
+      - Letters section header links to letter form + email; wrong email address fixed
+      - Quotes page links to quote submission form
+      - About page contact section links to all forms
+      - Support page links to letter and tip forms; submit page updated with no-payment disclosure
+  - label: Responsive and performance
+    entries:
+      - Drawer width uses min(280px, 85vw); nav dropdown uses min(560px, 90vw)
+      - Touch targets increased to 44px on drawer actions and calendar controls
+      - Horizontal article cards stack on mobile (≤480px)
+      - search.js changed from type=module to defer; service worker precache expanded
+      - Calendar popup capped at min(480px, 92vw); calendar controls responsive on mobile

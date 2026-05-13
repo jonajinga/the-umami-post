@@ -1,0 +1,447 @@
+---
+layout: base
+title: Print basket
+description: Print your selected articles as a single PDF. Articles are loaded from the basket you built while reading; rearrange or remove items, then print to PDF in your browser.
+permalink: /print-basket/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/reader/">Reader</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Print basket</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Print basket</h1>
+      <p class="page-header__lede">
+        The articles you've added with <strong>Add to PDF</strong>. Hit print — your browser opens its print dialog with all selected articles stacked. Choose <em>Save as PDF</em> there.
+      </p>
+    </header>
+
+    <div id="print-basket-empty" style="font-family: var(--font-body); padding: var(--space-8); border: 1px dashed var(--color-rule); text-align: center; color: var(--color-ink-muted);" hidden>
+      <p style="margin-bottom: var(--space-3);">Your print basket is empty.</p>
+      <p>Open any article and click the basket icon in the reader toolbar, then come back here to print them all in one go.</p>
+    </div>
+
+    <div id="print-basket-controls" style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6); font-family: var(--font-ui); font-size: var(--text-sm); align-items: center;" hidden>
+      <span><strong data-pb-count>0</strong> articles &middot; estimated <strong data-pb-pages>0</strong> pages &middot; <span data-pb-status>preparing…</span></span>
+      <label style="display: inline-flex; gap: 6px; align-items: center; margin-left: var(--space-2); cursor: pointer;">
+        <input type="checkbox" id="pb-include-footnotes"> Include footnotes
+      </label>
+      <button type="button" id="pb-print" disabled style="margin-left: auto; background: var(--color-ink); color: var(--color-bg); border: 0; padding: var(--space-2) var(--space-4); cursor: pointer; font-family: inherit; font-size: inherit; font-weight: 700; opacity: 0.5;"
+        onclick="window.__tftPrintBasket && window.__tftPrintBasket();" data-umami-event="pdf-basket-print">Print &rarr; Save as PDF</button>
+      <button type="button" id="pb-clear" style="background: none; border: 1px solid var(--color-rule); padding: var(--space-2) var(--space-3); cursor: pointer; font-family: inherit; font-size: inherit; color: var(--color-ink-muted);"
+        onclick="if(confirm('Empty your print basket?')){localStorage.removeItem('tft-pdf-basket');location.reload();}">Empty basket</button>
+    </div>
+
+    <ul id="print-basket-list" class="pb-list" style="list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-rule);"></ul>
+
+    <h2 id="pb-preview-heading" style="margin-top: var(--space-10); padding-top: var(--space-4); border-top: 1px solid var(--color-rule); font-family: var(--font-display); font-size: var(--text-2xl);" hidden>Preview</h2>
+    <p id="pb-preview-note" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-muted); margin-bottom: var(--space-6);" hidden>This is exactly what will print. Scroll through to spot-check before hitting Print.</p>
+
+    {# Visible preview surface — all fetched article bodies stack here so
+       the reader can verify content before printing. The Print button
+       opens this content in a hidden iframe and prints just that
+       iframe, sidestepping fragile @media-print isolation. #}
+    <div id="pb-preview" class="pb-preview" hidden></div>
+
+  </div>
+</div>
+
+<style>
+.pb-list li {
+  border-bottom: 1px solid var(--color-rule);
+  padding: var(--space-4) 0;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+}
+@media (max-width: 480px) {
+  /* Phones: stack the row — title spans full width, then meta + the
+   * two action buttons flow on a second row. The 3-col layout with
+   * an action button "auto" each side crowded the title to ~150 px
+   * on a 360 viewport. */
+  .pb-list li {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "title  title"
+      "meta   actions";
+    row-gap: var(--space-2);
+  }
+  .pb-list li > a { grid-area: title; }
+  .pb-list .pb-meta { grid-area: meta; }
+  .pb-list li > button { grid-area: actions; justify-self: end; }
+}
+.pb-list a {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.pb-list a:hover { color: var(--color-accent); }
+.pb-meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+/* Scoped so it doesn't clobber the .listen-btn pill, which has its
+ * own bg/border/padding that this rule would otherwise wipe out
+ * (visible bug: the listen pill rendered as plain underlined text
+ * on default and stayed red-filled after hover on the basket). */
+.pb-list button:not(.listen-btn) {
+  background: none;
+  border: 0;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-decoration: underline;
+  padding: 0;
+}
+.pb-list button:not(.listen-btn):hover { color: var(--color-accent); }
+.pb-listen { margin-top: var(--space-2); }
+
+.pb-preview {
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  padding: var(--space-4);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.pb-preview__article {
+  padding: var(--space-6) 0;
+  border-bottom: 1px dashed var(--color-rule);
+}
+.pb-preview__article:last-child { border-bottom: none; }
+.pb-preview__article h1 {
+  font-family: var(--font-masthead);
+  font-size: 1.6rem;
+  margin-bottom: var(--space-2);
+  line-height: 1.15;
+}
+.pb-preview__byline {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+.pb-preview__article p,
+.pb-preview__article ul,
+.pb-preview__article ol,
+.pb-preview__article blockquote {
+  margin-bottom: 0.8em;
+}
+</style>
+
+<script>
+(function () {
+  'use strict';
+  function load() { try { return JSON.parse(localStorage.getItem('tft-pdf-basket')) || []; } catch (e) { return []; } }
+  function save(arr) { try { localStorage.setItem('tft-pdf-basket', JSON.stringify(arr)); } catch (e) {} }
+
+  function fmtDate(s) {
+    if (!s) return '';
+    var d = new Date(s);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function escapeAttr(s) { return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function init() {
+    var listEl = document.getElementById('print-basket-list');
+    var empty = document.getElementById('print-basket-empty');
+    var controls = document.getElementById('print-basket-controls');
+    var preview = document.getElementById('pb-preview');
+    var previewHeading = document.getElementById('pb-preview-heading');
+    var previewNote = document.getElementById('pb-preview-note');
+    if (!listEl) return;
+
+    var basket = load();
+    if (!basket.length) {
+      empty.hidden = false;
+      return;
+    }
+    controls.hidden = false;
+    controls.querySelector('[data-pb-count]').textContent = basket.length;
+
+    var listen = (window.__tftAudioBar && window.__tftAudioBar.renderListenButton) || function () { return ''; };
+    listEl.innerHTML = basket.map(function (item, i) {
+      var meta = [item.section, fmtDate(item.date), item.author].filter(Boolean).join(' &middot; ');
+      var lbtn = listen(item.url, item.title || item.url);
+      return '<li data-pb-index="' + i + '">' +
+        '<div>' +
+          '<a href="' + escapeAttr(item.url) + '">' + escapeAttr(item.title || item.url) + '</a>' +
+          (meta ? '<div class="pb-meta" style="margin-top: 4px;">' + meta + '</div>' : '') +
+          (lbtn ? '<div class="pb-listen">' + lbtn + '</div>' : '') +
+        '</div>' +
+        '<button type="button" data-pb-up>&uarr;</button>' +
+        '<button type="button" data-pb-remove>Remove</button>' +
+        '</li>';
+    }).join('');
+
+    listEl.addEventListener('click', function (ev) {
+      var li = ev.target.closest('[data-pb-index]');
+      if (!li) return;
+      var i = Number(li.getAttribute('data-pb-index'));
+      var arr = load();
+      if (ev.target.matches('[data-pb-remove]')) {
+        arr.splice(i, 1);
+      } else if (ev.target.matches('[data-pb-up]') && i > 0) {
+        var t = arr[i]; arr[i] = arr[i - 1]; arr[i - 1] = t;
+      } else {
+        return;
+      }
+      save(arr);
+      location.reload();
+    });
+
+    var statusEl = controls.querySelector('[data-pb-status]');
+    var printBtn = document.getElementById('pb-print');
+
+    // ── Fetch each article body in parallel ──
+    var done = 0;
+    function progress() {
+      done += 1;
+      if (statusEl) statusEl.textContent = 'preparing… ' + done + '/' + basket.length;
+    }
+    Promise.all(basket.map(function (item) {
+      return fetch(item.url, { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.text() : ''; })
+        .then(function (html) {
+          progress();
+          if (!html) return { item: item, html: '<p style="color:#888">Could not load this article.</p>' };
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          // Prefer .article-body (which excludes the article header — we
+          // print our own synthetic <h1> + byline above it). Fall back to
+          // [data-pagefind-body] only if .article-body is missing, and
+          // strip the header from the fallback so the title doesn't
+          // appear twice in the printed PDF.
+          var body = doc.querySelector('.article-body, .library-body');
+          if (!body) {
+            body = doc.querySelector('[data-pagefind-body]');
+            if (body) body.querySelectorAll('.article-header, .library-header').forEach(function (n) { n.remove(); });
+          }
+          if (!body) return { item: item, html: '<p style="color:#888">Article body not found.</p>' };
+          // Pull the footnotes block out before we strip — we may want to
+          // keep it as an opt-in section. The real markdown-it-footnote
+          // output is `section.footnotes` / `.footnotes` (the
+          // `.article-footnotes` div is just an empty slot for the
+          // reader-panel).
+          var footnotesEl = doc.querySelector('section.footnotes, .footnotes');
+          var footnotesHtml = '';
+          if (footnotesEl && footnotesEl.querySelector('ol')) {
+            // Strip back-to-text return arrows so the printout reads cleanly.
+            var fnClone = footnotesEl.cloneNode(true);
+            fnClone.querySelectorAll('a.footnote-backref, .footnote-backref').forEach(function (a) { a.remove(); });
+            footnotesHtml = '<section class="pb-print__footnotes"><h2>Footnotes</h2>' + (fnClone.querySelector('ol').outerHTML) + '</section>';
+          }
+          // Strip every interactive / chrome surface that should never print.
+          body.querySelectorAll([
+            '.article-action-btn',
+            '.annotation-toolbar',
+            '.share-panel', '.share-wrap',
+            '.article-comments',
+            '.responses-section',
+            '.reading-progress',
+            '.article-header__actions',
+            '.article-footnotes',
+            // Support / funding / republish badges and panels
+            '.tip-buttons', '.tip-badge',
+            '.article-header__support-row',
+            '.author-hero__support-badges',
+            '#author-support-panel',
+            '#funding-panel',
+            '#republish-panel',
+            '[data-article-disclosure]',
+            // Misc
+            '[data-tts-skip]',
+            'script', 'style'
+          ].join(',')).forEach(function (n) { n.remove(); });
+          return { item: item, html: body.innerHTML, footnotes: footnotesHtml };
+        })
+        .catch(function () { progress(); return { item: item, html: '<p style="color:#888">Fetch error.</p>' }; });
+    })).then(function (parts) {
+      // Stash the parts so the print function can re-render based on
+      // the user's "Include footnotes" choice each time they click Print.
+      window.__tftPrintBasketParts = parts;
+
+      var footnoteToggle = document.getElementById('pb-include-footnotes');
+      function buildPieces(includeFootnotes) {
+        var totalChars = 0;
+        var pieces = parts.map(function (p, i) {
+          var content = p.html || '';
+          if (includeFootnotes && p.footnotes) content += p.footnotes;
+          totalChars += content.replace(/<[^>]+>/g, '').length;
+          var meta = [p.item.author, p.item.section, fmtDate(p.item.date)].filter(Boolean).join(' &middot; ');
+          return '<article class="pb-preview__article" id="pb-art-' + (i + 1) + '">' +
+            '<h1>' + escapeAttr(p.item.title || p.item.url) + '</h1>' +
+            (meta ? '<div class="pb-preview__byline">' + meta + '</div>' : '') +
+            content +
+          '</article>';
+        });
+        return { pieces: pieces, totalChars: totalChars };
+      }
+      function renderPreview() {
+        var includeFootnotes = footnoteToggle && footnoteToggle.checked;
+        var built = buildPieces(includeFootnotes);
+        preview.innerHTML = built.pieces.join('');
+        preview.hidden = false;
+        previewHeading.hidden = false;
+        previewNote.hidden = false;
+        var est = Math.max(1, Math.ceil(built.totalChars / 2400));
+        var pagesEl = controls.querySelector('[data-pb-pages]');
+        if (pagesEl) pagesEl.textContent = est;
+        // Stash the latest assembled HTML for the iframe printer
+        window.__tftPrintBasketHTML = built.pieces.join('');
+      }
+      renderPreview();
+      if (footnoteToggle) footnoteToggle.addEventListener('change', renderPreview);
+      if (statusEl) statusEl.textContent = 'ready';
+      if (printBtn) {
+        printBtn.disabled = false;
+        printBtn.style.opacity = '1';
+      }
+    });
+
+    // ── Print via a hidden iframe — sidesteps the fragile CSS print
+    //    isolation that produced blank pages. The iframe gets its own
+    //    minimal stylesheet (just typography), copies the prepared
+    //    article markup in, calls iframe.contentWindow.print(), then
+    //    is removed once the print dialog closes. ──
+    window.__tftPrintBasket = function () {
+      var html = window.__tftPrintBasketHTML || '';
+      if (!html.trim()) return;
+
+      // Build the table-of-contents cover page from the current basket.
+      // Each entry links to its article via #pb-art-N — both the
+      // browser print preview and saved-to-PDF retain these as
+      // clickable anchors.
+      var current = load();
+      var tocItems = current.map(function (item, i) {
+        var meta = [item.author, item.section, fmtDate(item.date)].filter(Boolean).join(' &middot; ');
+        var anchor = 'pb-art-' + (i + 1);
+        return '<li><a href="#' + anchor + '" class="pb-toc__link">' +
+               '<span class="pb-toc__num">' + (i + 1) + '</span>' +
+               '<span class="pb-toc__entry"><span class="pb-toc__title">' + escapeAttr(item.title || item.url) + '</span>' +
+               (meta ? '<span class="pb-toc__meta">' + meta + '</span>' : '') +
+               '</span></a></li>';
+      }).join('');
+      var coverDate = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      var cover =
+        '<section class="pb-cover">' +
+          '<div class="pb-cover__head">' +
+            '<p class="pb-cover__eyebrow">A reader compilation from</p>' +
+            '<h1 class="pb-cover__publication">{{ site.title }}</h1>' +
+            '<p class="pb-cover__line">{{ site.url }}</p>' +
+          '</div>' +
+          '<div class="pb-cover__body">' +
+            '<h2 class="pb-cover__heading">Contents</h2>' +
+            '<ol class="pb-toc">' + tocItems + '</ol>' +
+          '</div>' +
+          '<div class="pb-cover__foot">' +
+            '<p class="pb-cover__count">' + current.length + ' article' + (current.length === 1 ? '' : 's') + ' &middot; compiled ' + coverDate + '</p>' +
+            '<p class="pb-cover__note">Articles released under <a href="{{ site.url }}/license/">CC BY-NC-ND 4.0</a>. Republish with attribution and a link back to the canonical URL.</p>' +
+          '</div>' +
+        '</section>';
+
+      // Build the iframe document
+      var iframe = document.createElement('iframe');
+      iframe.style.cssText = 'position:fixed;width:0;height:0;border:0;left:-9999px;top:0;';
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.title = 'Print preview';
+      document.body.appendChild(iframe);
+
+      var doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write([
+        '<!doctype html><html><head><meta charset="utf-8"><title>{{ site.title }} — Print basket</title>',
+        '<style>',
+        ' @page { margin: 0.6in; }',
+        ' html, body { background: #fff; color: #111; }',
+        ' body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.5; margin: 0; padding: 0; }',
+        ' h1 { font-family: Georgia, serif; font-size: 22pt; line-height: 1.15; margin: 0 0 0.4em; }',
+        ' h2 { font-family: Georgia, serif; font-size: 16pt; line-height: 1.2; margin: 1.2em 0 0.4em; }',
+        ' h3 { font-size: 13pt; margin: 1em 0 0.3em; }',
+        ' p, ul, ol, blockquote { margin: 0 0 0.7em; }',
+        ' ul, ol { padding-left: 1.4em; }',
+        ' blockquote { border-left: 3px solid #888; padding-left: 0.8em; color: #444; }',
+        ' a { color: #111; text-decoration: underline; }',
+        ' img { max-width: 100%; height: auto; }',
+        ' figure { margin: 0.6em 0; }',
+        ' figcaption { font-size: 9pt; color: #555; }',
+        ' .pb-print__byline { font-family: Helvetica, Arial, sans-serif; font-size: 10pt; color: #555; margin-bottom: 1em; padding-bottom: 0.6em; border-bottom: 1px solid #ccc; }',
+        ' article { page-break-after: always; }',
+        ' article:last-child { page-break-after: auto; }',
+        // ── Cover page
+        ' .pb-cover { display: flex; flex-direction: column; min-height: calc(100vh - 1.2in); padding: 0; page-break-after: always; }',
+        ' .pb-cover__head { padding-top: 1.2in; text-align: center; border-bottom: 2px solid #111; padding-bottom: 0.6in; }',
+        ' .pb-cover__eyebrow { font-family: Helvetica, Arial, sans-serif; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.18em; color: #555; margin: 0 0 0.6em; }',
+        ' .pb-cover__publication { font-family: Georgia, serif; font-size: 36pt; line-height: 1.05; margin: 0 0 0.4em; letter-spacing: -0.01em; }',
+        ' .pb-cover__line { font-family: Helvetica, Arial, sans-serif; font-size: 10pt; color: #777; margin: 0; }',
+        ' .pb-cover__body { padding-top: 0.5in; flex: 1; }',
+        ' .pb-cover__heading { font-family: Helvetica, Arial, sans-serif; font-size: 11pt; text-transform: uppercase; letter-spacing: 0.16em; color: #555; font-weight: 700; margin: 0 0 0.3in; }',
+        ' .pb-toc { list-style: none; padding: 0; margin: 0; counter-reset: pbtoc; }',
+        ' .pb-toc li { padding: 0; border-bottom: 1px dotted #bbb; }',
+        ' .pb-toc__link { display: grid; grid-template-columns: 0.4in 1fr; align-items: baseline; gap: 0.15in; padding: 8pt 0; text-decoration: none; color: inherit; }',
+        ' .pb-toc__link:hover { background: #f3eeda; }',
+        ' .pb-toc__num { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; font-weight: 700; color: #555; }',
+        ' .pb-toc__entry { display: flex; flex-direction: column; gap: 2pt; }',
+        ' .pb-toc__title { font-family: Georgia, serif; font-size: 13pt; line-height: 1.25; color: #111; text-decoration: underline; text-decoration-color: #ccc; text-underline-offset: 2pt; }',
+        ' .pb-toc__meta { font-family: Helvetica, Arial, sans-serif; font-size: 9pt; color: #777; text-transform: uppercase; letter-spacing: 0.06em; }',
+        ' .pb-print__footnotes { margin-top: 1.4em; padding-top: 0.8em; border-top: 1px solid #ccc; }',
+        ' .pb-print__footnotes h2 { font-size: 12pt; text-transform: uppercase; letter-spacing: 0.08em; color: #555; margin-bottom: 0.4em; }',
+        ' .pb-print__footnotes ol { padding-left: 1.4em; font-size: 10pt; color: #333; }',
+        ' .pb-print__footnotes li { margin-bottom: 0.4em; line-height: 1.45; }',
+        ' .pb-cover__foot { padding-top: 0.4in; margin-top: 0.4in; border-top: 1px solid #bbb; text-align: center; }',
+        ' .pb-cover__count { font-family: Helvetica, Arial, sans-serif; font-size: 10pt; color: #555; margin: 0 0 0.4em; }',
+        ' .pb-cover__note { font-family: Helvetica, Arial, sans-serif; font-size: 8.5pt; color: #888; margin: 0; max-width: 4.6in; margin-left: auto; margin-right: auto; }',
+        '</style>',
+        '</head><body>',
+        cover,
+        // Re-tag the preview classes to match the iframe stylesheet
+        html.replace(/pb-preview__article/g, 'pb-print__article').replace(/pb-preview__byline/g, 'pb-print__byline'),
+        '</body></html>'
+      ].join(''));
+      doc.close();
+
+      function go() {
+        try {
+          iframe.contentWindow.focus();
+          iframe.contentWindow.print();
+        } catch (e) {
+          alert('Print failed: ' + e.message);
+        }
+        // Give the dialog a moment to open before tearing down the iframe;
+        // print() blocks in most browsers, so we land here after dismiss.
+        setTimeout(function () {
+          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }, 1000);
+      }
+      // Wait for images to load (best-effort) then print
+      var imgs = doc.images || [];
+      if (!imgs.length) { setTimeout(go, 50); return; }
+      var pending = imgs.length;
+      function done() { pending -= 1; if (pending <= 0) setTimeout(go, 50); }
+      for (var i = 0; i < imgs.length; i++) {
+        if (imgs[i].complete) done();
+        else { imgs[i].addEventListener('load', done); imgs[i].addEventListener('error', done); }
+      }
+      // Failsafe: print after 3s regardless
+      setTimeout(function () { if (pending > 0) go(); }, 3000);
+    };
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

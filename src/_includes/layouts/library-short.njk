@@ -1,0 +1,198 @@
+---
+layout: layouts/base.njk
+isReadingPage: true
+---
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "{{ workTitle }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author }}"
+  },
+  "datePublished": "{{ originalPublication }}",
+  "inLanguage": "{{ originalLanguage or 'en' }}",
+  "isAccessibleForFree": true,
+  "url": "{{ site.url }}{{ page.url }}"
+}
+</script>
+{% endblock %}
+{# Context div, read by library.js. No chapter slug since this is a standalone short work. #}
+<div id="library-context"
+     data-work-slug="{{ workSlug }}"
+     data-work-title="{{ workTitle | escape }}"
+     data-chapter-slug="{{ chapterSlug or workSlug }}"
+     data-chapter-title="{{ title }}"
+     hidden></div>
+{# Context for annotations.js #}
+<div id="annotations-context" data-page-slug="{{ workSlug }}" data-page-url="{{ page.url }}" data-page-title="{{ workTitle | escape }}: {{ title | escape }}" hidden></div>
+
+{# ── Reading progress bar ── #}
+<div class="library-reading-progress" aria-hidden="true">
+  <div class="library-reading-progress__bar" id="reading-progress-bar"></div>
+</div>
+
+{# ── Sticky reading header ── #}
+<header class="library-reading-header">
+  <a class="library-reading-header__back" href="/library/">&larr; Library</a>
+  <span class="library-reading-header__title">{{ title }}</span>
+</header>
+
+{# ── Body wrapper ── #}
+<div class="library-body-wrapper">
+
+  <p class="library-body-chapter-info">
+    {% if era %}<span>{{ era }}</span>{% endif %}
+    {% if author %}&nbsp;, &nbsp;<span>{{ author }}</span>{% endif %}
+  </p>
+
+  <h1 class="library-body__heading">{{ title }}</h1>
+  {% if subtitle %}<p class="library-body-chapter-info">{{ subtitle }}</p>{% endif %}
+
+  <p class="library-body-meta">
+    <span>{{ content | wordCount }} words</span>
+    <span aria-hidden="true">&middot;</span>
+    <span>{{ content | readingTime }}</span>
+  </p>
+
+  {# ── Reader tools (Save, Share, Reading, Download, Print, Cite) ── #}
+  {% include "partials/library-reader-tools.njk" %}
+
+  {# Cite overlay + modal #}
+  <div id="cite-overlay" class="cite-overlay" hidden aria-hidden="true"></div>
+  <div id="cite-modal" class="cite-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cite-modal-title">
+    <div class="cite-modal__inner">
+      <div class="cite-modal__header">
+        <p class="cite-modal__title" id="cite-modal-title">Cite This Work</p>
+        <button id="cite-close" class="cite-modal__close" type="button" aria-label="Close citation panel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="cite-modal__tabs" role="tablist" aria-label="Citation format">
+        <button class="cite-tab is-active" data-format="apa"     role="tab" aria-selected="true"  type="button">APA 7th</button>
+        <button class="cite-tab"           data-format="mla"     role="tab" aria-selected="false" type="button">MLA 9th</button>
+        <button class="cite-tab"           data-format="chicago" role="tab" aria-selected="false" type="button">Chicago 17th</button>
+      </div>
+      <div class="cite-modal__body">
+        <p id="cite-text" class="cite-modal__text"></p>
+      </div>
+      <button id="cite-copy-btn" class="cite-modal__copy-btn" type="button">Copy citation</button>
+    </div>
+  </div>
+
+  <div class="library-body article-body" data-pagefind-body>
+    <div aria-hidden="true" style="display:none">
+      <span data-pagefind-meta="section">Library</span>
+      <span data-pagefind-meta="work">{{ workTitle }}</span>
+      <span data-pagefind-meta="author">{{ author }}</span>
+    </div>
+    {{ content | safe }}
+  </div>
+
+</div>{# /.library-body-wrapper #}
+
+<div id="print-footnotes" class="print-footnotes" aria-hidden="true"></div>
+<div id="print-citations" class="print-citations" aria-hidden="true"></div>
+
+<footer class="print-footer" aria-hidden="true">
+  <span>{{ site.title }}, {{ site.url }}{{ page.url }}</span>
+  <span>{{ workTitle or title }} by {{ author }}</span>
+</footer>
+
+{# ── Within-chapter floating TOC (≥1200px; populated by progress.js) ── #}
+<div class="library-toc-float" id="toc-widget" hidden>
+  <p class="library-toc-float__title">On this page</p>
+  <nav id="toc-nav" aria-label="Section headings"></nav>
+</div>
+
+{# ── Panel overlay ── #}
+<div class="library-panel-overlay" aria-hidden="true"></div>
+
+{# ── Reading panel ── #}
+<aside id="library-panel" class="library-panel" aria-hidden="true" aria-label="Reader panel">
+  <header class="library-panel__header">
+    <div class="library-panel__heading">
+      <p class="library-panel__kicker">Reader</p>
+      <p class="library-panel__title">{{ workTitle }}{% if title %} &middot; {{ title }}{% endif %}</p>
+    </div>
+    <button class="library-panel__close" type="button" aria-label="Close reader panel">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </header>
+
+  <div class="library-panel__tabs" role="tablist" aria-label="Reader panel sections">
+    <button class="library-panel__tab" role="tab" aria-selected="true" data-target="panel-toc" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span class="library-panel__tab-label">Contents</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-highlights" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span class="library-panel__tab-label">Highlights</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-notes" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="library-panel__tab-label">Notes</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-bookmarks" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span class="library-panel__tab-label">Bookmarks</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-footnotes" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><text x="2" y="9" font-size="7" font-weight="700" fill="currentColor" stroke="none">1</text><text x="2" y="15" font-size="7" font-weight="700" fill="currentColor" stroke="none">2</text><text x="2" y="21" font-size="7" font-weight="700" fill="currentColor" stroke="none">3</text></svg>
+      <span class="library-panel__tab-label">Footnotes</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-cite-inline" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.685.54-2.293.44-.6 1.05-1.05 1.83-1.343.78-.295 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.824-2.556 1.51-.755.685-1.347 1.54-1.78 2.563-.432 1.025-.65 2.218-.65 3.58 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44zm9 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.132-1.54-.022-.16-.95.1-1.685.54-2.294.44-.606 1.05-1.056 1.83-1.35.78-.294 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.825-2.556 1.51-.755.686-1.347 1.54-1.78 2.565-.432 1.022-.65 2.216-.65 3.578 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44z"/></svg>
+      <span class="library-panel__tab-label">Cite</span>
+    </button>
+    <button class="library-panel__tab" role="tab" aria-selected="false" data-target="panel-export" type="button">
+      <svg class="library-panel__tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="library-panel__tab-label">Export</span>
+    </button>
+  </div>
+
+  <div class="library-panel__body">
+    {# TOC, single item for short works #}
+    <div id="panel-toc" class="library-panel__section" aria-hidden="false">
+      <a class="library-toc-item" href="#" aria-current="page">
+        <span class="library-toc-item__number">1.</span>
+        {{ title }}
+      </a>
+    </div>
+
+    {# Highlights tab #}
+    <div id="panel-highlights" class="library-panel__section" aria-hidden="true" data-print-label="Highlights"></div>
+
+    {# Notes tab #}
+    <div id="panel-notes" class="library-panel__section" aria-hidden="true" data-print-label="Notes"></div>
+
+    {# Bookmarks tab #}
+    <div id="panel-bookmarks" class="library-panel__section" aria-hidden="true" data-print-label="Bookmarks"></div>
+
+    {# Footnotes tab, populated by footnotes.js #}
+    <div id="panel-footnotes" class="library-panel__section" aria-hidden="true" data-print-label="Footnotes"></div>
+
+    {# Cite tab, populated by cite-inline.js #}
+    <div id="panel-cite-inline" class="library-panel__section" aria-hidden="true"></div>
+
+
+    <div id="panel-export" class="library-panel__section" aria-hidden="true"><p class="reader-panel-subhead">Export your notes &amp; highlights</p><ul class="reader-export-list"><li><button type="button" class="reader-export-btn" data-export="txt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span><strong>Plain text</strong><em>.txt, readable in any editor</em></span></button></li><li><button type="button" class="reader-export-btn" data-export="md"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg><span><strong>Markdown</strong><em>.md, for Obsidian, notes apps</em></span></button></li><li><button type="button" class="reader-export-btn" data-export="json"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span><strong>JSON</strong><em>.json, raw data for developers</em></span></button></li><li><button type="button" class="reader-export-btn" data-export="print"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span><strong>Print</strong><em>Opens a printable view of your notes</em></span></button></li></ul></div>
+  </div>
+
+</aside>
+
+
+{# Annotation toolbar — shared across article + library reading layouts. #}
+{% set readerPanelId = "library-panel" %}
+{% set readerToggleClass = "library-panel-toggle" %}
+{% include "partials/annotation-toolbar.njk" %}
+
+{% block scripts %}
+
+<script src="/assets/js/reading-list.js?v={{ buildTime }}" defer></script>
+<script src="/assets/js/download.js?v={{ buildTime }}" defer></script>
+<script src="/assets/js/library.js?v={{ buildTime }}" defer></script>
+<script src="/assets/js/annotations.js?v={{ buildTime }}" defer></script>
+{% endblock %}

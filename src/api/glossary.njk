@@ -1,0 +1,9 @@
+---
+permalink: /api/glossary.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ collections.glossary.length }},
+  "glossary": {{ collections.glossary | toApiItems(site.url) | toJSON | safe }}
+}

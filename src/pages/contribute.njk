@@ -1,0 +1,182 @@
+---
+layout: base
+title: Contribute
+description: Write for The Freethinking Times, submission guidelines, topics of interest, and how to pitch.
+permalink: /contribute/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Contribute</h1>
+    <p class="page-header__lede">
+      We welcome contributions from writers who share our commitment to reason, evidence, and intellectual honesty.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#what-we-publish">What we publish</a>
+      <a href="#contributor-tiers">Contributor tiers</a>
+      <a href="#what-we-look-for">What we look for</a>
+      <a href="#topics">Topics of interest</a>
+      <a href="#before-you-pitch">Before you pitch</a>
+      <a href="#how-to-pitch">How to pitch</a>
+      <a href="#other-ways">Other ways to contribute</a>
+      <a href="#writing-style">Writing style</a>
+      <a href="#rights">Rights and compensation</a>
+      <a href="#editorial-standards">Editorial standards</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="what-we-publish">What we publish</h2>
+
+      <p>{{ site.title }} publishes original writing across seven sections:</p>
+
+      <ul>
+        {% for key, section in site.sections %}
+        {% if key !== "thought-experiments" and key !== "trials-of-thought" and key !== "glossary" and key !== "bookshelf" %}
+        <li><strong>{{ section.label }}</strong>, {{ section.description }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+
+      <h2 id="contributor-tiers">Contributor tiers</h2>
+
+      <ul>
+        {% for tier in contributeContent.tiers %}
+        <li><strong>{{ tier.name }}</strong>, {{ tier.desc }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="what-we-look-for">What we look for</h2>
+
+      <ul>
+        {% for item in contributeContent.lookingFor %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="topics">Topics of particular interest</h2>
+
+      <ul>
+        {% for item in contributeContent.topics %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2 id="before-you-pitch">Before you pitch</h2>
+
+      <p>Take a look at our <a href="/templates/">content templates</a>. They show exactly how we structure each type of piece, front matter fields, sections, and what we expect in each. Pick the template that matches what you want to write and shape your pitch around it.</p>
+
+      <h2 id="how-to-pitch">How to pitch</h2>
+
+      <p>Use the form below or <a href="/contact/">our contact form</a> with "Pitch:" in the subject line.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0 var(--space-10);">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Pitch submission, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Pitch Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="contrib-name">Your name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="contrib-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="contrib-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="contrib-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="contrib-section">Proposed section</label>
+          <select class="w3f__select" name="section" id="contrib-section">
+            <option value="News">News</option>
+            <option value="Opinion">Opinion</option>
+            <option value="Analysis">Analysis</option>
+            <option value="Arts & Culture">Arts & Culture</option>
+            <option value="Science & Technology">Science & Technology</option>
+            <option value="History">History</option>
+            <option value="Letters">Letters to the Editor</option>
+            <option value="Reviews">Reviews</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="contrib-headline">Proposed headline <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="headline" id="contrib-headline" required aria-required="true">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="contrib-pitch">Your pitch <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="contrib-pitch-hint">What is the piece about? Why does it matter? What evidence will you use? (Under 400 words)</span>
+          <textarea class="w3f__textarea" name="pitch" id="contrib-pitch" rows="6" required aria-required="true" aria-describedby="contrib-pitch-hint" maxlength="3000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="contrib-clips">Published work <span class="w3f__optional">(optional)</span></label>
+          <span class="w3f__hint">Link to one or two examples of your writing</span>
+          <input class="w3f__input" type="url" name="clips" id="contrib-clips" placeholder="https://" inputmode="url">
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Pitch</button>
+        <p class="w3f__privacy">We respond to pitches that interest us within two weeks.</p>
+      </form>
+
+      <h2 id="other-ways">Other ways to contribute</h2>
+
+      <p>Writing articles is not the only way to contribute. You can also:</p>
+
+      <ul>
+        {% for item in contributeContent.otherWays %}
+        <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+
+      <p>See all submission options at <a href="/submit/">/submit/</a>.</p>
+
+      <h2 id="writing-style">Writing style</h2>
+
+      <ul>
+        {% for item in contributeContent.writingStyle %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <p>For full visual and brand guidelines, see the <a href="/style-guide/">style guide</a>.</p>
+
+      <h2 id="rights">Rights and compensation</h2>
+
+      <p>{{ site.title }} is currently a volunteer-run publication. We do not pay for contributions at this time. Contributors retain copyright and grant us a non-exclusive license to publish. You may republish your work elsewhere after 30 days.</p>
+
+      <p>All published work includes a byline, author bio, and permanent author page on the site.</p>
+
+      <h2 id="editorial-standards">Editorial standards</h2>
+
+      <p>All submissions are subject to our <a href="/ethics/">editorial ethics policy</a>. We fact-check claims, verify sources, and publish corrections promptly when errors are discovered. See our <a href="/corrections/">corrections log</a> for examples.</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

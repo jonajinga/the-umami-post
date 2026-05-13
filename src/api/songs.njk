@@ -1,0 +1,9 @@
+---
+permalink: /api/songs.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ songs.length }},
+  "songs": {{ songs | toJSON | safe }}
+}

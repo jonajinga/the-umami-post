@@ -1,0 +1,71 @@
+---
+layout: base
+title: "Submit a Photo"
+description: Share a photograph of the natural world for our gallery.
+permalink: /gallery/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/gallery/">Gallery</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Submit a Photo</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Submit a Photo</h1>
+      <p class="page-header__lede">
+        Share a photograph of the natural world. We accept images under open licenses or with the photographer's permission.
+      </p>
+    </header>
+    <div class="article-body">
+      <p>Since we cannot accept file uploads directly, please provide a link to your image hosted on a file-sharing or photography service (Google Drive, Dropbox, Flickr, Unsplash, Imgur, etc.). We will download and optimise it for the gallery.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Photo submission, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Gallery Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="w3f__group">
+          <label class="w3f__label" for="ph-url">Photo link <span class="w3f__required">*</span></label>
+          <span class="w3f__hint">Link to your photo on Google Drive, Dropbox, Flickr, Unsplash, Imgur, etc.</span>
+          <input class="w3f__input" type="url" name="photo_url" id="ph-url" required aria-required="true" placeholder="https://...">
+        </div>
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="ph-title">Title / caption <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="title" id="ph-title" placeholder="e.g. Morning fog in the Redwoods">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="ph-location">Location <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="location" id="ph-location" placeholder="e.g. Northern California">
+          </div>
+        </div>
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="ph-credit">Photographer name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="credit" id="ph-credit" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="ph-license">License <span class="w3f__required">*</span></label>
+            <select class="w3f__input" name="license" id="ph-license" required aria-required="true">
+              <option value="">Select...</option>
+              <option value="CC0">CC0 (Public Domain)</option>
+              <option value="CC-BY">CC-BY (Attribution)</option>
+              <option value="CC-BY-SA">CC-BY-SA (Attribution ShareAlike)</option>
+              <option value="Permission">I took this and grant permission</option>
+            </select>
+          </div>
+        </div>
+        <div class="w3f__group">
+          <label class="w3f__label" for="ph-email">Email <span class="w3f__optional">(optional, for credit or questions)</span></label>
+          <input class="w3f__input" type="email" name="email" id="ph-email" autocomplete="email">
+        </div>
+        <button type="submit" class="w3f__submit">Submit Photo</button>
+      </form>
+    </div>
+  </div>
+</div>

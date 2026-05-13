@@ -1,0 +1,384 @@
+---
+layout: base
+title: Page Not Found
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+
+<div class="container nf-page">
+  <div class="container--prose u-center">
+    <p class="nf-numeral" aria-hidden="true">404</p>
+    <h1 class="nf-title">Page Not Found</h1>
+    <p class="nf-lede">
+      The page you were looking for has moved, was renamed, or never existed. If you followed a link from another site, it may be out of date.
+    </p>
+
+    {# Inline search box — tries Pagefind if loaded, otherwise punts to /search/?q= #}
+    <form class="nf-search" role="search" onsubmit="event.preventDefault();var q=this.q.value.trim();if(q)location.href='/search/?q='+encodeURIComponent(q);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" name="q" placeholder="Search articles, topics, authors&hellip;" aria-label="Search the site" autocomplete="off">
+      <button type="submit" class="btn btn--accent">Search</button>
+    </form>
+
+    <div id="nf-suggestions" class="nf-suggestions" hidden>
+      <p class="nf-suggestions__label">Did you mean</p>
+      <ul id="nf-matches" class="nf-suggestions__list"></ul>
+    </div>
+
+    <div class="nf-ctas">
+      <a href="/" class="btn">&larr; Front Page</a>
+      <a href="/archives/" class="btn">Archives</a>
+      <a href="/topics/" class="btn">Topics</a>
+      <a href="/site-map/" class="btn">Sitemap</a>
+    </div>
+  </div>
+
+  {# Recent articles — give readers an obvious on-ramp #}
+  {% set recent = collections.allContent | reverse | limit(5) %}
+  {% if recent.length %}
+  <section class="nf-section">
+    <h2 class="nf-section__title">Latest dispatches</h2>
+    <ul class="nf-recent" role="list">
+      {% for item in recent %}
+      <li class="nf-recent__item">
+        <a href="{{ item.url }}" class="nf-recent__link">
+          {% if item.data.section %}<span class="nf-recent__section">{{ item.data.section }}</span>{% endif %}
+          <span class="nf-recent__title">{{ item.data.title }}</span>
+          <span class="nf-recent__meta">
+            {% if item.data.author and authors[item.data.author] %}{{ authors[item.data.author].name }} &middot; {% endif %}{{ item.data.date | readableDate }}
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section class="nf-section">
+    <h2 class="nf-section__title">Start somewhere new</h2>
+    <div class="nf-sections">
+      {% for item in nav %}
+      {% if item.collection %}
+      <a href="{{ item.url }}" class="nf-sections__card">
+        <span class="nf-sections__kicker">Section</span>
+        <span class="nf-sections__name">{{ item.label }}</span>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  {% set topTags = collections.allContent | topicStats(12) %}
+  {% if topTags.length %}
+  <section class="nf-section">
+    <h2 class="nf-section__title">Or browse by topic</h2>
+    <div class="nf-topics">
+      {% for t in topTags %}
+      <a href="/topics/{{ t.tag | slugify }}/" class="nf-topics__chip">{{ t.tag }}</a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <p class="nf-footnote">
+    Something broken? <a href="/feedback/">Tell us</a> and we&rsquo;ll track it down.
+  </p>
+</div>
+
+<style>
+.nf-page {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-20);
+}
+.nf-numeral {
+  font-family: var(--font-masthead, var(--font-headline));
+  font-size: clamp(4rem, 15vw, 10rem);
+  line-height: 1;
+  color: var(--color-rule-heavy);
+  margin: 0 0 var(--space-4);
+}
+.nf-title {
+  font-family: var(--font-headline);
+  font-size: clamp(var(--text-xl), 4vw, var(--text-2xl));
+  margin: 0 0 var(--space-4);
+}
+.nf-lede {
+  color: var(--color-ink-muted);
+  font-size: var(--text-md);
+  max-width: 52ch;
+  margin: 0 auto var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+.nf-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 480px;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink-faint);
+}
+.nf-search:focus-within {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+.nf-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: var(--space-2) 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  min-width: 0;
+}
+.nf-search input:focus { outline: none; }
+.nf-search button {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  flex-shrink: 0;
+}
+.nf-suggestions {
+  margin-bottom: var(--space-6);
+}
+.nf-suggestions__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-3);
+}
+.nf-suggestions__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 520px;
+  margin-inline: auto;
+}
+.nf-suggestions__list a {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  text-align: left;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.nf-suggestions__list a:hover {
+  border-color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+.nf-suggestions__list a > strong {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.nf-suggestions__list a > em {
+  display: block;
+  font-family: var(--font-ui);
+  font-style: normal;
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+.nf-ctas {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10);
+}
+
+/* Sections beneath the fold */
+.nf-section {
+  max-width: 780px;
+  margin: 0 auto var(--space-10);
+}
+.nf-section__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-ink);
+  text-align: center;
+}
+.nf-recent {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.nf-recent__link {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-rule);
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+.nf-recent__link:hover { background: var(--color-bg-alt); }
+.nf-recent__section {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+  padding-top: 4px;
+}
+.nf-recent__title {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+}
+.nf-recent__link:hover .nf-recent__title { color: var(--color-accent); }
+.nf-recent__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+  align-self: center;
+  grid-column: 2 / 4;
+}
+@media (max-width: 640px) {
+  .nf-recent__link { grid-template-columns: 1fr; gap: 2px; }
+  .nf-recent__section { padding-top: 0; }
+  .nf-recent__meta { grid-column: 1; white-space: normal; }
+}
+
+.nf-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+.nf-sections__card {
+  display: block;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.nf-sections__card:hover {
+  border-color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+.nf-sections__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+.nf-sections__name {
+  font-family: var(--font-headline);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.nf-topics {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.nf-topics__chip {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+.nf-topics__chip:hover {
+  color: var(--color-bg);
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.nf-footnote {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-align: center;
+  margin: var(--space-10) 0 0;
+}
+.nf-footnote a { color: var(--color-accent); }
+</style>
+
+<script>
+(function () {
+  // "Did you mean" suggestions: fetch the search index and fuzzy-match
+  // the failed URL against page titles and URLs.
+  var suggestions = document.getElementById('nf-suggestions');
+  var matchesEl = document.getElementById('nf-matches');
+  if (!suggestions || !matchesEl) return;
+
+  var badPath = location.pathname || '';
+  if (badPath === '/404.html' || badPath === '/') return;
+
+  var terms = badPath
+    .toLowerCase()
+    .replace(/\.html$/, '')
+    .split(/[/\-_]+/)
+    .filter(function (w) { return w.length >= 3; });
+  if (!terms.length) return;
+
+  function scoreMatch(text, url) {
+    var hay = (text + ' ' + url).toLowerCase();
+    var score = 0;
+    terms.forEach(function (t) {
+      if (hay.indexOf(t) !== -1) score += t.length;
+    });
+    return score;
+  }
+  function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function renderMatches(results) {
+    if (!results.length) return;
+    matchesEl.innerHTML = results.slice(0, 5).map(function (r) {
+      return '<li><a href="' + r.url + '">' +
+        '<strong>' + escapeHtml(r.title) + '</strong>' +
+        '<em>' + escapeHtml(r.url) + '</em>' +
+      '</a></li>';
+    }).join('');
+    suggestions.hidden = false;
+  }
+
+  (async function () {
+    try {
+      var pf = await import('/pagefind/pagefind.js');
+      await pf.options({ excerptLength: 0 });
+      var q = terms.join(' ');
+      var s = await pf.search(q);
+      var items = await Promise.all(s.results.slice(0, 10).map(function (r) { return r.data(); }));
+      var scored = items.map(function (item) {
+        return { title: item.meta && item.meta.title || 'Untitled', url: item.url, score: scoreMatch(item.meta && item.meta.title || '', item.url) };
+      }).filter(function (r) { return r.score > 0; }).sort(function (a, b) { return b.score - a.score; });
+      renderMatches(scored);
+    } catch (e) { /* Pagefind not available; fail silently */ }
+  })();
+})();
+</script>

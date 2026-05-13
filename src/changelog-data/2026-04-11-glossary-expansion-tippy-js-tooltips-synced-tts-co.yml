@@ -1,0 +1,33 @@
+date: "2026-04-11"
+title: Glossary expansion, Tippy.js tooltips, synced TTS, community form, style guide
+sections:
+  - label: Glossary
+    entries:
+      - >-
+        Expanded from 11 to 52 terms covering philosophy, arguments for/against God, ethics, science, legal, and
+        religious concepts
+      - Restructured as A-Z index with vertical sticky letter nav on right side
+      - Individual term pages use simplified layout (title + definition only)
+      - Real-time search filters terms and definitions
+  - label: Glossary tooltips (Tippy.js)
+    entries:
+      - Self-hosted Tippy.js + Popper.js (~12 KB gzipped) for inline glossary tooltips
+      - Glossary terms automatically detected in article and library body text
+      - First occurrence of each term gets a dotted underline; hover shows definition
+      - Works on all article pages and all library reading pages
+  - label: Synced TTS highlighting
+    entries:
+      - Words highlight in yellow as they are spoken aloud via text-to-speech
+      - Uses Web Speech API onboundary event (Chrome, Edge); graceful fallback on Firefox/Safari
+      - Auto-scrolls to keep the current word visible
+  - label: New pages & forms
+    entries:
+      - Community suggestion form at /community/submit/
+      - Style guide at /style-guide/ — brand identity, typography, colour palette, UI patterns
+      - Removed Beyond the Articles section from homepage
+      - Author pages now indexed by Pagefind with Authors section filter
+      - Library catalogue author names link to author pages
+  - label: Fixes
+    entries:
+      - Project section h1 uses clamp() sizing to prevent title clipping on mobile
+      - "TTS: removed setTimeout that broke Chrome user gesture requirement"

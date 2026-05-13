@@ -1,0 +1,604 @@
+---
+layout: base
+title: Archive Showcase
+description: A full-screen slideshow through The Freethinking Times archive. Filter by author, section, subsection, or topic.
+permalink: /archives/showcase/
+eleventyExcludeFromCollections: true
+---
+
+{% block head %}
+<style>
+.as-showcase {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-8);
+  z-index: 9999;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+}
+.as-showcase__slide {
+  width: 100%;
+  max-width: 56ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.as-showcase__kicker {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+  min-width: 6em;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.as-showcase__title {
+  font-family: var(--font-masthead, var(--font-headline));
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  text-wrap: balance;
+}
+.as-showcase__desc {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+  margin: var(--space-5) 0 0;
+  max-width: 48ch;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+  text-wrap: pretty;
+}
+.as-showcase__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  margin: var(--space-8) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-rule);
+  min-width: 12em;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.5s;
+}
+.as-showcase__meta strong { color: var(--color-ink); font-weight: 700; }
+.as-showcase__read {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.7s, background var(--transition-fast);
+}
+.as-showcase__read:hover { background: var(--color-accent); color: var(--color-bg); text-decoration: none; }
+.as-showcase__actions { display: inline-flex; align-items: stretch; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-5); }
+/* Match Read button height + margin so the two sit as a paired
+ * unit, not a big-button-and-tiny-pill mismatch. */
+.as-showcase__read { margin-top: 0; }
+.as-showcase__listen { display: inline-flex; align-items: stretch; }
+.as-showcase__listen .listen-btn {
+  height: auto;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+  border-radius: 0;
+}
+.as-showcase__listen .listen-btn:hover,
+.as-showcase__listen .listen-btn:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+.as-showcase__listen .listen-btn__icon { background: var(--color-ink); color: var(--color-bg); }
+.as-showcase__listen .listen-btn:hover .listen-btn__icon,
+.as-showcase__listen .listen-btn:focus-visible .listen-btn__icon { background: var(--color-bg); color: var(--color-accent); }
+.as-showcase.is-visible .as-showcase__kicker,
+.as-showcase.is-visible .as-showcase__desc,
+.as-showcase.is-visible .as-showcase__meta,
+.as-showcase.is-visible .as-showcase__read { opacity: 1; }
+.as-showcase.is-visible .as-showcase__title { opacity: 1; transform: translateY(0); }
+
+/* Exit / filter header — three-column grid so the middle filter label
+   is visually centred on the viewport regardless of the brand / exit
+   widths. With flex + space-between, asymmetric side widths push the
+   centre item off-axis. */
+.as-showcase__topbar {
+  position: fixed;
+  top: var(--space-5);
+  left: var(--space-6);
+  right: var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  z-index: 10;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.as-showcase__brand  { justify-self: start; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.as-showcase__filter { justify-self: center; min-width: 0; }
+.as-showcase__exit   { justify-self: end; }
+.as-showcase__brand {
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.as-showcase__exit {
+  color: var(--color-ink);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+.as-showcase__exit:hover,
+.as-showcase__brand:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.as-showcase__exit:hover {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+.as-showcase__filter {
+  font-weight: 700;
+  color: var(--color-accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 100%;
+}
+.as-showcase__filter[hidden] { display: none; }
+@media (max-width: 640px) {
+  .as-showcase__topbar {
+    font-size: 0.62rem;
+    top: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+  }
+  .as-showcase__filter { display: none; }
+  .as-showcase__brand-full { display: none; }
+}
+.as-showcase__brand-short { display: none; }
+@media (max-width: 640px) {
+  .as-showcase__brand-short { display: inline; letter-spacing: 0.18em; }
+}
+
+/* Short viewport (landscape phones, small laptops, split-screen). The
+   regular rhythm overflows when there are only ~400 px of height to
+   work with — topbar, title card, and nav stack into a mess. Compress
+   padding, type, and the description / rule-dividers so the slide
+   stays intact and scannable. */
+@media (max-height: 520px) {
+  .as-showcase {
+    padding: var(--space-4) var(--space-6);
+  }
+  .as-showcase__slide { max-width: 64ch; }
+  .as-showcase__kicker {
+    margin: 0 0 var(--space-2);
+    padding-bottom: var(--space-2);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+  .as-showcase__title {
+    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+    line-height: 1.18;
+  }
+  .as-showcase__desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-top: var(--space-2);
+    max-width: 58ch;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .as-showcase__meta {
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    font-size: 0.78rem;
+  }
+  .as-showcase__read {
+    margin-top: var(--space-2);
+    padding: 6px var(--space-4);
+    font-size: 0.66rem;
+  }
+  .as-showcase__topbar {
+    top: var(--space-3);
+    left: var(--space-4);
+    right: var(--space-4);
+    font-size: 0.6rem;
+  }
+  .as-showcase__exit {
+    padding: 4px var(--space-2);
+  }
+  .as-showcase__nav {
+    bottom: var(--space-3);
+    gap: var(--space-2);
+  }
+  .as-showcase__nav button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Very short viewports (most landscape phones). Drop the description
+   entirely so we can still show title + meta + CTA without clipping. */
+@media (max-height: 420px) {
+  .as-showcase__desc { display: none; }
+  .as-showcase__title { font-size: clamp(1rem, 2.2vw, 1.4rem); }
+  .as-showcase__kicker { display: inline-block; }
+}
+
+/* Controls */
+.as-showcase__nav {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+.as-showcase__nav:hover { opacity: 0.9; }
+.as-showcase__nav button {
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+}
+.as-showcase__nav button:hover { background: var(--color-ink); color: var(--color-bg); }
+.as-showcase__counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.as-showcase__progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-accent);
+  opacity: 0.5;
+  transition: width linear;
+  z-index: 10;
+}
+
+.as-showcase__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  max-width: 40ch;
+}
+.as-showcase__empty a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+<noscript>
+  <div style="max-width: 52ch; margin: var(--space-16) auto; padding: 0 var(--space-6); text-align: center; font-family: var(--font-body);">
+    <p style="font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-accent); margin-bottom: var(--space-3);">Showcase requires JavaScript</p>
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: var(--space-4);">Try the Timeline instead</h1>
+    <p style="color: var(--color-ink-muted); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+      The full-screen showcase is a slideshow that advances with JavaScript. The Timeline view shows every article grouped by year and works without JS.
+    </p>
+    <a href="/archives/timeline/" class="btn btn--primary">Open the Timeline &rarr;</a>
+  </div>
+</noscript>
+
+<div class="as-showcase" id="as-showcase">
+  <div class="as-showcase__topbar">
+    <a class="as-showcase__brand" href="/" data-no-spa>
+      <span class="as-showcase__brand-full">The Freethinking Times</span>
+      <span class="as-showcase__brand-short" aria-hidden="true">TFT</span>
+    </a>
+    <span class="as-showcase__filter" id="as-filter"></span>
+    <a class="as-showcase__exit" id="as-exit" href="/archives/" data-no-spa>&larr; Exit</a>
+  </div>
+
+  <div class="as-showcase__slide" aria-live="polite" aria-atomic="true">
+    <p class="as-showcase__kicker" id="as-kicker"></p>
+    <h1 class="as-showcase__title" id="as-title"></h1>
+    <p class="as-showcase__desc" id="as-desc"></p>
+    <p class="as-showcase__meta" id="as-meta"></p>
+    <div class="as-showcase__actions">
+      <a class="as-showcase__read" id="as-read" href="#" data-no-spa>Read article &rarr;</a>
+      <span class="as-showcase__listen" id="as-listen"></span>
+    </div>
+  </div>
+
+  <div class="as-showcase__nav">
+    <button id="as-prev" type="button" aria-label="Previous article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <span class="as-showcase__counter" id="as-counter"></span>
+    <button id="as-next" type="button" aria-label="Next article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <button id="as-pause" type="button" aria-label="Pause auto-advance"><svg id="as-pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><svg id="as-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><polygon points="5 3 19 12 5 21"/></svg></button>
+  </div>
+
+  <div class="as-showcase__progress" id="as-progress"></div>
+</div>
+
+<script id="as-data" type="application/json">
+{%- set _articles = [] -%}
+{%- for a in collections.allContent -%}
+  {%- set entry = {
+    url: a.url,
+    title: a.data.title,
+    date: a.data.date | isoDate,
+    description: a.data.description or '',
+    section: a.data.section,
+    sectionSlug: a.data.section | slugify,
+    subsection: a.data.subsection,
+    author: a.data.author,
+    authorName: (authors[a.data.author].name if a.data.author and authors[a.data.author] else (a.data.authorName or '')),
+    tags: a.data.tags | rejectattr('post')
+  } -%}
+  {%- set _articles = _articles.concat([entry]) -%}
+{%- endfor -%}
+{{ _articles | dump | safe }}
+</script>
+
+{% block scripts %}
+<script>
+(function () {
+  var data = [];
+  try { data = JSON.parse(document.getElementById('as-data').textContent); } catch (e) {}
+
+  var params = new URLSearchParams(location.search);
+  var author = params.get('author') || '';
+  var section = (params.get('section') || '').toLowerCase();
+  var subsection = (params.get('subsection') || '').toLowerCase();
+  var topic = (params.get('topic') || '').toLowerCase();
+  var year = params.get('year') || '';
+  var month = params.get('month') || '';
+
+  function normSlug(s) { return (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+
+  var articles = data.filter(function (a) {
+    if (author && a.author !== author) return false;
+    if (section && normSlug(a.section) !== section && normSlug(a.sectionSlug) !== section) return false;
+    if (subsection && normSlug(a.subsection) !== subsection) return false;
+    if (topic) {
+      var tags = (a.tags || []).map(function (t) { return normSlug(t); });
+      if (tags.indexOf(topic) === -1) return false;
+    }
+    if (year || month) {
+      var d = new Date(a.date);
+      if (year  && String(d.getUTCFullYear()) !== String(year))  return false;
+      if (month && String(d.getUTCMonth() + 1) !== String(parseInt(month, 10))) return false;
+    }
+    return true;
+  });
+
+  // Filter label — only shown when an actual filter is applied.
+  // Every slide's own kicker already shows section › subsection so we
+  // don't want the topbar to repeat that for the unfiltered full archive.
+  var filterLabel = '';
+  var exitHref = '/archives/';
+  if (author) {
+    var authorName = (data.find(function (x) { return x.author === author; }) || {}).authorName || author;
+    filterLabel = 'By ' + authorName;
+    exitHref = '/author/' + author + '/';
+  } else if (topic) {
+    filterLabel = 'Topic: ' + topic;
+    exitHref = '/topics/' + topic + '/';
+  } else if (section) {
+    filterLabel = section.charAt(0).toUpperCase() + section.slice(1) + (subsection ? ' \u203a ' + subsection.charAt(0).toUpperCase() + subsection.slice(1) : '');
+    exitHref = '/' + section + '/';
+  }
+  var filterEl = document.getElementById('as-filter');
+  if (filterLabel) {
+    filterEl.textContent = filterLabel;
+    filterEl.hidden = false;
+  } else {
+    filterEl.hidden = true;
+  }
+  document.getElementById('as-exit').href = exitHref;
+
+  // Move showcase out of site-wrapper and hide everything else. Remember
+  // the original position so pagehide (bfcache) can undo it — otherwise
+  // hitting the browser back button after navigating to an article
+  // restores a page with the showcase detached from its original parent,
+  // which looks "unformatted".
+  var showcase = document.getElementById('as-showcase');
+  var wrapper = document.querySelector('.site-wrapper');
+  var originalParent = showcase ? showcase.parentNode : null;
+  var originalNext = showcase ? showcase.nextSibling : null;
+  if (showcase && wrapper) { document.body.appendChild(showcase); wrapper.style.display = 'none'; }
+  document.body.style.overflow = 'hidden';
+  document.body.style.margin = '0';
+
+  // Re-attach showcase to its original slot before the page is stashed in
+  // bfcache so back-navigation restores a valid document.
+  window.addEventListener('pagehide', function () {
+    if (showcase && originalParent) {
+      if (originalNext && originalNext.parentNode === originalParent) {
+        originalParent.insertBefore(showcase, originalNext);
+      } else {
+        originalParent.appendChild(showcase);
+      }
+    }
+    if (wrapper) wrapper.style.display = '';
+    document.body.style.overflow = '';
+    document.body.style.margin = '';
+  });
+
+  if (!articles.length) {
+    showcase.innerHTML =
+      '<div class="as-showcase__topbar">' +
+        '<a class="as-showcase__brand" href="/" data-no-spa>The Freethinking Times</a>' +
+        '<a class="as-showcase__exit" href="' + exitHref + '" data-no-spa>\u2190 Exit</a>' +
+      '</div>' +
+      '<p class="as-showcase__empty">No articles match this filter yet. <a href="' + exitHref + '" data-no-spa>Go back</a>.</p>';
+    return;
+  }
+
+  // Shuffle
+  for (var i = articles.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = articles[i]; articles[i] = articles[j]; articles[j] = t;
+  }
+
+  var idx = 0;
+  var paused = false;
+  var INTERVAL = 10000;
+  var timer = null;
+
+  var elKicker = document.getElementById('as-kicker');
+  var elTitle = document.getElementById('as-title');
+  var elDesc = document.getElementById('as-desc');
+  var elMeta = document.getElementById('as-meta');
+  var elRead = document.getElementById('as-read');
+  var elListen = document.getElementById('as-listen');
+  var elCounter = document.getElementById('as-counter');
+  var elProgress = document.getElementById('as-progress');
+  var elPause = document.getElementById('as-pause');
+  var pauseIcon = document.getElementById('as-pause-icon');
+  var playIcon = document.getElementById('as-play-icon');
+
+  function show(i) {
+    idx = ((i % articles.length) + articles.length) % articles.length;
+    var a = articles[idx];
+    showcase.classList.remove('is-visible');
+    setTimeout(function () {
+      var d = new Date(a.date);
+      var dateStr = d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+      elKicker.textContent = [a.section, a.subsection].filter(Boolean).join(' \u203a ') || 'Article';
+      elTitle.textContent = a.title;
+      elDesc.textContent = a.description || '';
+      elDesc.hidden = !a.description;
+      var metaBits = [];
+      if (a.authorName) metaBits.push('<strong>' + a.authorName + '</strong>');
+      metaBits.push(dateStr);
+      elMeta.innerHTML = metaBits.join(' &middot; ');
+      elRead.href = a.url;
+      if (elListen) {
+        elListen.innerHTML = (window.__tftAudioBar && window.__tftAudioBar.renderListenButton) ? window.__tftAudioBar.renderListenButton(a.url, a.title) : '';
+      }
+      elCounter.textContent = (idx + 1) + ' / ' + articles.length;
+      showcase.classList.add('is-visible');
+    }, 350);
+    resetProgress();
+  }
+  function resetProgress() {
+    clearTimeout(timer);
+    elProgress.style.transition = 'none';
+    elProgress.style.width = '0';
+    if (!paused) {
+      requestAnimationFrame(function () {
+        elProgress.style.transition = 'width ' + (INTERVAL / 1000) + 's linear';
+        elProgress.style.width = '100%';
+      });
+      timer = setTimeout(function () { show(idx + 1); }, INTERVAL);
+    }
+  }
+  function togglePause() {
+    paused = !paused;
+    pauseIcon.style.display = paused ? 'none' : '';
+    playIcon.style.display = paused ? '' : 'none';
+    elPause.setAttribute('aria-label', paused ? 'Resume auto-advance' : 'Pause auto-advance');
+    if (paused) { clearTimeout(timer); elProgress.style.transition = 'none'; elProgress.style.width = '0'; }
+    else { resetProgress(); }
+  }
+
+  document.getElementById('as-prev').addEventListener('click', function (e) { e.stopPropagation(); show(idx - 1); });
+  document.getElementById('as-next').addEventListener('click', function (e) { e.stopPropagation(); show(idx + 1); });
+  elPause.addEventListener('click', function (e) { e.stopPropagation(); togglePause(); });
+
+  // Stop the auto-cycle while a reader is listening to an article in
+  // the global audio bar. Resumes when audio pauses or ends.
+  function pauseShowcaseForAudio() {
+    if (!paused) {
+      paused = true;
+      pauseIcon.style.display = 'none';
+      playIcon.style.display = '';
+      elPause.setAttribute('aria-label', 'Resume auto-advance');
+      clearTimeout(timer);
+      elProgress.style.transition = 'none';
+      elProgress.style.width = '0';
+    }
+  }
+  function resumeShowcaseAfterAudio() {
+    if (paused) {
+      paused = false;
+      pauseIcon.style.display = '';
+      playIcon.style.display = 'none';
+      elPause.setAttribute('aria-label', 'Pause auto-advance');
+      resetProgress();
+    }
+  }
+  document.addEventListener('tft:tts-playing', pauseShowcaseForAudio);
+  // Listen for the bar's audio pause/end so we can resume cycling
+  var barAudio = document.getElementById('audio-bar-source');
+  if (barAudio) {
+    barAudio.addEventListener('pause', resumeShowcaseAfterAudio);
+    barAudio.addEventListener('ended', resumeShowcaseAfterAudio);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(idx + 1); }
+    else if (e.key === 'p') togglePause();
+    else if (e.key === 'Enter') location.href = articles[idx].url;
+    else if (e.key === 'Escape') location.href = exitHref;
+  });
+
+  // Click anywhere advances except interactive controls
+  showcase.addEventListener('click', function (e) {
+    if (e.target.closest('a, button')) return;
+    show(idx + 1);
+  });
+
+  show(0);
+})();
+</script>
+{% endblock %}

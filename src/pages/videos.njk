@@ -1,0 +1,98 @@
+---
+layout: base
+title: Video Library
+description: Curated freethought lectures, debates, and documentaries, the best of freethinking on video.
+permalink: /videos/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Video Library</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">Videos</h1>
+    <p class="page-header__lede">
+      Curated lectures, debates, and documentaries from the freethought tradition.
+    </p>
+  </header>
+
+  <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6);flex-wrap:wrap;">
+    <select id="video-speaker-filter" aria-label="Filter by speaker" style="padding:var(--space-2) var(--space-3);font-family:var(--font-ui);font-size:var(--text-sm);border:1px solid var(--color-rule);border-radius:var(--radius-sm);background:var(--color-bg);color:var(--color-ink);">
+      <option value="">All speakers</option>
+      {% set speakerSet = [] %}
+      {% for v in videos %}
+        {% if v.speaker not in speakerSet %}{% set speakerSet = speakerSet.concat([v.speaker]) %}{% endif %}
+      {% endfor %}
+      {% for s in speakerSet | sort %}
+        <option value="{{ s }}">{{ s }}</option>
+      {% endfor %}
+    </select>
+    <select id="video-tag-filter" aria-label="Filter by topic" style="padding:var(--space-2) var(--space-3);font-family:var(--font-ui);font-size:var(--text-sm);border:1px solid var(--color-rule);border-radius:var(--radius-sm);background:var(--color-bg);color:var(--color-ink);">
+      <option value="">All topics</option>
+      {% set tagSet = [] %}
+      {% for v in videos %}
+        {% for t in v.tags %}
+          {% if t not in tagSet %}{% set tagSet = tagSet.concat([t]) %}{% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% for t in tagSet | sort %}
+        <option value="{{ t }}">{{ t }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div id="video-list" data-pagefind-ignore style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--space-6);">
+    {% for v in videos %}
+    <div class="video-card" data-speaker="{{ v.speaker }}" data-tags="{{ v.tags | join(',') }}" style="border:1px solid var(--color-rule);border-top:3px solid var(--color-accent);display:flex;flex-direction:column;">
+      <div style="position:relative;padding-bottom:56.25%;background:var(--color-ink);">
+        <iframe
+          src="{{ v.embed }}"
+          title="{{ v.title }}"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+          loading="lazy"
+          allowfullscreen></iframe>
+      </div>
+      <div style="padding:var(--space-4);flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+        <h2 style="font-family:var(--font-headline);font-size:var(--text-md);font-weight:700;margin:0;line-height:var(--leading-snug);">
+          <a href="/videos/{{ v.title | slugify }}/" style="color:var(--color-ink);text-decoration:none;">{{ v.title }}</a>
+        </h2>
+        <p style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);margin:0;">
+          {{ v.speaker }} &middot; {{ v.date }} &middot; {{ v.duration }}
+        </p>
+        <p style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-ink-muted);margin:0;line-height:var(--leading-normal);flex:1;">
+          {{ v.description }}
+        </p>
+        <div style="display:flex;gap:var(--space-1);flex-wrap:wrap;">
+          {% for tag in v.tags %}
+          <span style="font-family:var(--font-ui);font-size:0.6rem;background:var(--color-bg-inset);color:var(--color-ink-faint);padding:2px 6px;border-radius:2px;">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function () {
+  var speakerFilter = document.getElementById('video-speaker-filter');
+  var tagFilter = document.getElementById('video-tag-filter');
+  function filterVideos() {
+    var speaker = speakerFilter ? speakerFilter.value : '';
+    var tag = tagFilter ? tagFilter.value : '';
+    document.querySelectorAll('.video-card').forEach(function (card) {
+      var matchSpeaker = !speaker || card.dataset.speaker === speaker;
+      var matchTag = !tag || (card.dataset.tags || '').indexOf(tag) !== -1;
+      card.style.display = (matchSpeaker && matchTag) ? '' : 'none';
+    });
+  }
+  if (speakerFilter) speakerFilter.addEventListener('change', filterVideos);
+  if (tagFilter) tagFilter.addEventListener('change', filterVideos);
+})();
+</script>

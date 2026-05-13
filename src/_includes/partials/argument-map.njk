@@ -1,0 +1,29 @@
+{#
+  Argument Map Partial, for opinion and analysis articles
+  Front matter: argument: { claim, evidence[], conclusion }
+  Usage: {% if argument %}{% include "partials/argument-map.njk" %}{% endif %}
+#}
+<aside class="argument-map" aria-label="Argument summary">
+  <p class="argument-map__label">The argument</p>
+
+  <div class="argument-map__row">
+    <span class="argument-map__step argument-map__step--claim">Claim</span>
+    <p class="argument-map__text">{{ argument.claim }}</p>
+  </div>
+
+  {% if argument.evidence and argument.evidence.length %}
+  <div class="argument-map__row">
+    <span class="argument-map__step argument-map__step--evidence">Evidence</span>
+    <ul class="argument-map__list">
+      {% for item in argument.evidence %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="argument-map__row">
+    <span class="argument-map__step argument-map__step--conclusion">Conclusion</span>
+    <p class="argument-map__text">{{ argument.conclusion }}</p>
+  </div>
+</aside>

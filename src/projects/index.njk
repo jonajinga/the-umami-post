@@ -1,0 +1,97 @@
+---
+layout: base
+title: Freethought Projects
+description: Interactive tools, historical databases, and research projects from The Freethinking Times.
+permalink: /projects/
+---
+
+{% set cardStyle = 'style="display:block;padding:var(--space-6);border:1px solid var(--color-rule);text-decoration:none;color:var(--color-ink);"' %}
+{% set h2Style = 'style="font-family:var(--font-headline);font-size:var(--text-md);margin:0 0 var(--space-2);"' %}
+{% set descStyle = 'style="font-size:var(--text-sm);color:var(--color-ink-muted);margin:0;"' %}
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Freethought Projects</h1>
+    <p class="page-header__lede">
+      Interactive tools, historical databases, and research projects that go beyond
+      the article format. Each project is a living document, updated as new material emerges.
+    </p>
+  </header>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-6);">
+
+    <a href="/music/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Freethought Music</h2>
+      <p {{ descStyle | safe }}>Curated playlists for reading and thinking. Plays in the background as you browse the site.</p>
+    </a>
+
+    <a href="/glossary/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Glossary of Terms</h2>
+      <p {{ descStyle | safe }}>86 philosophical terms defined clearly, with etymology, key figures, and hover tooltips across all articles.</p>
+    </a>
+
+    <a href="/timeline/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Historical Timeline</h2>
+      <p {{ descStyle | safe }}>2,400 years of freethought history, from Socrates to the present, with era filtering and full-screen showcase.</p>
+    </a>
+
+    <a href="/gallery/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Photo Gallery</h2>
+      <p {{ descStyle | safe }}>Nature photography with lightbox, zoom, download, and category, license, and source filters.</p>
+    </a>
+
+    <a href="/library/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Public Domain Library</h2>
+      <p {{ descStyle | safe }}>Full texts from the freethought tradition, read online with chapter navigation, annotations, highlights, bookmarks, and reading progress.</p>
+    </a>
+
+    <a href="/quotes/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Quotes Collection</h2>
+      <p {{ descStyle | safe }}>Curated freethought quotes, save, share, copy, and filter by author, topic, or era. Timeline and showcase views.</p>
+    </a>
+
+    <a href="/bookshelf/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Recommended Freethought Reading</h2>
+      <p {{ descStyle | safe }}>Annotated reading recommendations organised by category, with difficulty level, year, and editorial guidance.</p>
+    </a>
+
+    <a href="/resources/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Resources</h2>
+      <p {{ descStyle | safe }}>Education, legal rights, personal support, and media tools for freethinkers.</p>
+    </a>
+
+    <a href="/thought-experiments/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Thought Experiments</h2>
+      <p {{ descStyle | safe }}>Classic thought experiments examined, what they prove, what they don't, and why they matter.</p>
+    </a>
+
+    <a href="/trials/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Trials of Thought</h2>
+      <p {{ descStyle | safe }}>Landmark trials where ideas were the defendant, from Socrates to Rushdie. Timeline and showcase views.</p>
+    </a>
+
+    <a href="/videos/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Video Library</h2>
+      <p {{ descStyle | safe }}>Lectures, debates, and documentaries from the freethought tradition, filterable by speaker and topic.</p>
+    </a>
+
+    <a href="/games/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Games</h2>
+      <p {{ descStyle | safe }}>A small collection of thinking games — crossy-road, trivia, word scramble, and more.</p>
+    </a>
+
+    <a href="/knowledge-map/" {{ cardStyle | safe }}>
+      <h2 {{ h2Style | safe }}>Knowledge Map</h2>
+      <p {{ descStyle | safe }}>Force-directed visual map of every article, clustered by topic and author. Drag, zoom, click any node to read.</p>
+    </a>
+
+  </div>
+
+  <div style="margin-top: var(--space-10); padding-top: var(--space-6); border-top: 1px solid var(--color-rule);">
+    <p style="font-size: var(--text-sm); color: var(--color-ink-muted);">
+      Want to contribute? You can <a href="/submit/">suggest content</a> for any of these projects, quotes, timeline entries, books, glossary terms, photos, songs, and more.
+    </p>
+  </div>
+
+</div>

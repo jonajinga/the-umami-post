@@ -1,0 +1,680 @@
+[
+  {
+    "term": "Accountability",
+    "see_also": ["Public records", "Regulatory capture"],
+    "entries": [
+      {
+        "sub_term": "in federal regulatory enforcement",
+        "references": [
+          { "title": "Federal Regulators Quietly Shelved Three Major Investigations Last Quarter", "url": "/news/federal-regulators-shelved-investigations/", "date": "2026-03-15", "section": "News" }
+        ],
+        "sub_sub_entries": [
+          {
+            "term": "shelved investigations",
+            "references": [
+              { "title": "Federal Regulators Quietly Shelved Three Major Investigations Last Quarter", "url": "/news/federal-regulators-shelved-investigations/", "date": "2026-03-15", "section": "News" }
+            ]
+          }
+        ]
+      },
+      {
+        "sub_term": "in municipal spending",
+        "references": [
+          { "title": "City's Affordable Housing Fund Diverted to Consultant Contracts, Records Show", "url": "/news/affordable-housing-fund-consulting/", "date": "2026-03-10", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Attention economy",
+    "see_also": ["Surveillance", "Media"],
+    "entries": [
+      {
+        "sub_term": "as a bargain with users",
+        "references": [
+          { "title": "The Attention Economy's Bargain, and Who Is Paying for It", "url": "/analysis/attention-economy-bargain/", "date": "2026-02-28", "section": "Analysis" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Blasphemy laws",
+    "see_also": ["Civil liberties", "Religion and the state"],
+    "entries": [
+      {
+        "sub_term": "Pakistan",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ],
+        "sub_sub_entries": [
+          {
+            "term": "high-court acquittal",
+            "references": [
+              { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Books",
+    "see_also": ["Libraries", "Reading"],
+    "entries": [
+      {
+        "sub_term": "labelled \"difficult,\" rhetoric of",
+        "references": [
+          { "title": "What We Talk About When We Talk About 'Difficult' Books", "url": "/arts-culture/difficult-books/", "date": "2026-03-01", "section": "Arts & Culture" }
+        ]
+      },
+      {
+        "sub_term": "removal compliance, library funding tied to",
+        "references": [
+          { "title": "Missouri Lawmakers Tie Library Funding to Book-Removal Compliance", "url": "/news/missouri-library-funding-restriction/", "date": "2026-04-14", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Chaplains in public schools",
+    "see_also": ["Church-state separation", "Education"],
+    "entries": [
+      {
+        "sub_term": "unlicensed, as in-school counselors",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Church-state separation",
+    "see_also": ["Religion and the state", "Secular education"],
+    "entries": [
+      {
+        "sub_term": "in public-school counselling",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "in religious-education opt-out policy (Finland)",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Cinema",
+    "see_also": ["Media"],
+    "entries": [
+      {
+        "sub_term": "nostalgia as a thinking problem",
+        "references": [
+          { "title": "Cinema's Nostalgia Problem Is a Thinking Problem", "url": "/arts-culture/cinema-nostalgia-problem/", "date": "2026-02-20", "section": "Arts & Culture" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Civil liberties",
+    "see_also": ["Blasphemy laws", "Religious freedom"],
+    "entries": [
+      {
+        "sub_term": "blasphemy prosecutions and",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "library access and",
+        "references": [
+          { "title": "Missouri Lawmakers Tie Library Funding to Book-Removal Compliance", "url": "/news/missouri-library-funding-restriction/", "date": "2026-04-14", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Consulting industry",
+    "see_also": ["Government contracts", "Public spending"],
+    "entries": [
+      {
+        "sub_term": "diverting affordable-housing funds",
+        "references": [
+          { "title": "City's Affordable Housing Fund Diverted to Consultant Contracts, Records Show", "url": "/news/affordable-housing-fund-consulting/", "date": "2026-03-10", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Education",
+    "see_also": ["Chaplains in public schools", "Libraries", "Secular education"],
+    "entries": [
+      {
+        "sub_term": "religious-education opt-out (Finland)",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "school counselling, chaplains and",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Epistemic humility",
+    "see_also": ["Moral cowardice", "Reason"],
+    "entries": [
+      {
+        "sub_term": "as performed uncertainty, critique of",
+        "references": [
+          { "title": "On the Moral Cowardice of Epistemic Humility", "url": "/opinion/moral-cowardice-epistemic-humility/", "date": "2026-03-05", "section": "Opinion" }
+        ]
+      },
+      {
+        "sub_term": "academic objections to the critique",
+        "references": [
+          { "title": "On Epistemic Humility and the Academy", "url": "/letters/on-epistemic-humility-academy/", "date": "2026-03-06", "section": "Letters" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Freethought tradition",
+    "see_also": ["Secularism", "Vocabulary"],
+    "entries": [
+      {
+        "sub_term": "naming and the vocabulary of unbelief",
+        "references": [
+          { "title": "The Vocabulary of Unbelief: How Freethinkers Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
+        ]
+      },
+      {
+        "sub_term": "uncomfortable ancestors of",
+        "references": [
+          { "title": "Review: 'Radicals' Finds the Freethought Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Gilded Age",
+    "see_also": ["History", "Inequality"],
+    "entries": [
+      {
+        "sub_term": "the first, what ended it",
+        "references": [
+          { "title": "The First Gilded Age Ended. Here Is What It Took.", "url": "/history/first-gilded-age-ended/", "date": "2026-03-09", "section": "History" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Government oversight",
+    "see_also": ["Accountability", "Regulatory capture"],
+    "entries": [
+      {
+        "sub_term": "of financial institutions",
+        "references": [
+          { "title": "Federal Regulators Quietly Shelved Three Major Investigations Last Quarter", "url": "/news/federal-regulators-shelved-investigations/", "date": "2026-03-15", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "regulatory-capture mechanics",
+        "references": [
+          { "title": "How Regulatory Capture Actually Works: A Field Guide", "url": "/analysis/regulatory-capture-field-guide/", "date": "2026-03-08", "section": "Analysis" },
+          { "title": "On Your Coverage of Regulatory Capture", "url": "/letters/on-regulatory-capture-coverage/", "date": "2026-03-14", "section": "Letters" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "History, lessons of",
+    "see_also": ["Gilded Age", "Pentagon Papers"],
+    "entries": [
+      {
+        "sub_term": "from the Pentagon Papers, fifty years on",
+        "references": [
+          { "title": "The Pentagon Papers at Fifty-Plus: What We Actually Learned", "url": "/history/pentagon-papers-lessons/", "date": "2026-02-15", "section": "History" }
+        ]
+      },
+      {
+        "sub_term": "from the end of the first Gilded Age",
+        "references": [
+          { "title": "The First Gilded Age Ended. Here Is What It Took.", "url": "/history/first-gilded-age-ended/", "date": "2026-03-09", "section": "History" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Infrastructure",
+    "see_also": ["Internet", "Public goods"],
+    "entries": [
+      {
+        "sub_term": "internet, what keeps it on",
+        "references": [
+          { "title": "The Infrastructure Nobody Talks About: How the Internet Actually Stays On", "url": "/science-technology/internet-infrastructure/", "date": "2026-02-25", "section": "Science & Technology" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Journalism",
+    "see_also": ["Media", "Newspaper, the"],
+    "entries": [
+      {
+        "sub_term": "industry sale and dismemberment",
+        "references": [
+          { "title": "The Newspaper Didn't Die. It Was Sold for Parts.", "url": "/opinion/newspaper-sold-for-parts/", "date": "2026-03-12", "section": "Opinion" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Libraries",
+    "see_also": ["Books", "Civil liberties", "Education"],
+    "entries": [
+      {
+        "sub_term": "funding tied to book removal",
+        "references": [
+          { "title": "Missouri Lawmakers Tie Library Funding to Book-Removal Compliance", "url": "/news/missouri-library-funding-restriction/", "date": "2026-04-14", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Media",
+    "see_also": ["Cinema", "Journalism", "Newspaper, the"],
+    "entries": [
+      {
+        "sub_term": "attention economy as bargain with",
+        "references": [
+          { "title": "The Attention Economy's Bargain, and Who Is Paying for It", "url": "/analysis/attention-economy-bargain/", "date": "2026-02-28", "section": "Analysis" }
+        ]
+      },
+      {
+        "sub_term": "newspaper industry, dissolution of",
+        "references": [
+          { "title": "The Newspaper Didn't Die. It Was Sold for Parts.", "url": "/opinion/newspaper-sold-for-parts/", "date": "2026-03-12", "section": "Opinion" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Moral cowardice",
+    "see_also": ["Epistemic humility", "Reason"],
+    "entries": [
+      {
+        "sub_term": "and performed uncertainty",
+        "references": [
+          { "title": "On the Moral Cowardice of Epistemic Humility", "url": "/opinion/moral-cowardice-epistemic-humility/", "date": "2026-03-05", "section": "Opinion" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Newspaper, the",
+    "see_also": ["Journalism", "Media"],
+    "entries": [
+      {
+        "sub_term": "as a sold-for-parts asset",
+        "references": [
+          { "title": "The Newspaper Didn't Die. It Was Sold for Parts.", "url": "/opinion/newspaper-sold-for-parts/", "date": "2026-03-12", "section": "Opinion" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Pentagon Papers",
+    "see_also": ["History, lessons of", "Press freedom"],
+    "entries": [
+      {
+        "sub_term": "what was actually learned",
+        "references": [
+          { "title": "The Pentagon Papers at Fifty-Plus: What We Actually Learned", "url": "/history/pentagon-papers-lessons/", "date": "2026-02-15", "section": "History" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Public records",
+    "see_also": ["Accountability", "FOIA"],
+    "entries": [
+      {
+        "sub_term": "as evidence of fund diversion",
+        "references": [
+          { "title": "City's Affordable Housing Fund Diverted to Consultant Contracts, Records Show", "url": "/news/affordable-housing-fund-consulting/", "date": "2026-03-10", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Reason",
+    "see_also": ["Epistemic humility", "Science"],
+    "entries": [
+      {
+        "sub_term": "and humility, distinction between",
+        "references": [
+          { "title": "On the Moral Cowardice of Epistemic Humility", "url": "/opinion/moral-cowardice-epistemic-humility/", "date": "2026-03-05", "section": "Opinion" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Regulatory capture",
+    "see_also": ["Accountability", "Government oversight"],
+    "entries": [
+      {
+        "sub_term": "field guide to mechanics of",
+        "references": [
+          { "title": "How Regulatory Capture Actually Works: A Field Guide", "url": "/analysis/regulatory-capture-field-guide/", "date": "2026-03-08", "section": "Analysis" }
+        ],
+        "sub_sub_entries": [
+          {
+            "term": "reader response from former regulator",
+            "references": [
+              { "title": "On Your Coverage of Regulatory Capture", "url": "/letters/on-regulatory-capture-coverage/", "date": "2026-03-14", "section": "Letters" }
+            ]
+          }
+        ]
+      },
+      {
+        "sub_term": "shelved enforcement and",
+        "references": [
+          { "title": "Federal Regulators Quietly Shelved Three Major Investigations Last Quarter", "url": "/news/federal-regulators-shelved-investigations/", "date": "2026-03-15", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Religion and the state",
+    "see_also": ["Blasphemy laws", "Church-state separation"],
+    "entries": [
+      {
+        "sub_term": "blasphemy prosecution and acquittal",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "religious-education policy",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "school chaplaincy",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Replication crisis",
+    "see_also": ["Science"],
+    "entries": [
+      {
+        "sub_term": "what it actually says about science",
+        "references": [
+          { "title": "What the Replication Crisis Actually Tells Us About How Science Works", "url": "/science-technology/replication-crisis/", "date": "2026-03-11", "section": "Science & Technology" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Reviews",
+    "see_also": [],
+    "entries": [
+      {
+        "sub_term": "Better Angels, Revisited (Kessler)",
+        "references": [
+          { "title": "Review: 'The Better Angels, Revisited' by Rachel Kessler", "url": "/reviews/review-better-angels-revisited/", "date": "2026-04-13", "section": "Reviews" }
+        ]
+      },
+      {
+        "sub_term": "Radicals (documentary)",
+        "references": [
+          { "title": "Review: 'Radicals' Finds the Freethought Tradition's Most Uncomfortable Ancestors", "url": "/reviews/review-radicals-documentary/", "date": "2026-04-07", "section": "Reviews" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Science",
+    "see_also": ["Reason", "Replication crisis"],
+    "entries": [
+      {
+        "sub_term": "what the replication crisis tells us about",
+        "references": [
+          { "title": "What the Replication Crisis Actually Tells Us About How Science Works", "url": "/science-technology/replication-crisis/", "date": "2026-03-11", "section": "Science & Technology" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Secular education",
+    "see_also": ["Church-state separation", "Education"],
+    "entries": [
+      {
+        "sub_term": "Finland, opt-out-only policy struck down",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Vocabulary, philosophical",
+    "see_also": ["Freethought tradition"],
+    "entries": [
+      {
+        "sub_term": "of unbelief, naming a tradition",
+        "references": [
+          { "title": "The Vocabulary of Unbelief: How Freethinkers Named Their Own Tradition", "url": "/history/vocabulary-of-unbelief/", "date": "2026-04-11", "section": "History" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Academic freedom",
+    "see_also": ["Blasphemy laws", "Civil liberties"],
+    "entries": [
+      {
+        "sub_term": "blasphemy prosecution of a professor (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "religious defaulting in compulsory schooling (Finland)",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Constitutional law",
+    "see_also": ["Civil liberties", "Religion and the state"],
+    "entries": [
+      {
+        "sub_term": "Finland, Section 11 (freedom of religion and conscience)",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ],
+        "sub_sub_entries": [
+          {
+            "term": "religious-test analysis applied to opt-out structure",
+            "references": [
+              { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Counseling, school",
+    "see_also": ["Chaplains in public schools", "Mental health"],
+    "entries": [
+      {
+        "sub_term": "credential substitution by religious volunteers",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Evidentiary standards",
+    "see_also": ["Procedural justice"],
+    "entries": [
+      {
+        "sub_term": "audio authentication, Qanun-e-Shahadat (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Judicial minimalism",
+    "see_also": ["Constitutional law"],
+    "entries": [
+      {
+        "sub_term": "evidentiary acquittals leaving statute untouched (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Legislation",
+    "see_also": ["Blasphemy laws", "Chaplains in public schools", "Religion and the state"],
+    "entries": [
+      {
+        "sub_term": "Texas Senate Bill 763 (school chaplains, 2023)",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "Pakistan Penal Code blasphemy provisions",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "Missouri library-funding compliance statute",
+        "references": [
+          { "title": "Missouri Lawmakers Tie Library Funding to Book-Removal Compliance", "url": "/news/missouri-library-funding-restriction/", "date": "2026-04-14", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Mental health",
+    "see_also": ["Counseling, school", "Education"],
+    "entries": [
+      {
+        "sub_term": "school-based, chaplain substitution for licensed counselors",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Mob violence",
+    "see_also": ["Civil liberties", "Vigilantism"],
+    "entries": [
+      {
+        "sub_term": "post-acquittal in blasphemy cases (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Nordic countries",
+    "see_also": ["Secular education"],
+    "entries": [
+      {
+        "sub_term": "comparative religious-education models",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ],
+        "sub_sub_entries": [
+          {
+            "term": "Sweden — confessional instruction discontinued, 1969",
+            "references": [
+              { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+            ]
+          },
+          {
+            "term": "Norway — ECHR 2007 case shifted model",
+            "references": [
+              { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+            ]
+          },
+          {
+            "term": "Denmark — Evangelical Lutheran default retained",
+            "references": [
+              { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Procedural justice",
+    "see_also": ["Evidentiary standards"],
+    "entries": [
+      {
+        "sub_term": "irregularities in blasphemy trial (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Religious minorities",
+    "see_also": ["Blasphemy laws", "Civil liberties"],
+    "entries": [
+      {
+        "sub_term": "disproportionate use of blasphemy statute against (Pakistan)",
+        "references": [
+          { "title": "Pakistan High Court Acquits Professor Held Four Years on Blasphemy Charge", "url": "/news/pakistan-blasphemy-acquittal/", "date": "2026-04-16", "section": "News" }
+        ]
+      }
+    ]
+  },
+  {
+    "term": "Religious neutrality",
+    "see": ["Viewpoint neutrality"],
+    "see_also": ["Church-state separation"],
+    "entries": [
+      {
+        "sub_term": "absent from school chaplaincy policy (Texas)",
+        "references": [
+          { "title": "Texas District Approves Unlicensed Chaplains as In-School Counselors", "url": "/news/texas-chaplain-program-public-schools/", "date": "2026-04-09", "section": "News" }
+        ]
+      },
+      {
+        "sub_term": "demanded by court ruling on opt-out education (Finland)",
+        "references": [
+          { "title": "Finnish Supreme Administrative Court Strikes Down Opt-Out-Only Religious Education Policy", "url": "/news/finland-secular-education-ruling/", "date": "2026-04-11", "section": "News" }
+        ]
+      }
+    ]
+  }
+]

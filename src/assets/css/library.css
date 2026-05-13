@@ -1,0 +1,2994 @@
+/* ============================================================
+   THE FREETHINKING TIMES — Public Domain Library
+   All values reference tokens from tokens.css.
+   ============================================================ */
+
+/* ── 1. Library Homepage ──────────────────────────────────── */
+
+.library-home {
+  padding-block: var(--space-12);
+}
+
+.library-hero {
+  text-align: center;
+  padding-block: var(--space-16) var(--space-12);
+  border-bottom: 1px solid var(--color-rule);
+  margin-bottom: var(--space-12);
+}
+
+.library-hero__eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-4);
+  text-align: center;
+}
+
+.library-hero__headline {
+  font-family: var(--font-masthead);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-6);
+}
+
+.library-hero__deck {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 60ch;
+  margin: 0 auto var(--space-8);
+}
+
+/* Featured works grid */
+.library-featured {
+  margin-bottom: var(--space-16);
+}
+
+.library-featured__heading {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.library-featured__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  font-style: italic;
+  padding: var(--space-8) 0;
+}
+
+.library-featured__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-6);
+}
+
+.library-work-card {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-top: 3px solid var(--color-accent);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  transition: border-top-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.library-work-card:hover {
+  border-top-color: var(--color-link);
+  box-shadow: var(--shadow-md);
+}
+
+.library-work-card__era {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.library-work-card__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.library-work-card__author {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.library-work-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  margin: 0;
+  flex: 1;
+}
+
+.library-work-card__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* Catalogue table */
+.library-catalogue {
+  margin-bottom: var(--space-16);
+}
+
+.library-catalogue__heading {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.library-catalogue__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  font-style: italic;
+  padding: var(--space-8) 0;
+}
+
+/* Filter bar */
+.library-filter-bar {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.library-filter-bar__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.library-filter-bar select {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-8);
+}
+
+.library-filter-bar select:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-color: var(--color-link);
+}
+
+/* Catalogue table */
+.library-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+}
+
+.library-table thead th {
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--color-rule-heavy);
+}
+
+.library-table tbody tr {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-table tbody tr[hidden] {
+  display: none;
+}
+
+.library-table tbody tr:hover {
+  background: var(--color-bg-alt);
+}
+
+.library-table td {
+  padding: var(--space-3);
+  vertical-align: middle;
+  color: var(--color-ink);
+  line-height: var(--leading-normal);
+}
+
+.library-table__title-cell a {
+  color: var(--color-link);
+  text-decoration: none;
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.library-table__title-cell a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+.library-table__author {
+  color: var(--color-ink-muted);
+}
+
+.library-table__type,
+.library-table__era {
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .library-table__author,
+  .library-table__type,
+  .library-table__era {
+    display: none;
+  }
+}
+
+
+/* ── 2. Work Landing Page ─────────────────────────────────── */
+
+.library-work-landing {
+  padding-block: var(--space-12);
+}
+
+.library-work-hero {
+  max-width: var(--max-width-prose);
+  margin: 0 auto var(--space-12);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-work-hero__back {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.library-work-hero__back:hover {
+  color: var(--color-link);
+}
+
+.library-work-hero__era {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-3);
+}
+
+.library-work-hero__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-4);
+}
+
+.library-work-hero__author {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-6);
+}
+
+.library-work-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-8);
+}
+
+.library-work-hero__meta span::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 0.85em;
+  background: var(--color-rule);
+  margin-right: var(--space-6);
+  vertical-align: middle;
+}
+
+.library-work-hero__meta span:first-child::before {
+  display: none;
+}
+
+.library-work-hero__intro {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+}
+
+.library-work-hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+
+/* Chapter list */
+.library-chapter-list {
+  max-width: var(--max-width-prose);
+  margin: 0 auto;
+}
+
+.library-chapter-list__heading {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.library-chapter-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-rule);
+  text-decoration: none;
+  color: inherit;
+}
+
+.library-chapter-item:hover .library-chapter-item__title {
+  color: var(--color-link);
+}
+
+.library-chapter-item__number {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-ink-faint);
+  text-align: right;
+}
+
+.library-chapter-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.library-chapter-item__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-ink);
+  transition: color var(--transition-fast);
+}
+
+.library-chapter-item__subtitle {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+
+.library-chapter-item__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.library-chapter-item__complete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--color-bg-inset);
+  font-size: 0.6rem;
+  color: var(--color-ink-faint);
+}
+
+.library-chapter-item__complete--done {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+
+/* ── 3. Reading Layout ────────────────────────────────────── */
+
+.library-reading {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
+.library-reading-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;                          /* below masthead (100) so nav dropdowns aren't covered */
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-rule);
+  padding: var(--space-3) var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.library-reading-header.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.library-reading-header__back {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.library-reading-header__back:hover {
+  color: var(--color-link);
+}
+
+.library-reading-header__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: center;
+}
+
+.library-reading-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.library-reading-progress {
+  height: 2px;
+  background: var(--color-rule);
+  position: relative;
+}
+
+.library-reading-progress__bar {
+  height: 100%;
+  background: var(--color-accent);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Body wrapper — centers prose, leaves room for panel on wide screens */
+.library-body-wrapper {
+  max-width: var(--max-width-prose);
+  margin: 0 auto;
+  padding: var(--space-10) var(--gutter) var(--space-16);
+}
+
+.library-body-chapter-info {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-body-chapter-info__work {
+  font-weight: 600;
+  color: var(--color-ink-muted);
+}
+
+.library-body-meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.library-body__heading {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-6);
+}
+
+/* The rendered Markdown content */
+.library-body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+  margin-top: var(--space-8);
+}
+
+.library-body p { margin: 0 0 var(--space-6); }
+
+.library-body h2 {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin: var(--space-10) 0 var(--space-4);
+  color: var(--color-ink);
+}
+
+.library-body h3 {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin: var(--space-8) 0 var(--space-3);
+  color: var(--color-ink);
+}
+
+.library-body blockquote {
+  border-left: 3px solid var(--color-rule-heavy);
+  padding-left: var(--space-6);
+  margin: var(--space-6) 0;
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.library-body a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.library-body a:hover {
+  color: var(--color-link-hover);
+}
+
+/* Chapter navigation */
+.library-chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-10) 0;
+  border-top: 1px solid var(--color-rule);
+  margin-top: var(--space-10);
+}
+
+.library-chapter-nav__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-link);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 45%;
+}
+
+.library-chapter-nav__link:hover {
+  color: var(--color-link-hover);
+}
+
+.library-chapter-nav__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-ink-faint);
+}
+
+.library-chapter-nav__title {
+  font-family: var(--font-headline);
+  font-weight: 600;
+}
+
+.library-chapter-nav__link--next {
+  text-align: right;
+  margin-left: auto;
+}
+
+
+/* ── 4. Reading Panel ─────────────────────────────────────── */
+
+.library-panel-toggle {
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.library-panel-toggle:hover,
+.library-panel-toggle[aria-expanded="true"] {
+  border-color: var(--color-link);
+  color: var(--color-link);
+}
+
+/* Reader panel — mirrors the .nav-drawer / .gs-panel slide-in pattern
+ * for consistency. Right-anchored, full viewport height (covers the
+ * masthead while open), visibility flip delayed by the slide duration
+ * on close so the slide-out animation actually renders before the
+ * element disappears. Toggle via aria-hidden="false" like before so
+ * we don't have to touch the existing JS layer. */
+.library-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: min(540px, 92vw);
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-rule);
+  box-shadow: -2px 0 28px rgba(0, 0, 0, 0.18);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--transition-normal), visibility 0s linear var(--transition-normal);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+.library-panel[aria-hidden="false"] {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform var(--transition-normal), visibility 0s linear 0s;
+}
+@media (max-width: 640px) {
+  .library-panel {
+    width: 100vw;
+    border-left: none;
+    box-shadow: none;
+  }
+}
+
+/* ── Header: kicker + current title + close ───────────────── */
+.library-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+  flex-shrink: 0;
+}
+.library-panel__heading {
+  min-width: 0;
+  flex: 1;
+}
+.library-panel__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  margin: 0 0 2px;
+}
+.library-panel__title {
+  font-family: var(--font-masthead, var(--font-headline));
+  /* Default font-size; JS (fitPanelTitle in annotations.js) shrinks this
+     down to as small as 0.72rem on very long titles so the whole title
+     is readable instead of being clamped with an ellipsis. */
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.library-panel__header-btn {
+  background: none;
+  border: none;
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: var(--space-1);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+
+.library-panel__header-btn:hover { color: var(--color-ink); }
+
+.library-panel__export-menu {
+  /* Position fixed (not absolute) so the menu isn't clipped by the
+     tabs row's overflow-x: auto. JS in reader-panel-migrate positions
+     it next to the export button on click. */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  padding: var(--space-2);
+  z-index: calc(var(--z-overlay) + 30);
+  min-width: 160px;
+  border-radius: 6px;
+}
+.library-panel__export-menu[hidden] { display: none; }
+
+.library-panel__export-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  background: none;
+  border: none;
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast);
+}
+
+.library-panel__export-item:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-ink);
+}
+
+.library-panel__close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.library-panel__close:hover {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+
+.library-panel__tabs-wrap {
+  position: relative;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-panel__tabs {
+  display: flex;
+  flex-shrink: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+/* When not inside a wrap (before JS init), keep the original border. */
+.library-panel__tabs:not(.library-panel__tabs-wrap > *) {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-panel__tabs::-webkit-scrollbar { display: none; }
+
+/* Scroll chevrons flanking the tab strip. Rendered via annotations.js
+   init so users on narrow viewports can discover overflowed tabs
+   without having to guess that they're scrollable. */
+.library-panel__tabs-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  border: none;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+.library-panel__tabs-arrow:hover {
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+.library-panel__tabs-arrow[hidden] { display: none; }
+.library-panel__tabs-arrow--left {
+  left: 0;
+  box-shadow: 6px 0 8px -4px rgba(0, 0, 0, 0.08);
+}
+.library-panel__tabs-arrow--right {
+  right: 0;
+  box-shadow: -6px 0 8px -4px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Reader panel: quick-actions row ──
+   Top band of the Reader panel. Holds Save, Listen, Focus — the
+   three most-used toggles. Each slot stretches evenly; buttons
+   show icon + label stacked for clarity. */
+.library-panel__quick-actions {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+  flex-shrink: 0;
+}
+.library-panel__quick-actions:empty { display: none; }
+.library-panel__quick-actions > div {
+  flex: 1;
+  display: flex;
+}
+.library-panel__quick-actions .article-action-btn {
+  position: static;
+  width: 100%;
+  height: auto;
+  min-height: 56px;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.library-panel__quick-actions .article-action-btn .btn-label {
+  display: inline !important;
+}
+/* Tooltip hover-label is redundant when the label is already visible */
+.library-panel__quick-actions .article-action-btn::after { display: none; }
+
+/* ── Reader panel: footer links band ──
+   Bottom of the panel — secondary actions that belong in the panel
+   context (bookmark current spot, jump to comments, send feedback).
+   Rendered as compact text-style buttons with a leading icon. */
+.library-panel__footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  padding-bottom: max(var(--space-3), env(safe-area-inset-bottom, 0));
+  border-top: 1px solid var(--color-rule);
+  flex-shrink: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+}
+.library-panel__footer-links:empty { display: none; }
+
+.library-panel__footer-btn,
+.library-panel__footer-slot > button,
+.library-panel__footer-slot > .article-feedback-wrap > button {
+  position: relative;
+  flex: 1 1 30%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-ink-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.library-panel__footer-btn:hover,
+.library-panel__footer-btn:focus-visible,
+.library-panel__footer-slot button:hover,
+.library-panel__footer-slot button:focus-visible {
+  background: var(--color-bg-alt);
+  color: var(--color-ink);
+  outline: none;
+}
+.library-panel__footer-btn svg,
+.library-panel__footer-slot svg {
+  flex-shrink: 0;
+  color: var(--color-ink-faint);
+}
+/* Migrated feedback button has class="article-action-btn" — strip the
+   square pill chrome so it looks like the other footer links. */
+.library-panel__footer-slot .article-action-btn::after { display: none; }
+.library-panel__footer-slot .article-action-btn .btn-label {
+  display: inline !important;
+}
+/* Feedback popup, when reparented into the panel footer, renders as a
+   centered fixed dialog instead of an absolute-positioned dropdown. */
+.library-panel__footer-slot .article-feedback-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  width: min(440px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: var(--space-6);
+}
+
+/* "Saved!" flash on the panel-bookmark button — renders the tooltip
+   above the button without nuking the SVG. */
+.library-panel__footer-btn.is-saved-flash::before,
+.annotation-toolbar__btn.is-saved-flash::before,
+.annotation-toolbar .article-action-btn.is-saved-flash::before {
+  content: 'Saved';
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Export tab — list of format buttons inside the panel ── */
+.reader-export-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.reader-export-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-ui);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.reader-export-btn:hover,
+.reader-export-btn:focus-visible {
+  border-color: var(--color-accent);
+  background: var(--color-bg-alt);
+  outline: none;
+}
+.reader-export-btn > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-ink-faint);
+}
+.reader-export-btn > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
+}
+.reader-export-btn strong {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.reader-export-btn em {
+  font-style: normal;
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+
+/* CTA button inside the Display tab — opens the unified global display
+   settings panel (now the single source of truth for display prefs). */
+.reader-panel-open-display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.reader-panel-open-display:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Subheads inside tab sections (e.g. "Share" / "Download" in the Share tab) */
+.reader-panel-subhead {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-3);
+}
+
+/* ── Cite tab inline content ── */
+.cite-inline__entry {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.cite-inline__entry:last-child { border-bottom: none; }
+.cite-inline__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-2);
+}
+.cite-inline__text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-2);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.cite-inline__copy {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+.cite-inline__copy:hover { background: var(--color-bg-alt); color: var(--color-ink); }
+
+/* ── Footnotes tab ── */
+.footnotes-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+.footnotes-panel__item {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+.footnotes-panel__item:last-child { border-bottom: none; }
+.footnotes-panel__num {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
+  align-self: start;
+}
+.footnotes-panel__num:hover { text-decoration: underline; }
+.footnotes-panel__text p { margin: 0 0 var(--space-2); }
+.footnotes-panel__text p:last-child { margin-bottom: 0; }
+
+/* Brief highlight of an in-text footnote target after panel jump */
+.footnote-flash {
+  background: var(--color-bg-alt);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  transition: background var(--transition-fast), outline-color var(--transition-fast);
+}
+
+.library-panel__tab {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-3) 10px var(--space-2);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  min-width: 58px;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+.library-panel__tab-icon {
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+.library-panel__tab-label {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.library-panel__tab[aria-selected="true"] {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+  background: var(--color-bg-alt);
+}
+.library-panel__tab[aria-selected="true"] .library-panel__tab-icon { opacity: 1; }
+
+.library-panel__tab:hover:not([aria-selected="true"]) {
+  color: var(--color-ink-muted);
+  background: var(--color-bg-alt);
+}
+.library-panel__tab:hover:not([aria-selected="true"]) .library-panel__tab-icon { opacity: 0.95; }
+
+/* Phones: icon-only to fit more tabs. */
+@media (max-width: 640px) {
+  .library-panel__tab {
+    min-width: 0;
+    padding: var(--space-2) var(--space-3);
+  }
+  .library-panel__tab-label { display: none; }
+  .library-panel__tab-icon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .library-panel__export-item svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+}
+
+.library-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  scrollbar-width: thin;
+}
+
+.library-panel__section {
+  display: none;
+}
+
+.library-panel__section[aria-hidden="false"] {
+  display: block;
+}
+
+.library-panel__section-head {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-panel__section-lede {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.library-panel__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+  line-height: var(--leading-relaxed);
+  text-align: center;
+  padding: var(--space-10) var(--space-4);
+  margin: 0;
+}
+.library-panel__empty-title {
+  display: block;
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--space-2);
+}
+.library-panel__empty-hint {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+/* TOC items */
+.library-toc-item {
+  display: block;
+  padding: var(--space-2) 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-rule);
+  transition: color var(--transition-fast);
+}
+
+.library-toc-item:hover,
+.library-toc-item[aria-current="page"] {
+  color: var(--color-link);
+}
+
+.library-toc-item__number {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-right: var(--space-2);
+}
+
+/* Bookmark items */
+.library-bookmark-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.library-bookmark-item {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast);
+}
+
+.library-bookmark-item:hover {
+  border-color: var(--color-link);
+}
+
+.library-bookmark-item__chapter {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-ink-faint);
+}
+
+.library-bookmark-item__pos {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+}
+
+.library-bookmark-item__delete {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: 0;
+  margin-top: var(--space-1);
+}
+
+.library-bookmark-item__delete:hover {
+  color: var(--color-accent);
+}
+
+/* Annotation items */
+.library-annotation-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.library-annotation-item {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.library-annotation-item__quote {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  line-height: var(--leading-normal);
+}
+
+.library-annotation-item__note {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+}
+
+.library-annotation-item__actions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.library-annotation-item__action {
+  background: none;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.library-annotation-item__action:hover {
+  color: var(--color-ink);
+}
+
+
+/* ── 5. Annotation Toolbar ──────────────────────────────────
+   Single persistent command bar at the bottom of reading pages.
+   Layout: centered row of icons (Reader toggle first, then selection
+   tools and article actions). Music player docks to the right when
+   playback is active, separated by a vertical divider; on mobile
+   the music player wraps to its own row below the icons. */
+.annotation-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* Two-row grid: row 1 holds the scroll-arrow + main-row + scroll-
+   * arrow trio (always one line, the main row scrolls horizontally
+   * when its buttons exceed the available column). Row 2 hosts the
+   * docked music player when active. Grid prevents the wrap-pile
+   * we got with flex on narrow viewports. */
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: var(--space-2);
+  row-gap: var(--space-2);
+  background: #1a1a1a;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: var(--space-2);
+  /* Respect mobile browser's bottom chrome (address bar, home indicator)
+   * so the bar isn't hidden behind it. Both min-height and padding-bottom
+   * grow by env(safe-area-inset-bottom) so the bar's effective rendered
+   * height is exactly `68 + safe-area`. That makes --toolbar-floor below
+   * trivially trackable so the TTS / music bars stack flush against the
+   * top edge of the toolbar with no gap. */
+  padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom, 0));
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+  z-index: var(--z-overlay);
+  /* Sized for 48 px buttons + 8 px top + 8 px bottom (+ safe-area).
+   * Matches --toolbar-floor below so the audio bar / music bar stack
+   * sits flush against the toolbar's top edge. */
+  min-height: calc(72px + env(safe-area-inset-bottom, 0));
+}
+.annotation-toolbar__scroll--left  { grid-column: 1; grid-row: 1; }
+.annotation-toolbar__main          { grid-column: 2; grid-row: 1; }
+.annotation-toolbar__scroll--right { grid-column: 3; grid-row: 1; }
+.annotation-toolbar__music         { grid-column: 1 / -1; grid-row: 2; }
+
+/* Page-arrow scroll buttons that flank the toolbar's main row. JS
+ * (reader-panel-migrate.js) toggles their hidden state based on
+ * whether the row currently overflows + which edge it sits at. */
+.annotation-toolbar__scroll {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+.annotation-toolbar__scroll:hover,
+.annotation-toolbar__scroll:focus-visible {
+  background: rgba(255,255,255,0.18);
+  outline: none;
+}
+/* SVG size normalised to 20×20 in the unified rule above. */
+/* Hide via visibility, not display: keeps the 44 px column reserved
+ * in the toolbar grid so the middle row's clientWidth stays constant
+ * when an arrow disappears. Without this the atEnd / atStart math
+ * races against layout reflow — the arrow toggles visible/hidden in
+ * a loop because the changed clientWidth flips the inequality back.
+ * Override the [hidden] user-agent display:none too so the box still
+ * occupies space. */
+.annotation-toolbar__scroll[hidden] {
+  display: inline-flex;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.annotation-toolbar__main {
+  display: flex;
+  align-items: center;
+  /* Centred on desktop / tablet (>=768) where the row almost always
+   * fits without overflow — looks intentional rather than left-clumped.
+   * On phones (<768) we override to flex-start in the media query
+   * below so the leftmost buttons (Listen / reading-pct / back-to-top)
+   * are always visible on initial paint. Centre-math on phones
+   * trapped the first few buttons past the visible viewport. */
+  justify-content: center;
+  flex-wrap: nowrap;
+  /* Bumped from var(--space-1) (4 px) → var(--space-2) (8 px) so
+   * the buttons aren't visually pinched together. */
+  gap: var(--space-2);
+  /* Always one row; overflow scrolls horizontally. The flanking
+   * .annotation-toolbar__scroll buttons drive the scroll on click;
+   * touch users can swipe directly. Hidden scrollbar — the page
+   * arrows are the affordance. */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Inline padding so the leftmost / rightmost buttons aren't flush
+   * against the scroll-arrow buttons when scrolled to the edges. */
+  padding: 0 var(--space-2);
+}
+.annotation-toolbar__main::-webkit-scrollbar { display: none; }
+
+.annotation-toolbar__slot {
+  display: contents;
+}
+.annotation-toolbar__slot:empty { display: none; }
+
+/* Music: always renders on its own row — flex-basis:100% forces a wrap
+   so the bar sits below the icon row at every breakpoint, not docked. */
+.annotation-toolbar__music {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  padding-top: var(--space-1);
+  margin-top: var(--space-1);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.annotation-toolbar__music:empty { display: none; }
+.annotation-toolbar__music > .music-bar { max-width: 560px; flex: 1; }
+
+/* Selection-only buttons (Highlight, Note) dim and disable when no
+ * text is selected; light up clearly when selection is active so the
+ * reader knows the buttons are now usable. */
+.annotation-toolbar__btn--needs-selection {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: not-allowed;
+  transition: opacity var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+.annotation-toolbar__btn--needs-selection.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-accent);
+}
+.annotation-toolbar__btn--needs-selection.is-active:hover,
+.annotation-toolbar__btn--needs-selection.is-active:focus-visible {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.annotation-toolbar__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  /* Opt out of the base.css universal 44 px floor — this toolbar
+   * intentionally packs 10+ buttons on phones; the per-breakpoint
+   * widths below override min-height/min-width. */
+  min-width: 0;
+  min-height: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 6px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Normalise SVG icon size so engagement buttons (like, mark-read,
+   pdf-basket, tts) render at the same 20px size the rest of the
+   toolbar uses. Without this the like heart shipped at 13×13 and
+   looked missing next to the larger bookmark / share / comments
+   icons. */
+.annotation-toolbar__btn svg,
+.annotation-toolbar .article-action-btn svg,
+.annotation-toolbar .article-action-btn .bookmark-icon,
+.annotation-toolbar .article-action-btn .like-icon,
+.annotation-toolbar .article-action-btn .mark-read-icon,
+.annotation-toolbar__scroll svg,
+.annotation-toolbar #back-to-top svg,
+.annotation-toolbar .listen-btn--icon svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+/* Toolbar holds 10+ buttons. We hold the WCAG AA 44×44 floor on every
+ * button at every viewport, and turn the inner row into a horizontal
+ * scroll strip with ← / → page-arrows below 768 so users can reach
+ * off-screen actions without sub-44 buttons. */
+@media (max-width: 768px) {
+  /* Phones / tablet portrait: the row is wider than the viewport,
+   * so left-align it and let the user scroll right. Centre-math
+   * pushed the first few buttons past the start of the visible
+   * window. */
+  .annotation-toolbar__main {
+    justify-content: flex-start;
+    /* Slightly tighter than desktop but not pinched — 4 px keeps
+     * the buttons from butting against each other while still
+     * fitting more on screen before the user scrolls. */
+    gap: 4px;
+    column-gap: 4px;
+    /* No horizontal padding on phones — the leftmost button needs
+     * to sit flush against the scroll-arrow column edge so the
+     * Listen / % read buttons aren't visually pushed off-screen. */
+    padding: 0;
+  }
+  .annotation-toolbar { padding: 4px var(--space-1); column-gap: 4px; }
+}
+
+
+.annotation-toolbar__btn:hover,
+.annotation-toolbar__btn:focus-visible {
+  background: rgba(255,255,255,0.15);
+  outline: none;
+}
+
+/* Listen pill embedded inside the dark annotation toolbar. The default
+ * .listen-btn--sm chrome targets light-bg article cards; on the
+ * toolbar we want a high-contrast white-on-ink rendering with no
+ * border. The :not(.listen-btn--icon) guard preserves the icon-only
+ * play/pause variant's 44×44 circular treatment — without it the
+ * toolbar override forced the icon to 44×32 and broke button-size
+ * uniformity across the bar. */
+.annotation-toolbar .listen-btn:not(.listen-btn--icon),
+.annotation-toolbar .listen-btn--sm:not(.listen-btn--icon) {
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 4px 10px;
+  height: 32px;
+  font-size: 0.7rem;
+}
+.annotation-toolbar .listen-btn:not(.listen-btn--icon):hover,
+.annotation-toolbar .listen-btn:not(.listen-btn--icon):focus-visible {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+.annotation-toolbar .listen-btn__icon svg { fill: currentColor; }
+
+/* Listen-btn--icon (TTS play/pause) inside the toolbar adopts the
+ * same chrome as every other __btn — square 6 px corners, transparent
+ * background, white-alpha hover. The accent red fill the icon
+ * variant ships with elsewhere stood out too much next to the
+ * uniform dark row; the user wants it visually identical to its
+ * neighbours. */
+.annotation-toolbar .listen-btn--icon {
+  border-radius: 6px;
+  background: transparent;
+  color: #fff;
+  width: 48px;
+  height: 48px;
+}
+.annotation-toolbar .listen-btn--icon:hover,
+.annotation-toolbar .listen-btn--icon:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.annotation-toolbar .listen-btn--icon.is-playing {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* When the reading-floats (#reading-pct / #back-to-top) get rendered
+ * inline inside the toolbar (article.njk does this server-side via the
+ * .toolbar-floats class), neutralize their fixed-position floating
+ * chrome so they sit inline with the other toolbar buttons.
+ * Sized 44×44 to match every other annotation-toolbar__btn so the
+ * row reads as one consistent set of icons. No per-element padding
+ * — spacing comes from the toolbar's column gap, same as every other
+ * button. */
+.annotation-toolbar .toolbar-floats {
+  position: static;
+  inset: auto;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  height: 48px;
+  min-height: 0;
+  min-width: 0;
+  background: transparent;
+  color: #fff;
+  padding: 0;
+  /* Lock both back-to-top and reading-pct to no-shrink so the
+   * scrolling toolbar row can't squash them to zero width. Without
+   * this, on a phone viewport the row treats them as flex items
+   * with default flex-shrink: 1 and back-to-top collapses to ~0
+   * before the user notices it should be there. Same fix we
+   * applied to .article-action-btn for the bookmark/save button. */
+  flex-shrink: 0;
+}
+/* % through label — sits in the toolbar row at the same 48 px box
+ * height as every button so the row reads as one uniform set of
+ * affordances. No border / no fill so it's visually a label rather
+ * than a competing button; the horizontal padding gives the digits
+ * room without dominating. */
+.annotation-toolbar #reading-pct {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  min-width: 48px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.annotation-toolbar #back-to-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  /* Default = "at the top of the page" — visibly present at 60 %
+   * white but slightly dimmer than its neighbours so the reader
+   * understands it's not actionable yet. Once they scroll past
+   * 50 px (progress.js flips .reading-floats.is-visible), it goes
+   * to full #fff. The previous 0.35 alpha was nearly invisible on
+   * a few mobile screens and read as "missing". */
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+body:has(.reading-floats.is-visible) .annotation-toolbar #back-to-top {
+  color: #fff;
+}
+.annotation-toolbar #back-to-top:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+/* SVG size normalised to 20×20 in the unified rule above. */
+/* Back-to-top + reading-pct used to hide until scrollY > 400. That
+ * gated their visibility behind progress.js's class toggle, which
+ * was failing on some mobile builds — users couldn't find the
+ * return-to-top affordance. Both now render unconditionally inside
+ * the toolbar; back-to-top just no-ops if the page is already at
+ * the top, and reading-pct shows 0 % at the top of the article. */
+
+.annotation-toolbar__btn[aria-expanded="true"],
+.annotation-toolbar__btn[aria-pressed="true"] {
+  background: rgba(255,255,255,0.18);
+}
+
+/* Disabled state — used by ann-bookmark-btn at end-of-article so
+ * readers can't stack pointless bookmarks against the footer. */
+.annotation-toolbar__btn.is-disabled,
+.annotation-toolbar__btn[aria-disabled="true"] {
+  color: rgba(255, 255, 255, 0.25);
+  cursor: not-allowed;
+}
+.annotation-toolbar__btn.is-disabled:hover,
+.annotation-toolbar__btn[aria-disabled="true"]:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Width / height set in the unified SVG-sizing rule above. */
+.annotation-toolbar__btn svg {
+  display: block;
+  pointer-events: none;
+}
+
+/* Hover / focus tooltip for every bar icon — sourced from aria-label.
+   Custom CSS instead of the browser's native (slow) title tooltip so
+   it appears reliably and matches the dark bar styling. */
+.annotation-toolbar__btn[aria-label]::after,
+.annotation-toolbar .article-action-btn[aria-label]::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #1a1a1a;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s 0.3s;
+  z-index: calc(var(--z-overlay) + 25);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.annotation-toolbar__btn[aria-label]:hover::after,
+.annotation-toolbar__btn[aria-label]:focus-visible::after,
+.annotation-toolbar .article-action-btn[aria-label]:hover::after,
+.annotation-toolbar .article-action-btn[aria-label]:focus-visible::after {
+  opacity: 1;
+}
+/* Suppress hover tooltip when an icon's popover is open. */
+.annotation-toolbar__btn[aria-expanded="true"]::after { display: none; }
+
+/* Legacy divider — flatten to a vertical rule. */
+.annotation-toolbar__divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+/* When the feedback popup is rendered inside the bar's slot (it was
+   originally an absolute-positioned dropdown anchored to a button in
+   the article header), render it as a centered fixed dialog instead. */
+.annotation-toolbar .article-feedback-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  width: min(460px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+}
+.annotation-toolbar .article-feedback-wrap {
+  position: static;
+  display: inline-flex;
+}
+
+/* Migrated Save/Listen/Focus buttons (class="article-action-btn") need to
+   blend into the dark toolbar; override their light-theme defaults.
+   Keep position: relative so the tooltip ::after (added further down)
+   can be positioned against the button. */
+.annotation-toolbar .article-action-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  /* Migrated buttons (bookmark, like, mark-read, pdf-basket, feedback)
+   * default to flex-shrink: 1 — without this floor they collapse to
+   * their content width when the toolbar's main row is packed and
+   * scrolling. The bookmark icon's natural content was tiny (13 px
+   * inline attr) so it shrank to ~1/3 the width of its neighbours.
+   * Lock to no-shrink, matching __btn behaviour. */
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 48px;
+}
+.annotation-toolbar .article-action-btn:hover,
+.annotation-toolbar .article-action-btn:focus-visible {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: transparent;
+}
+.annotation-toolbar .article-action-btn[aria-pressed="true"],
+.annotation-toolbar .article-action-btn.is-active,
+.annotation-toolbar .article-action-btn.is-saved,
+.annotation-toolbar .article-action-btn.is-speaking {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+/* SVG size set in the unified sizing rule near top of toolbar block. */
+
+/* Mobile: bar wraps so the music player gets its own row below the icons.
+   The icons themselves never scroll horizontally — they fit in one row
+   even on narrow screens because the bar carries 8 icons max. */
+/* Legacy phone rules removed: previous iterations forced
+ * flex-direction: column on the toolbar at <=640 and shrank buttons
+ * to 32×32 / 30×30 with !important at <=480 / <=360. Both broke the
+ * 44×44 WCAG 2.2 AA touch-target floor and the horizontal-scroll
+ * design. The single <=768 rule above handles phones now: keep
+ * 44×44 buttons, scroll horizontally, left-align so the leftmost
+ * affordances stay visible. */
+@media (max-width: 640px) {
+  .annotation-toolbar__music:not(:empty)::before { display: none; }
+}
+
+/* ── Share / download / print popover ──
+   Anchored above the annotation toolbar near the share icon.
+   Holds the migrated share-panel (social links), download-panel
+   (txt / md), and an inline Print button. */
+/* Fullscreen modal — covers the whole viewport so the share / download /
+ * print options have plenty of breathing room and the close button in
+ * the corner is the only way out. */
+.ann-share-popover {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  overflow-y: auto;
+  background: var(--color-bg);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  z-index: var(--z-modal);
+  font-family: var(--font-ui);
+}
+.ann-share-popover[hidden] { display: none; }
+.ann-share-popover__header {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+  margin: 0 auto;
+  max-width: 640px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.ann-share-popover__title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.ann-share-popover__close {
+  background: none;
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-faint);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 4px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.ann-share-popover__close:hover {
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+}
+.ann-share-popover__body {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6);
+  box-sizing: border-box;
+}
+
+.ann-share-popover__subhead {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-2);
+  padding: 0 var(--space-2);
+}
+.ann-share-popover__subhead:not(:first-child) {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+}
+
+/* Migrated share-panel + download-panel render as simple lists inside.
+   The original share-panel had position:absolute, top:100%, left:50%,
+   and transform:translateX(-50%) — without overriding the transform,
+   the panel was being shifted half its width to the left, off-screen. */
+.ann-share-popover #share-panel,
+.ann-share-popover #download-panel {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  display: block !important;
+  z-index: auto !important;
+}
+
+.ann-share-popover .share-panel__item,
+.ann-share-popover .download-panel__item,
+.ann-share-popover__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  text-decoration: none;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+}
+.ann-share-popover .share-panel__item:hover,
+.ann-share-popover .download-panel__item:hover,
+.ann-share-popover__item:hover,
+.ann-share-popover .share-panel__item:focus-visible,
+.ann-share-popover .download-panel__item:focus-visible,
+.ann-share-popover__item:focus-visible {
+  background: var(--color-bg-alt);
+  outline: none;
+}
+.ann-share-popover .share-panel__divider {
+  display: none;
+}
+.ann-share-popover .share-panel__item svg,
+.ann-share-popover .download-panel__item svg,
+.ann-share-popover__item svg {
+  flex-shrink: 0;
+  color: var(--color-ink-faint);
+}
+
+@media (max-width: 640px) {
+  .ann-share-popover {
+    width: min(320px, 92vw);
+  }
+}
+
+/* ── Bookmark placement preview ──
+ * Thin accent rule + pin glyph that previews where the bookmark
+ * will land on hover/focus of the toolbar bookmark button. Lives
+ * at body level (position: fixed) so it survives the toolbar's
+ * own stacking context. Pointer-events:none so it never blocks
+ * clicks on the article body underneath. */
+.bookmark-preview {
+  position: fixed;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.bookmark-preview.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bookmark-preview__line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-accent);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 6px 12px -8px rgba(0,0,0,0.18);
+}
+.bookmark-preview__pin {
+  position: absolute;
+  top: -10px;
+  /* Anchor to the LEFT of the body column so the pin sits in the
+   * gutter and never covers reader prose. Wider negative offset on
+   * larger viewports where the body has more breathing room. */
+  left: -44px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 4px 10px -4px rgba(0,0,0,0.18);
+}
+@media (max-width: 640px) {
+  /* On phones the body column hugs the gutter — pull the pin only a
+   * little so it stays in the page-edge margin without disappearing
+   * off-screen. */
+  .bookmark-preview__pin { left: -28px; }
+}
+.bookmark-preview__pin svg { width: 12px; height: 12px; }
+[data-theme="dark"] .bookmark-preview__line {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 6px 12px -8px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .bookmark-preview__pin {
+  background: var(--color-bg-alt);
+  box-shadow: 0 4px 10px -4px rgba(0,0,0,0.5);
+}
+
+/* ── Inline highlight marks ── */
+.library-highlight {
+  background: rgba(250, 204, 21, 0.3);
+  cursor: pointer;
+  /* No background-transition: a transition on background would cause
+   * a freshly-inserted <mark> to briefly animate the light-mode
+   * yellow value through to the dark-mode value when the dark rule
+   * applies, producing a visible "light flash → dark settle" on the
+   * very first paint of a new highlight. Hover already commits
+   * instantly without animation. */
+}
+
+.library-highlight:hover {
+  background: rgba(250, 204, 21, 0.45);
+}
+
+/* Dark mode: a saturated dark gold reads like a "highlighted word"
+ * against the surrounding dark prose — the previous bright pastel
+ * yellow with forced dark text was visually loud and clashed with
+ * the surrounding light dark-mode ink. Light ink stays so the
+ * highlighted text shares the same colour as the rest of the
+ * paragraph; the gold wash signals the highlight without hijacking
+ * the typography. */
+[data-theme="dark"] .library-highlight {
+  background: #6b5400;
+  color: #fff8d6;
+}
+
+[data-theme="dark"] .library-highlight:hover {
+  background: #856700;
+  color: #fff8d6;
+}
+
+/* OS-preference dark mode (system dark, no explicit theme toggle).
+ * Mirrors the [data-theme="dark"] rules above so a freshly-created
+ * highlight doesn't flash the light-mode rgba(...) wash before the
+ * inline theme script settles. The :not([data-theme="light"]) gate
+ * keeps the rule from firing on users who have explicitly chosen
+ * light mode on a system that prefers dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .library-highlight {
+    background: #6b5400;
+    color: #fff8d6;
+  }
+  :root:not([data-theme="light"]) .library-highlight:hover {
+    background: #856700;
+    color: #fff8d6;
+  }
+}
+
+/* Highlight color variants — light theme */
+.library-highlight--pink { background: rgba(219, 39, 119, 0.18); }
+.library-highlight--pink:hover { background: rgba(219, 39, 119, 0.3); }
+.library-highlight--blue { background: rgba(37, 99, 235, 0.15); }
+.library-highlight--blue:hover { background: rgba(37, 99, 235, 0.28); }
+.library-highlight--green { background: rgba(22, 163, 74, 0.18); }
+.library-highlight--green:hover { background: rgba(22, 163, 74, 0.3); }
+.library-highlight--orange { background: rgba(234, 88, 12, 0.18); }
+.library-highlight--orange:hover { background: rgba(234, 88, 12, 0.3); }
+.library-highlight--purple { background: rgba(124, 58, 237, 0.15); }
+.library-highlight--purple:hover { background: rgba(124, 58, 237, 0.28); }
+
+/* Dark theme — saturated dark variants + light ink, matching the
+ * yellow rule above. Each tone is dark enough that the surrounding
+ * dark-mode page bg still shows clearly which words are highlighted
+ * but the highlight itself integrates with the dark theme rather
+ * than punching out as a bright pastel chip. */
+[data-theme="dark"] .library-highlight--pink { background: #6b1a3d; color: #fce7f3; }
+[data-theme="dark"] .library-highlight--pink:hover { background: #831a47; color: #fce7f3; }
+[data-theme="dark"] .library-highlight--blue { background: #1e3a8a; color: #dbeafe; }
+[data-theme="dark"] .library-highlight--blue:hover { background: #1d4ed8; color: #dbeafe; }
+[data-theme="dark"] .library-highlight--green { background: #14532d; color: #dcfce7; }
+[data-theme="dark"] .library-highlight--green:hover { background: #166534; color: #dcfce7; }
+[data-theme="dark"] .library-highlight--orange { background: #7c2d12; color: #fed7aa; }
+[data-theme="dark"] .library-highlight--orange:hover { background: #9a3412; color: #fed7aa; }
+[data-theme="dark"] .library-highlight--purple { background: #4c1d95; color: #ede9fe; }
+[data-theme="dark"] .library-highlight--purple:hover { background: #5b21b6; color: #ede9fe; }
+
+/* OS-preference dark mode: same dark-saturated palette for colour
+ * variants so newly-created highlights don't flash the light-mode
+ * rgba wash on a system in dark mode without an explicit toggle. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .library-highlight--pink { background: #6b1a3d; color: #fce7f3; }
+  :root:not([data-theme="light"]) .library-highlight--pink:hover { background: #831a47; color: #fce7f3; }
+  :root:not([data-theme="light"]) .library-highlight--blue { background: #1e3a8a; color: #dbeafe; }
+  :root:not([data-theme="light"]) .library-highlight--blue:hover { background: #1d4ed8; color: #dbeafe; }
+  :root:not([data-theme="light"]) .library-highlight--green { background: #14532d; color: #dcfce7; }
+  :root:not([data-theme="light"]) .library-highlight--green:hover { background: #166534; color: #dcfce7; }
+  :root:not([data-theme="light"]) .library-highlight--orange { background: #7c2d12; color: #fed7aa; }
+  :root:not([data-theme="light"]) .library-highlight--orange:hover { background: #9a3412; color: #fed7aa; }
+  :root:not([data-theme="light"]) .library-highlight--purple { background: #4c1d95; color: #ede9fe; }
+  :root:not([data-theme="light"]) .library-highlight--purple:hover { background: #5b21b6; color: #ede9fe; }
+}
+
+/* Sepia theme */
+[data-rs-bg="sepia"] .library-highlight { background: rgba(180, 140, 20, 0.25); }
+[data-rs-bg="sepia"] .library-highlight--pink { background: rgba(190, 50, 100, 0.2); }
+[data-rs-bg="sepia"] .library-highlight--blue { background: rgba(50, 100, 180, 0.18); }
+[data-rs-bg="sepia"] .library-highlight--green { background: rgba(40, 140, 70, 0.2); }
+[data-rs-bg="sepia"] .library-highlight--orange { background: rgba(200, 90, 20, 0.22); }
+[data-rs-bg="sepia"] .library-highlight--purple { background: rgba(120, 60, 200, 0.18); }
+[data-gs-bg="sepia"] .library-highlight { background: rgba(180, 140, 20, 0.25); }
+[data-gs-bg="sepia"] .library-highlight--pink { background: rgba(190, 50, 100, 0.2); }
+[data-gs-bg="sepia"] .library-highlight--blue { background: rgba(50, 100, 180, 0.18); }
+[data-gs-bg="sepia"] .library-highlight--green { background: rgba(40, 140, 70, 0.2); }
+[data-gs-bg="sepia"] .library-highlight--orange { background: rgba(200, 90, 20, 0.22); }
+[data-gs-bg="sepia"] .library-highlight--purple { background: rgba(120, 60, 200, 0.18); }
+
+/* Cream theme */
+[data-rs-bg="cream"] .library-highlight { background: rgba(200, 160, 20, 0.22); }
+[data-rs-bg="cream"] .library-highlight--pink { background: rgba(200, 50, 110, 0.16); }
+[data-rs-bg="cream"] .library-highlight--blue { background: rgba(50, 100, 190, 0.14); }
+[data-rs-bg="cream"] .library-highlight--green { background: rgba(30, 140, 60, 0.16); }
+[data-rs-bg="cream"] .library-highlight--orange { background: rgba(210, 90, 20, 0.18); }
+[data-rs-bg="cream"] .library-highlight--purple { background: rgba(120, 50, 210, 0.14); }
+[data-gs-bg="cream"] .library-highlight { background: rgba(200, 160, 20, 0.22); }
+[data-gs-bg="cream"] .library-highlight--pink { background: rgba(200, 50, 110, 0.16); }
+[data-gs-bg="cream"] .library-highlight--blue { background: rgba(50, 100, 190, 0.14); }
+[data-gs-bg="cream"] .library-highlight--green { background: rgba(30, 140, 60, 0.16); }
+[data-gs-bg="cream"] .library-highlight--orange { background: rgba(210, 90, 20, 0.18); }
+[data-gs-bg="cream"] .library-highlight--purple { background: rgba(120, 50, 210, 0.14); }
+
+/* Highlights with notes — dotted underline to indicate attached note */
+.library-highlight--note {
+  border-bottom: 2px dotted rgba(200, 160, 0, 0.6);
+}
+.library-highlight--pink.library-highlight--note { border-bottom-color: rgba(219, 39, 119, 0.5); }
+.library-highlight--blue.library-highlight--note { border-bottom-color: rgba(37, 99, 235, 0.5); }
+.library-highlight--green.library-highlight--note { border-bottom-color: rgba(22, 163, 74, 0.5); }
+.library-highlight--orange.library-highlight--note { border-bottom-color: rgba(234, 88, 12, 0.5); }
+.library-highlight--purple.library-highlight--note { border-bottom-color: rgba(124, 58, 237, 0.5); }
+
+/* Article-level dark background — same dark-saturated palette as the
+ * global dark-theme rules above. */
+[data-rs-bg="dark"] .library-highlight { background: #6b5400; color: #fff8d6; }
+[data-rs-bg="dark"] .library-highlight--pink { background: #6b1a3d; color: #fce7f3; }
+[data-rs-bg="dark"] .library-highlight--blue { background: #1e3a8a; color: #dbeafe; }
+[data-rs-bg="dark"] .library-highlight--green { background: #14532d; color: #dcfce7; }
+[data-rs-bg="dark"] .library-highlight--orange { background: #7c2d12; color: #fed7aa; }
+[data-rs-bg="dark"] .library-highlight--purple { background: #4c1d95; color: #ede9fe; }
+
+/* Dotted-underline note indicator: bumped to ~0.9 alpha on dark so
+ * the dot pattern reads against the saturated highlight wash. */
+[data-theme="dark"] .library-highlight--note {
+  border-bottom-color: rgba(255, 220, 80, 0.9);
+}
+[data-theme="dark"] .library-highlight--pink.library-highlight--note { border-bottom-color: rgba(244, 114, 182, 0.9); }
+[data-theme="dark"] .library-highlight--blue.library-highlight--note { border-bottom-color: rgba(147, 197, 253, 0.9); }
+[data-theme="dark"] .library-highlight--green.library-highlight--note { border-bottom-color: rgba(134, 239, 172, 0.9); }
+[data-theme="dark"] .library-highlight--orange.library-highlight--note { border-bottom-color: rgba(253, 186, 116, 0.95); }
+[data-theme="dark"] .library-highlight--purple.library-highlight--note { border-bottom-color: rgba(196, 181, 253, 0.95); }
+
+/* Note editor modal */
+.ann-note-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.ann-note-modal {
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  width: min(480px, 100%);
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ann-note-modal__header {
+  padding: var(--space-3) var(--space-4) var(--space-2);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.ann-note-toolbar {
+  display: flex;
+  gap: 2px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.ann-note-toolbar button {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  padding: 2px 8px;
+  line-height: 1.4;
+}
+
+.ann-note-toolbar button:hover {
+  background: var(--color-bg-inset);
+  color: var(--color-ink);
+}
+
+.ann-note-editable {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-ink);
+  background: var(--color-bg-alt);
+  border: none;
+  padding: var(--space-4);
+  min-height: 120px;
+  max-height: 40vh;
+  overflow-y: auto;
+  outline: none;
+}
+
+.ann-note-editable:empty::before {
+  content: 'Write your note...';
+  color: var(--color-ink-faint);
+  pointer-events: none;
+}
+
+.ann-note-editable blockquote {
+  border-left: 2px solid var(--color-rule);
+  padding-left: var(--space-2);
+  margin: var(--space-1) 0;
+  color: var(--color-ink-muted);
+}
+
+.ann-note-editable a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.ann-note-modal__footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.ann-note-btn {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+.ann-note-btn--save {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+
+.ann-note-btn:hover { opacity: 0.85; }
+
+/* Rendered markdown in notes */
+.library-annotation-item__note {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+  margin: var(--space-1) 0;
+}
+
+.library-annotation-item__note strong { font-weight: 700; color: var(--color-ink); }
+.library-annotation-item__note em { font-style: italic; }
+.library-annotation-item__note code {
+  font-family: 'SF Mono', Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-inset);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.library-annotation-item__note pre {
+  background: var(--color-bg-inset);
+  padding: var(--space-2);
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: var(--space-1) 0;
+}
+.library-annotation-item__note pre code { background: none; padding: 0; }
+.library-annotation-item__note blockquote {
+  border-left: 2px solid var(--color-rule);
+  padding-left: var(--space-2);
+  color: var(--color-ink-faint);
+  margin: var(--space-1) 0;
+}
+.library-annotation-item__note ul {
+  padding-left: var(--space-4);
+  margin: var(--space-1) 0;
+}
+.library-annotation-item__note a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+/* Highlight color picker popup */
+.hl-color-picker {
+  position: absolute;
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  z-index: 300;
+}
+
+.hl-color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.hl-color-btn:hover {
+  transform: scale(1.2);
+}
+
+.hl-color-btn.is-active {
+  border-color: var(--color-ink);
+}
+
+/* Panel overlay — disabled (panel is non-blocking sidebar) */
+.library-panel-overlay {
+  display: none !important;
+}
+
+/* Bookmark toggle button in header */
+.library-bookmark-btn {
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.library-bookmark-btn:hover,
+.library-bookmark-btn[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ─────────────────────────────────────────────
+   Discovery pages (subjects, authors)
+   ───────────────────────────────────────────── */
+
+.library-discovery {
+  padding: var(--space-12) 0 var(--space-16);
+}
+
+.library-discovery__header {
+  margin-bottom: var(--space-10);
+}
+
+.library-discovery__back {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  margin-bottom: var(--space-4);
+}
+
+.library-discovery__back:hover {
+  color: var(--color-accent);
+}
+
+.library-discovery__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-2);
+}
+
+.library-discovery__deck {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.library-discovery__count {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-6);
+}
+
+/* Tag cloud */
+.library-tag-cloud {
+  margin-bottom: var(--space-12);
+}
+
+.library-tag-cloud__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-5);
+}
+
+.library-tag-cloud__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.library-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-full);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.library-tag:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-faint, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.library-tag__count {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  background: var(--color-rule);
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-2);
+  min-width: 1.4em;
+  text-align: center;
+}
+
+/* Subject list table */
+.library-subject-list {
+  margin-top: var(--space-12);
+}
+
+.library-subject-list__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-5);
+}
+
+.library-table__count {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+  width: 4rem;
+}
+
+/* Author list */
+.library-author-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.library-author-list__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.library-author-list__link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.library-author-list__link:hover .library-author-list__name {
+  color: var(--color-accent);
+}
+
+.library-author-list__name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.library-author-list__dates {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.library-author-list__meta {
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+/* Author page */
+.library-author-page {
+  padding: var(--space-12) 0 var(--space-16);
+}
+
+.library-author-hero {
+  margin-bottom: var(--space-8);
+}
+
+.library-author-hero__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--color-ink);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.library-author-hero__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.library-author-hero__significance {
+  font-size: var(--text-lg);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 70ch;
+  margin: 0;
+}
+
+.library-author-bio {
+  max-width: 68ch;
+  margin: 0 0 var(--space-12);
+  color: var(--color-ink);
+  line-height: var(--leading-prose);
+}
+
+.library-author-works {
+  margin-top: var(--space-12);
+}
+
+.library-author-works__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-6);
+}
+
+.library-author-map-note {
+  margin-top: var(--space-8);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.library-author-map-note a {
+  color: var(--color-accent);
+}
+
+/* ─────────────────────────────────────────────
+   Mobile reading experience
+   ───────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* Reading body: ensure minimum readable font size */
+  .library-body {
+    font-size: max(1.05rem, 16px);
+  }
+
+  /* Sticky header on mobile: hide chapter title to save horizontal
+     space. The work title (back link) and Panel button are sufficient
+     for library chapter pages. */
+  .library-reading-header__title {
+    display: none;
+  }
+
+  /* Compact reading header on mobile */
+  .library-reading-header {
+    padding-inline: var(--space-4);
+    gap: var(--space-3);
+  }
+
+
+  .annotation-toolbar__btn {
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Within-chapter floating TOC
+   Populated by progress.js from h2/h3 in .article-body.
+   Only rendered where there is whitespace outside the 720px
+   reading column — roughly ≥1200px viewport.
+   ───────────────────────────────────────────── */
+
+.library-toc-float {
+  /* Hidden everywhere; only shown once progress.js removes [hidden] on wide screens */
+  display: none;
+}
+
+@media (min-width: 1180px) {
+  /* :not([hidden]) prevents the CSS display:block from overriding the
+     browser's [hidden] attribute, which would show an empty widget */
+  .library-toc-float:not([hidden]) {
+    display: block;
+    position: fixed;
+    top: 4rem;                          /* clear fixed reading header */
+    right: 1.5rem;
+    width: 190px;
+    max-height: calc(100vh - 14rem);    /* bottom gap keeps TOC clear of back-to-top button */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    background: var(--color-bg);
+    border: 1px solid var(--color-rule);
+    border-radius: 4px;
+    padding: var(--space-3) var(--space-4);
+    z-index: 50;                        /* below panel overlay (~200) */
+  }
+}
+
+.library-toc-float__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-3);
+}
+
+/* ─────────────────────────────────────────────
+   Print styles
+   ───────────────────────────────────────────── */
+
+@media print {
+  .library-reading-header,
+  .library-panel,
+  .library-panel-toggle,
+  .library-chapter-nav,
+  .annotation-toolbar,
+  .ann-share-popover,
+  .library-reading-progress,
+  .reading-settings-wrap,
+  /* Comments don't belong in a printed article. */
+  .article-comments,
+  /* Per-annotation action buttons (Copy / Share / Delete / Remove)
+     are UI chrome, never useful on paper. */
+  .library-annotation-item__actions,
+  .library-bookmark-item__delete {
+    display: none !important;
+  }
+
+  /* In article+notes print, force the inline highlight backgrounds to
+     render so the marked passages stand out on paper too. */
+  body.print-include-notes .library-highlight {
+    background: #fff3a0 !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body.print-include-notes .library-highlight--note {
+    background: #cfe7ff !important;
+  }
+  /* Reveal note text inline next to its highlight (added to the DOM by
+     reader-panel-migrate.js right before printing). */
+  body.print-include-notes .print-inline-note {
+    display: inline !important;
+    font-style: italic;
+    color: #555;
+    font-size: 0.9em;
+  }
+  body.print-include-notes .print-inline-note::before { content: ' [note: '; }
+  body.print-include-notes .print-inline-note::after  { content: ']'; }
+
+  /* "Print with notes" mode (set on <body> by the Print popover handler):
+     reveal the Reader panel inline as an appendix, but only the
+     highlights / notes / bookmarks / footnotes sections — strip the
+     sidebar chrome and unrelated tabs. */
+  body.print-include-notes .library-panel {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    margin-top: 2em;
+    border: none !important;
+    box-shadow: none !important;
+    page-break-before: always;
+  }
+  body.print-include-notes .library-panel__header,
+  body.print-include-notes .library-panel__tabs,
+  body.print-include-notes .library-panel__quick-actions,
+  body.print-include-notes .library-panel__footer-links {
+    display: none !important;
+  }
+  body.print-include-notes .library-panel__body {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  body.print-include-notes .library-panel__section {
+    display: block !important;
+    margin-bottom: 2em;
+  }
+  body.print-include-notes .library-panel__section::before {
+    content: attr(data-print-label);
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 14pt;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.25em;
+  }
+  body.print-include-notes #article-panel-contents,
+  body.print-include-notes #article-panel-display,
+  body.print-include-notes #article-panel-cite-inline,
+  body.print-include-notes #article-panel-history,
+  body.print-include-notes #article-panel-related,
+  body.print-include-notes #article-panel-export,
+  body.print-include-notes #panel-toc,
+  body.print-include-notes #panel-display,
+  body.print-include-notes #panel-cite-inline,
+  body.print-include-notes #panel-export {
+    display: none !important;
+  }
+  /* Skip sections that have no user content (just the "No X yet"
+     placeholder from annotations.js / footnotes.js, or literally empty). */
+  body.print-include-notes .library-panel__section:has(.library-panel__empty),
+  body.print-include-notes .library-panel__section:empty {
+    display: none !important;
+  }
+
+  /* "Notes & highlights only" mode: hide the article entirely and only
+     reveal the panel sections containing the user's annotations. */
+  body.print-notes-only .article-layout,
+  body.print-notes-only .library-body-wrapper,
+  body.print-notes-only .article-footnotes,
+  body.print-notes-only .article-comments,
+  body.print-notes-only .article-feedback-popup {
+    display: none !important;
+  }
+  body.print-notes-only .library-panel {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  body.print-notes-only .library-panel__header,
+  body.print-notes-only .library-panel__tabs,
+  body.print-notes-only .library-panel__quick-actions,
+  body.print-notes-only .library-panel__footer-links {
+    display: none !important;
+  }
+  body.print-notes-only .library-panel__body {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  body.print-notes-only .library-panel__section {
+    display: block !important;
+    margin-bottom: 2em;
+  }
+  body.print-notes-only .library-panel__section::before {
+    content: attr(data-print-label);
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 14pt;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.25em;
+  }
+  body.print-notes-only #article-panel-contents,
+  body.print-notes-only #article-panel-display,
+  body.print-notes-only #article-panel-cite-inline,
+  body.print-notes-only #article-panel-history,
+  body.print-notes-only #article-panel-related,
+  body.print-notes-only #article-panel-export,
+  body.print-notes-only #panel-toc,
+  body.print-notes-only #panel-display,
+  body.print-notes-only #panel-cite-inline,
+  body.print-notes-only #panel-export {
+    display: none !important;
+  }
+
+  /* Belt + suspenders: the Export tab is pure UI — never print it in
+     any mode, regardless of which panel section is active. */
+  .reader-export-list,
+  #article-panel-export,
+  #panel-export {
+    display: none !important;
+  }
+  body.print-notes-only .library-panel__section:has(.library-panel__empty),
+  body.print-notes-only .library-panel__section:empty {
+    display: none !important;
+  }
+
+  .library-body {
+    font-size: 12pt;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  .library-body-wrapper {
+    padding: 0;
+    max-width: none;
+  }
+
+  .library-body a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .library-body a[href]::after {
+    content: none;
+  }
+}

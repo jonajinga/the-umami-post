@@ -1,0 +1,434 @@
+/* ============================================================
+   THE FREETHINKING TIMES — Main Stylesheet
+   Import order matters: tokens → base → layout → components → article
+   ============================================================ */
+
+@import 'tokens.css';
+@import 'base.css';
+@import 'layout.css';
+@import 'components.css';
+@import 'article.css';
+@import 'projects.css';
+@import 'library.css';
+
+/* ── Print Styles ───────────────────────────────────────────── */
+.print-header,
+.print-footer,
+.print-footnotes,
+.print-citations,
+.edition-print-articles { display: none; }
+
+@media print {
+  .masthead,
+  .masthead__actions,
+  .site-nav,
+  .site-footer,
+  .reading-progress,
+  .article-layout__aside,
+  .article-header__actions,
+  .reading-floats,
+  .pullquote-share,
+  .reading-filter,
+  .related-articles,
+  .subscribe-block,
+  .subscribe-block--footer,
+  .suggest-correction,
+  .article-footer__tags,
+  .author-bio,
+  .comments-section,
+  .cite-modal,
+  .cite-overlay,
+  .library-panel,
+  .library-panel-overlay,
+  .article-notes-overlay,
+  .annotation-toolbar,
+  .gtranslate_wrapper,
+  .gt_float_switcher,
+  .fn-tooltip,
+  .music-bar,
+  .reading-settings-wrap,
+  .gs-panel,
+  .global-settings-overlay,
+  /* Navigation / secondary chrome that shouldn't survive a print */
+  .nav-drawer,
+  .nav-drawer-overlay,
+  .breadcrumbs,
+  .back-to-top,
+  .kb-shortcuts-overlay,
+  /* In-content controls */
+  .heading-anchor,
+  .archive-views,
+  .archive-toolbar,
+  .share-panel,
+  .share-popover,
+  .cite-inline__copy { display: none !important; }
+
+  /* Default printed page: bottom-left publication name, bottom-right
+   * page number. The cover page (when used) suppresses both via
+   * @page :first below. Note: @page margin-boxes only accept
+   * literal strings + counters, no var() or attr(), so the
+   * publication name is hardcoded here. */
+  @page {
+    margin: 0.6in 0.5in 0.7in;
+    @bottom-left   { content: "The Freethinking Times"; font-family: Helvetica, Arial, sans-serif; font-size: 8pt; color: #666; }
+    @bottom-right  { content: "Page " counter(page); font-family: Helvetica, Arial, sans-serif; font-size: 8pt; color: #666; }
+  }
+  @page :first {
+    @bottom-left   { content: ""; }
+    @bottom-right  { content: ""; }
+  }
+  body {
+    orphans: 3;
+    widows: 3;
+    background: #fff !important;
+    color: #000 !important;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  /* Keep headings with the paragraph they introduce. */
+  .article-body h2,
+  .article-body h3,
+  .article-body h4,
+  .library-body h2,
+  .library-body h3,
+  .library-body h4 {
+    page-break-after: avoid;
+    break-after: avoid-page;
+    page-break-inside: avoid;
+    color: #000 !important;
+  }
+
+  /* Keep paragraphs from splitting too aggressively. */
+  .article-body p,
+  .library-body p { orphans: 3; widows: 3; }
+
+  /* Pullquotes + blockquotes should ride with their surroundings. */
+  .article-body blockquote,
+  .article-body figure,
+  .library-body blockquote,
+  .library-body figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Constrain imagery so nothing bleeds off the page. */
+  .article-body img,
+  .library-body img,
+  figure img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+
+  /* Tables: thin rules only. */
+  .article-body table,
+  .library-body table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: auto;
+  }
+  .article-body th,
+  .article-body td {
+    border: 1px solid #999;
+    padding: 0.3rem 0.5rem;
+    font-size: 9pt;
+  }
+
+  /* Drop cap off — it doesn't print well and looks stranded. */
+  .article-body > p:first-of-type::first-letter { all: unset; }
+
+  /* Show link URLs in print (skip internal/anchor links) */
+  .article-body a[href^="http"]:not(.archive-link)::after,
+  .library-body a[href^="http"]:not(.archive-link)::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+    word-break: break-all;
+  }
+  /* Archive links collapse to "(archived)" in print */
+  .archive-link { font-size: 7pt; color: #888; }
+  .archive-link svg { display: none; }
+  .archive-link::before { content: "[archived] "; }
+
+  /* Footnote superscript — render as plain text, no button affordance */
+  .fn-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: #000;
+    cursor: default;
+  }
+
+  /* Print-only footnotes section */
+  .print-footnotes {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid #000;
+    page-break-inside: avoid;
+  }
+
+  .print-footnotes__heading {
+    font-size: 10pt;
+    font-weight: 700;
+    font-family: serif;
+    margin: 0 0 0.5rem;
+  }
+
+  .print-footnotes__list {
+    margin: 0;
+    padding-left: 1.5rem;
+    font-size: 8.5pt;
+    font-family: serif;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .print-footnotes__list li { margin-bottom: 0.25rem; }
+
+  /* Print-only citations section */
+  .print-citations {
+    display: block;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  .print-citations__heading {
+    font-size: 10pt;
+    font-weight: 700;
+    font-family: serif;
+    margin: 0 0 0.75rem;
+  }
+
+  .print-citations__item { margin-bottom: 0.75rem; }
+
+  .print-citations__format {
+    font-family: sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+    margin: 0 0 0.2rem;
+  }
+
+  .print-citations__text {
+    font-family: serif;
+    font-size: 8.5pt;
+    line-height: 1.5;
+    color: #000;
+    margin: 0;
+  }
+
+  .series-nav { border: 1px solid #000; }
+
+  /* ── Edition pages ── */
+  .edition-back,
+  .edition-nav,
+  .edition-rule,
+  #edition-print-btn { display: none !important; }
+
+  .edition-header {
+    text-align: left;
+    padding: 0 0 1rem;
+    border-bottom: 3px solid #000;
+    margin-bottom: 1.5rem;
+  }
+
+  .edition-header__number {
+    font-family: sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin: 0 0 0.25rem;
+  }
+
+  .edition-header__date {
+    font-family: serif;
+    font-size: 9pt;
+    color: #555;
+    margin: 0 0 0.4rem;
+  }
+
+  .edition-header__title {
+    font-family: serif;
+    font-size: 22pt;
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+  }
+
+  .edition-header__count {
+    font-family: sans-serif;
+    font-size: 8pt;
+    color: #777;
+    margin: 0;
+  }
+
+  .article-card {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    page-break-inside: avoid;
+  }
+
+  .article-card__image { display: none; }
+
+  .article-card__eyebrow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.2rem;
+  }
+
+  .section-badge {
+    background: none;
+    color: #555;
+    font-family: sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid #999;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+  }
+
+  .dateline { font-family: serif; font-size: 8pt; color: #777; }
+
+  .article-card__headline {
+    display: block;
+    font-family: serif;
+    font-size: 13pt;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #000;
+    margin-bottom: 0.2rem;
+  }
+
+  .article-card__dek {
+    font-family: serif;
+    font-size: 9pt;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 0.2rem;
+  }
+
+  .article-card__byline {
+    font-family: sans-serif;
+    font-size: 7.5pt;
+    color: #666;
+  }
+
+  .article-list { list-style: none; padding: 0; margin: 0; }
+  .article-list__item { display: block; }
+
+  /* Full article text — screen: hidden; print: visible */
+  .edition-print-articles { display: block; }
+
+  .edition-print-article {
+    page-break-before: always;
+    padding-top: 1.5rem;
+  }
+
+  .edition-print-article__eyebrow {
+    font-family: sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin: 0 0 0.4rem;
+  }
+
+  .edition-print-article__title {
+    font-family: serif;
+    font-size: 20pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+    color: #000;
+  }
+
+  .edition-print-article__dek {
+    font-family: serif;
+    font-size: 11pt;
+    color: #333;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 0 0 0.4rem;
+  }
+
+  .edition-print-article__byline {
+    font-family: sans-serif;
+    font-size: 8pt;
+    color: #555;
+    margin: 0 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .edition-print-article__body {
+    font-family: serif;
+    font-size: 10pt;
+    line-height: 1.65;
+    color: #000;
+  }
+
+  .edition-print-article__body h2,
+  .edition-print-article__body h3 {
+    font-family: serif;
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+  }
+
+  .edition-print-article__body p { margin: 0 0 0.6rem; }
+
+  .edition-print-article__body img { display: none; }
+
+  .edition-print-article__body a { color: #000; text-decoration: none; }
+
+  body {
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+
+  a { text-decoration: none; color: #000; }
+
+  .article-header__headline { font-size: 24pt; }
+
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.5rem;
+    font-family: serif;
+    font-size: 9pt;
+    color: #444;
+  }
+
+  .print-header__title {
+    font-weight: 700;
+    font-size: 11pt;
+    color: #000;
+  }
+
+  .print-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid #000;
+    padding-top: 0.4rem;
+    margin-top: 2rem;
+    font-family: serif;
+    font-size: 8pt;
+    color: #666;
+  }
+}

@@ -1,0 +1,84 @@
+---
+layout: layouts/base.njk
+---
+
+{% block head %}
+<link rel="alternate" type="application/rss+xml" title="{{ tag }}, {{ site.title }}" href="{{ site.url }}/feeds/topics/{{ tag | slugify }}.xml">
+{% endblock %}
+
+<div class="container" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
+
+  <header style="margin-bottom: var(--space-10); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
+    <p style="font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-ink-faint); margin-bottom: var(--space-3);">
+      Topic
+    </p>
+    <h1 style="font-family: var(--font-masthead); font-size: var(--text-3xl); margin-bottom: var(--space-2);">{{ tag }}</h1>
+    <p style="color: var(--color-ink-muted); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+      {{ collections[tag].length }} article{% if collections[tag].length != 1 %}s{% endif %} across all sections
+      &middot; <a href="/knowledge-map/?topic={{ tag | slugify }}" style="color: var(--color-link); text-decoration: underline;">View on knowledge map &rarr;</a>
+    </p>
+    {% if collections[tag] and collections[tag].length %}
+    {% set viewFilter = "topic=" + (tag | slugify) %}
+    {% set rssHref = "/feeds/topics/" + (tag | slugify) + ".xml" %}
+    {% set rssFeed = "topic-" + (tag | slugify) %}
+    {% set rssLabel = tag %}
+    {% include "partials/archive-views-buttons.njk" %}
+    {% endif %}
+  </header>
+
+  <div class="section-grid">
+    <div class="section-grid__main">
+
+      <ul class="article-list" role="list">
+        {% for item in collections[tag] | reverse %}
+        <li class="article-list__item">
+          {% set article = item %}
+          {% set size = "sm" %}
+          {% include "partials/article-card.njk" %}
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+
+    <aside class="section-grid__sidebar">
+      {% set allTopics = collections.allContent | topicStats(6) %}
+      {% set currentTopic = null %}
+      {% for t in allTopics %}{% if t.tag == tag %}{% set currentTopic = t %}{% endif %}{% endfor %}
+
+      {% if currentTopic and currentTopic.related.length %}
+      <div class="sidebar-widget">
+        <p class="sidebar-widget__title">Related Topics</p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+          {% for r in currentTopic.related %}
+          <a href="/topics/{{ r.tag | slugify }}/" style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-link);text-decoration:none;border:1px solid var(--color-rule);padding:1px var(--space-2);border-radius:var(--radius-sm);" title="{{ r.cooccur }} article{% if r.cooccur != 1 %}s{% endif %} covering both topics">
+            {{ r.tag }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="sidebar-widget">
+        <p class="sidebar-widget__title">Browse All Topics</p>
+        <a href="/topics/" class="btn" style="width: 100%; text-align: center; display: block; font-size: var(--text-xs); margin-bottom: var(--space-3);">
+          Topics Index →
+        </a>
+      </div>
+
+      <div class="sidebar-widget">
+        <p class="sidebar-widget__title">Sections</p>
+        <ul style="list-style: none; padding: 0;">
+          {% for item in nav %}
+          <li style="padding: var(--space-2) 0; border-bottom: 1px solid var(--color-rule);">
+            <a href="{{ item.url }}" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-muted); text-decoration: none;">
+              {{ item.label }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</div>

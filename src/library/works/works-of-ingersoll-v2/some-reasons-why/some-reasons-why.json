@@ -1,0 +1,18 @@
+{
+  "workSlug": "some-reasons-why",
+  "workTitle": "Some Reasons Why",
+  "author": "Robert G. Ingersoll",
+  "authorSlug": "robert-ingersoll",
+  "authorDates": "1833-1899",
+  "originalPublication": 1881,
+  "originalLanguage": "English",
+  "translator": null,
+  "edition": "Dresden Edition",
+  "source": "Project Gutenberg",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/38802",
+  "type": "lecture",
+  "subjects": ["Freethought", "Philosophy", "Religion"],
+  "difficulty": "Accessible",
+  "era": "19th Century",
+  "shortWork": false
+}

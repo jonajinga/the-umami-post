@@ -1,0 +1,507 @@
+---
+layout: base
+title: Editorial Dashboard
+description: Content status overview for The Freethinking Times editorial team.
+permalink: /dashboard/
+eleventyExcludeFromCollections: true
+isEditorial: true
+---
+
+{% set editorialSections = ["news", "opinion", "analysis", "arts-culture", "science-technology", "history", "letters", "reviews"] %}
+{% set sc = collections.allContent | statusCounts %}
+{% set assignments = collections.allContent | activeAssignments %}
+{% set board = collections.allContent | editorialBoard %}
+{% set stale = collections.allContent | staleAlerts %}
+{% set coverage = collections.allContent | coverageGaps(editorialSections) %}
+{% set pulse = collections.allContent | productionPulse(12) %}
+{% set scoreboard = collections.allContent | authorScoreboard(authors | keys) %}
+{% set agenda = collections.allContent | schedulingAgenda(14) %}
+{% set cycle = board | cycleTimeBuckets %}
+{% set wip = board | wipLimits %}
+{% set sla = assignments | slaBreaches %}
+{% set velocity = collections.allContent | velocity(8) %}
+{% set staleTotal = stale.oldDrafts.length + stale.recentCorrections.length + stale.fastSectionStale.length + stale.brokenResponses.length %}
+{% set onDeck = assignments | limit(5) %}
+{% set velocityMax = 1 %}
+{% for v in velocity %}{% for w in v.weeks %}{% if w.count > velocityMax %}{% set velocityMax = w.count %}{% endif %}{% endfor %}{% endfor %}
+
+<div class="container dash">
+
+  {% include "partials/editorial-pivot.njk" %}
+
+  <header class="dash__header">
+    <p class="dash__kicker">Editorial</p>
+    <h1 class="dash__title">Dashboard</h1>
+    <p class="dash__lede">Content status, assignments, and production pulse across the masthead.</p>
+    <div class="dash__tools">
+      <a href="/dashboard/guide/" class="btn">How to read this</a>
+      <a href="/templates/" class="btn">Content Templates</a>
+      <a href="/abbreviations/" class="btn">Abbreviations</a>
+      {% if site.comments and site.comments.appId %}
+      <a href="https://cusdis.com/dashboard/project/{{ site.comments.appId }}" target="_blank" rel="noopener noreferrer" class="btn">Moderate Comments &nearr;</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {# ── Top stats row (clickable drill-throughs to the board) ── #}
+  <div class="dash__stats">
+    <div class="dash-stat"><p class="dash-stat__label">Total</p><p class="dash-stat__value">{{ collections.allContent.length }}</p></div>
+    <a class="dash-stat dash-stat--link" href="/editorial/board/?col=pitched"><p class="dash-stat__label">Pitched</p><p class="dash-stat__value">{{ board.pitched.length }}</p></a>
+    <a class="dash-stat dash-stat--link dash-stat--alert" href="/editorial/board/?col=drafting"><p class="dash-stat__label">Drafting</p><p class="dash-stat__value">{{ board.drafting.length }}</p></a>
+    <a class="dash-stat dash-stat--link dash-stat--warn" href="/editorial/board/?col=review"><p class="dash-stat__label">In review</p><p class="dash-stat__value">{{ board.review.length }}</p></a>
+    <a class="dash-stat dash-stat--link" href="/editorial/board/?col=scheduled"><p class="dash-stat__label">Scheduled</p><p class="dash-stat__value">{{ board.scheduled.length }}</p></a>
+    <a class="dash-stat dash-stat--link" href="/editorial/board/?col=published"><p class="dash-stat__label">Published</p><p class="dash-stat__value">{{ board.published.length }}</p></a>
+    {% if staleTotal %}
+    <div class="dash-stat dash-stat--alert" style="border-left-color: var(--color-accent);"><p class="dash-stat__label">Needs attention</p><p class="dash-stat__value">{{ staleTotal }}</p></div>
+    {% endif %}
+  </div>
+
+  {# ── Production pulse: weekly published-article counts (last 12 weeks) ── #}
+  <section class="dash-pulse" aria-label="Production pulse, last 12 weeks">
+    <header class="dash-pulse__head">
+      <h2 class="dash-card__title">Production pulse</h2>
+      <p class="dash-pulse__sub">Articles published per week, last 12 weeks. Click a bar to see that week&rsquo;s articles.</p>
+    </header>
+    <div class="dash-pulse__chart">
+      {% for w in pulse %}
+      <button type="button"
+              class="dash-pulse__col{% if w.count == 0 %} dash-pulse__col--empty{% endif %}"
+              {% if w.count %}aria-controls="pulse-week-{{ loop.index0 }}" aria-expanded="false"{% else %}disabled aria-disabled="true"{% endif %}
+              data-week="{{ loop.index0 }}"
+              title="{{ w.rangeLabel }} &middot; {{ w.count }} article{% if w.count != 1 %}s{% endif %}">
+        <div class="dash-pulse__bar" style="height: {{ w.pct }}%;"></div>
+        <div class="dash-pulse__count">{{ w.count }}</div>
+        <div class="dash-pulse__week">{{ w.label }}</div>
+      </button>
+      {% endfor %}
+    </div>
+    {% for w in pulse %}
+    {% if w.count %}
+    <div class="dash-pulse__panel" id="pulse-week-{{ loop.index0 }}" role="region" aria-label="Articles published {{ w.rangeLabel }}" hidden>
+      <p class="dash-pulse__panel-head">{{ w.rangeLabel }} &middot; {{ w.count }} article{% if w.count != 1 %}s{% endif %}</p>
+      <ul class="dash-pulse__panel-list">
+        {% for a in w.items %}
+        <li>
+          <a href="{{ a.url }}">{{ a.title }}</a>
+          <span class="dash-pulse__panel-meta">{{ a.section }} &middot; {{ a.date }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </section>
+
+  {# ── Stale-content alerts ── #}
+  {% if staleTotal %}
+  <section class="dash-stale" aria-label="Editorial alerts needing attention">
+    <header class="dash-stale__head">
+      <h2 class="dash-card__title dash-card__title--alert">Needs attention</h2>
+      <p class="dash-stale__sub">Surfaces drafts gone stale, recent corrections, fast-section pieces with old <code>lastUpdated</code>, and broken response chains.</p>
+    </header>
+    <div class="dash-stale__grid">
+      {% if stale.oldDrafts.length %}
+      <div class="dash-stale__group">
+        <h3 class="dash-stale__group-title">Drafts &gt; 14 days old <span class="dash-stale__group-count">{{ stale.oldDrafts.length }}</span></h3>
+        <ul class="dash-stale__list">
+          {% for d in stale.oldDrafts | limit(8) %}
+          <li><a href="{{ d.url }}">{{ d.title }}</a> <span class="dash-stale__meta">{{ d.author }} &middot; {{ d.ageDays }}d in {{ d.status }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if stale.recentCorrections.length %}
+      <div class="dash-stale__group">
+        <h3 class="dash-stale__group-title">Corrections in last 30 days <span class="dash-stale__group-count">{{ stale.recentCorrections.length }}</span></h3>
+        <ul class="dash-stale__list">
+          {% for c in stale.recentCorrections | limit(8) %}
+          <li><a href="{{ c.url }}">{{ c.title }}</a> <span class="dash-stale__meta">{{ c.correctionDate }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if stale.fastSectionStale.length %}
+      <div class="dash-stale__group">
+        <h3 class="dash-stale__group-title">Fast sections, stale <span class="dash-stale__group-count">{{ stale.fastSectionStale.length }}</span></h3>
+        <ul class="dash-stale__list">
+          {% for s in stale.fastSectionStale | limit(8) %}
+          <li><a href="{{ s.url }}">{{ s.title }}</a> <span class="dash-stale__meta">{{ s.section }} &middot; {{ s.ageDays }}d since update</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if stale.brokenResponses.length %}
+      <div class="dash-stale__group">
+        <h3 class="dash-stale__group-title">Broken response chains <span class="dash-stale__group-count">{{ stale.brokenResponses.length }}</span></h3>
+        <ul class="dash-stale__list">
+          {% for r in stale.brokenResponses %}
+          <li><a href="{{ r.url }}">{{ r.title }}</a> <span class="dash-stale__meta">→ {{ r.missingTarget }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── Coverage gap report ── #}
+  <section class="dash-coverage" aria-label="Section coverage health">
+    <header>
+      <h2 class="dash-card__title">Section coverage</h2>
+      <p class="dash-pulse__sub">Last published date and counts in the last 14 / 90 days, per section. Amber: zero in 14d. Red: zero in 90d.</p>
+    </header>
+    <ul class="dash-coverage__grid">
+      {% for c in coverage %}
+      <li class="dash-coverage__cell dash-coverage__cell--{{ c.healthLevel }}">
+        <a href="/{{ c.slug }}/" class="dash-coverage__label">{{ c.label }}</a>
+        <p class="dash-coverage__counts"><strong>{{ c.last14 }}</strong>/14d &middot; <strong>{{ c.last90 }}</strong>/90d</p>
+        <p class="dash-coverage__last">{% if c.daysSince != null %}last {{ c.daysSince }}d ago{% else %}never{% endif %}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {# ── 14-day scheduling agenda ── #}
+  {% set agendaHasItems = false %}
+  {% for slot in agenda %}{% if slot.items.length %}{% set agendaHasItems = true %}{% endif %}{% endfor %}
+  {% if agendaHasItems %}
+  <section class="dash-agenda" aria-label="14-day scheduling agenda">
+    <header><h2 class="dash-card__title">Next 14 days</h2></header>
+    <div class="dash-agenda__strip">
+      {% for slot in agenda %}
+      <div class="dash-agenda__slot{% if slot.items.length %} dash-agenda__slot--filled{% endif %}">
+        <div class="dash-agenda__weekday">{{ slot.weekday }}</div>
+        <div class="dash-agenda__day">{{ slot.dayOfMonth }}</div>
+        <div class="dash-agenda__count">{{ slot.items.length }}</div>
+        {% if slot.items.length %}
+        <ul class="dash-agenda__list">
+          {% for item in slot.items %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="dash__grid">
+
+    {# ── Cycle-time histogram (NEW) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Cycle time</h2>
+      <p class="dash-card__sub">Distribution of days-in-status across the active board lanes.</p>
+      <div class="dash-cycle">
+        {% for col in ["pitched", "drafting", "review", "scheduled"] %}
+        {% set bk = cycle[col] %}
+        {% set total = bk.fresh + bk.warming + bk.stuck + bk.severe %}
+        <div class="dash-cycle__col">
+          <h3 class="dash-cycle__col-title">{{ col }}</h3>
+          <div class="dash-cycle__bars">
+            {% for tier in [["fresh","0–3d",bk.fresh],["warming","4–7d",bk.warming],["stuck","8–14d",bk.stuck],["severe","15+d",bk.severe]] %}
+            <div class="dash-cycle__bar dash-cycle__bar--{{ tier[0] }}">
+              <span class="dash-cycle__bar-label">{{ tier[1] }}</span>
+              <span class="dash-cycle__bar-track"><span class="dash-cycle__bar-fill" style="width: {% if total %}{{ (tier[2] / total * 100) | round }}{% else %}0{% endif %}%;"></span></span>
+              <span class="dash-cycle__bar-num">{{ tier[2] }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# ── SLA-breach board (NEW) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">SLA breach</h2>
+      <p class="dash-card__sub">Assignments past their <code>dueDate</code>, bucketed by lateness.</p>
+      <div class="dash-sla__grid">
+        {% for tier in [["soon","Soon (1–3d late)"],["late","Late (4–7d)"],["severe","Severe (8d+)"]] %}
+        <div class="dash-sla__bucket dash-sla__bucket--{{ tier[0] }}">
+          <h3 class="dash-sla__bucket-title">{{ tier[1] }} <span class="dash-sla__bucket-count">{{ sla[tier[0]].length }}</span></h3>
+          {% if sla[tier[0]].length %}
+          <ul class="dash-sla__list">
+            {% for a in sla[tier[0]] %}
+            <li><a href="{{ a.url }}">{{ a.title }}</a> <span class="dash-sla__meta">{{ a.assignedTo }} &middot; {{ a.lateBy }}d late</span></li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="dash-sla__empty">Nothing in this band.</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# ── Velocity sparklines (NEW) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Author velocity</h2>
+      <p class="dash-card__sub">Articles published per ISO week, last 8 weeks. Δ compares last 30 days against the 30 days before that.</p>
+      {% if velocity.length %}
+      {% for v in velocity %}
+      {% if v.total %}
+      <div class="dash-velocity__row">
+        <span class="dash-velocity__name">{% if authors[v.slug].name %}<a href="/author/{{ v.slug }}/">{{ authors[v.slug].name }}</a>{% else %}{{ v.slug }}{% endif %}</span>
+        <span class="dash-velocity__spark" aria-label="{{ v.total }} published over {{ v.weeks.length }} weeks">
+          {% for w in v.weeks %}
+          <span class="dash-velocity__spark-bar{% if w.count %} dash-velocity__spark-bar--has{% endif %}" style="height: {% if w.count %}{{ (w.count / velocityMax * 100) | round }}{% else %}4{% endif %}%;" title="{{ w.week }}: {{ w.count }}"></span>
+          {% endfor %}
+        </span>
+        <span class="dash-velocity__delta dash-velocity__delta--{% if v.delta > 0 %}up{% elif v.delta < 0 %}down{% else %}flat{% endif %}">
+          {% if v.delta > 0 %}+{{ v.delta }}{% elif v.delta < 0 %}{{ v.delta }}{% else %}±0{% endif %}
+        </span>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      <p class="dash-card__empty">No publication history yet.</p>
+      {% endif %}
+    </section>
+
+    {# ── On-deck queue (NEW) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">On deck</h2>
+      <p class="dash-card__sub">Top five assignments closest to publishing — overdue first, then earliest due.</p>
+      {% if onDeck.length %}
+      <ul class="dash-ondeck">
+        {% for a in onDeck %}
+        <li>
+          <span class="dash-ondeck__title"><a href="{{ a.url }}">{{ a.title }}</a></span>
+          <span class="dash-ondeck__meta">{{ a.assignedTo }} &middot; <span class="dash-status dash-status--{{ a.status | lower | replace(' ', '-') }}">{{ a.status }}</span></span>
+          <span class="dash-ondeck__due {% if a.overdue %}dash-ondeck__due--late{% elif a.daysUntilDue != null and a.daysUntilDue <= 2 %}dash-ondeck__due--soon{% endif %}">
+            {% if a.overdue %}{{ a.dueDate }} &middot; {{ a.daysUntilDue * -1 }}d late
+            {% elif a.dueDate %}{{ a.dueDate }}{% if a.daysUntilDue <= 2 %} &middot; {{ a.daysUntilDue }}d{% endif %}
+            {% else %}no due date{% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="dash-card__empty">No active assignments.</p>
+      {% endif %}
+    </section>
+
+    {# ── Articles by Section ── #}
+    <section class="dash-card">
+      <h2 class="dash-card__title">Articles by section</h2>
+      <table class="dash-table">
+        <thead>
+          <tr><th>Section</th><th class="dash-table__num">Count</th></tr>
+        </thead>
+        <tbody>
+          {% for key in editorialSections %}
+          {% if collections[key] %}
+          <tr>
+            <td><a href="/{{ key }}/">{{ site.sections[key].label }}</a></td>
+            <td class="dash-table__num">{{ collections[key].length }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr><td>Total</td><td class="dash-table__num">{{ collections.allContent.length }}</td></tr>
+        </tfoot>
+      </table>
+    </section>
+
+    {# ── Projects ── #}
+    <section class="dash-card">
+      <h2 class="dash-card__title">Projects</h2>
+      <table class="dash-table">
+        <thead><tr><th>Project</th><th class="dash-table__num">Entries</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/glossary/">Glossary</a></td><td class="dash-table__num">{{ collections.glossary.length }}</td></tr>
+          <tr><td><a href="/bookshelf/">Recommended Reading</a></td><td class="dash-table__num">{{ collections.bookshelf.length }}</td></tr>
+          <tr><td><a href="/thought-experiments/">Thought Experiments</a></td><td class="dash-table__num">{{ collections["thought-experiments"].length }}</td></tr>
+          <tr><td><a href="/trials/">Trials of Thought</a></td><td class="dash-table__num">{{ collections["trials-of-thought"].length }}</td></tr>
+          <tr><td><a href="/quotes/">Quotes</a></td><td class="dash-table__num">{{ quotes | length }}</td></tr>
+          <tr><td><a href="/timeline/">Timeline</a></td><td class="dash-table__num">{{ timeline | length }}</td></tr>
+          <tr><td><a href="/music/">Songs</a></td><td class="dash-table__num">{{ songs | length }}</td></tr>
+          <tr><td><a href="/videos/">Videos</a></td><td class="dash-table__num">{{ videos | length }}</td></tr>
+          <tr><td><a href="/gallery/">Gallery</a></td><td class="dash-table__num">{{ gallery | length }}</td></tr>
+          <tr><td><a href="/events/">Events</a></td><td class="dash-table__num">{{ events | length }}</td></tr>
+          <tr><td><a href="/music/">Playlists</a></td><td class="dash-table__num">{{ playlists | length }}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    {# ── Library ── #}
+    <section class="dash-card">
+      <h2 class="dash-card__title">Library</h2>
+      <table class="dash-table">
+        <thead><tr><th>Metric</th><th class="dash-table__num">Count</th></tr></thead>
+        <tbody>
+          <tr><td>Works</td><td class="dash-table__num">{{ library.works | length }}</td></tr>
+          <tr><td>Chapters</td><td class="dash-table__num">{{ collections.libraryChapters.length }}</td></tr>
+          <tr><td>Authors</td><td class="dash-table__num">{{ library.authors | length }}</td></tr>
+          <tr><td>Subjects</td><td class="dash-table__num">{{ library.subjects | length }}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    {# ── Infrastructure ── #}
+    {% set authorList = authors | keys %}
+    {% set authorFeedCount = 0 %}
+    {% for slug in authorList %}{% if slug != "staff" %}{% set authorFeedCount = authorFeedCount + 1 %}{% endif %}{% endfor %}
+    {% set sectionFeedCount = collections.sectionList | length %}
+    {% set topicFeedCount = collections.tagList | length %}
+    {% set externalFeedCount = feeds | length %}
+    {% set totalFeedCount = 1 + sectionFeedCount + authorFeedCount + topicFeedCount %}
+    <section class="dash-card">
+      <h2 class="dash-card__title">Infrastructure</h2>
+      <table class="dash-table">
+        <thead><tr><th>Item</th><th class="dash-table__num">Count</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/feeds/">RSS feeds (total)</a></td><td class="dash-table__num">{{ totalFeedCount }}</td></tr>
+          <tr><td><a href="/feed.xml">— Whole site</a></td><td class="dash-table__num">1</td></tr>
+          <tr><td><a href="/feeds/#sections">— Per section</a></td><td class="dash-table__num">{{ sectionFeedCount }}</td></tr>
+          <tr><td><a href="/feeds/#authors">— Per author</a></td><td class="dash-table__num">{{ authorFeedCount }}</td></tr>
+          <tr><td><a href="/feeds/#topics">— Per topic</a></td><td class="dash-table__num">{{ topicFeedCount }}</td></tr>
+          <tr><td><a href="/feeds/#external">External feeds we follow</a></td><td class="dash-table__num">{{ externalFeedCount }}</td></tr>
+          <tr><td><a href="/changelog/">Changelog entries</a></td><td class="dash-table__num">{{ changelog | length }}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    {# ── Active Assignments (wide) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Active assignments</h2>
+      {% if assignments.length %}
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th>Assigned to</th>
+            <th>Status</th>
+            <th class="dash-table__num">Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in assignments %}
+          <tr>
+            <td><a href="{{ a.url }}">{{ a.title }}</a></td>
+            <td>{{ a.assignedTo }}</td>
+            <td><span class="dash-status dash-status--{{ a.status | lower | replace(' ', '-') }}">{{ a.status }}</span></td>
+            <td class="dash-table__num">
+              {% if a.overdue %}<strong class="dash-due dash-due--late">{{ a.dueDate }} &middot; {{ a.daysUntilDue * -1 }}d late</strong>
+              {% elif a.dueDate %}{{ a.dueDate }}{% if a.daysUntilDue <= 2 %} <span class="dash-due dash-due--soon">({{ a.daysUntilDue }}d)</span>{% endif %}
+              {% else %}<span class="dash-due dash-due--none">no due date</span>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="dash-card__empty">No active assignments. Add <code>assignedTo:</code> and <code>dueDate:</code> to article front matter to track work.</p>
+      {% endif %}
+    </section>
+
+    {# ── Per-author scoreboard ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Per-author scoreboard</h2>
+      <p class="dash-card__sub">Sorted by lifetime words. Drafts column shows pieces in the pipeline (pitched + drafting + review). Last 3 lists the most recent published titles.</p>
+      <table class="dash-table dash-scoreboard">
+        <thead>
+          <tr>
+            <th>Author</th>
+            <th class="dash-table__num">Articles</th>
+            <th class="dash-table__num">Drafts</th>
+            <th class="dash-table__num">Words</th>
+            <th class="dash-table__num">Avg</th>
+            <th class="dash-table__num">Last published</th>
+            <th>Recent</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in scoreboard %}
+          {% if s.articles or s.drafts %}
+          <tr>
+            <td>{% if authors[s.slug].name %}<a href="/author/{{ s.slug }}/">{{ authors[s.slug].name }}</a>{% else %}{{ s.slug }}{% endif %}</td>
+            <td class="dash-table__num">{{ s.articles }}</td>
+            <td class="dash-table__num">{% if s.drafts %}<strong>{{ s.drafts }}</strong>{% else %}0{% endif %}</td>
+            <td class="dash-table__num">{{ (s.words / 1000) | round(1) }}k</td>
+            <td class="dash-table__num">{{ s.avgWords }}</td>
+            <td class="dash-table__num">{{ s.lastDateIso or "—" }}</td>
+            <td>
+              {% for t in s.lastTitles %}<a href="{{ t.url }}" class="dash-scoreboard__title">{{ t.title | truncate(48) }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {# ── Reading Time by Section (wide) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Reading time by section</h2>
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th class="dash-table__num">Articles</th>
+            <th class="dash-table__num">Total words</th>
+            <th class="dash-table__num">Avg length</th>
+            <th class="dash-table__num">Total reading</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for stat in collections.allContent | sectionStats %}
+          <tr>
+            <td>{{ stat.section }}</td>
+            <td class="dash-table__num">{{ stat.count }}</td>
+            <td class="dash-table__num">{{ stat.totalWords }}</td>
+            <td class="dash-table__num">{{ stat.avgWords }}</td>
+            <td class="dash-table__num">{{ stat.totalReadingMin }} min</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {# ── Recent articles (wide) ── #}
+    <section class="dash-card dash-card--wide">
+      <h2 class="dash-card__title">Recent articles</h2>
+      <ul class="dash-recent">
+        {% for article in collections.allContent | limit(12) %}
+        <li>
+          <a href="{{ article.url }}" class="dash-recent__title">{{ article.data.title }}</a>
+          <span class="dash-recent__meta">
+            {{ article.data.section }} &middot; {{ article.date | readableDate }}
+            {% if article.data.status == "draft" or article.data.draft %} &middot; <span class="dash-recent__flag dash-recent__flag--draft">DRAFT</span>{% endif %}
+            {% if article.data.status == "review" %} &middot; <span class="dash-recent__flag dash-recent__flag--review">IN REVIEW</span>{% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+  </div>
+
+  <section class="dash__note">
+    <h2 class="dash-card__title">Manage content</h2>
+    <p>Use <a href="/admin/" target="_blank" rel="noopener noreferrer">Decap CMS</a> to add and edit content without touching code. Sign in with your GitHub account to get started.</p>
+  </section>
+
+</div>
+
+{# Pulse-panel toggle — small inline IIFE to keep the rest of the JS-free #}
+<script>
+(function () {
+  var bars = document.querySelectorAll('.dash-pulse__col[aria-controls]');
+  bars.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('aria-controls');
+      var panel = document.getElementById(id);
+      if (!panel) return;
+      var willOpen = panel.hasAttribute('hidden');
+      document.querySelectorAll('.dash-pulse__panel').forEach(function (p) { p.setAttribute('hidden', ''); });
+      document.querySelectorAll('.dash-pulse__col[aria-expanded]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      if (willOpen) {
+        panel.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+})();
+</script>

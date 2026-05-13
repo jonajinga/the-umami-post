@@ -1,0 +1,136 @@
+---
+layout: base
+title: Subscription Confirmed
+description: Your subscription to The Freethinking Times newsletter is confirmed.
+permalink: /newsletter/confirmed/
+---
+
+<div class="container nl-page">
+
+  <header class="nl-header">
+    <img src="/assets/favicon.svg" alt="" aria-hidden="true" width="48" height="48" class="nl-header__icon">
+    <p class="nl-kicker">Confirmed</p>
+    <h1 class="nl-title">You&rsquo;re on the list.</h1>
+    <p class="nl-lede">
+      Your subscription to The Freethinking Times is active. New pieces will arrive in your inbox as they publish &mdash; no digest, no delay, no filler.
+    </p>
+  </header>
+
+  <section class="nl-block">
+    <h2 class="nl-block__title">A good place to start</h2>
+    <ul class="nl-starter">
+      <li>
+        <a class="nl-starter__link" href="/start-here/">Start Here &rarr;</a>
+        <p class="nl-starter__desc">A curated entry point &mdash; the pieces that best represent what we do.</p>
+      </li>
+      <li>
+        <a class="nl-starter__link" href="/library/">Public Domain Library &rarr;</a>
+        <p class="nl-starter__desc">Curated texts from the freethought tradition, readable in your browser.</p>
+      </li>
+      <li>
+        <a class="nl-starter__link" href="/reading-list/">Reading List &rarr;</a>
+        <p class="nl-starter__desc">Bookmark articles to read later. No account required.</p>
+      </li>
+      <li>
+        <a class="nl-starter__link" href="/archives/">Archives &rarr;</a>
+        <p class="nl-starter__desc">Every piece we&rsquo;ve published, filterable by section, author, or topic.</p>
+      </li>
+    </ul>
+  </section>
+
+  <p class="nl-fineprint">
+    Every newsletter includes an unsubscribe link. Questions: <a href="/contact/">our contact form</a>.
+  </p>
+
+</div>
+
+<style>
+.nl-page {
+  max-width: 680px;
+  padding-top: var(--space-14);
+  padding-bottom: var(--space-20);
+}
+.nl-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-8);
+  border-bottom: 3px solid var(--color-ink);
+}
+.nl-header__icon {
+  display: block;
+  margin: 0 auto var(--space-4);
+  opacity: 0.9;
+}
+.nl-kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-3);
+}
+.nl-title {
+  font-family: var(--font-masthead, var(--font-headline));
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-4);
+}
+.nl-lede {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 48ch;
+  margin: 0 auto;
+}
+.nl-block {
+  padding: var(--space-8) 0;
+  margin-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-rule);
+}
+.nl-block__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink);
+  padding-bottom: var(--space-2);
+  margin: 0 0 var(--space-5);
+  border-bottom: 1px solid var(--color-rule);
+}
+.nl-starter {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.nl-starter__link {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.nl-starter__link:hover { color: var(--color-accent); }
+.nl-starter__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 4px 0 0;
+}
+.nl-fineprint {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+.nl-fineprint a { color: var(--color-accent); }
+</style>

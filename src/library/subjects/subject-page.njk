@@ -1,0 +1,50 @@
+---
+layout: base
+pagination:
+  data: library.subjects
+  size: 1
+  alias: subject
+permalink: /library/subjects/{{ subject | slugify }}/
+eleventyComputed:
+  title: "{{ subject | safe }} — Library"
+  description: "Public domain works on {{ subject | safe }} in the Freethinking Times Library."
+---
+<div class="library-discovery" data-pagefind-ignore>
+  <div class="container">
+
+    <header class="library-discovery__header">
+      <a class="library-discovery__back" href="/library/subjects/">&larr; All Subjects</a>
+      <h1 class="library-discovery__title">{{ subject }}</h1>
+    </header>
+
+    {% set subjectWorks = [] %}
+    {% for w in library.works %}
+      {% if subject in (w.subjects or []) and not w.parentWork %}
+        {% set subjectWorks = subjectWorks.concat([w]) %}
+      {% endif %}
+    {% endfor %}
+
+    {% if subjectWorks.length %}
+      <p class="library-discovery__count">{{ subjectWorks.length }} work{{ "s" if subjectWorks.length !== 1 }}</p>
+      <div class="library-featured__grid">
+        {% for w in subjectWorks %}
+          <a class="library-work-card" href="/library/{{ w.slug }}/">
+            <p class="library-work-card__era">{{ w.era or "" }}</p>
+            <h2 class="library-work-card__title">{{ w.title }}</h2>
+            <p class="library-work-card__author">{{ w.author or "" }}</p>
+            {% if w.description %}
+              <p class="library-work-card__desc">{{ w.description }}</p>
+            {% endif %}
+            <div class="library-work-card__meta">
+              {% if w.year %}<span>{{ w.year }}</span>{% endif %}
+              {% if w.type %}<span>{{ w.type }}</span>{% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="library-catalogue__empty">No works found for this subject.</p>
+    {% endif %}
+
+  </div>
+</div>

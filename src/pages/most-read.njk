@@ -1,0 +1,137 @@
+---
+layout: base
+title: Most read
+description: A visualization of the articles readers are spending the most time with, ranked by Umami pageviews. Updated each time the build pulls fresh metrics.
+permalink: /most-read/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header style="margin-bottom: var(--space-8); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink); max-width: var(--max-width-prose);">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Most read</li>
+      </ol>
+    </nav>
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-4);">Most read</h1>
+    <p style="font-family: var(--font-body); font-size: var(--text-lg); color: var(--color-ink-muted); line-height: var(--leading-loose); max-width: 60ch;">
+      What readers are spending the most time with, by Umami-tracked pageviews. We publish this so you can see which arguments are landing — and which deserve more oxygen.
+    </p>
+  </header>
+
+  {% set _stats = articleStats %}
+  {% set _items = collections.allContent | reverse %}
+
+  <div id="most-read-empty" style="font-family: var(--font-body); padding: var(--space-8); border: 1px dashed var(--color-rule); text-align: center; color: var(--color-ink-muted); max-width: 60ch;" hidden>
+    <p style="margin-bottom: var(--space-3);"><strong>No data yet.</strong></p>
+    <p>Stats are pulled from Umami via the <code>sync-stats</code> job. Once the first pull lands in <code>src/_data/articleStats.json</code> the chart below will render.</p>
+  </div>
+
+  <div id="most-read" data-most-read>
+    <div id="most-read-chart" style="margin-top: var(--space-6);"></div>
+  </div>
+
+  {# Embed the data as JSON so the client-side D3 has it without an extra fetch. #}
+  <script id="most-read-data" type="application/json">
+[{% set _hasAny = false %}{% for item in _items %}{% set _s = _stats[item.url] %}{% if _s and _s.views %}{% if _hasAny %},{% endif %}{"url":{{ item.url | dump | safe }},"title":{{ item.data.title | dump | safe }},"section":{{ (item.data.section or "") | dump | safe }},"date":{{ (item.date | htmlDateString) | dump | safe }},"views":{{ _s.views }},"shares":{{ _s.shares or 0 }},"likes":{{ _s.likes or 0 }}}{% set _hasAny = true %}{% endif %}{% endfor %}]
+  </script>
+
+</div>
+
+<style>
+.mr-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3) var(--space-4);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.mr-row__label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.mr-row__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mr-row__title:hover { color: var(--color-accent); }
+.mr-row__sub {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.mr-row__listen {
+  margin-top: 4px;
+  display: inline-flex;
+}
+.mr-row__bar {
+  position: relative;
+  grid-column: 1 / -1;
+  height: 6px;
+  background: var(--color-bg-alt);
+  overflow: hidden;
+}
+.mr-row__bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--color-accent);
+}
+.mr-row__count {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+  white-space: nowrap;
+  margin-left: var(--space-2);
+}
+</style>
+
+<script>
+(function () {
+  'use strict';
+  function init() {
+    var dataEl = document.getElementById('most-read-data');
+    var chart = document.getElementById('most-read-chart');
+    var empty = document.getElementById('most-read-empty');
+    if (!dataEl || !chart) return;
+    var data;
+    try { data = JSON.parse(dataEl.textContent); } catch (e) { data = []; }
+    if (!data.length) {
+      empty.hidden = false;
+      return;
+    }
+    data.sort(function (a, b) { return b.views - a.views; });
+    data = data.slice(0, 30);
+    var max = data[0].views || 1;
+    var listen = (window.__tftAudioBar && window.__tftAudioBar.renderListenButton) || function () { return ''; };
+    chart.innerHTML = data.map(function (d, i) {
+      var pct = (d.views / max) * 100;
+      var sub = [d.section, d.date].filter(Boolean).join(' &middot; ');
+      var lbtn = listen(d.url, d.title);
+      return '<div class="mr-row">' +
+        '<div class="mr-row__label">' +
+          '<a class="mr-row__title" href="' + d.url + '" title="' + d.title.replace(/"/g, '&quot;') + '">' + (i + 1) + '. ' + d.title + '</a>' +
+          (sub ? '<span class="mr-row__sub">' + sub + '</span>' : '') +
+          (lbtn ? '<div class="mr-row__listen">' + lbtn + '</div>' : '') +
+        '</div>' +
+        '<span class="mr-row__count">' + d.views.toLocaleString() + ' views</span>' +
+        '<div class="mr-row__bar"><div class="mr-row__bar-fill" style="width: ' + pct.toFixed(1) + '%"></div></div>' +
+      '</div>';
+    }).join('');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

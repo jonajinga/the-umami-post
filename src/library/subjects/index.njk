@@ -1,0 +1,58 @@
+---
+layout: base
+title: Library Subjects
+description: Browse the public domain library by subject.
+permalink: /library/subjects/
+---
+<div class="library-discovery" data-pagefind-ignore>
+  <div class="container">
+
+    <header class="library-discovery__header">
+      <a class="library-discovery__back" href="/library/">&larr; Library</a>
+      <h1 class="library-discovery__title">Browse by Subject</h1>
+      <p class="library-discovery__deck">{{ library.subjects.length }} subjects across {{ library.works.length }} works.</p>
+    </header>
+
+    {# ── Tag cloud ── #}
+    <section class="library-tag-cloud" aria-labelledby="tag-cloud-heading">
+      <h2 class="library-tag-cloud__heading" id="tag-cloud-heading">Subjects</h2>
+      <div class="library-tag-cloud__tags">
+        {% for subject in library.subjects %}
+          {% set count = 0 %}
+          {% for w in library.works %}
+            {% if subject in (w.subjects or []) and not w.parentWork %}{% set count = count + 1 %}{% endif %}
+          {% endfor %}
+          <a class="library-tag" href="/library/subjects/{{ subject | slugify }}/">
+            {{ subject }}<span class="library-tag__count">{{ count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# ── Sorted list with counts ── #}
+    <section class="library-subject-list" aria-labelledby="subject-list-heading">
+      <h2 class="library-subject-list__heading" id="subject-list-heading">All Subjects</h2>
+      <table class="library-table" aria-label="Subjects list">
+        <thead>
+          <tr>
+            <th scope="col">Subject</th>
+            <th scope="col" class="library-table__count">Works</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subject in library.subjects %}
+            {% set count = 0 %}
+            {% for w in library.works %}
+              {% if subject in (w.subjects or []) and not w.parentWork %}{% set count = count + 1 %}{% endif %}
+            {% endfor %}
+            <tr>
+              <td><a href="/library/subjects/{{ subject | slugify }}/">{{ subject }}</a></td>
+              <td class="library-table__count">{{ count }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+</div>

@@ -1,0 +1,75 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="container">
+  <div class="doc-layout">
+
+    <header class="doc-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/documents/">Documents</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ title }}</li>
+        </ol>
+      </nav>
+
+      <div class="doc-header__eyebrow">
+        {% if docType %}<span class="doc-type-badge">{{ docType }}</span>{% endif %}
+      </div>
+
+      <h1 class="doc-header__title">{{ title }}</h1>
+
+      {% if description %}
+      <p class="doc-header__desc">{{ description }}</p>
+      {% endif %}
+
+      <dl class="doc-header__meta">
+        {% if source %}
+        <div class="doc-meta-row">
+          <dt>Source</dt>
+          <dd>{{ source }}</dd>
+        </div>
+        {% endif %}
+        {% if dateObtained %}
+        <div class="doc-meta-row">
+          <dt>Obtained</dt>
+          <dd><time datetime="{{ dateObtained }}">{{ dateObtained }}</time></dd>
+        </div>
+        {% endif %}
+        {% if page.date %}
+        <div class="doc-meta-row">
+          <dt>Published</dt>
+          <dd><time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time></dd>
+        </div>
+        {% endif %}
+        {% if fileUrl %}
+        <div class="doc-meta-row">
+          <dt>Download</dt>
+          <dd><a href="{{ fileUrl }}" rel="noopener" target="_blank">{{ fileName or "Original document" }}</a></dd>
+        </div>
+        {% endif %}
+      </dl>
+
+      {% if relatedArticles and relatedArticles.length %}
+      <div class="doc-related-articles">
+        <p class="doc-related-articles__label">Referenced in</p>
+        <ul>
+          {% for url in relatedArticles %}
+          {% for item in collections.allContent %}
+          {% if item.url == url %}
+          <li><a href="{{ url }}">{{ item.data.title }}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="doc-body prose">
+      {{ content | safe }}
+    </div>
+
+  </div>
+</div>

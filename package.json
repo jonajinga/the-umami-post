@@ -1,0 +1,52 @@
+{
+  "name": "freethinking-times",
+  "version": "1.0.0",
+  "description": "The Freethinking Times — Independent journalism built on Eleventy",
+  "license": "MIT",
+  "author": "Jon Ajinga",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jon-ajinga/freethinking-times"
+  },
+  "keywords": [
+    "eleventy",
+    "11ty",
+    "journalism",
+    "publishing",
+    "static-site",
+    "pages-cms"
+  ],
+  "scripts": {
+    "start": "npx @11ty/eleventy --quiet && npx pagefind --site _site --output-path _site/pagefind && npx @11ty/eleventy --serve --quiet",
+    "dev": "npx @11ty/eleventy --quiet && npx pagefind --site _site --output-path _site/pagefind && npx @11ty/eleventy --serve --quiet",
+    "build": "npx @11ty/eleventy && npx pagefind --site _site --output-path _site/pagefind",
+    "build:search": "npx pagefind --site _site --output-path _site/pagefind",
+    "sync-stats": "node scripts/sync-stats.mjs",
+    "audio": "node scripts/generate-tts.mjs",
+    "audio:rebuild": "node scripts/generate-tts.mjs -- --force",
+    "debug": "DEBUG=Eleventy* npx @11ty/eleventy"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-fetch": "^5.1.2",
+    "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-plugin-rss": "^2.0.2",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "dotenv": "^16.6.1",
+    "luxon": "^3.7.2",
+    "markdown-it": "^14.1.1",
+    "markdown-it-anchor": "^9.2.0",
+    "pagefind": "^1.4.0",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "ffmpeg-static": "^5.3.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "gray-matter": "^4.0.3",
+    "kokoro-js": "^1.2.1",
+    "purgecss": "^8.0.0",
+    "remove-markdown": "^0.6.3"
+  }
+}

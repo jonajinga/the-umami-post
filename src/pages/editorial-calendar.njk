@@ -1,0 +1,79 @@
+---
+layout: base
+title: Editorial calendar
+description: Every article we've published, navigable by day, week, month, or year — full article cards inline.
+permalink: /editorial-calendar/
+isEditorial: true
+---
+{% set allItems = collections.allContent %}
+{% set deadlines = collections.allContent | deadlineOverlays %}
+{% set sectionSet = [] %}
+{% for item in allItems %}{% if item.data.section and item.data.section not in sectionSet %}{% set sectionSet = (sectionSet.push(item.data.section), sectionSet) %}{% endif %}{% endfor %}
+{% set authorSet = [] %}
+{% for item in allItems %}{% if item.data.author and item.data.author != "staff" and item.data.author not in authorSet %}{% set authorSet = (authorSet.push(item.data.author), authorSet) %}{% endif %}{% endfor %}
+
+<main class="container ed-cal" data-pagefind-ignore>
+
+  {% include "partials/editorial-pivot.njk" %}
+
+  <header class="ed-cal__header">
+    <p class="ed-cal__kicker">Reader tools</p>
+    <h1 class="ed-cal__title">Editorial calendar</h1>
+    <p class="ed-cal__lede">
+      What we&rsquo;ve published, by date. Day, week, month, year views;
+      filter by section or author; subscribe via the
+      <a href="/editorial-calendar/calendar.ics">ICS feed</a> in your
+      own calendar app.
+    </p>
+  </header>
+
+  <div id="ed-cal-mount" class="cal-mount" aria-live="polite">
+    <p class="cal-loading">Loading calendar&hellip;</p>
+  </div>
+
+  {% include "partials/calendar-data.njk" %}
+
+  {# ── Deadline overlay data: ghost cards on dueDate cells ── #}
+  <script id="cal-deadline-data" type="application/json">
+  {{ deadlines | dump | safe }}
+  </script>
+
+  {# ── Filter-chip option lists for the engine to render ── #}
+  <script id="cal-section-list" type="application/json">{{ sectionSet | dump | safe }}</script>
+  <script id="cal-author-list"  type="application/json">{{ authorSet  | dump | safe }}</script>
+
+  {# ── JSON-LD events markup for upcoming scheduled articles ── #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+    {%- set _events = [] -%}
+    {%- for item in allItems -%}
+      {%- if item.date and (item.date | htmlDateString) >= (page.date | htmlDateString) -%}
+      {%- if _events.length > 0 -%},{%- endif %}
+      {
+        "@type": "Event",
+        "name": {{ item.data.title | dump | safe }},
+        "startDate": {{ (item.date | htmlDateString) | dump | safe }},
+        "url": "{{ site.url }}{{ item.url }}",
+        "description": {{ (item.data.description or "") | dump | safe }},
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode"
+      }
+      {%- set _events = (_events.push(1), _events) -%}
+      {%- endif -%}
+    {%- endfor %}
+    ]
+  }
+  </script>
+
+  <noscript>
+    <p class="cal-noscript">
+      The calendar grid needs JavaScript. The full article list is
+      available without JavaScript at <a href="/archives/">/archives/</a>.
+    </p>
+  </noscript>
+
+</main>
+
+<script src="/assets/js/calendar-shared.js?v={{ buildTime }}" defer></script>

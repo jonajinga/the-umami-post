@@ -1,0 +1,195 @@
+---
+layout: base
+isReadingPage: true
+---
+
+<div class="reading-progress" aria-hidden="true"></div>
+
+<div class="print-header" aria-hidden="true">
+  <span class="print-header__title">{{ site.title }}</span>
+  <span class="print-header__url">{{ site.url }}</span>
+</div>
+
+<div class="container" style="padding-top: var(--space-12); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/bookshelf/">Bookshelf</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+
+  <div class="book-layout">
+
+    <article class="book-main" data-pagefind-body>
+      <div aria-hidden="true" style="display:none">
+        <span data-pagefind-meta="section">Bookshelf</span>
+        <span data-pagefind-filter="section">Bookshelf</span>
+      </div>
+
+      <header class="book-header">
+        <span class="section-badge section-badge--bookshelf">Bookshelf</span>
+        {% if category %}<span class="book-category-label">{{ category }}</span>{% endif %}
+        <h1>{{ title }}</h1>
+        <p class="book-byline">
+          {{ bookAuthor }}{% if year %} · {{ year }}{% endif %}{% if publisher %} · {{ publisher }}{% endif %}
+        </p>
+        {% if description %}
+        <p class="book-lede">{{ description }}</p>
+        {% endif %}
+
+        <div class="article-header__actions">
+
+          <button class="article-action-btn bookmark-btn" id="bookmark-btn" type="button" aria-label="Save to reading list"
+            data-url="{{ page.url }}"
+            data-title="{{ title | escape }}"
+            data-section="Bookshelf"
+            data-date="{{ page.date | htmlDateString }}"
+            data-mins="{{ content | readingMins }}">
+            <svg class="bookmark-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span class="btn-label">Save</span>
+          </button>
+
+          {# Share-panel migrates into the bottom-toolbar share popover
+             via reader-panel-migrate.js. The inline trigger button is
+             gone — ann-share-btn in the toolbar replaces it. #}
+          <div class="share-wrap">
+            <div id="share-panel" class="share-panel" hidden role="menu">
+              <a class="share-panel__item" id="share-twitter" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X / Twitter
+              </a>
+              <a class="share-panel__item" id="share-bluesky" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+                <svg width="14" height="14" viewBox="0 0 568 501" fill="currentColor" aria-hidden="true"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.209C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.889-129.52 80.653-149.07-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.66 0 75.293 0 57.947 0-28.906 76.135-1.611 123.121 33.664z"/></svg>
+                Bluesky
+              </a>
+              <a class="share-panel__item" id="share-mastodon" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+                <svg width="14" height="14" viewBox="0 0 74 79" fill="currentColor" aria-hidden="true"><path d="M73.7014 17.4323C72.5616 9.05152 65.1774 2.4469 56.424 1.1671C54.9472 0.950843 49.3518 0.163185 36.3901 0.163185H36.2933C23.3281 0.163185 20.5465 0.950843 19.0697 1.1671C10.56 2.41145 2.78877 8.34604 0.903306 16.826C-0.00357854 21.0022 -0.100361 25.6322 0.068224 29.8793C0.308274 35.9699 0.354113 42.0498 0.91436 48.1158C1.30054 52.1309 1.94863 56.1158 2.85116 60.0428C4.38616 66.6564 11.3077 72.2018 18.1071 74.674C25.3658 77.2579 33.2044 77.7447 40.7259 76.0832C41.5504 75.8995 42.3649 75.6935 43.1693 75.4654C44.9192 74.9477 46.8901 74.3625 48.5903 73.4578C50.5512 72.4484 52.6405 71.6906 54.8072 71.1972C60.5459 69.8936 63.5516 68.2696 65.5728 63.8064C68.1284 58.0558 69.4851 51.8392 69.5624 45.5509C69.5754 44.3821 70.1476 28.3366 70.1476 26.9658C70.1542 22.4227 71.5994 21.3484 73.7014 17.4323Z"/><path fill="white" d="M61.0244 25.5705V46.8777H52.3878V26.2006C52.3878 21.7833 50.7207 19.5372 47.3566 19.5372C43.6516 19.5372 41.7942 21.9943 41.7942 26.8522V37.4655H33.2089V26.8522C33.2089 21.9943 31.3515 19.5372 27.6465 19.5372C24.2824 19.5372 22.6154 21.7833 22.6154 26.2006V46.8777H13.9788V25.5705C13.9788 21.1568 15.1415 17.6392 17.4705 15.0235C19.8744 12.4078 23.0184 11.0734 26.9101 11.0734C31.4145 11.0734 34.8321 12.7486 37.116 16.0991L39.5018 20.0767L41.8877 16.0991C44.1716 12.7486 47.5892 11.0734 52.0936 11.0734C55.9853 11.0734 59.1293 12.4078 61.5332 15.0235C63.8622 17.6392 65.0249 21.1568 65.0249 25.5705H61.0244V25.5705Z"/></svg>
+                Mastodon
+              </a>
+              <hr class="share-panel__divider" aria-hidden="true">
+              <button class="share-panel__item" id="share-copy" type="button" role="menuitem">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                Copy link
+              </button>
+              <a class="share-panel__item" id="share-email" href="#" role="menuitem">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Email
+              </a>
+            </div>
+          </div>
+
+          {# Reading-settings panel removed — display preferences live in
+             the global gs-panel reachable from the masthead. Print and
+             cite buttons moved into the bottom toolbar (their #print-btn
+             and #cite-btn handlers in progress.js still wire up). #}
+        </div>
+
+        <div id="cite-data"
+          data-title="{{ title | escape }}"
+          data-author="{{ bookAuthor | default(site.title) }}"
+          data-date="{{ page.date | isoDate }}"
+          data-publication="{{ site.title }}"
+          data-url="{{ site.url }}{{ page.url }}"
+          hidden></div>
+
+      </header>
+
+      {# Cite modal #}
+      <div id="cite-overlay" class="cite-overlay" hidden aria-hidden="true"></div>
+      <div id="cite-modal" class="cite-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cite-modal-title">
+        <div class="cite-modal__inner">
+          <div class="cite-modal__header">
+            <p class="cite-modal__title" id="cite-modal-title">Cite This Entry</p>
+            <button id="cite-close" class="cite-modal__close" type="button" aria-label="Close citation panel">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="cite-modal__tabs" role="tablist" aria-label="Citation format">
+            <button class="cite-tab is-active" data-format="apa"     role="tab" aria-selected="true"  type="button">APA 7th</button>
+            <button class="cite-tab"           data-format="mla"     role="tab" aria-selected="false" type="button">MLA 9th</button>
+            <button class="cite-tab"           data-format="chicago" role="tab" aria-selected="false" type="button">Chicago 17th</button>
+          </div>
+          <div class="cite-modal__body">
+            <p id="cite-text" class="cite-modal__text"></p>
+          </div>
+          <button id="cite-copy-btn" class="cite-modal__copy-btn" type="button">Copy citation</button>
+        </div>
+      </div>
+
+
+      {% if bestFor or difficulty %}
+      <div class="book-meta-block">
+        {% if bestFor %}<p><strong>Best for:</strong> {{ bestFor }}</p>{% endif %}
+        {% if difficulty %}<p><strong>Difficulty:</strong> {{ difficulty }}</p>{% endif %}
+      </div>
+      {% endif %}
+
+      <div class="book-body prose article-body">
+        {{ content | safe }}
+      </div>
+
+      {% set visibleTags = [] %}
+      {% for tag in tags %}
+        {% if tag != "bookshelf" and tag != "all" and tag != "post" %}
+          {% set visibleTags = (visibleTags.push(tag), visibleTags) %}
+        {% endif %}
+      {% endfor %}
+      {% if visibleTags.length %}
+      <footer class="book-tags">
+        {% for tag in visibleTags %}
+        <a href="/topics/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a>
+        {% endfor %}
+      </footer>
+      {% endif %}
+
+    </article>
+
+    <aside class="book-sidebar">
+
+      {# Table of contents, populated by JS when entry has 2+ headings #}
+      <div class="sidebar-widget toc-widget" id="toc-widget" hidden>
+        <p class="sidebar-widget__title">Contents</p>
+        <nav id="toc-nav" aria-label="Entry sections"></nav>
+      </div>
+
+      <div class="sidebar-widget">
+        <h3 class="sidebar-widget__title">All Books</h3>
+        <ul class="book-list-sidebar">
+          {% for entry in collections.bookshelf %}
+          <li class="{% if entry.url == page.url %}book-list-sidebar__current{% endif %}">
+            <a href="{{ entry.url }}">
+              {{ entry.data.title }}
+              <span class="book-list-sidebar__author">{{ entry.data.bookAuthor }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+</div>
+
+<footer class="print-footer" aria-hidden="true">
+  <span>{{ site.title }}, {{ site.url }}{{ page.url }}</span>
+  <span>Published {{ page.date | readableDate }}</span>
+</footer>
+
+{% include "partials/reader-toolbar-mini.njk" %}
+
+{% block scripts %}
+
+<script src="/assets/js/reading-list.js" defer></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{
+  "workSlug": "age-of-reason",
+  "workTitle": "The Age of Reason",
+  "author": "Thomas Paine",
+  "authorSlug": "thomas-paine",
+  "authorDates": "1737–1809",
+  "originalPublication": 1794,
+  "originalLanguage": "English",
+  "translator": null,
+  "edition": "Project Gutenberg edition",
+  "source": "Project Gutenberg",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/3743",
+  "type": "treatise",
+  "subjects": ["Philosophy", "Religion", "Deism", "Freethought"],
+  "difficulty": "Accessible",
+  "era": "18th Century",
+  "shortWork": false
+}

@@ -1,0 +1,76 @@
+---
+layout: base
+title: Editorial Ethics
+description: The standards by which The Freethinking Times operates.
+permalink: /ethics/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Editorial Ethics</h1>
+    <p class="page-header__lede">
+      The standards we hold ourselves to, stated plainly.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#accuracy">Accuracy</a>
+      <a href="#independence">Independence</a>
+      <a href="#sourcing">Sourcing</a>
+      <a href="#fairness">Fairness</a>
+      <a href="#news-opinion">News and opinion</a>
+      <a href="#corrections">Corrections policy</a>
+      <a href="#conflicts">Conflicts of interest</a>
+      <a href="#contact">Contact the editors</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="accuracy">Accuracy</h2>
+      <p>We verify claims before publishing them. We use primary sources wherever possible and identify the nature of our sourcing clearly. When we cannot independently verify something, we say so. When we are wrong, we correct the record promptly, prominently, and without euphemism.</p>
+
+      <h2 id="independence">Independence</h2>
+      <p>No advertiser, funder, donor, or external party has any influence over our editorial decisions. We do not accept gifts, travel, or any consideration of value from sources, subjects, or interested parties. We disclose any potential conflict of interest before it affects coverage, not after.</p>
+
+      <h2 id="sourcing">Sourcing</h2>
+      <p>We name sources wherever possible. We grant anonymity only when a source faces genuine risk and when the information they provide cannot be obtained through named sources. When we use anonymous sources, we describe their basis for knowledge and the reason for anonymity. We do not use anonymous sources for opinion or characterization, only for factual claims we have reason to believe are accurate.</p>
+
+      <h2 id="fairness">Fairness</h2>
+      <p>Individuals and institutions that are the subject of critical reporting are given a genuine opportunity to respond before publication, not a perfunctory request timed to prevent a useful response. Their responses, or their refusal to respond, are reported accurately.</p>
+
+      <h2 id="news-opinion">Separation of News and Opinion</h2>
+      <p>News reporting and opinion are clearly labeled and editorially separate. The editorial positions of the publication do not determine what news we cover or how we cover it.</p>
+
+      <h2 id="corrections">Corrections Policy</h2>
+      <p>Corrections are published on the original article, clearly labeled, with the date of correction and a description of what was changed and why. We do not alter published articles without notation. Significant corrections are noted on our front page.</p>
+
+      <h2 id="conflicts">Conflicts of Interest</h2>
+      <p>Staff and contributors disclose financial interests, personal relationships, and prior affiliations that are relevant to the subjects they cover. We do not assign coverage to writers with material conflicts. When a potential conflict exists that does not rise to the level of disqualification, we disclose it to readers.</p>
+
+      <h2 id="contact">Contact the Editors</h2>
+      <p>Concerns about our editorial standards: <a href="/contact/">our contact form</a>.<br>
+      Corrections: <a href="/corrections/report/">report a correction</a>.</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

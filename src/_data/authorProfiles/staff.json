@@ -1,0 +1,26 @@
+{
+  "slug": "staff",
+  "name": "The Freethinking Times",
+  "role": "Publication",
+  "title": "Independent journalism, investigative, philosophical, adversarial to power",
+  "location": "Denver, Colorado",
+  "bio": "Stories reported and edited by the staff of The Freethinking Times.",
+  "bioLong": "<p>The Freethinking Times is an independent publication founded in 2025. We cover regulation, institutional power, the history of ideas, and the life of reason, without advertisers, without paywalls, and without deference to official narratives.</p><p>Staff bylines appear on pieces with significant editorial or research contributions from multiple team members, or on institutional content such as corrections, policy notices, and editorial statements.</p><p>The publication is reader-funded. Every piece is written, edited, and published entirely by human beings who answer to readers and no one else.</p>",
+  "photo": "src/assets/favicon.svg",
+  "social": {
+    "x": "https://x.com/freethinkingtms",
+    "bluesky": "https://bsky.app/profile/thefreethinkingtimes.com",
+    "mastodon": "https://mastodon.social/@freethinkingtimes",
+    "linkedin": "",
+    "github": "https://github.com/jonajinga/the-freethinking-times",
+    "threads": "",
+    "instagram": "",
+    "website": "https://thefreethinkingtimes.com",
+    "email": "hello@thefreethinkingtimes.com"
+  },
+  "tipping": {
+    "kofi": "https://ko-fi.com/thefreethinkingtimes",
+    "bmac": "",
+    "patreon": ""
+  }
+}

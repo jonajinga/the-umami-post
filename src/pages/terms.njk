@@ -1,0 +1,99 @@
+---
+layout: base
+title: "Terms of Use"
+description: Terms and conditions for using The Freethinking Times website.
+permalink: /terms/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Terms of Use</h1>
+    <p class="page-header__lede">
+      By using this site you agree to these terms. They are simple and fair.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#using-this-site">Using this site</a>
+      <a href="#content-ownership">Content ownership</a>
+      <a href="#public-domain">Public Domain Library</a>
+      <a href="#user-content">User-generated content</a>
+      <a href="#reader-data">Reader data</a>
+      <a href="#third-party">Third-party services</a>
+      <a href="#external-links">External links</a>
+      <a href="#no-warranty">No warranty</a>
+      <a href="#changes">Changes</a>
+      <a href="#contact">Contact</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="using-this-site">Using This Site</h2>
+
+      <p>{{ site.title }} is free to read. You do not need an account. You may browse, read, search, highlight, annotate, and use all reader tools without restriction. We ask that you use the site in good faith and do not attempt to disrupt its operation.</p>
+
+      <h2 id="content-ownership">Content Ownership</h2>
+
+      <p>Articles, essays, and editorial content published on {{ site.title }} are the intellectual property of their respective authors. You may not reproduce, republish, or redistribute this content in full without written permission from the author or the publication.</p>
+
+      <p>You may quote reasonable excerpts for the purposes of criticism, commentary, news reporting, education, or research, consistent with fair use principles. Please credit the author and link to the original article.</p>
+
+      <h2 id="public-domain">Public Domain Library</h2>
+
+      <p>Texts in our Public Domain Library are in the public domain and may be freely used by anyone. Our annotations, introductions, and editorial commentary accompanying those texts remain the property of {{ site.title }}.</p>
+
+      <h2 id="user-content">User-Generated Content</h2>
+
+      <p>If you submit a comment, letter, tip, quote, or other content to {{ site.title }}, you grant us a non-exclusive, royalty-free license to publish, edit, and display that content. For letters to the editor, we may edit for length and clarity. We will not publish your email address.</p>
+
+      <p>You retain ownership of any content you submit. You may request removal of your submitted content by contacting us at <a href="/contact/">our contact form</a>.</p>
+
+      <h2 id="reader-data">Reader Data</h2>
+
+      <p>All reader data (highlights, notes, bookmarks, reading list, preferences) is stored in your browser's localStorage. We do not have access to this data. See our <a href="/your-data/">Your Data</a> page and <a href="/privacy/">Privacy Policy</a> for details.</p>
+
+      <h2 id="third-party">Third-Party Services</h2>
+
+      <p>This site uses third-party services including Cloudflare (hosting), Buttondown (newsletter), Umami (analytics), Cusdis (comments), Web3Forms (forms), and GTranslate (translation). Your use of these services is subject to their respective terms and privacy policies, which are described in our <a href="/privacy/">Privacy Policy</a>.</p>
+
+      <h2 id="external-links">Links to External Sites</h2>
+
+      <p>This site contains links to external websites. We are not responsible for the content, accuracy, or privacy practices of those sites. A link does not constitute an endorsement.</p>
+
+      <h2 id="no-warranty">No Warranty</h2>
+
+      <p>This site is provided as-is. We make no guarantees about uptime, accuracy, or completeness. While we strive for accuracy and correct errors promptly, we cannot guarantee that all information is current or error-free.</p>
+
+      <h2 id="changes">Changes</h2>
+
+      <p>We may update these terms. Continued use of the site after changes constitutes acceptance. Material changes will be noted in our <a href="/changelog/">changelog</a>.</p>
+
+      <h2 id="contact">Contact</h2>
+
+      <p>Questions about these terms: <a href="/contact/">our contact form</a>.</p>
+
+      <p><em>Last updated: {{ currentYear }}</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

@@ -1,0 +1,33 @@
+date: "2026-04-10"
+title: Quotes, resources, RSS reader, contact, language, data management
+sections:
+  - label: New pages
+    entries:
+      - Quotes page at /quotes/ — 30 curated freethought quotes with save, share, copy buttons and author filter
+      - Freethought Resources at /resources/ — organizations, publications, communities, archives, podcasts
+      - RSS Reader at /reader/ — feeds fetched at build time, tab filtering by source
+      - "Contact page at /contact/ — replaces all mailto: links with structured contact info"
+      - Language page at /language/ — translation how-to, supported languages, privacy info
+      - Your Data page at /your-data/ — explains localStorage, export/import, device transfer
+  - label: Reader features
+    entries:
+      - "Notes page: search by title, filter by source (Articles/Library/Quotes), per-page print/export/share"
+      - "Reading list: search filter, icon buttons for import/export/print/clear, export dropdown (txt/md/json/PDF)"
+      - Quotes searchable via Pagefind with Quotes filter button in search
+      - Social share panels with icons (X, Facebook, LinkedIn, Reddit, Email, Copy) on quotes and notes pages
+  - label: Navigation
+    entries:
+      - Quotes added to nav with dropdown showing 3 preview quotes
+      - "Library dropdown: Browse by Subject/Author moved to footer links"
+      - Mobile search icon in header (phones only)
+      - "Email icon links to /contact/ instead of mailto:"
+  - label: Hamburger menu
+    entries:
+      - Language and Your Data combined into single card with red divider
+      - Newsletter signup form in drawer
+      - Consistent card styling (sidebar-widget + accent border)
+      - Newsletter description shortened
+  - label: Performance
+    entries:
+      - CSS concatenated at build time — no @import waterfall in production
+      - Removed 3 failing RSS feeds (FFRF 404, CFI 403, Friendly Atheist broken XML)

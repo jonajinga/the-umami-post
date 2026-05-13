@@ -1,0 +1,58 @@
+{# Mini reader toolbar for short-form reading layouts (glossary-term,
+   book-entry). These pages set isReadingPage:true so base.njk's
+   global .reading-floats is suppressed; this toolbar provides the
+   inline back-to-top + percent-through pill, plus the migrated
+   bookmark and share controls.
+
+   Buttons that re-use existing IDs (#print-btn, #cite-btn) keep their
+   handlers in progress.js wired up; the inline copies of those
+   buttons are dropped from the layout. ann-share-btn + popover are
+   bound by reader-panel-migrate.js. #}
+<div id="annotation-toolbar" class="annotation-toolbar" role="toolbar" aria-label="Reader tools">
+  <div class="annotation-toolbar__main">
+    {# Reading floats — back-to-top + percent-through pill rendered
+       inline since the global .reading-floats is suppressed on
+       isReadingPage layouts. progress.js toggles is-visible. #}
+    <div id="reading-floats" class="reading-floats annotation-toolbar__slot">
+      <span class="reading-pct toolbar-floats" id="reading-pct"></span>
+      <button class="back-to-top toolbar-floats" id="back-to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <polyline points="5 11 12 4 19 11"/>
+        </svg>
+      </button>
+    </div>
+    {# Save slot — bookmark-btn from .article-header__actions migrates here. #}
+    <div id="ann-save-slot" class="annotation-toolbar__slot"></div>
+    {# Share — opens ann-share-popover; share-panel migrates into
+       ann-share-slot inside the popover. Bound by reader-panel-migrate.js. #}
+    <button id="ann-share-btn" class="annotation-toolbar__btn" type="button" aria-label="Share, print" aria-controls="ann-share-popover" aria-expanded="false" title="Share, print">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </button>
+    {# Cite — re-uses #cite-btn ID so progress.js's existing handler
+       (line 640+) opens the cite-modal that lives inline in the layout. #}
+    <button id="cite-btn" class="annotation-toolbar__btn" type="button" aria-label="Cite this entry" aria-expanded="false" aria-controls="cite-modal" title="Cite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.685.54-2.293.44-.6 1.05-1.05 1.83-1.343.78-.295 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.824-2.556 1.51-.755.685-1.347 1.54-1.78 2.563-.432 1.025-.65 2.218-.65 3.58 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44zm9 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.132-1.54-.022-.16-.95.1-1.685.54-2.294.44-.606 1.05-1.056 1.83-1.35.78-.294 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.825-2.556 1.51-.755.686-1.347 1.54-1.78 2.565-.432 1.022-.65 2.216-.65 3.578 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44z"/></svg>
+    </button>
+  </div>
+</div>
+
+{# Combined Share / Print popover. share-panel migrates into ann-share-slot. #}
+<div id="ann-share-popover" class="ann-share-popover" hidden role="dialog" aria-modal="true" aria-labelledby="ann-share-popover-title">
+  <header class="ann-share-popover__header">
+    <h2 class="ann-share-popover__title" id="ann-share-popover-title">Share</h2>
+    <button type="button" class="ann-share-popover__close" aria-label="Close share popup"
+      onclick="var p=document.getElementById('ann-share-popover');if(p){p.hidden=true;}var b=document.getElementById('ann-share-btn');if(b)b.setAttribute('aria-expanded','false');">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </header>
+  <div class="ann-share-popover__body">
+    <p class="ann-share-popover__subhead">Share</p>
+    <div id="ann-share-slot"></div>
+    <p class="ann-share-popover__subhead">Print / PDF</p>
+    <button class="ann-share-popover__item" type="button" id="print-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print this entry
+    </button>
+  </div>
+</div>

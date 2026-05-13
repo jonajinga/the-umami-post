@@ -1,0 +1,117 @@
+date: "2026-04-23"
+title: Webmentions live, IndieWeb identity, audit-driven polish
+sections:
+  - label: Webmentions
+    entries:
+      - >-
+        The site now receives and displays Webmentions via webmention.io.
+        Replies, likes, reposts, and bare mentions are grouped beneath every
+        article and author page, with avatar + name + excerpt cards for
+        replies and a facepile for likes / reposts.
+      - >-
+        Build-time fetch via @11ty/eleventy-fetch with a 24-hour cache. The
+        site falls back to a silent empty state when a page has no mentions,
+        so fresh articles don't carry dead space.
+      - >-
+        "IndieWeb identity wired: <link rel=\"me\"> pointing at
+        github.com/jonajinga in <head>, with the reciprocal Website field
+        set on the GitHub profile. Enables IndieAuth sign-in against the
+        domain."
+      - >-
+        Preview mode (`WEBMENTIONS_DEMO=1 npm run dev`) injects a
+        synthesised bundle of replies and likes so the block can be
+        previewed locally without waiting for real mentions.
+  - label: Accessibility
+    entries:
+      - >-
+        Token contrast tightened — --color-ink-muted darkened to #3D3B39,
+        --color-ink-faint to #4F4A48. Every meta / caption / dateline now
+        clears WCAG AA 4.5:1 against every background variant.
+      - >-
+        Global `prefers-reduced-motion` — any transition or animation
+        collapses to a single frame when the reader prefers reduced motion.
+      - >-
+        Display-settings panel gained a proper focus trap — Tab wraps at
+        edges, first control autofocuses on open, focus returns to the
+        trigger on close.
+      - >-
+        Reading-floats wrapper no longer uses aria-hidden with a focusable
+        descendant. The back-to-top button uses visibility:hidden until
+        scroll exposes it, removing it from both tab order and a11y tree.
+  - label: OG share cards
+    entries:
+      - >-
+        Rebuilt the per-article share card. Author name now resolves
+        correctly from the authors data map (was previously falling back
+        to an empty string), publish date appears on the byline bar, and
+        the layout centres title + deck in a proper editorial frame.
+      - >-
+        Render path switched from SVG foreignObject to native <text> +
+        <tspan> because the resvg-js rasteriser silently skips
+        foreignObject — that was the cause of the big blank tan void in
+        the middle of cards.
+      - >-
+        Header + byline typography sized up and brightened to pure white
+        so the masthead and credits stay legible at thumbnail scale.
+  - label: Style guide + copy
+    entries:
+      - >-
+        New .page-header component (kicker + title + lede) replaces the
+        inline-styled headers on About, Accessibility, Contact, Cookies,
+        Editorial Ethics, Privacy, Stack, and Terms.
+      - >-
+        New .btn--primary / .btn--secondary variants, three .divider
+        weights, a unified .empty-state pattern, and breadcrumb active-
+        state styling.
+      - >-
+        Newsletter hero copy tightened — "The newsletter. Direct to your
+        inbox." → "One email, one article." Support headline → "Reader-
+        funded, always." Subscribe button label reduced to plain
+        "Subscribe".
+  - label: Reader panel + display
+    entries:
+      - >-
+        Reader panel desktop width widened from 460 → 678 px (+47% across
+        two passes) for long titles and crowded sidebars.
+      - >-
+        Reading-settings merged into the global display-settings panel.
+        Reading ruler, paragraph numbers, and auto-scroll controls only
+        surface on pages with an .article-body element.
+      - >-
+        Auto-scroll now yields instantly to any reader input — wheel,
+        touchmove, arrow keys, PageUp / PageDown, Home / End, Space — so
+        readers never get trapped scrolling the wrong direction.
+  - label: Archive discovery
+    entries:
+      - >-
+        Unified /archives/showcase/ and /archives/timeline/ — one pair
+        of pages driven by URL parameters (?author, ?section, ?subsection,
+        ?topic, ?year, ?month). Buttons on the archives page, author
+        hero, section index, and topic pages link to the appropriately
+        filtered view.
+      - >-
+        Archive page filters now persist in the URL so filtered views
+        are shareable and survive reloads, with popstate re-syncing on
+        back / forward.
+      - >-
+        "From the archive" surface on the newsletter page surfaces older
+        pieces beneath the signup form as a rediscovery counterpart to
+        the forward-looking feed.
+  - label: Performance + music continuity
+    entries:
+      - >-
+        Articles are now SPA-navigable — the background music iframe
+        survives navigation between articles, sections, library chapters,
+        glossary entries, and utility pages. The list of forced-reload
+        paths (dashboard, notes, search, events, library chapter) has
+        been removed.
+      - >-
+        Music bar centred across both the annotation-toolbar dock and
+        the standalone fixed bar.
+  - label: Removed
+    entries:
+      - >-
+        Text-to-speech removed entirely — the integration had chronic
+        cross-browser issues on Android offline voices and desktop
+        highlight sync. ~800 lines gone from progress.js, CSS, and
+        templates.

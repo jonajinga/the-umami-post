@@ -1,0 +1,111 @@
+{#
+  Author hero block, photo + name + role + bio + socials + stats + tip badges.
+  Used on /author/{slug}/.
+#}
+{% if authorData %}
+<div class="author-hero">
+  <div class="author-hero__avatar">
+    <div class="author-hero__initials" aria-hidden="true">{{ authorData.name | initials }}</div>
+    {% if authorData.photo %}
+      {% set photoSrc = authorData.photo | replace("src", "") %}
+      <img src="{{ photoSrc }}" alt="{{ authorData.name }}"
+           class="author-hero__photo" width="184" height="184" loading="eager" decoding="async"
+           onerror="this.style.opacity=0">
+    {% endif %}
+  </div>
+
+  <div class="author-hero__body">
+    {% if authorData.role %}
+    <p class="author-hero__role">{{ authorData.role }}</p>
+    {% endif %}
+    <h1 class="author-hero__name">{{ authorData.name }}</h1>
+    {% if authorData.title or authorData.location %}
+    <p class="author-hero__meta">
+      {% if authorData.title %}{{ authorData.title }}{% endif %}
+      {% if authorData.title and authorData.location %} &middot; {% endif %}
+      {% if authorData.location %}{{ authorData.location }}{% endif %}
+    </p>
+    {% endif %}
+    {% if authorData.bio %}
+    <p class="author-hero__bio">{{ authorData.bio }}</p>
+    {% endif %}
+
+    <div class="author-hero__socials">
+      {% set social = authorData.social %}
+      {% include "partials/social-icons.njk" %}
+      {% if authorArticles is defined and authorArticles.length and authorSlug %}
+      <span class="author-hero__socials-divider" aria-hidden="true"></span>
+      {% set viewFilter = "author=" + authorSlug %}
+      {% set viewsSize = "sm" %}
+      {% set rssHref = "/feeds/" + authorSlug + ".xml" %}
+      {% set rssFeed = "author-" + authorSlug %}
+      {% set rssLabel = authorData.name %}
+      {% include "partials/archive-views-buttons.njk" %}
+      {% endif %}
+    </div>
+
+    {# ── Support row: inline stats · separator · learn more + tip badges #}
+    <div class="author-hero__support-row">
+      {% if authorArticles is defined and authorArticles.length %}
+      {% set sectionList = [] %}
+      {% for item in authorArticles %}
+        {% if item.data.section and item.data.section not in sectionList %}
+          {% set sectionList = (sectionList.push(item.data.section), sectionList) %}
+        {% endif %}
+      {% endfor %}
+      {% set totalWords = 0 %}
+      {% set totalReadMins = 0 %}
+      {% for item in authorArticles %}
+        {% if item.templateContent %}
+          {% set totalWords = totalWords + (item.templateContent | wordCountRaw) %}
+          {% set totalReadMins = totalReadMins + (item.templateContent | readingMins) %}
+        {% endif %}
+      {% endfor %}
+      <span class="author-hero__inline-stats">
+        <span>{{ authorArticles.length }} {{ "article" if authorArticles.length == 1 else "articles" }}</span>
+        {% if sectionList.length %}<span class="author-hero__inline-sep">&middot;</span><span>{{ sectionList.length }} {{ "section" if sectionList.length == 1 else "sections" }}</span>{% endif %}
+        {% if totalWords > 0 %}
+        {% set listenMins = (totalWords / 130) | round %}
+        <span class="author-hero__inline-sep">&middot;</span><span>{{ (totalWords / 1000) | round(1) }}k words</span>
+        <span class="author-hero__inline-sep">&middot;</span><span>~{{ totalReadMins }}m read</span>
+        <span class="author-hero__inline-sep">&middot;</span><span>~{{ listenMins }}m listen</span>
+        {% endif %}
+      </span>
+      <span class="author-hero__support-divider" aria-hidden="true"></span>
+      {% endif %}
+      <div class="author-hero__support-badges">
+        {# Direct payment links per platform — one badge per
+           configured destination on the author's profile (kofi /
+           bmac / patreon). Skips silently when the author has
+           none, so casual contributors don't get a half-empty
+           support row. #}
+        {% if authorData.tipping %}
+          {% if authorData.tipping.kofi %}
+          <a class="tip-badge" href="{{ authorData.tipping.kofi }}" target="_blank" rel="noopener noreferrer"
+             aria-label="Tip {{ authorData.name }} on Ko-fi"
+             data-umami-event="author-support-kofi">Ko-fi</a>
+          {% endif %}
+          {% if authorData.tipping.bmac %}
+          <a class="tip-badge" href="{{ authorData.tipping.bmac }}" target="_blank" rel="noopener noreferrer"
+             aria-label="Tip {{ authorData.name }} on Buy Me a Coffee"
+             data-umami-event="author-support-bmac">Buy Me a Coffee</a>
+          {% endif %}
+          {% if authorData.tipping.patreon %}
+          <a class="tip-badge" href="{{ authorData.tipping.patreon }}" target="_blank" rel="noopener noreferrer"
+             aria-label="Support {{ authorData.name }} on Patreon"
+             data-umami-event="author-support-patreon">Patreon</a>
+          {% endif %}
+          {% if authorData.tipping.stripe %}
+          <a class="tip-badge" href="{{ authorData.tipping.stripe }}" target="_blank" rel="noopener noreferrer"
+             aria-label="Tip {{ authorData.name }}"
+             data-umami-event="author-support-stripe">Tip directly</a>
+          {% endif %}
+        {% endif %}
+        <a class="tip-badge" href="/support/"
+           aria-label="How {{ site.title }} is funded"
+           data-umami-event="footer-support">How We're Funded</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

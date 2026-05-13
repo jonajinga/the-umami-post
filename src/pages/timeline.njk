@@ -1,0 +1,106 @@
+---
+layout: base
+title: Freethought Timeline
+description: A chronological history of freethought, from Socrates to the New Atheism, 2,400 years of reason against orthodoxy.
+permalink: /timeline/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Freethought Timeline</li>
+    </ol>
+  </nav>
+
+  <header style="padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink); margin-bottom: var(--space-10); text-align: center;">
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-4);">Freethought Timeline</h1>
+    <p style="color: var(--color-ink-muted); font-size: var(--text-md); font-style: italic; max-width: 40ch; margin-inline: auto;">
+      2,400 years of reason against orthodoxy.
+    </p>
+    <div style="display:flex;justify-content:center;margin-top:var(--space-4);">
+      <p style="font-family: var(--font-ui); font-size: var(--text-sm); margin: 0;">
+        Know a key moment in freethought history? <a href="/timeline/submit/" style="color: var(--color-link); font-weight: 600;">Suggest it</a>
+      </p>
+    </div>
+    <div style="margin-top:var(--space-4);display:flex;justify-content:center;">
+      <a href="/timeline/showcase/" class="btn">View Showcase</a>
+    </div>
+  </header>
+
+  <div style="text-align: center; margin-bottom: var(--space-10);">
+    <select id="timeline-era-filter" aria-label="Filter by era" class="rs-select" style="display:inline-block;width:auto;min-width:200px;font-size:var(--text-md);padding:var(--space-3) var(--space-4);">
+      <option value="">All eras</option>
+      {% set eraSet = [] %}
+      {% for e in timeline %}
+        {% if e.era not in eraSet %}{% set eraSet = eraSet.concat([e.era]) %}{% endif %}
+      {% endfor %}
+      {% for era in eraSet %}
+        <option value="{{ era }}">{{ era }}</option>
+      {% endfor %}
+    </select>
+    <span id="timeline-count" style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);margin-left:var(--space-2);">{{ timeline | length }} events</span>
+  </div>
+
+  <div class="tl" id="timeline-list" data-pagefind-ignore>
+    <div class="tl__line" aria-hidden="true"></div>
+
+    {% set currentEra = '' %}
+    {% for event in timeline | sort(false, false, 'year') %}
+
+      {% if event.era != currentEra %}
+        {% set currentEra = event.era %}
+        <div class="tl__era" data-era="{{ event.era }}">
+          <span class="tl__era-label">{{ event.era }}</span>
+        </div>
+      {% endif %}
+
+      <div class="tl__event {% if loop.index0 % 2 == 0 %}tl__event--left{% else %}tl__event--right{% endif %}" data-era="{{ event.era }}">
+        <div class="tl__connector" aria-hidden="true"></div>
+        <div class="tl__dot" aria-hidden="true"></div>
+        <div class="tl__card">
+          <div class="tl__year">
+            {% if event.year < 0 %}{{ event.year * -1 }} BCE{% else %}{{ event.year }}{% endif %}
+          </div>
+          <h2 class="tl__title"><a href="/timeline/{{ event.title | slugify }}/">{{ event.title }}</a></h2>
+          <p class="tl__desc">{{ event.description }}</p>
+        </div>
+      </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% include "partials/timeline-styles.njk" %}
+
+<script>
+(function () {
+  var filter = document.getElementById('timeline-era-filter');
+  var countEl = document.getElementById('timeline-count');
+  if (filter) {
+    filter.addEventListener('change', function () {
+      var era = this.value;
+      var visible = 0;
+      document.querySelectorAll('.tl__event, .tl__era').forEach(function (el) {
+        var show = !era || el.dataset.era === era;
+        el.style.display = show ? '' : 'none';
+        if (show && el.classList.contains('tl__event')) visible++;
+      });
+      if (countEl) countEl.textContent = visible + ' event' + (visible !== 1 ? 's' : '');
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.tl__event').forEach(function (el) { observer.observe(el); });
+  } else {
+    document.querySelectorAll('.tl__event').forEach(function (el) { el.classList.add('is-visible'); });
+  }
+})();
+</script>

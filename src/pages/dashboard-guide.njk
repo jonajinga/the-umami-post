@@ -1,0 +1,133 @@
+---
+layout: base
+title: "How to read the editorial dashboard"
+description: A reader's guide to the public editorial dashboard — what each panel shows, what the alerts mean, and why we publish the pipeline.
+permalink: /dashboard/guide/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <p class="page-header__eyebrow">Transparency</p>
+    <h1 class="page-header__title">How to read the editorial dashboard</h1>
+    <p class="page-header__lede">
+      {{ site.title }} publishes its editorial pipeline as part of the same transparency posture that keeps our funding model and corrections log public. This page is the reader's manual for what you're looking at when you open <a href="/dashboard/">/dashboard/</a> or <a href="/editorial/board/">/editorial/board/</a>.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#why">Why we publish this</a>
+      <a href="#dashboard">The Dashboard</a>
+      <a href="#board">The Editorial Board</a>
+      <a href="#workflow">How a piece moves</a>
+      <a href="#alerts">What the alerts mean</a>
+      <a href="#limits">What this isn&rsquo;t</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="why">Why we publish this</h2>
+      <p>Most publications hide their editorial workings. They are unaware of the stories not yet pursued, the pitches that died for lack of source access, the pieces that took longer to land than expected. We publish ours because <strong>the same logic that requires us to show our funding line by line and log every correction also requires us to show what we are working on</strong>.</p>
+      <p>The trade-off is real: a reader can see that a draft has been sitting unfinished for 19 days; a competing publication can scrape our pitch list. We accept those trade-offs. The alternative is the polished surface most newsrooms present, which does not match the actual conditions inside any newsroom.</p>
+      <p>If you find that a story we have flagged as &ldquo;in review&rdquo; has been sitting for a month, send <a href="/feedback/">feedback</a>. We will either ship it or spike it.</p>
+
+      <h2 id="dashboard">The Dashboard</h2>
+      <p>The <a href="/dashboard/">/dashboard/</a> page is the at-a-glance view, top to bottom:</p>
+
+      <h3>Stats row</h3>
+      <p>Seven cells: total articles, plus the count in each editorial state (Pitched, Drafting, In review, Scheduled, Published). A &ldquo;needs attention&rdquo; cell appears when the alerts panel below has anything to flag.</p>
+
+      <h3>Production pulse</h3>
+      <p>A 12-week sparkline showing articles published per ISO week. Hover any bar for the count. Use it to see whether output is steady, accelerating, or dropping.</p>
+
+      <h3>Needs attention</h3>
+      <p>Auto-hidden when there&rsquo;s nothing to flag. Surfaces four classes of problem:</p>
+      <ul>
+        <li><strong>Drafts more than 14 days old</strong> — pieces in our pipeline that have not moved. Either we ship them or spike them.</li>
+        <li><strong>Recent corrections</strong> — articles that received a correction in the last 30 days. We want this list visible to ourselves and to you.</li>
+        <li><strong>Fast sections, stale</strong> — News, Opinion, or Politics articles whose <code>lastUpdated</code> is more than six months old. Time-sensitive coverage that may need a refresh.</li>
+        <li><strong>Broken response chains</strong> — articles that link back to a piece they were responding to, where the original is no longer on the site. The link is dead and we know it.</li>
+      </ul>
+
+      <h3>Section coverage</h3>
+      <p>Per-section grid showing the last published date and counts in the last 14 and 90 days. Sections with no publication in 14 days are flagged amber; sections with nothing in 90 days are flagged red. We publish the flag because dormant sections deserve scrutiny.</p>
+
+      <h3>Next 14 days</h3>
+      <p>A strip showing what we have queued for publication over the next two weeks. If a date has multiple pieces stacked, the day-cell shows the count and lists the titles.</p>
+
+      <h3>Per-author scoreboard</h3>
+      <p>Per-contributor stats: articles published, drafts in flight, lifetime words, average length, last published date, recent titles. Sorted by lifetime words. The drafts-in-flight column is operationally interesting because it shows what each writer has unfinished in our pipeline.</p>
+
+      <h3>Articles by section / Projects / Library / Infrastructure</h3>
+      <p>Reference counts. Useful for confirming nothing has silently disappeared, and for the kind of &ldquo;what does this publication have on file&rdquo; question that people sometimes ask.</p>
+
+      <h3>Active assignments</h3>
+      <p>Articles with a specific writer assigned, not yet published, with due dates. Overdue pieces sort to the top.</p>
+
+      <h2 id="board">The Editorial Board</h2>
+      <p>The <a href="/editorial/board/">/editorial/board/</a> page is the kanban view. Six columns, left to right:</p>
+      <ol>
+        <li><strong>Pitched</strong> — captured ideas, no draft yet</li>
+        <li><strong>Drafting</strong> — being written</li>
+        <li><strong>In Review</strong> — being edited</li>
+        <li><strong>Scheduled</strong> — approved, future date</li>
+        <li><strong>Published</strong> — live (recent first)</li>
+        <li><strong>Spiked / Held</strong> — killed or held indefinitely (muted)</li>
+      </ol>
+
+      <p>Each card shows: section badge, title (linked), author, days in current column, word count, due date when set, editor / reviewer when assigned. Cards in active columns get a coloured dot when they have been in the column too long: <strong>amber after 7 days, red after 14 days</strong>. Spiked cards include the reason the piece was killed; we keep them visible as institutional memory rather than deleting.</p>
+
+      <p>Above the board, a 7-day strip shows what is scheduled this week. The toolbar lets readers filter by section, author, &ldquo;stuck only&rdquo;, or &ldquo;overdue only&rdquo;, and toggle a swim-lane view that re-sorts cards by author within each column.</p>
+
+      <p>At the bottom of the page, a collapsible <strong>Recent edits</strong> panel surfaces the 30 most recent commits to article files. Hash, message, author, date. This is the same data <code>git log</code> would give us, exposed to readers because it should be.</p>
+
+      <h2 id="workflow">How a piece moves</h2>
+      <p>An article moves through six states. The state is set by the writer or editor in the article&rsquo;s front matter (the metadata at the top of each Markdown file).</p>
+
+      <table>
+        <thead><tr><th>From</th><th>To</th><th>Trigger</th></tr></thead>
+        <tbody>
+          <tr><td>Pitched</td><td>Drafting</td><td>Writer starts the draft</td></tr>
+          <tr><td>Drafting</td><td>Review</td><td>Writer hands off to an editor</td></tr>
+          <tr><td>Review</td><td>Scheduled or Published</td><td>Editor approves</td></tr>
+          <tr><td>Scheduled</td><td>Published</td><td>Date passes (automatic)</td></tr>
+          <tr><td>Any</td><td>Spiked</td><td>Editor kills or holds the piece, with a reason</td></tr>
+        </tbody>
+      </table>
+
+      <p>A future publish date always reads as &ldquo;Scheduled&rdquo; regardless of explicit status, so a piece with a publish date set for next Tuesday automatically slots into the Scheduled column even while we are still polishing it. On Tuesday, it auto-flips to Published.</p>
+
+      <h2 id="alerts">What the alerts mean</h2>
+
+      <p>The dashboard&rsquo;s &ldquo;Needs attention&rdquo; panel is not aspirational; it is operational. Each row in each sub-panel represents a specific failure mode we want to see:</p>
+
+      <ul>
+        <li><strong>Drafts &gt; 14 days</strong>: editorial drift. A piece sitting unfinished for two weeks usually means either the source access fell through, the writer&rsquo;s priorities shifted, or the editor forgot to send a follow-up. We want all three visible.</li>
+        <li><strong>Recent corrections</strong>: stays visible for 30 days after a correction is filed. Not a punishment, an audit. Patterns in this list are worth noticing &mdash; if a single section produces more corrections than the others, sourcing practices in that section need a hard look.</li>
+        <li><strong>Fast sections, stale</strong>: News and Opinion pieces age fast. A piece labelled &ldquo;current&rdquo; in our archive that was last updated six months ago is no longer current. Either we update it or we add a note saying when it was last verified.</li>
+        <li><strong>Broken response chains</strong>: an article with <code>inResponseTo</code> set, where the original target no longer resolves. Often indicates a renamed URL we forgot to update; occasionally indicates that the piece we were responding to was retracted by its publisher.</li>
+      </ul>
+
+      <h2 id="limits">What this isn&rsquo;t</h2>
+
+      <ul>
+        <li><strong>It isn&rsquo;t a real-time view.</strong> The dashboard rebuilds whenever we push to the repository, typically within a minute. If you reload and see the same numbers, no one has pushed.</li>
+        <li><strong>It isn&rsquo;t comprehensive.</strong> Pieces being drafted in private notes, or pitches that have not yet been entered, do not appear. The board only shows what has been committed to the repository.</li>
+        <li><strong>It isn&rsquo;t a queue you can affect directly.</strong> You can <a href="/feedback/">send feedback</a> on any piece, including those in the pipeline, but you cannot move cards from the outside.</li>
+        <li><strong>It isn&rsquo;t every kind of metric.</strong> We do not publish reader analytics, tip totals per author, or comment-moderation queues here &mdash; those are private. The Dashboard is editorial state, not reader behaviour.</li>
+      </ul>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="/transparency/">Transparency hub</a> &mdash; everything we make public about how this site works.</li>
+        <li><a href="/corrections/">Corrections log</a> &mdash; every correction ever filed, dated, with the original article linked.</li>
+        <li><a href="/costs/">Costs</a> &mdash; line-by-line accounting of what it costs to run this publication.</li>
+        <li><a href="/ethics/">Editorial ethics</a> &mdash; the standards that govern what does and doesn&rsquo;t get pitched.</li>
+        <li><a href="/changelog/">Changelog</a> &mdash; everything we have shipped and changed.</li>
+      </ul>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+---
+permalink: /api/videos.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ videos.length }},
+  "videos": {{ videos | toJSON | safe }}
+}

@@ -1,0 +1,144 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);" data-pagefind-body>
+  <span data-pagefind-meta="section" hidden>Authors</span>
+  <span data-pagefind-filter="section" hidden>Authors</span>
+
+  {# ── Breadcrumbs ──────────────────────────────────────────── #}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/contributors/">Contributors</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+
+  {% set authorData = authors[authorSlug] %}
+  {% set authorArticles = collections.allContent | where("author", authorSlug) %}
+
+  {% include "partials/author-hero.njk" %}
+
+  {# ── Long bio ─────────────────────────────────────────────── #}
+  {% if authorData.bioLong %}
+  <div class="author-bio-long">
+    {{ authorData.bioLong | safe }}
+  </div>
+  {% endif %}
+
+  {# ── Filter bar ───────────────────────────────────────────── #}
+  {% if authorArticles.length %}
+  <div class="author-filter">
+    <input class="author-filter__search" type="search" placeholder="Search articles…" aria-label="Filter articles">
+    <select class="author-filter__select" aria-label="Filter by section">
+      <option value="">All sections</option>
+      {% for item in authorArticles %}
+        {% if item.data.section %}
+      <option value="{{ item.data.section | lower }}">{{ item.data.section }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  {% endif %}
+
+  <p class="author-articles-heading">
+    Articles by {{ title }}{% if authorArticles.length %} <span class="author-articles-heading__count">({{ authorArticles.length }})</span>{% endif %}
+  </p>
+  {% if authorArticles.length %}
+  <div class="archive-views" style="margin: 0 0 var(--space-4);">
+    <a href="/knowledge-map/?author={{ authorSlug or (title | slugify) }}" class="btn archive-views__btn">Knowledge Map</a>
+    <a href="/editorial-calendar/?author={{ authorSlug or (title | slugify) }}" class="btn archive-views__btn">Editorial Calendar</a>
+  </div>
+  {% endif %}
+
+  {% if authorArticles.length == 0 %}
+  <p style="color: var(--color-ink-muted); font-style: italic;">No articles published yet.</p>
+  {% else %}
+  <ul class="article-list" role="list" id="author-article-list">
+    {% for item in authorArticles %}
+    <li class="article-list__item"
+        data-title="{{ item.data.title | lower }}"
+        data-section="{{ item.data.section | lower if item.data.section else '' }}">
+      {% set article = item %}
+      {% set size = "sm" %}
+      {% include "partials/article-card.njk" %}
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="author-filter__empty" hidden>No articles match your filter.</p>
+  {% endif %}
+
+  {# Webmentions for this author page specifically. Silent if none. #}
+  {% include "partials/article-webmentions.njk" %}
+
+</div>
+
+<script>
+(function () {
+  var search = document.querySelector('.author-filter__search');
+  var select = document.querySelector('.author-filter__select');
+  var list = document.getElementById('author-article-list');
+  var empty = document.querySelector('.author-filter__empty');
+  if (!search || !list) return;
+
+  var seen = {};
+  select.querySelectorAll('option').forEach(function (opt) {
+    if (opt.value && seen[opt.value]) { opt.remove(); }
+    else if (opt.value) { seen[opt.value] = true; }
+  });
+
+  // URL state: ?q=&section= so filtered author views are shareable
+  // (e.g. link to "every News article by Jon"). history.replaceState
+  // keeps keystrokes from flooding the browser back stack.
+  function writeUrl() {
+    var p = new URLSearchParams();
+    var q = search.value.trim();
+    if (q) p.set('q', q);
+    if (select.value) p.set('section', select.value);
+    var qs = p.toString();
+    history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+  }
+  function readUrl() {
+    var p = new URLSearchParams(location.search);
+    if (p.has('q')) search.value = p.get('q');
+    if (p.has('section')) {
+      var s = p.get('section');
+      // Select value is case-insensitive (options are lowercased).
+      var opt = Array.prototype.find.call(select.options, function (o) {
+        return o.value.toLowerCase() === s.toLowerCase();
+      });
+      if (opt) select.value = opt.value;
+    }
+  }
+
+  function filter(skipUrl) {
+    var q = search.value.trim().toLowerCase();
+    var sec = select.value.toLowerCase();
+    var items = list.querySelectorAll('.article-list__item');
+    var visible = 0;
+    items.forEach(function (li) {
+      var show = (!q || li.dataset.title.includes(q)) && (!sec || li.dataset.section === sec);
+      li.hidden = !show;
+      if (show) visible++;
+    });
+    if (empty) empty.hidden = visible > 0;
+    if (!skipUrl) writeUrl();
+  }
+
+  var searchTimer;
+  search.addEventListener('input', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(filter, 200);
+  });
+  select.addEventListener('change', function () { filter(); });
+
+  // Hydrate from URL on first paint, then respond to back/forward.
+  readUrl();
+  if (search.value || select.value) filter(true);
+  window.addEventListener('popstate', function () {
+    readUrl();
+    filter(true);
+  });
+})();
+</script>

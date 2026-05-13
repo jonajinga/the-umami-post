@@ -1,0 +1,425 @@
+---
+layout: base
+title: Archives
+description: The complete article archive of The Freethinking Times.
+permalink: /archives/
+---
+<div class="container" style="padding-top: 0; padding-bottom: var(--space-20);">
+
+  {# ── Filter toolbar (sticks flush below masthead as soon as user scrolls) ── #}
+  <div class="archive-toolbar" role="search" aria-label="Filter articles">
+    <div class="archive-toolbar__controls">
+
+      <label class="visually-hidden" for="archive-search">Search articles</label>
+      <input
+        id="archive-search"
+        class="archive-search"
+        type="search"
+        placeholder="Search titles and descriptions…"
+        autocomplete="off"
+        aria-label="Search articles"
+        aria-keyshortcuts="/"
+      >
+
+      <label class="visually-hidden" for="archive-section">Filter by section</label>
+      <select id="archive-section" class="archive-select" aria-label="Filter by section">
+        <option value="">All Sections</option>
+      </select>
+
+      <label class="visually-hidden" for="archive-author">Filter by author</label>
+      <select id="archive-author" class="archive-select" aria-label="Filter by author">
+        <option value="">All Authors</option>
+      </select>
+
+      <label class="visually-hidden" for="archive-year">Filter by year</label>
+      <select id="archive-year" class="archive-select" aria-label="Filter by year">
+        <option value="">All Years</option>
+      </select>
+
+      <label class="visually-hidden" for="archive-month">Filter by month</label>
+      <select id="archive-month" class="archive-select" aria-label="Filter by month">
+        <option value="">All Months</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+
+      <label class="visually-hidden" for="archive-topic">Filter by topic</label>
+      <select id="archive-topic" class="archive-select" aria-label="Filter by topic">
+        <option value="">All Topics</option>
+        {% for tag in collections.tagList %}
+        <option value="{{ tag | lower }}">{{ tag }}</option>
+        {% endfor %}
+      </select>
+
+      <a class="archive-topics-link" href="/topics/">Browse topics &rarr;</a>
+
+      <button id="archive-clear" class="archive-clear" type="button" hidden>Clear filters</button>
+
+    </div>
+    <p class="archive-meta" id="archive-count" aria-live="polite" aria-atomic="true"></p>
+  </div>
+
+  {# ── Page title (sits below the sticky toolbar) ────────────── #}
+  <header class="archive-header" style="margin-top: var(--space-8); margin-bottom: var(--space-10); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-2);">Archives</h1>
+    <p style="font-size: var(--text-lg); color: var(--color-ink-muted); font-style: italic; margin: 0 0 var(--space-4);">
+      {{ collections.allContent | length }} articles published in The Freethinking Times.
+    </p>
+    {% set viewFilter = "" %}
+    {% include "partials/archive-views-buttons.njk" %}
+  </header>
+
+  {# ── Article groups ───────────────────────────────────────────── #}
+  {% set dateGroups = collections.allContent | groupByDate %}
+
+  <div id="archive-list">
+
+    {% for group in dateGroups %}
+    <section
+      class="archive-group"
+      id="{{ group.date }}"
+      data-group-date="{{ group.date }}"
+    >
+
+      <h2 class="archive-group__heading">
+        <a href="#{{ group.date }}">{{ group.articles[0].date | readableDate | upper }}</a>
+      </h2>
+
+      <ul class="article-list" role="list">
+        {% for item in group.articles %}
+        {% set itemDate = item.date | htmlDateString %}
+        {% set authorSlug = item.data.author %}
+        {% set authorName = authors[authorSlug].name if (authorSlug and authors[authorSlug]) else "The Freethinking Times" %}
+        {% set itemSection = item.data.section if item.data.section else "" %}
+        {% set itemTitle = item.data.title if item.data.title else "" %}
+        {% set itemDesc = item.data.description if item.data.description else "" %}
+        {% set dateParts = itemDate.split("-") %}
+
+        {% set itemTags = "" %}
+        {% if item.data.tags %}{% for t in item.data.tags %}{% if t != "post" %}{% set itemTags = itemTags + (t | lower) + "|" %}{% endif %}{% endfor %}{% endif %}
+        <li
+          class="article-list__item archive-entry"
+          data-title="{{ itemTitle | lower }}"
+          data-desc="{{ itemDesc | lower }}"
+          data-section="{{ itemSection }}"
+          data-author="{{ authorSlug }}"
+          data-author-name="{{ authorName }}"
+          data-year="{{ dateParts[0] }}"
+          data-month="{{ dateParts[1] | int }}"
+          data-tags="|{{ itemTags }}"
+        >
+
+          {# Section badge #}
+          {% if itemSection %}
+          <div class="archive-entry__top">
+            <a
+              href="/{{ itemSection | slugify }}/"
+              class="section-badge section-badge--{{ itemSection | slugify }}"
+            >{{ itemSection }}</a>
+          </div>
+          {% endif %}
+
+          {# Title #}
+          <h3 class="archive-entry__title">
+            <a href="{{ item.url }}">{{ itemTitle }}</a>
+          </h3>
+
+          {# Description #}
+          {% if itemDesc %}
+          <p class="archive-entry__desc">{{ itemDesc }}</p>
+          {% endif %}
+
+          {# Listen button — own row so the byline below stays a
+             clean single line. Auto-skips when no MP3 exists. #}
+          {% set listenUrl = item.url %}
+          {% set listenTitle = itemTitle %}
+          {% set listenSize = "sm" %}
+          {% set _aud = audioManifest[item.url] %}
+          {% if _aud %}
+          <div class="archive-entry__listen">
+            {% include "partials/listen-button.njk" %}
+          </div>
+          {% endif %}
+
+          {# Meta row: author | reading time | word count
+             (vertical-rule separators rendered by CSS, no dots). #}
+          <div class="article-list__meta article-list__meta--bars">
+            <span class="article-list__meta-item">BY
+              <a href="/author/{{ authorSlug }}/" class="archive-entry__author">{{ authorName | upper }}</a>
+            </span>
+            <span class="article-list__meta-item">{{ item.templateContent | readingTime }}</span>
+            <span class="article-list__meta-item">{{ item.templateContent | wordCount }}</span>
+          </div>
+
+        </li>
+        {% endfor %}
+      </ul>
+
+    </section>
+    {% endfor %}
+
+    {# Empty state #}
+    <div class="archive-empty" id="archive-empty" hidden>
+      <p>No articles match your filters. <button type="button" onclick="archiveClearAll()">Clear all filters</button> to start over.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var searchEl  = document.getElementById('archive-search');
+  var sectionEl = document.getElementById('archive-section');
+  var authorEl  = document.getElementById('archive-author');
+  var yearEl    = document.getElementById('archive-year');
+  var monthEl   = document.getElementById('archive-month');
+  var topicEl   = document.getElementById('archive-topic');
+  var clearBtn  = document.getElementById('archive-clear');
+  var countEl   = document.getElementById('archive-count');
+  var emptyEl   = document.getElementById('archive-empty');
+  var listEl    = document.getElementById('archive-list');
+  var entries   = Array.from(document.querySelectorAll('.archive-entry'));
+  var groups    = Array.from(document.querySelectorAll('.archive-group'));
+  var total     = entries.length;
+
+  // ── Populate dropdowns from data ──────────────────────────────
+  var unique = function (arr) {
+    return Array.from(new Set(arr)).filter(Boolean).sort(function (a, b) { return a.localeCompare(b); });
+  };
+
+  var sections = unique(entries.map(function (e) { return e.dataset.section; }));
+  sections.forEach(function (s) {
+    var opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = s;
+    sectionEl.appendChild(opt);
+  });
+
+  var authorMap = {};
+  entries.forEach(function (e) {
+    if (e.dataset.author) authorMap[e.dataset.author] = e.dataset.authorName;
+  });
+  Object.keys(authorMap).sort(function (a, b) {
+    return authorMap[a].localeCompare(authorMap[b]);
+  }).forEach(function (slug) {
+    var opt = document.createElement('option');
+    opt.value = slug;
+    opt.textContent = authorMap[slug];
+    authorEl.appendChild(opt);
+  });
+
+  var years = unique(entries.map(function (e) { return e.dataset.year; })).sort(function (a, b) { return b - a; });
+  years.forEach(function (y) {
+    var opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    yearEl.appendChild(opt);
+  });
+
+  // ── Year-jump navigation ──────────────────────────────────────
+  function getScrollOffset() {
+    var masthead = document.querySelector('.masthead');
+    var toolbar  = document.querySelector('.archive-toolbar');
+    return (masthead ? masthead.offsetHeight : 0) + (toolbar ? toolbar.offsetHeight : 0) + 16;
+  }
+
+  function scrollToYear(year) {
+    var target = document.querySelector('[data-group-date^="' + year + '"]:not([hidden])') ||
+                 document.querySelector('[data-group-date^="' + year + '"]');
+    if (!target) return;
+    var top = target.getBoundingClientRect().top + window.scrollY - getScrollOffset();
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  if (years.length >= 2) {
+    var nav = document.createElement('nav');
+    nav.className = 'archive-year-nav';
+    nav.setAttribute('aria-label', 'Jump to year');
+    var label = document.createElement('span');
+    label.textContent = 'Jump to:';
+    nav.appendChild(label);
+    years.forEach(function (y, i) {
+      if (i > 0) {
+        var sep = document.createElement('span');
+        sep.className = 'archive-year-nav__sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '·';
+        nav.appendChild(sep);
+      }
+      var btn = document.createElement('button');
+      btn.className = 'archive-year-nav__btn';
+      btn.dataset.year = y;
+      btn.textContent = y;
+      btn.addEventListener('click', function () { scrollToYear(this.dataset.year); });
+      nav.appendChild(btn);
+    });
+    listEl.parentNode.insertBefore(nav, listEl);
+  }
+
+  // ── Active select state ───────────────────────────────────────
+  function updateSelectStates() {
+    [sectionEl, authorEl, yearEl, monthEl].forEach(function (el) {
+      el.classList.toggle('archive-select--active', el.value !== '');
+    });
+  }
+
+  // ── Update count display ──────────────────────────────────────
+  function updateCount(visible) {
+    if (visible === total) {
+      countEl.textContent = total + ' article' + (total !== 1 ? 's' : '');
+    } else {
+      countEl.textContent = 'Showing ' + visible + ' of ' + total + ' article' + (total !== 1 ? 's' : '');
+    }
+  }
+
+  // Sync Showcase / Timeline hrefs in the archive header so the
+  // alternate views always reflect the current filter state. Search
+  // (?q=) is omitted — neither view supports free-text filtering.
+  var viewLinks = document.querySelectorAll('.archive-header .archive-views__btn');
+  function updateViewLinks() {
+    if (!viewLinks.length) return;
+    var p = new URLSearchParams();
+    if (sectionEl.value) p.set('section', sectionEl.value.toLowerCase());
+    if (authorEl.value)  p.set('author',  authorEl.value);
+    if (yearEl.value)    p.set('year',    yearEl.value);
+    if (monthEl.value)   p.set('month',   monthEl.value);
+    if (topicEl && topicEl.value) p.set('topic', topicEl.value);
+    var qs = p.toString();
+    viewLinks.forEach(function (a) {
+      var base = a.getAttribute('href').split('?')[0];
+      a.setAttribute('href', base + (qs ? '?' + qs : ''));
+    });
+  }
+
+  // ── URL state persistence ─────────────────────────────────────
+  // Filters mirror to ?q=&section=&author=&year=&month=&topic= so the
+  // view is shareable and survives browser back/forward. Hydrated on
+  // load below.
+  function writeUrlState() {
+    var p = new URLSearchParams();
+    var q = searchEl.value.trim();
+    if (q)              p.set('q', q);
+    if (sectionEl.value) p.set('section', sectionEl.value);
+    if (authorEl.value)  p.set('author', authorEl.value);
+    if (yearEl.value)    p.set('year', yearEl.value);
+    if (monthEl.value)   p.set('month', monthEl.value);
+    if (topicEl && topicEl.value) p.set('topic', topicEl.value);
+    var qs = p.toString();
+    var next = location.pathname + (qs ? '?' + qs : '') + location.hash;
+    history.replaceState(null, '', next);
+  }
+  function readUrlState() {
+    var p = new URLSearchParams(location.search);
+    if (p.has('q'))       searchEl.value  = p.get('q');
+    if (p.has('section')) sectionEl.value = p.get('section');
+    if (p.has('author'))  authorEl.value  = p.get('author');
+    if (p.has('year'))    yearEl.value    = p.get('year');
+    if (p.has('month'))   monthEl.value   = p.get('month');
+    if (p.has('topic') && topicEl) topicEl.value = p.get('topic');
+  }
+
+  // ── Core filter function ──────────────────────────────────────
+  function applyFilters(skipUrl) {
+    var q       = searchEl.value.trim().toLowerCase();
+    var section = sectionEl.value;
+    var author  = authorEl.value;
+    var year    = yearEl.value;
+    var month   = monthEl.value;
+    var topic   = topicEl ? topicEl.value : '';
+
+    var anyActive = q || section || author || year || month || topic;
+    clearBtn.hidden = !anyActive;
+    updateSelectStates();
+
+    var visible = 0;
+
+    entries.forEach(function (entry) {
+      var show = true;
+      if (q && !entry.dataset.title.includes(q) && !entry.dataset.desc.includes(q)) show = false;
+      if (section && entry.dataset.section !== section) show = false;
+      if (author  && entry.dataset.author  !== author)  show = false;
+      if (year    && entry.dataset.year    !== year)     show = false;
+      if (month   && entry.dataset.month   !== month)    show = false;
+      if (topic) {
+        // Tags are stored as |topic|topic|topic| so substring match
+        // around the | sentinel ensures partial-name collisions
+        // (e.g. "ar" ≠ "art") never produce false positives.
+        var t = entry.dataset.tags || '';
+        if (t.indexOf('|' + topic + '|') === -1) show = false;
+      }
+      entry.hidden = !show;
+      if (show) visible++;
+    });
+
+    groups.forEach(function (group) {
+      var anyVisible = group.querySelectorAll('.archive-entry:not([hidden])').length > 0;
+      group.hidden = !anyVisible;
+    });
+
+    updateCount(visible);
+    emptyEl.hidden = visible > 0;
+    updateViewLinks();
+    if (!skipUrl) writeUrlState();
+  }
+
+  // ── Event listeners ───────────────────────────────────────────
+  var searchTimer;
+  searchEl.addEventListener('input', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyFilters, 200);
+  });
+
+  [sectionEl, authorEl, yearEl, monthEl, topicEl].forEach(function (el) {
+    if (el) el.addEventListener('change', applyFilters);
+  });
+
+  clearBtn.addEventListener('click', archiveClearAll);
+
+  // ── Keyboard shortcut: / focuses search ──────────────────────
+  document.addEventListener('keydown', function (e) {
+    var tag = document.activeElement ? document.activeElement.tagName : '';
+    if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+      e.preventDefault();
+      searchEl.focus();
+      searchEl.select();
+    }
+  });
+
+  // ── Global clear (also called from empty-state button) ───────
+  window.archiveClearAll = function () {
+    searchEl.value = '';
+    sectionEl.value = '';
+    authorEl.value = '';
+    yearEl.value = '';
+    monthEl.value = '';
+    if (topicEl) topicEl.value = '';
+    applyFilters();
+  };
+
+  // ── Init ─────────────────────────────────────────────────────
+  updateCount(total);
+  updateSelectStates();
+  // Hydrate filters from the URL and run once. skipUrl avoids rewriting
+  // the URL to an identical value on the first paint.
+  readUrlState();
+  if (searchEl.value || sectionEl.value || authorEl.value || yearEl.value || monthEl.value || (topicEl && topicEl.value)) {
+    applyFilters(true);
+  }
+  // Back/forward should re-sync the filters to match the restored URL.
+  window.addEventListener('popstate', function () {
+    readUrlState();
+    applyFilters(true);
+  });
+})();
+</script>

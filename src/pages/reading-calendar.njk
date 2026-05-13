@@ -1,0 +1,37 @@
+---
+layout: base
+title: Reading calendar
+description: A personal calendar of the articles you've read, drawn from this device's local reading history.
+permalink: /reading-calendar/
+---
+<main class="container reading-cal" data-pagefind-ignore>
+
+  <header class="reading-cal__header">
+    <p class="reading-cal__kicker">Reader tools</p>
+    <h1 class="reading-cal__title">Reading calendar</h1>
+    <p class="reading-cal__lede">
+      The articles you&rsquo;ve read, by date. Switch between day,
+      week, month, and year views &mdash; click any day in the grid
+      to drill in. Drawn entirely from this device&rsquo;s local
+      history; no account, no server.
+    </p>
+  </header>
+
+  <div class="reading-cal__summary" id="reading-cal-summary"></div>
+
+  <div id="reading-cal-mount" class="cal-mount" aria-live="polite">
+    <p class="cal-loading">Loading your reading history&hellip;</p>
+  </div>
+
+  {% include "partials/calendar-data.njk" %}
+
+  <noscript>
+    <p class="cal-noscript">
+      The reading calendar reads your local history with JavaScript.
+      Without JS the calendar can&rsquo;t render.
+    </p>
+  </noscript>
+
+</main>
+
+<script src="/assets/js/calendar-shared.js?v={{ buildTime }}" defer></script>

@@ -1,0 +1,83 @@
+---
+layout: base
+title: "Suggest a Community"
+description: Know a freethought community, group, or organization that should be listed? Tell us about it.
+permalink: /community/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/community/">Community</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Suggest a Community</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Suggest a Community</h1>
+      <p class="page-header__lede">
+        Know a freethought group, secular organization, or online community we should list? We review every suggestion.
+      </p>
+    </header>
+
+    <div class="article-body">
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Community suggestion, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Community Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="cm-name">Organization or group name <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="organization" id="cm-name" required aria-required="true" placeholder="e.g. Sunday Assembly">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="cm-url">Website <span class="w3f__optional">(optional)</span></label>
+          <input class="w3f__input" type="url" name="website" id="cm-url" placeholder="https://...">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="cm-type">Type <span class="w3f__optional">(optional)</span></label>
+            <select class="w3f__input" name="type" id="cm-type">
+              <option value="">Select...</option>
+              <option>National organization</option>
+              <option>International organization</option>
+              <option>Local group / meetup</option>
+              <option>Online community</option>
+              <option>Student group</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="cm-location">Location or region <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="location" id="cm-location" placeholder="e.g. United States, Global, Online">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="cm-desc">Brief description <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="cm-desc-hint">What does this group do? Who is it for?</span>
+          <textarea class="w3f__textarea" name="description" id="cm-desc" rows="3" required aria-required="true" aria-describedby="cm-desc-hint" maxlength="1000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="cm-sname">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="cm-sname" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="cm-email">Email <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="email" name="email" id="cm-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Suggestion</button>
+      </form>
+    </div>
+  </div>
+</div>

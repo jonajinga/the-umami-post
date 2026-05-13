@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  {# ── Title ── #}
+  <title>{% if title %}{{ title }}, {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+  {# ── Meta Description ── #}
+  <meta name="description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+
+  {# ── Open Graph ── #}
+  <meta property="og:type" content="{% if layout == 'article' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  {# OG image: explicit front-matter image wins; article pages fall back to auto-generated card (PNG for social, SVG as secondary) #}
+  {% if image %}
+    <meta property="og:image" content="{{ site.url }}{{ image }}">
+  {% elif section %}
+    <meta property="og:image" content="{{ site.url }}/og/{{ page.url | ogSlug }}.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+  {% endif %}
+
+  {# ── Twitter Card ── #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+  {% if section %}
+  <meta name="twitter:image" content="{{ site.url }}/og/{{ page.url | ogSlug }}.png">
+  {% endif %}
+
+  {# ── Canonical ── #}
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+  {# ── IndieWeb identity + Webmentions ──
+     rel=me links out to profiles that link back (verified two-way) so
+     IndieLogin / IndieAuth can authenticate the domain. webmention and
+     pingback tell other sites where to send mentions for this page. #}
+  {% if site.indieweb and site.indieweb.me %}
+    {% for me in site.indieweb.me %}
+  <link rel="me" href="{{ me }}">
+    {% endfor %}
+  {% endif %}
+  {% if site.webmention and site.webmention.endpoint %}
+  <link rel="webmention" href="{{ site.webmention.endpoint }}">
+  {% endif %}
+  {% if site.webmention and site.webmention.pingback %}
+  <link rel="pingback" href="{{ site.webmention.pingback }}">
+  {% endif %}
+
+  {# ── RSS Feeds ── #}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
+  {% if authorSlug %}
+  <link rel="alternate" type="application/rss+xml" title="{{ title }}, {{ site.title }}" href="{{ site.url }}/feeds/{{ authorSlug }}.xml">
+  {% endif %}
+
+  {# ── Favicon — light + dark variants via prefers-color-scheme ── #}
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#E8E4DC" media="(prefers-color-scheme: dark)">
+
+  {# ── Resource Hints ── #}
+  <link rel="dns-prefetch" href="https://fonts.bunny.net">
+  <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+
+  {# ── Font woff2 preloads, DM Sans + Source Serif 4 regular + Lora 700
+       (the article headline weight) to prevent FOUC / FOIT on the
+       article title during cold loads + SPA-nav swaps ── #}
+  <link rel="preload" href="https://fonts.bunny.net/dm-sans/files/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.bunny.net/source-serif-4/files/source-serif-4-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.bunny.net/lora/files/lora-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  {# ── Fonts (async, non-render-blocking) ── #}
+  <link rel="preload" href="{{ site.fontsUrl }}" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ site.fontsUrl }}" crossorigin></noscript>
+
+  {# ── Critical CSS: tokens + body baseline, inlined to prevent FOUC while main.css loads async ── #}
+  <style>:root{--color-bg:#F4F1EB;--color-bg-alt:#EAE6DE;--color-bg-inset:#E0DBCF;--color-ink:#1A1A1A;--color-ink-muted:#4A4845;--color-ink-faint:#5E5856;--color-rule:#C8C2B6;--color-rule-heavy:#8A847A;--color-accent:#C0392B;--color-link:#2C5F8A;--color-selection:#6A1B9A;--color-selection-ink:#fff;--font-masthead:'Playfair Display',Georgia,serif;--font-headline:'Lora',Georgia,serif;--font-body:'Source Serif 4',Georgia,serif;--font-ui:'DM Sans',system-ui,sans-serif}[data-theme="dark"]{--color-bg:#141414;--color-bg-alt:#1E1E1E;--color-bg-inset:#252525;--color-ink:#E8E4DC;--color-ink-muted:#A8A49C;--color-ink-faint:#9E9A96;--color-rule:#303030;--color-rule-heavy:#484440;--color-accent:#E05545;--color-link:#6B9EC7}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#141414;--color-bg-alt:#1E1E1E;--color-bg-inset:#252525;--color-ink:#E8E4DC;--color-ink-muted:#A8A49C;--color-ink-faint:#9E9A96;--color-rule:#303030;--color-rule-heavy:#484440;--color-accent:#E05545;--color-link:#6B9EC7}}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{color-scheme:light dark}body{background:var(--color-bg);color:var(--color-ink);font-family:var(--font-body)}.site-wrapper{min-height:100vh;display:flex;flex-direction:column}</style>
+
+  {# ── Styles ── #}
+  <link rel="stylesheet" href="/assets/css/main.css?v={{ buildTime }}">
+
+  {# ── Theme: removed external script, inlined below after __PREFIX is set ── #}
+
+  {# ── BreadcrumbList structured data ── #}
+  {% if page.url != "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" },
+      { "@type": "ListItem", "position": 2, "name": "{% if title %}{{ title }}{% else %}Page{% endif %}", "item": "{{ site.url }}{{ page.url }}" }
+    ]
+  }
+  </script>
+  {% endif %}
+
+  {# ── Site prefix for localStorage keys ── #}
+  <script>window.__PREFIX='{{ site.storagePrefix }}';{% if site.repo %}window.__repo={owner:"{{ site.repo.owner }}",name:"{{ site.repo.name }}",branch:"{{ site.repo.branch | default('main') }}"};{% endif %}</script>
+
+  {# ── Theme: inlined to prevent FOUC without a render-blocking network request ── #}
+  <script>(function(){'use strict';var STORAGE_KEY=(window.__PREFIX||'tft')+'-theme';var root=document.documentElement;function getSystemTheme(){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}function getStoredTheme(){try{return localStorage.getItem(STORAGE_KEY);}catch{return null;}}function applyTheme(theme){root.setAttribute('data-theme',theme);root.classList.add('js-enabled');}applyTheme(getStoredTheme()||getSystemTheme());try{var bg=localStorage.getItem((window.__PREFIX||'tft')+'-gs-bg');if(bg&&bg!=='default')root.setAttribute('data-gs-bg',bg);var gsFont=localStorage.getItem((window.__PREFIX||'tft')+'-gs-font');if(gsFont&&gsFont!=='default'){root.setAttribute('data-gs-font',gsFont);var wf={inter:'inter:wght@400;600;700',merriweather:'merriweather:wght@400;700',roboto:'roboto:wght@400;700',opensans:'open-sans:wght@400;600;700',baskerville:'libre-baskerville:wght@400;700',crimson:'crimson-pro:wght@400;600;700',ibmplex:'ibm-plex-serif:wght@400;600;700',literata:'literata:wght@400;600;700',atkinson:'atkinson-hyperlegible:wght@400;700'};if(wf[gsFont]){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.bunny.net/css?family='+wf[gsFont]+'&display=swap';document.head.appendChild(l);}}var gsFontSize=localStorage.getItem((window.__PREFIX||'tft')+'-gs-font-size');if(gsFontSize&&parseInt(gsFontSize)>0)root.style.fontSize=gsFontSize+'px';var gsSpacing=localStorage.getItem((window.__PREFIX||'tft')+'-gs-spacing');if(gsSpacing&&gsSpacing!=='normal'){var map={tight:'1.3',relaxed:'1.8'};if(map[gsSpacing])root.style.lineHeight=map[gsSpacing];}var gsWordspace=localStorage.getItem((window.__PREFIX||'tft')+'-gs-wordspace');if(gsWordspace&&gsWordspace!=='normal'){var wsMap={wide:'0.12em',wider:'0.25em'};if(wsMap[gsWordspace])root.style.wordSpacing=wsMap[gsWordspace];}}catch(e){}document.addEventListener('DOMContentLoaded',function(){var btn=document.getElementById('theme-toggle');if(!btn)return;function updateButton(theme){btn.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');}updateButton(root.getAttribute('data-theme'));btn.addEventListener('click',function(){var current=root.getAttribute('data-theme');var next=current==='dark'?'light':'dark';applyTheme(next);try{localStorage.setItem(STORAGE_KEY,next);}catch{}updateButton(next);});window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!getStoredTheme()){var theme=e.matches?'dark':'light';applyTheme(theme);updateButton(theme);}});});})();</script>
+
+  {# ── OG Article properties (article pages only) ── #}
+  {% if section %}
+  <meta property="article:published_time" content="{{ page.date | isoDate }}">
+  {% if lastUpdated %}<meta property="article:modified_time" content="{{ lastUpdated | isoDate }}">{% endif %}
+  {% if author %}<meta property="article:author" content="{{ site.url }}/author/{{ author | slugify }}/">{% endif %}
+  <meta property="article:section" content="{{ section }}">
+  {% for tag in tags %}<meta property="article:tag" content="{{ tag }}">
+  {% endfor %}
+  {% endif %}
+
+  {% block head %}{% endblock %}
+</head>
+
+<body data-page-url="{{ page.url }}"{% if page.url == "/" %} class="is-home"{% endif %}>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="site-wrapper">
+
+    {# Announcement banner moved into partials/header.njk so it
+       sits between the section nav and the quote bar, reading as
+       publication-state chrome rather than a top-of-page strip. #}
+
+    {# ── Breaking Banner (conditional, per-page front-matter) ── #}
+    {% if breaking %}
+    <div class="breaking-banner" role="alert">
+      <span>Breaking: </span><a href="{{ breaking.url }}">{{ breaking.text }}</a>
+    </div>
+    {% endif %}
+
+    {# ── Masthead ── #}
+    {% include "partials/header.njk" %}
+
+    {# ── Sitewide breadcrumbs strip ──
+       Auto-generates from page.url. Suppresses on the home page and
+       any page that opts out via `hideBreadcrumbs: true` in front
+       matter. Renders as its own bar with thin rule borders, separate
+       from the main content. #}
+    {% include "partials/breadcrumbs.njk" %}
+
+    {# ── Main Content ── #}
+    <main id="main-content" class="site-main">
+      {{ content | safe }}
+    </main>
+
+    {# ── Sitewide disclosure panels — render INSIDE the main content
+         area so they open inline above the footer rather than below
+         it when toggled from a footer / hero / non-article surface.
+         The funding panel is the publication-wide one; author-support
+         only renders when there's an author context (article page or
+         author page). On article pages, article.njk includes its own
+         versions inline next to the byline, which take precedence
+         (closer to the trigger = nicer scroll target). #}
+    {% if not author %}
+    <div class="sitewide-disclosures">
+      {% include "partials/funding.njk" %}
+      {% if authorSlug %}
+      {% set author = authorSlug %}
+      {% include "partials/author-support.njk" %}
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {# ── Footer ── #}
+    {% include "partials/footer.njk" %}
+
+    {# ── Global audio bar (TTS playback while reader browses) ── #}
+    {% include "partials/audio-bar.njk" %}
+
+    <script>
+      // Inline disclosures — toggle hidden + scroll the panel into
+      // view in the same page. Mutual exclusion across all panels on
+      // the page so opening one closes the rest.
+      window.toggleArticleDisclosure = function (btn) {
+        var id = btn.getAttribute('aria-controls');
+        if (!id) return;
+        var panel = document.getElementById(id);
+        if (!panel) return;
+        var willOpen = panel.hasAttribute('hidden');
+        document.querySelectorAll('[data-article-disclosure]').forEach(function (p) {
+          if (!p.hasAttribute('hidden')) p.setAttribute('hidden', '');
+          var t = document.querySelector('[aria-controls="' + p.id + '"][aria-expanded="true"]');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
+        if (willOpen) {
+          panel.removeAttribute('hidden');
+          btn.setAttribute('aria-expanded', 'true');
+          // Inline panels (funding / author-support) live in document
+          // flow — scroll them into view. Fullscreen modal variants
+          // (e.g. .republish--modal) are position:fixed and don't
+          // need scrolling — they already cover the viewport.
+          var isFixedModal = panel.classList.contains('republish--modal');
+          if (!isFixedModal) {
+            var rect = panel.getBoundingClientRect();
+            var top = rect.top + window.scrollY - 80;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+          if (typeof panel.focus === 'function') {
+            panel.setAttribute('tabindex', '-1');
+            try { panel.focus({ preventScroll: true }); } catch (e) {}
+          }
+        }
+      };
+    </script>
+
+  </div>{# /.site-wrapper #}
+
+  {# ── Reading floats (back-to-top + % through) — site-wide ── #}
+  {# aria-hidden removed: the back-to-top button inside is focusable, so
+     hiding the wrapper from assistive tech while leaving the button in
+     the tab order was a Lighthouse a11y failure. Visibility is handled
+     in CSS via visibility: hidden, which removes the button from both
+     the tab order and the accessibility tree until is-visible is set. #}
+  {# Reading-floats: rendered globally on non-reading pages. Reading
+     pages (article / library / glossary-term / book-entry) emit the
+     same markup directly inside their annotation-toolbar slots, so
+     we suppress the duplicate here to avoid double IDs. #}
+  {% if not isReadingPage %}
+  <div class="reading-floats" id="reading-floats">
+    <span class="reading-pct" id="reading-pct"></span>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <polyline points="5 11 12 4 19 11"/>
+      </svg>
+    </button>
+  </div>
+  {% endif %}
+
+  {# ── Scripts ── #}
+  <script src="/assets/js/drawer.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/progress.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/paragraph-anchors.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/pdf-viewer.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/smart-header.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/search.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/subscribe.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/global-settings.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/spa-nav.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/music-player.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/audio-bar.js?v={{ buildTime }}" defer></script>
+  {# Notes page uses localStorage; load it sitewide so the IIFE
+     stays alive across SPA-nav and binds to #notes-page-root the
+     moment the /notes/ page swaps in. Without this, /notes/
+     only worked on hard refresh. #}
+  <script src="/assets/js/notes-page.js?v={{ buildTime }}" defer></script>
+  {% if isEditorial %}
+  <script src="/assets/js/editorial-keyboard.js?v={{ buildTime }}" defer></script>
+  {% endif %}
+  {% block scripts %}{% endblock %}
+
+  {# ── Glossary tooltips (Tippy.js) ── #}
+  <script>
+  window.__glossaryTerms=[{% for entry in collections.glossary %}{ term:"{{ entry.data.title | escape }}", def:"{{ entry.data.description | escape }}", url:"{{ entry.url }}" }{% if not loop.last %},{% endif %}{% endfor %}];
+  </script>
+  <script src="/assets/js/popper.min.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/tippy.min.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/glossary-tips.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/author-bio-tippy.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/badge-tips.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/footer-tips.js?v={{ buildTime }}" defer></script>
+
+  {# ── Revision history (opt-in via site.repo config) ── #}
+  {% if site.repo and site.repo.owner %}
+  <script src="/assets/js/revision-history.js?v={{ buildTime }}" defer></script>
+  {% endif %}
+
+  {# ── Reader panel migration, re-parents article action buttons into the panel ── #}
+  <script src="/assets/js/reader-panel-migrate.js?v={{ buildTime }}" defer></script>
+
+  {# ── Reader panel tab populators, Footnotes / Cite render lazily into their tabs ── #}
+  <script src="/assets/js/footnotes.js?v={{ buildTime }}" defer></script>
+  <script src="/assets/js/cite-inline.js?v={{ buildTime }}" defer></script>
+
+  {# ── Keyboard shortcuts for power readers ── #}
+  <script src="/assets/js/keyboard-shortcuts.js?v={{ buildTime }}" defer></script>
+
+  {# ── Per-article reading progress tracking + card indicators ── #}
+  <script src="/assets/js/reading-progress.js?v={{ buildTime }}" defer></script>
+
+  {# ── Manual mark-as-read toggle + reading history ── #}
+  <script src="/assets/js/read-state.js?v={{ buildTime }}" defer></script>
+
+  {# ── Like / heart button ── #}
+  <script src="/assets/js/like-btn.js?v={{ buildTime }}" defer></script>
+
+  {# ── PDF basket: collect articles, print as one PDF ── #}
+  <script src="/assets/js/pdf-basket.js?v={{ buildTime }}" defer></script>
+
+  {# Article TTS now uses build-time MP3 files served via the global
+     audio bar — no client-side Kokoro / Web Speech engine. tts.js
+     is intentionally not loaded here; the toolbar Listen button is
+     a [data-tft-audio-trigger] that routes through audio-bar.js. #}
+
+  {# ── hCaptcha + dictation for Web3Forms pages ── #}
+  {% if site.forms and site.forms.accessKey %}
+  <script src="https://web3forms.com/client/script.js" async defer></script>
+  <script src="/assets/js/dictation.js?v={{ buildTime }}" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.w3f').forEach(function(f){
+      f.addEventListener('submit',function(){
+        var btn=f.querySelector('.w3f__submit');
+        if(btn){btn.disabled=true;btn.textContent='Submitting\u2026';}
+      });
+    });
+  });
+  </script>
+  {% endif %}
+
+  {# ── Data Export/Import ── #}
+  <script>
+  (function(){
+    var eb=document.getElementById('data-export-btn');
+    var ib=document.getElementById('data-import-btn');
+    if(eb)eb.addEventListener('click',function(){
+      var d={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k)d[k]=localStorage.getItem(k);}
+      var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+      var u=URL.createObjectURL(b);var a=document.createElement('a');
+      a.href=u;a.download='tft-backup.json';a.click();URL.revokeObjectURL(u);
+    });
+    if(ib)ib.addEventListener('click',function(){
+      var i=document.createElement('input');i.type='file';i.accept='.json';
+      i.onchange=function(){var r=new FileReader();r.onload=function(){
+        try{var d=JSON.parse(r.result);Object.keys(d).forEach(function(k){localStorage.setItem(k,d[k]);});
+        alert('Imported '+Object.keys(d).length+' items.');}catch(e){alert('Invalid file.');}
+      };r.readAsText(i.files[0]);};i.click();
+    });
+  })();
+  </script>
+
+  {# ── Service Worker Registration ── #}
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+
+  {# ── GTranslate (dropdown, renders inside nav drawer) ── #}
+  {% if site.gtranslate %}
+  <script>
+    window.gtranslateSettings = {
+      "default_language": "{{ site.language }}",
+      "languages": ["en","af","sq","am","ar","hy","az","eu","be","bn","bs","bg","ca","ceb","zh-CN","zh-TW","co","hr","cs","da","nl","eo","et","fi","fr","fy","gl","ka","de","el","gu","ht","ha","haw","he","hi","hmn","hu","is","ig","id","ga","it","ja","jv","kn","kk","km","rw","ko","ku","ky","lo","la","lv","lt","lb","mk","mg","ms","ml","mt","mi","mr","mn","my","ne","no","ny","or","ps","fa","pl","pt","pa","ro","ru","sm","gd","sr","st","sn","sd","si","sk","sl","so","es","su","sw","sv","tl","tg","ta","tt","te","th","tr","tk","uk","ur","ug","uz","vi","cy","xh","yi","yo","zu"],
+      "wrapper_selector": ".gtranslate_wrapper",
+      "flag_size": 20,
+      "flag_style": "3d",
+      "alt_flags": { "en": "usa" }
+    };
+  </script>
+  <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+  {% endif %}
+
+  {# ── Analytics ── #}
+  {% if site.analytics and site.analytics.websiteId %}
+  <script defer src="{{ site.analytics.scriptUrl }}" data-website-id="{{ site.analytics.websiteId }}"></script>
+  {% endif %}
+
+  {# ── Instant Page (prefetch on hover), loaded last so it never touches the critical path ── #}
+  <script src="/assets/js/instant.page.js?v={{ buildTime }}" type="module"></script>
+</body>
+</html>

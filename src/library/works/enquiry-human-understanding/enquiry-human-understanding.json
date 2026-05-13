@@ -1,0 +1,18 @@
+{
+  "workSlug": "enquiry-human-understanding",
+  "workTitle": "An Enquiry Concerning Human Understanding",
+  "author": "David Hume",
+  "authorSlug": "david-hume",
+  "authorDates": "1711–1776",
+  "originalPublication": 1748,
+  "originalLanguage": "English",
+  "translator": null,
+  "edition": "Project Gutenberg edition",
+  "source": "Project Gutenberg",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/9662",
+  "type": "treatise",
+  "subjects": ["Philosophy", "Epistemology", "Science", "Religion"],
+  "difficulty": "Intermediate",
+  "era": "18th Century",
+  "shortWork": false
+}

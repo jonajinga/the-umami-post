@@ -1,0 +1,315 @@
+---
+layout: base
+title: "Sitemap"
+description: A complete directory of everything on The Freethinking Times.
+permalink: /site-map/
+---
+
+<style>
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+    font-family: var(--font-ui);
+  }
+  .sitemap-section {
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-md);
+    align-self: start;
+  }
+  .sitemap-section summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-headline);
+    font-size: var(--text-md);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-fast);
+  }
+  .sitemap-section summary > .sitemap-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sitemap-section summary:hover {
+    color: var(--color-link);
+  }
+  .sitemap-section[open] > summary {
+    border-bottom-color: var(--color-ink);
+  }
+  .sitemap-section summary::after {
+    content: '+';
+    font-size: var(--text-lg);
+    font-weight: 400;
+    color: var(--color-ink-faint);
+    transition: transform var(--transition-fast);
+    line-height: 1;
+  }
+  .sitemap-section[open] > summary::after {
+    content: '\2212';
+  }
+  .sitemap-section summary::-webkit-details-marker,
+  .sitemap-section summary::marker {
+    display: none;
+    content: '';
+  }
+  .sitemap-section ul {
+    list-style: none;
+    padding: var(--space-2) var(--space-4) var(--space-4);
+    margin: 0;
+  }
+  .sitemap-section li {
+    padding: var(--space-1) 0;
+  }
+  .sitemap-section a {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+  }
+  .sitemap-section a:hover {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+  .sitemap-section .sub {
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+    padding-left: var(--space-4);
+  }
+  .sitemap-section .sub:hover {
+    color: var(--color-link);
+  }
+  .sitemap-count {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-ink-faint);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 2ch;
+    text-align: right;
+    flex-shrink: 0;
+  }
+</style>
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Sitemap</h1>
+    <p class="page-header__lede">
+      A complete guide to everything on this site. Click any section to expand it.
+    </p>
+  </header>
+
+  <div class="sitemap-grid">
+
+    {# ── Editorial Sections ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Editorial Sections</span><span class="sitemap-count">11</span></summary>
+      <ul>
+        <li><a href="/news/">News</a></li>
+        <li><a href="/opinion/">Opinion</a></li>
+        <li><a href="/analysis/">Analysis</a></li>
+        <li><a href="/arts-culture/">Arts & Culture</a></li>
+        <li><a href="/science-technology/">Science & Technology</a></li>
+        <li><a href="/history/">History</a></li>
+        <li><a href="/letters/">Letters</a></li>
+        <li><a href="/reviews/">Reviews</a></li>
+        <li><a href="/archives/">Archives</a></li>
+        <li><a href="/editions/">Editions</a></li>
+        <li><a href="/topics/">Topics</a></li>
+      </ul>
+    </details>
+
+    {# ── Library & Reference ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Library & Reference</span><span class="sitemap-count">10</span></summary>
+      <ul>
+        <li><a href="/library/">Public Domain Library</a></li>
+        <li><a href="/library/subjects/" class="sub">Browse by Subject</a></li>
+        <li><a href="/library/authors/" class="sub">Browse by Author</a></li>
+        <li><a href="/glossary/">Glossary of Terms</a></li>
+        <li><a href="/glossary/showcase/" class="sub">Glossary Showcase</a></li>
+        <li><a href="/bookshelf/">Recommended Freethought Reading</a></li>
+        <li><a href="/bookshelf/timeline/" class="sub">Bookshelf Timeline</a></li>
+        <li><a href="/bookshelf/showcase/" class="sub">Bookshelf Showcase</a></li>
+        <li><a href="/resources/">Resources</a></li>
+        <li><a href="/resources/education/" class="sub">Education</a></li>
+        <li><a href="/resources/legal/" class="sub">Legal Rights</a></li>
+        <li><a href="/resources/support/" class="sub">Personal Support</a></li>
+        <li><a href="/resources/tools/" class="sub">Media & Tools</a></li>
+      </ul>
+    </details>
+
+    {# ── Timelines & Showcases ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Timelines & Showcases</span><span class="sitemap-count">11</span></summary>
+      <ul>
+        <li><a href="/timeline/">Historical Timeline</a></li>
+        <li><a href="/timeline/showcase/" class="sub">Timeline Showcase</a></li>
+        <li><a href="/quotes/">Quotes Collection</a></li>
+        <li><a href="/quotes/timeline/" class="sub">Quotes Timeline</a></li>
+        <li><a href="/quotes/showcase/" class="sub">Quotes Showcase</a></li>
+        <li><a href="/thought-experiments/">Thought Experiments</a></li>
+        <li><a href="/thought-experiments/showcase/" class="sub">Thought Experiments Showcase</a></li>
+        <li><a href="/trials/">Trials of Thought</a></li>
+        <li><a href="/trials/timeline/" class="sub">Trials Timeline</a></li>
+        <li><a href="/trials/showcase/" class="sub">Trials Showcase</a></li>
+        <li><a href="/projects/">All Projects</a></li>
+      </ul>
+    </details>
+
+    {# ── Media ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Media</span><span class="sitemap-count">4</span></summary>
+      <ul>
+        <li><a href="/videos/">Video Library</a></li>
+        <li><a href="/music/">Freethought Music</a></li>
+        <li><a href="/gallery/">Photo Gallery</a></li>
+        <li><a href="/games/">Games</a></li>
+        <li><a href="/language/">Language</a></li>
+      </ul>
+    </details>
+
+    {# ── Freethought Community ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Freethought Community</span><span class="sitemap-count">6</span></summary>
+      <ul>
+        <li><a href="/community/">Community Directory</a></li>
+        <li><a href="/events/">Events Calendar</a></li>
+        <li><a href="/community-guidelines/">Community Guidelines</a></li>
+        <li><a href="/newsletter/">Newsletter</a></li>
+        <li><a href="/reader/">RSS Reader</a></li>
+        <li><a href="/community/submit/">Suggest a Group</a></li>
+      </ul>
+    </details>
+
+    {# ── Contribute to Our Projects ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Contribute to Our Projects</span><span class="sitemap-count">10</span></summary>
+      <ul>
+        <li><a href="/quotes/submit/">Submit a Quote</a></li>
+        <li><a href="/timeline/submit/">Submit a Timeline Entry</a></li>
+        <li><a href="/bookshelf/submit/">Recommend a Book</a></li>
+        <li><a href="/library/submit/">Suggest a Library Text</a></li>
+        <li><a href="/glossary/submit/">Suggest a Glossary Term</a></li>
+        <li><a href="/trials/submit/">Suggest a Trial</a></li>
+        <li><a href="/thought-experiments/submit/">Suggest a Thought Experiment</a></li>
+        <li><a href="/events/submit/">Submit an Event</a></li>
+        <li><a href="/gallery/submit/">Submit a Photo</a></li>
+        <li><a href="/music/submit/">Recommend a Song</a></li>
+        <li><a href="/music/playlists/submit/">Suggest a Playlist</a></li>
+      </ul>
+    </details>
+
+    {# ── Contribute ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Contribute</span><span class="sitemap-count">4</span></summary>
+      <ul>
+        <li><a href="/contribute/">Write for Us</a></li>
+        <li><a href="/submit/">Submit an Article</a></li>
+        <li><a href="/letters/submit/">Write a Letter</a></li>
+        <li><a href="/support/">Support Us</a></li>
+      </ul>
+    </details>
+
+    {# ── Contact ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Contact</span><span class="sitemap-count">4</span></summary>
+      <ul>
+        <li><a href="/contact/">Contact Us</a></li>
+        <li><a href="/feedback/">Send Feedback</a></li>
+        <li><a href="/tips/">Tip Line</a></li>
+        <li><a href="/corrections/report/">Report a Correction</a></li>
+      </ul>
+    </details>
+
+    {# ── Reader Tools ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Reader Tools</span><span class="sitemap-count">11</span></summary>
+      <ul>
+        <li><a href="/search/">Search</a></li>
+        <li><a href="/start-here/">Start Here</a></li>
+        <li><a href="/notes/">Notes & Highlights</a></li>
+        <li><a href="/reading-list/">Reading List</a></li>
+        <li><a href="/archives/">Archives</a></li>
+        <li><a href="/editions/">Editions</a></li>
+        <li><a href="/your-data/">Your Data</a></li>
+        <li><a href="/language/">Language</a></li>
+        <li><a href="/reader-tools/">All Reader Tools</a></li>
+        <li><a href="/feeds/">Feeds</a></li>
+        <li><a href="/api/">Public API</a></li>
+      </ul>
+    </details>
+
+    {# ── RSS Feeds ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">RSS Feeds</span><span class="sitemap-count">5</span></summary>
+      <ul>
+        <li><a href="/feeds/">Feeds Directory</a></li>
+        <li><a href="/feed.xml" class="sub">Whole site</a></li>
+        <li><a href="/feeds/#sections" class="sub">By section (8 feeds)</a></li>
+        <li><a href="/feeds/#authors" class="sub">By author (one per contributor)</a></li>
+        <li><a href="/feeds/#topics" class="sub">By topic (one per tag)</a></li>
+        <li><a href="/feeds/#external" class="sub">External feeds we follow</a></li>
+      </ul>
+    </details>
+
+    {# ── About ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">About</span><span class="sitemap-count">10</span></summary>
+      <ul>
+        <li><a href="/about/">About Us</a></li>
+        <li><a href="/masthead/">Masthead</a></li>
+        <li><a href="/contributors/">Contributors</a></li>
+        <li><a href="/ethics/">Editorial Ethics</a></li>
+        <li><a href="/editorial/">Editorial Handbook</a></li>
+        <li><a href="/documents/">Document Library</a></li>
+        <li><a href="/dashboard/">Editorial Dashboard</a></li>
+        <li><a href="/editorial/board/">Editorial Board</a></li>
+        <li><a href="/templates/">Content Templates</a></li>
+        <li><a href="/abbreviations/">Abbreviations</a></li>
+      </ul>
+    </details>
+
+    {# ── Transparency ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Transparency</span><span class="sitemap-count">8</span></summary>
+      <ul>
+        <li><a href="/features/">Features</a></li>
+        <li><a href="/stack/">How It's Built</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/costs/">Costs</a></li>
+        <li><a href="/corrections/">Corrections</a></li>
+        <li><a href="/open-source/">Open Source</a></li>
+        <li><a href="/style-guide/">Style Guide</a></li>
+        <li><a href="/transparency/">Transparency Hub</a></li>
+      </ul>
+    </details>
+
+    {# ── Legal ── #}
+    <details class="sitemap-section">
+      <summary><span class="sitemap-title">Legal</span><span class="sitemap-count">7</span></summary>
+      <ul>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms of Use</a></li>
+        <li><a href="/cookies/">Cookies Policy</a></li>
+        <li><a href="/accessibility/">Accessibility</a></li>
+        <li><a href="/license/">Republication License</a></li>
+        <li><a href="/legal/">Legal Hub</a></li>
+        <li><a href="/site-map/">Sitemap</a></li>
+      </ul>
+    </details>
+
+  </div>
+
+  <div style="margin-top: var(--space-10); padding-top: var(--space-6); border-top: 1px solid var(--color-rule); font-family: var(--font-ui); font-size: var(--text-xs); color: var(--color-ink-faint); display: flex; justify-content: space-between; align-items: center;">
+    <span><a href="/sitemap.xml" style="color: var(--color-link);">XML Sitemap</a> &middot; <a href="/feeds/" style="color: var(--color-link);">All Feeds</a> &middot; <a href="/feed.xml" style="color: var(--color-link);">Main RSS</a></span>
+    <button type="button" style="background:none;border:1px solid var(--color-rule);padding:var(--space-1) var(--space-3);font-size:var(--text-xs);font-family:var(--font-ui);color:var(--color-ink-muted);cursor:pointer;border-radius:var(--radius-md);" onclick="document.querySelectorAll('.sitemap-section').forEach(function(d){d.open=!d.open})">Toggle All</button>
+  </div>
+
+</div>

@@ -1,0 +1,266 @@
+---
+layout: base
+title: Features
+description: A complete list of every feature The Freethinking Times website offers, reading tools, publishing infrastructure, and reader experience.
+permalink: /features/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Features</h1>
+    <p class="page-header__lede">
+      Everything this site can do, for readers and for the publication.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#reading-experience">Reading experience</a>
+      <a href="#article-actions">Article actions</a>
+      <a href="#library">Library</a>
+      <a href="#navigation">Navigation</a>
+      <a href="#publishing">Publishing</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#infrastructure">Infrastructure</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#translation">Translation</a>
+      <a href="#contact-forms">Contact forms</a>
+      <a href="#projects">Projects</a>
+      <a href="#transparency">Transparency</a>
+      <a href="#quotes-media">Quotes & media</a>
+      <a href="#data">Data</a>
+      <a href="#open-source">Open source</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="reading-experience">Reading experience</h2>
+      <ul>
+        <li><strong>Dark / light mode</strong>, toggle in the masthead; respects system preference on first visit; preference saved to <code>localStorage</code></li>
+        <li><strong>Reading progress bar</strong>, fixed at the top of article and library pages; stops at the end of the body text</li>
+        <li><strong>Focus mode</strong>, hides the site masthead for distraction-free reading; persisted in <code>localStorage</code>; available on articles and library texts</li>
+        <li><strong>Global display settings</strong>, masthead panel with 27 font choices (system serif, sans, mono, plus Bunny web fonts loaded on demand), font size, line spacing, word spacing, and unified theme selector (Auto / Light / Sepia / Cream / Dark); preferences saved to <code>localStorage</code></li>
+        <li><strong>Article reading settings</strong>, per-article panel with 27 fonts, line spacing, text width, word spacing, reading ruler, paragraph numbers, auto-scroll with speed control, and reset to defaults; also available on library pages</li>
+        <li><strong>Reading ruler</strong>, customisable guide line: adjustable thickness (1, 8 px), 7 colour choices, 4 styles (solid, dashed, dotted, glow); fixed position on mobile; hides during text selection</li>
+        <li><strong>Glossary tooltips</strong>, glossary terms are automatically detected in article and library text and show their definition on hover via Tippy.js</li>
+        <li><strong>Table of contents</strong>, auto-generated from h2/h3 headings on article pages with scroll-spy highlighting; floating within-chapter TOC on library pages (≥1200 px screens); sticky sidebar TOC with scroll-spy on 18 long-form reference pages (Privacy, Terms, Features, Stack, Accessibility, Ethics, Cookies, About, Contribute, and more)</li>
+        <li><strong>Heading anchor links</strong>, link icon appears on hover for every h2/h3 for deep-linking to any section</li>
+        <li><strong>Back to top button</strong>, appears after scrolling 400 px on articles and library reading pages</li>
+        <li><strong>Reading percentage</strong>, shows how far through the current text you are; visible on articles and library reading pages</li>
+        <li><strong>Reading time</strong>, calculated from word count at build time; shown on every article card, article page, and library reading page</li>
+        <li><strong>Word count</strong>, displayed next to reading time on articles and library reading pages</li>
+        <li><strong>Pullquote sharing</strong>, select any text in an article body; a share button appears; shares via Web Share API or copies to clipboard</li>
+        <li><strong>Text selection colour</strong>, pansy purple, consistent with the publication's identity</li>
+      </ul>
+
+      <h2 id="article-actions">Article actions</h2>
+      <ul>
+        <li><strong>Save to reading list</strong>, bookmark any article in the browser; no account required; accessible at <a href="/reading-list/">/reading-list/</a></li>
+        <li><strong>Share</strong>, share panel with X/Twitter, Facebook, LinkedIn, Reddit, Bluesky, Mastodon, copy link, and email</li>
+        <li><strong>Download</strong>, export article as plain text (.txt) or Markdown (.md)</li>
+        <li><strong>Print</strong>, print-optimised CSS suppresses all chrome and renders clean text; works for PDF saving</li>
+        <li><strong>Cite</strong>, citation modal with APA, MLA, and Chicago formats; one-click copy for each</li>
+        <li><strong>Reader toolbar</strong>, persistent bottom bar with Highlight, Note, Bookmark, and Share actions</li>
+        <li><strong>Reader panel</strong>, slide-out panel with Contents (TOC), Highlights, Notes, Bookmarks, and Related tabs</li>
+        <li><strong>Highlight & annotate</strong>, select text and tap Highlight for a one-tap yellow wash, or tap Note to attach a rich-text note; highlights and notes persist in <code>localStorage</code></li>
+        <li><strong>Rich-text notes</strong>, WYSIWYG editor with formatting toolbar (bold, italic, lists, blockquotes, links); what you see is what gets saved</li>
+        <li><strong>Position bookmarks</strong>, save your scroll position from the reader toolbar; a placement preview rule shows exactly where the pin will land before you commit, and bookmark indicators appear in the left margin. Duplicate bookmarks at the same scroll spot are suppressed.</li>
+        <li><strong>Notes page</strong> at <a href="/notes/">/notes/</a>, all highlights, notes, and bookmarks across the site with export and import (JSON) for cross-device sync</li>
+        <li><strong>Annotation footnotes</strong>, inline tooltip footnotes via shortcode; no jump to the bottom of the page</li>
+      </ul>
+
+      <h2 id="library">Public Domain Library</h2>
+      <ul>
+        <li><strong>Library homepage</strong> at <a href="/library/">/library/</a>, featured works grid and full catalogue with subject and era filters</li>
+        <li><strong>Work landing pages</strong>, introduction, chapter list, reading progress indicators, and Continue Reading detection</li>
+        <li><strong>Chapter reader</strong>, all eight article reader tools available on library reading pages; word count, reading time, back-to-top, and reading percentage also included</li>
+        <li><strong>Library reading settings</strong>, identical to article settings: 27 fonts, line spacing, text width, word spacing, background presets, reading ruler, paragraph numbers, auto-scroll</li>
+        <li><strong>Reading panel</strong>, slide-out panel with Contents (chapter list), Bookmarks, and Notes tabs</li>
+        <li><strong>Annotation toolbar</strong>, highlight and annotate selected text; highlights and notes persist in <code>localStorage</code></li>
+        <li><strong>Reading position</strong>, scroll position saved per chapter to <code>localStorage</code>; restored on return (30-day expiry)</li>
+        <li><strong>Chapter completion</strong>, chapters marked complete at 88% scroll; progress visible on the work landing page</li>
+        <li><strong>Bookmarks</strong>, bookmark any scroll position within a chapter; listed in the reading panel</li>
+        <li><strong>Floating within-chapter TOC</strong>, auto-populated from headings with scroll-spy; visible at ≥1200 px</li>
+        <li><strong>Browse by Subject</strong> at <a href="/library/subjects/">/library/subjects/</a>, tag cloud and per-subject work listings</li>
+        <li><strong>Browse by Author</strong> at <a href="/library/authors/">/library/authors/</a>, author biographies and collected works</li>
+      </ul>
+
+      <h2 id="navigation">Navigation & discovery</h2>
+      <ul>
+        <li><strong>Full-site search</strong> via Pagefind, built at deploy time, no backend; section filter bar included</li>
+        <li><strong>Section navigation</strong>, dropdown menus per section showing recent articles</li>
+        <li><strong>More mega-dropdown</strong>, 5-column dropdown with links to every non-article section (Explore, Projects, Community, About, Reader Tools)</li>
+        <li><strong>Mobile nav drawer</strong>, sentence-case links with visual hierarchy, icon toolbar pinned to bottom, language toggle inline</li>
+        <li><strong>Surprise Me</strong>, button in the masthead that redirects to a random article</li>
+        <li><strong>Reading time filter</strong>, filter articles by All / Short reads (&lt;5 min) / Long reads (&gt;15 min) on section pages</li>
+        <li><strong>Related articles</strong>, ranked by shared tags with section fallback; accessible in the reader panel's Related tab</li>
+        <li><strong>Backlinks</strong>, each article shows other articles on the site that link to it, discovered at build time</li>
+        <li><strong>Tags / topics index</strong> at <a href="/topics/">/topics/</a></li>
+        <li><strong>Archives</strong> at <a href="/archives/">/archives/</a>, articles indexed by date</li>
+        <li><strong>Editions</strong> at <a href="/editions/">/editions/</a>, articles grouped into numbered editions; edition pages are printable with a full article text section included after the contents listing</li>
+      </ul>
+
+      <h2 id="publishing">Publishing & editorial</h2>
+      <ul>
+        <li><strong>Corrections log</strong>, articles carry corrections in front matter; aggregate view at <a href="/corrections/">/corrections/</a></li>
+        <li><strong>Suggest a correction</strong>, button in the article action bar linking to <a href="/corrections/report/">/corrections/report/</a></li>
+        <li><strong>Article series</strong>, numbered parts with previous/next navigation</li>
+        <li><strong>Inter-article response system</strong>, <code>responseTo</code> front matter links articles with banners shown on both</li>
+        <li><strong>Argument map</strong>, structured Claim → Evidence → Conclusion box for opinion pieces</li>
+        <li><strong>Dates link to archives</strong>, every date on articles and cards links to the corresponding archive anchor</li>
+        <li><strong>Contributors index</strong> at <a href="/contributors/">/contributors/</a>, bio cards and article links</li>
+        <li><strong>Per-author pages</strong>, bio and article history for each contributor</li>
+        <li><strong>Per-author RSS feeds</strong> at <code>/feeds/[author-slug].xml</code> with link autodiscovery</li>
+        <li><strong>Document library</strong> at <a href="/documents/">/documents/</a>, primary source library for FOIA responses and public records</li>
+        <li><strong>Changelog</strong> at <a href="/changelog/">/changelog/</a>, public record of site changes</li>
+      </ul>
+
+      <h2 id="newsletter">Newsletter</h2>
+      <ul>
+        <li><strong>Newsletter page</strong> at <a href="/newsletter/">/newsletter/</a>, signup form, what to expect, past issues link, alternative follow options</li>
+        <li><strong>Buttondown integration</strong>, subscribe forms embedded across the site (inline, sidebar, footer variants); no backend required</li>
+        <li><strong>Confirmation redirect</strong> at <a href="/newsletter/confirmed/">/newsletter/confirmed/</a>, shown after clicking the confirmation link in Buttondown's double opt-in email</li>
+        <li><strong>Welcome redirect</strong> at <a href="/newsletter/welcome/">/newsletter/welcome/</a>, shown immediately after form submission</li>
+        <li><strong>No open or click tracking</strong>, Buttondown's open and click tracking are disabled; links include a UTM tag for aggregate site analytics only</li>
+      </ul>
+
+      <h2 id="infrastructure">Infrastructure & performance</h2>
+      <ul>
+        <li><strong>Progressive Web App</strong>, web manifest, cache-first service worker, offline fallback at <code>/offline.html</code></li>
+        <li><strong>XML sitemap</strong> at <a href="/sitemap.xml">/sitemap.xml</a>, all articles, library pages, and key static pages with <code>lastmod</code> dates</li>
+        <li><strong>Google News sitemap</strong> at <code>/news-sitemap.xml</code>, <code>news:news</code> namespace with publication, language, date, and title</li>
+        <li><strong>RSS feed</strong> at <a href="/feed.xml">/feed.xml</a> covering all sections</li>
+        <li><strong>Per-author RSS feeds</strong> at <code>/feeds/[author-slug].xml</code></li>
+        <li><strong>robots.txt</strong>, allows all crawlers including Googlebot-News; declares both sitemaps</li>
+        <li><strong>JSON-LD structured data</strong>, NewsArticle on article pages; Book and Chapter on library pages</li>
+        <li><strong>Open Graph social card images</strong>, auto-generated per article at build time</li>
+        <li><strong>Print CSS</strong>, suppresses nav, sidebar, and all non-essential chrome across article and edition pages</li>
+        <li><strong>Instant page</strong>, prefetches links on hover for near-instant navigation (self-hosted, ~3 KB)</li>
+        <li><strong>SPA navigation</strong>, pages load without full page refresh; music and global state persist across navigation; article pages use full reload for reader tool compatibility</li>
+        <li><strong>Bunny Fonts</strong>, privacy-friendly font CDN; no IP logging, no cookies, no tracking</li>
+        <li><strong>Hosted on Cloudflare Pages</strong></li>
+      </ul>
+
+      <h2 id="analytics">Analytics & privacy</h2>
+      <ul>
+        <li><strong>Umami analytics</strong>, privacy-first; no cookies, no personally identifiable information{% if site.analytics and site.analytics.dashboardUrl %}; <a href="{{ site.analytics.dashboardUrl }}" target="_blank" rel="noopener noreferrer">public dashboard</a>{% endif %}</li>
+        <li><strong>No first-party cookies</strong>, all reader preferences and state stored in <code>localStorage</code></li>
+        <li><strong>No advertising networks or tracking pixels</strong></li>
+        <li><strong>Privacy policy</strong> at <a href="/privacy/">/privacy/</a></li>
+      </ul>
+
+      <h2 id="translation">Translation & accessibility</h2>
+      <ul>
+        <li><strong>GTranslate widget</strong>, nine languages (English, French, Italian, Spanish, German, Portuguese, Arabic, Chinese, Japanese); accessible from the global display settings panel</li>
+        <li><strong>Voice search</strong>, microphone button in the search modal; speak to search with real-time transcription (Chrome, Edge, Safari)</li>
+        <li><strong>Form dictation</strong>, "Dictate" button on tip line, letter, and feedback form textareas; speak to type with continuous recognition</li>
+        <li><strong>Skip-to-main link</strong>, first element in the page for keyboard and screen reader navigation</li>
+        <li><strong>ARIA labels</strong> on all icon-only buttons; <code>aria-expanded</code> on all interactive toggles; ARIA grid semantics on calendar</li>
+        <li><strong>Keyboard navigation</strong>, arrow keys navigate the events calendar grid; Enter to view events; Escape closes panels</li>
+      </ul>
+
+      <h2 id="contact-forms">Contact forms</h2>
+      <ul>
+        <li><strong>Contact Us</strong> at <a href="/contact/">/contact/</a>, general inquiries with subject dropdown and card grid linking to all specialised forms</li>
+        <li><strong>Submit a Piece</strong> at <a href="/submit/">/submit/</a>, pitch form embedded in editorial guidelines with section dropdown</li>
+        <li><strong>Report a Correction</strong> at <a href="/corrections/report/">/corrections/report/</a>, auto-fills article URL from referrer; anonymous submissions accepted</li>
+        <li><strong>Submit an Event</strong> at <a href="/events/submit/">/events/submit/</a>, date, location, type fields for calendar submissions</li>
+        <li><strong>Submit a Tip</strong> at <a href="/tips/">/tips/</a>, anonymous tip line with topic categories and voice dictation</li>
+        <li><strong>Send Feedback</strong> at <a href="/feedback/">/feedback/</a>, bug reports, suggestions, accessibility issues, with auto-fill page URL</li>
+        <li><strong>Write a Letter</strong> at <a href="/letters/submit/">/letters/submit/</a>, letters to the editor with city, background, and voice dictation</li>
+        <li><strong>Submit a Quote</strong> at <a href="/quotes/submit/">/quotes/submit/</a>, quote text, author, source, and context</li>
+        <li><strong>Suggest a Timeline Entry</strong> at <a href="/timeline/submit/">/timeline/submit/</a>, event title, year, era, description</li>
+        <li><strong>Recommend a Book</strong> at <a href="/bookshelf/submit/">/bookshelf/submit/</a>, title, author, category, why it belongs</li>
+        <li><strong>Suggest a Public Domain Text</strong> at <a href="/library/submit/">/library/submit/</a>, title, author, source link</li>
+        <li><strong>Suggest a Glossary Term</strong> at <a href="/glossary/submit/">/glossary/submit/</a>, term, definition, reason</li>
+        <li><strong>Suggest a Trial</strong> at <a href="/trials/submit/">/trials/submit/</a>, trial name, year, defendant, charge</li>
+        <li><strong>Suggest a Thought Experiment</strong> at <a href="/thought-experiments/submit/">/thought-experiments/submit/</a>, name, philosopher, description</li>
+        <li><strong>All forms</strong> use Web3Forms with hCaptcha, honeypot spam protection, maxlength limits, aria-required attributes, and email fallback</li>
+      </ul>
+
+      <h2 id="projects">Intellectual projects</h2>
+      <ul>
+        <li><strong>Freethought Glossary</strong> at <a href="/glossary/">/glossary/</a>, 86 terms with A, Z sidebar navigation, real-time search, individual Pagefind-indexed pages, and Tippy.js hover tooltips on articles and library pages</li>
+        <li><strong>Thought Experiment Library</strong> at <a href="/thought-experiments/">/thought-experiments/</a></li>
+        <li><strong>Freethinker's Bookshelf</strong> at <a href="/bookshelf/">/bookshelf/</a>, 21 annotated books with category, difficulty, and best-for metadata; timeline and showcase views</li>
+        <li><strong>Trials of Thought</strong> at <a href="/trials/">/trials/</a>, landmark trials where ideas were the defendant; chronological from 399 BCE</li>
+        <li><strong>Games</strong> at <a href="/games/">/games/</a>, Fifteen Puzzle, Freethinking Trivia, Word Scramble, and a Crossy Road variant</li>
+        <li><strong>Freethought Music</strong> at <a href="/music/">/music/</a>, curated YouTube playlists with a persistent background player that continues across page navigation; transport controls, volume, and track info in a bottom bar</li>
+        <li><strong>Photo Gallery</strong> at <a href="/gallery/">/gallery/</a>, nature photography gallery with lightbox viewer, zoom in/out, download, and category/license/source filters</li>
+        <li><strong>Reviews</strong> at <a href="/reviews/">/reviews/</a>, book, film, podcast, and documentary reviews with star ratings, media type badges, and creator/year metadata</li>
+      </ul>
+
+      <h2 id="transparency">Transparency</h2>
+      <ul>
+        <li><strong>Features page</strong> at <a href="/features/">/features/</a>, this page; complete inventory of site features</li>
+        <li><strong>Changelog</strong> at <a href="/changelog/">/changelog/</a>, public record of every site change</li>
+        {% if site.analytics and site.analytics.dashboardUrl %}<li><strong>Public analytics</strong>, <a href="{{ site.analytics.dashboardUrl }}" target="_blank" rel="noopener noreferrer">live Umami dashboard</a> readable by anyone</li>{% endif %}
+        <li><strong>Editorial handbook</strong> at <a href="/editorial/">/editorial/</a>, public standards covering accuracy, sourcing, corrections, AI use, and complaints</li>
+        <li><strong>Corrections log</strong> at <a href="/corrections/">/corrections/</a>, aggregate view of all published corrections</li>
+        <li><strong>Open source</strong>, the site's codebase is available as an open-source template; see <a href="/open-source/">/open-source/</a></li>
+        <li><strong>How it's built</strong> at <a href="/stack/">/stack/</a>, plain-language explanation of every tool and service</li>
+        <li><strong>Sitemap</strong> at <a href="/site-map/">/site-map/</a>, visual directory of every page on the site</li>
+        <li><strong>Terms of use</strong> at <a href="/terms/">/terms/</a>, plain-language terms covering content, submissions, and data</li>
+        <li><strong>Cookies policy</strong> at <a href="/cookies/">/cookies/</a>, zero first-party cookies; full disclosure of third-party cookies</li>
+        <li><strong>Accessibility statement</strong> at <a href="/accessibility/">/accessibility/</a>, WCAG 2.2 AA commitment with detailed feature documentation</li>
+        <li><strong>Community guidelines</strong> at <a href="/community-guidelines/">/community-guidelines/</a>, standards for comments and community participation</li>
+        <li><strong>Hub pages</strong>, dedicated landing pages for <a href="/explore/">Explore</a>, <a href="/submit/">Submit</a>, <a href="/reader-tools/">Reader Tools</a>, <a href="/transparency/">Transparency</a>, and <a href="/legal/">Legal</a></li>
+      </ul>
+
+      <h2 id="quotes-media">Quotes, media & resources</h2>
+      <ul>
+        <li><strong>Quotes</strong> at <a href="/quotes/">/quotes/</a>, curated freethought quotes filterable by author, topic, and era, with save/share/copy</li>
+        <li><strong>Daily quote bar</strong>, rotating quote in the masthead header, cycling every 10 seconds with fade transitions</li>
+        <li><strong>Quotes Showcase</strong> at <a href="/quotes/showcase/">/quotes/showcase/</a>, full-screen screensaver-style display cycling through all quotes with crossfade transitions, auto-advance, shuffle, keyboard navigation, and pause/play</li>
+        <li><strong>Video Library</strong> at <a href="/videos/">/videos/</a>, curated lectures, debates, and documentaries with speaker and topic filters</li>
+        <li><strong>Freethought Timeline</strong> at <a href="/timeline/">/timeline/</a>, 38 events spanning 2,500 years of freethought history in a vertical alternating timeline with era markers and scroll-reveal animation</li>
+        <li><strong>Timeline Showcase</strong> at <a href="/timeline/showcase/">/timeline/showcase/</a>, full-screen screensaver cycling through all timeline events with auto-advance and keyboard navigation</li>
+        <li><strong>Quotes Timeline</strong> at <a href="/quotes/timeline/">/quotes/timeline/</a>, quotes arranged chronologically with years extracted from source citations</li>
+        <li><strong>Bookshelf Timeline</strong> at <a href="/bookshelf/timeline/">/bookshelf/timeline/</a>, the annotated bookshelf in chronological order</li>
+        <li><strong>Trials Timeline</strong> at <a href="/trials/timeline/">/trials/timeline/</a>, landmark trials from 399 BCE to 1989 in timeline format</li>
+        <li><strong>Trials Showcase</strong> at <a href="/trials/showcase/">/trials/showcase/</a>, full-screen screensaver cycling through trial events</li>
+        <li><strong>Resources</strong> at <a href="/resources/">/resources/</a>, hub page linking to 5 sub-pages: education, legal rights, personal support, media & tools, and on-this-site guide</li>
+        <li><strong>Community</strong> at <a href="/community/">/community/</a>, national and international freethought groups, online communities, student organizations</li>
+        <li><strong>Events calendar</strong> at <a href="/events/">/events/</a>, interactive calendar with month/week/day/list views, recurrence engine for weekly/monthly/annual events, dot-based month grid with hover tooltips, slide-in detail panel, sidebar (Next Up, This Month, Organizations), URL hash persistence, keyboard navigation, touch swipe, type and region filters</li>
+        <li><strong>Contribute</strong> at <a href="/contribute/">/contribute/</a>, submission guidelines, style guide, and pitch instructions</li>
+        <li><strong>RSS Reader</strong> at <a href="/reader/">/reader/</a>, freethought publication feeds fetched at build time</li>
+      </ul>
+
+      <h2 id="data">Data management</h2>
+      <ul>
+        <li><strong>Your Data</strong> at <a href="/your-data/">/your-data/</a>, explanation of what is stored and how to manage it</li>
+        <li><strong>Export / Import</strong>, backup and restore all site data (reading list, notes, highlights, bookmarks, preferences, RSS feeds) via JSON</li>
+        <li><strong>Per-page export</strong>, export notes for individual articles or library entries as plain text, Markdown, or JSON</li>
+      </ul>
+
+      <h2 id="open-source">Open source</h2>
+      <ul>
+        <li><strong>Project Broadsheet</strong> at <a href="https://github.com/jonajinga/project-broadsheet" target="_blank" rel="noopener noreferrer">github.com/jonajinga/project-broadsheet</a>, the complete site architecture as a reusable open-source publication system (MIT license); learn more at <a href="https://projectbroadsheet.com" target="_blank" rel="noopener noreferrer">projectbroadsheet.com</a></li>
+        <li><strong>Decap CMS</strong>, browser-based content management via <a href="/admin/" target="_blank" rel="noopener noreferrer">Decap CMS</a>; configured in <code>src/admin/config.yml</code></li>
+        <li><strong>Editorial Dashboard</strong> at <a href="/dashboard/">/dashboard/</a>, content counts and status overview</li>
+      </ul>
+
+      <p><em>Last updated: {{ currentYear }}</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

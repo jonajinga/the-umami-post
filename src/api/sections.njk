@@ -1,0 +1,14 @@
+---
+permalink: /api/sections.json
+eleventyExcludeFromCollections: true
+---
+{%- set sections = [] -%}
+{%- for key, s in site.sections -%}
+  {%- set sec = { "key": key, "label": s.label, "description": s.description, "color": s.color, "url": site.url + "/" + key + "/", "count": collections[key].length if collections[key] else 0 } -%}
+  {%- set sections = (sections.push(sec), sections) -%}
+{%- endfor -%}
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ sections.length }},
+  "sections": {{ sections | toJSON | safe }}
+}

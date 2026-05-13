@@ -1,0 +1,194 @@
+---
+layout: base
+title: The Fifteen Puzzle
+description: Slide the tiles back into numerical order using the blank space.
+permalink: /games/fifteen/
+---
+
+{% block head %}
+<style>
+  .fifteen-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: min(380px, calc(100vw - 3rem));
+    aspect-ratio: 1;
+    margin: 0 auto var(--space-6);
+  }
+
+  .fifteen-tile {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    font-family: var(--font-headline);
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.12s;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .fifteen-tile:hover:not(.fifteen-tile--blank) {
+    background: var(--color-accent);
+  }
+
+  .fifteen-tile--blank {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-rule);
+    cursor: default;
+  }
+
+  .fifteen-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .fifteen-win {
+    display: none;
+    text-align: center;
+    padding: var(--space-6);
+    border: 1px solid var(--color-rule);
+    border-top: 3px solid var(--color-accent);
+    margin-top: var(--space-6);
+  }
+
+  .fifteen-win.is-visible { display: block; }
+
+  .fifteen-win__headline {
+    font-family: var(--font-headline);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+  }
+
+  .fifteen-win__detail {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+</style>
+{% endblock %}
+
+<div class="game-page">
+
+  <div class="game-header">
+    <a href="/games/" class="game-back">← Games</a>
+    <h1 class="game-title">The Fifteen Puzzle</h1>
+    <p class="game-description">Slide the tiles into numerical order. The blank space is your only tool.</p>
+  </div>
+
+  <div class="fifteen-controls">
+    <span class="game-status" id="move-count">Moves: 0</span>
+    <button class="game-btn" id="new-game" type="button">New Game</button>
+  </div>
+
+  <div class="fifteen-board" id="board"></div>
+
+  <div class="fifteen-win" id="win-msg">
+    <p class="fifteen-win__headline">Solved.</p>
+    <p class="fifteen-win__detail" id="win-detail"></p>
+  </div>
+
+</div>
+
+{% block scripts %}
+<script>
+(function () {
+  'use strict';
+
+  var boardEl   = document.getElementById('board');
+  var moveEl    = document.getElementById('move-count');
+  var newBtn    = document.getElementById('new-game');
+  var winMsg    = document.getElementById('win-msg');
+  var winDetail = document.getElementById('win-detail');
+
+  var tiles    = [];
+  var blankIdx = 15;
+  var moves    = 0;
+  var solved   = false;
+
+  function init() {
+    tiles = [];
+    for (var i = 1; i <= 15; i++) tiles.push(i);
+    tiles.push(0);
+    shuffle();
+    moves  = 0;
+    solved = false;
+    winMsg.classList.remove('is-visible');
+    render();
+  }
+
+  function shuffle() {
+    blankIdx = 15;
+    for (var i = 0; i < 300; i++) {
+      var n    = neighbors(blankIdx);
+      var pick = n[Math.floor(Math.random() * n.length)];
+      swap(blankIdx, pick);
+      blankIdx = pick;
+    }
+  }
+
+  function neighbors(idx) {
+    var row = Math.floor(idx / 4), col = idx % 4, out = [];
+    if (row > 0) out.push(idx - 4);
+    if (row < 3) out.push(idx + 4);
+    if (col > 0) out.push(idx - 1);
+    if (col < 3) out.push(idx + 1);
+    return out;
+  }
+
+  function swap(a, b) {
+    var tmp = tiles[a]; tiles[a] = tiles[b]; tiles[b] = tmp;
+  }
+
+  function render() {
+    boardEl.innerHTML = '';
+    tiles.forEach(function (val, idx) {
+      var t = document.createElement('div');
+      t.className = val === 0 ? 'fifteen-tile fifteen-tile--blank' : 'fifteen-tile';
+      if (val !== 0) {
+        t.textContent = val;
+        t.addEventListener('click', (function (i) {
+          return function () { handleClick(i); };
+        }(idx)));
+      }
+      boardEl.appendChild(t);
+    });
+    moveEl.textContent = 'Moves: ' + moves;
+  }
+
+  function handleClick(idx) {
+    if (solved) return;
+    if (neighbors(idx).indexOf(blankIdx) === -1) return;
+    swap(idx, blankIdx);
+    blankIdx = idx;
+    moves++;
+    render();
+    if (isSolved()) showWin();
+  }
+
+  function isSolved() {
+    for (var i = 0; i < 15; i++) {
+      if (tiles[i] !== i + 1) return false;
+    }
+    return tiles[15] === 0;
+  }
+
+  function showWin() {
+    solved = true;
+    winDetail.textContent = 'Completed in ' + moves + ' move' + (moves === 1 ? '' : 's') + '.';
+    winMsg.classList.add('is-visible');
+  }
+
+  newBtn.addEventListener('click', init);
+  init();
+}());
+</script>
+{% endblock %}

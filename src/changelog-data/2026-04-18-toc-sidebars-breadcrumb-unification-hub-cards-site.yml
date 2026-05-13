@@ -1,0 +1,58 @@
+date: "2026-04-18"
+title: TOC sidebars, breadcrumb unification, hub cards, site-map fix, content updates
+sections:
+  - label: Sticky TOC sidebar — 18 pages
+    entries:
+      - >-
+        Sticky scroll-spy table of contents sidebar added to all long-form reference pages: Features, How It's Built,
+        Privacy Policy, Accessibility, Terms of Use, Editorial Ethics, Cookies Policy, About, Community Guidelines,
+        Language, Costs, Open Source, Your Data, Contribute, and all four Resources sub-pages
+      - >-
+        Uses the same .sg-layout / .sg-nav / scroll-spy JS pattern as the style guide — 13rem sidebar column, active
+        link highlighted with accent border-left
+      - Fixed sticky top offset from 5rem to 7rem so nav clears the full masthead height (nameplate + nav bar)
+      - "Added scroll-margin-top: 7rem to .sg-layout h2[id] so anchor jumps land below the masthead"
+  - label: Sitewide breadcrumb unification
+    entries:
+      - >-
+        Full audit of all .njk templates — every non-standard breadcrumb converted to the canonical .breadcrumbs BEM
+        component
+      - >-
+        33 files updated: all submission forms, project index pages (music, gallery, timeline, videos, quotes, glossary,
+        games), resource sub-pages, and miscellaneous pages
+      - >-
+        Standard: accent-coloured .breadcrumbs__link, / separator via CSS ::before, current page in ink-faint with
+        aria-current
+      - >-
+        Reading-header back links (← section) intentionally left as-is — those are in-article navigation, not page
+        breadcrumbs
+  - label: Hub card component
+    entries:
+      - New .hub-card and .hub-card-grid CSS component extracted from repeated inline styles
+      - Applied across Transparency, Legal, Reader Tools, and Resources (On This Site) hub pages
+      - "Cards: background alt, 3px accent top border on hover, font-headline title, muted description, full hover state"
+  - label: Support page
+    entries:
+      - >-
+        Staff publication entry excluded from the 'Support a Contributor' tipping section — only individual contributors
+        with Ko-fi/BMac/Patreon links appear
+      - "Support block cards restyled: accent top border, improved spacing between badges and divider lines"
+  - label: Content updates
+    entries:
+      - >-
+        Masthead updated: Jon Ajinga entry expanded with full bio, role, and location; funding statement updated to
+        reader-funded; Letters and Contributors sections improved; Transparency link added
+      - >-
+        How It's Built (stack): Project Broadsheet section added at top; page count corrected to 500+; font loading
+        described accurately (on-demand, not pre-loaded)
+      - >-
+        Features: Project Broadsheet GitHub URL corrected to jonajinga/project-broadsheet; projectbroadsheet.com link
+        added
+      - "Privacy policy: last-updated date corrected to April 18, 2026"
+  - label: Fixes
+    entries:
+      - >-
+        Site map: details elements left an empty bordered ghost when collapsed in CSS grid — fixed with align-self:
+        start on .sitemap-section
+      - "Author hero: photo was touching the name/byline — gap increased from space-6 to space-10"
+      - "Footer: 'Powered by Project Broadsheet' moved to its own line"

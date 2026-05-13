@@ -1,0 +1,71 @@
+name: Bug Report
+description: Report a build error, rendering issue, or site functionality problem.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. For **security vulnerabilities**, please
+        do not open a public issue — see [SECURITY.md](../../SECURITY.md) instead.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug. What did you expect to happen, and what actually happened?
+      placeholder: |
+        Expected: the article renders with the correct author byline.
+        Actual: the byline shows "undefined" instead of the author name.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this? Be as specific as possible.
+      placeholder: |
+        1. Run `npm start`
+        2. Open http://localhost:8080/opinion/my-article/
+        3. See the byline in the article header
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Node.js version, operating system, and browser (if relevant).
+      placeholder: "Node 18.20.2 / Windows 11 / Chrome 124"
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Build output or error message
+      description: Paste relevant terminal output, error messages, or stack traces.
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: url
+    attributes:
+      label: Affected URL or file
+      description: Which page, route, or file is affected?
+      placeholder: "/opinion/my-article/ or src/_includes/layouts/article.njk"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing open and closed issues and this hasn't been reported.
+          required: true
+        - label: This is not a security vulnerability (I would use SECURITY.md for that).
+          required: true
+        - label: I can reproduce this on a clean install (`npm ci && npm run build`).
+          required: false

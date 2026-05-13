@@ -1,0 +1,78 @@
+---
+layout: base
+title: "Suggest a Timeline Entry"
+description: Know of a key moment in freethought history? Suggest it for our timeline.
+permalink: /timeline/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/timeline/">Timeline</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Suggest an Entry</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Suggest a Timeline Entry</h1>
+      <p class="page-header__lede">
+        Know of a pivotal moment in the history of freethought, reason, or secularism? We'd love to hear about it.
+      </p>
+    </header>
+
+    <div class="article-body">
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Timeline suggestion, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Timeline Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="tl-title">Event title <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="title" id="tl-title" required aria-required="true" placeholder="e.g. Execution of Giordano Bruno">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="tl-year">Year <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="year" id="tl-year" required aria-required="true" placeholder="e.g. 1600 or 399 BCE">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="tl-era">Era <span class="w3f__optional">(optional)</span></label>
+            <select class="w3f__input" name="era" id="tl-era">
+              <option value="">Select...</option>
+              <option>Ancient</option>
+              <option>Early Modern</option>
+              <option>Enlightenment</option>
+              <option>19th Century</option>
+              <option>20th Century</option>
+              <option>21st Century</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="tl-desc">Description <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="tl-desc-hint">What happened and why it matters to freethought history.</span>
+          <textarea class="w3f__textarea" name="description" id="tl-desc" rows="4" required aria-required="true" aria-describedby="tl-desc-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="tl-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="tl-name" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="tl-email">Email <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="email" name="email" id="tl-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Suggestion</button>
+      </form>
+    </div>
+  </div>
+</div>

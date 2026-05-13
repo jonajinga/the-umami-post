@@ -1,0 +1,126 @@
+---
+layout: base
+title: Back-of-book index
+description: A scholarly back-of-book index — concepts, figures, and themes mapped to the articles where they're discussed.
+permalink: /back-of-book/
+---
+{% set groups = conceptIndex | groupConceptIndex %}
+{% set presentLetters = [] %}
+{% for g in groups %}{% set presentLetters = (presentLetters.push(g.letter), presentLetters) %}{% endfor %}
+
+<main class="container concept-index" data-pagefind-ignore>
+
+  <header class="concept-index__header">
+    <p class="concept-index__kicker">Reader tools</p>
+    <h1 class="concept-index__title">Back-of-book index</h1>
+    <p class="concept-index__lede">
+      A scholarly index of concepts, figures, and themes from across
+      the publication, with three-tier hierarchy and cross-references.
+      Each entry maps an idea to the articles where it&rsquo;s
+      substantively discussed &mdash; not every passing mention. Built
+      conceptually, not as a keyword search; complementary to
+      <a href="/topics/">/topics/</a> and <a href="/archives/">/archives/</a>.
+    </p>
+  </header>
+
+  {# ── A-Z navigation strip ───────────────────────────────────── #}
+  <nav class="concept-index__alpha" aria-label="Jump to letter">
+    {% set _alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"] %}
+    {% for letter in _alpha %}
+      {% if letter in presentLetters %}
+      <a class="concept-index__alpha-letter" href="#letter-{{ letter }}">{{ letter }}</a>
+      {% else %}
+      <span class="concept-index__alpha-letter concept-index__alpha-letter--empty" aria-disabled="true">{{ letter }}</span>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  {# ── Filter / search box (client-side, narrows the entry list) ── #}
+  <div class="concept-index__filter">
+    <label for="concept-index-filter" class="visually-hidden">Filter index entries</label>
+    <input
+      type="search"
+      id="concept-index-filter"
+      class="concept-index__filter-input"
+      placeholder="Filter entries…"
+      autocomplete="off"
+      spellcheck="false">
+    <p class="concept-index__count" id="concept-index-count" aria-live="polite">
+      {{ conceptIndex.length }} entr{% if conceptIndex.length != 1 %}ies{% else %}y{% endif %}
+    </p>
+  </div>
+
+  {# ── Letter sections ─────────────────────────────────────────── #}
+  {% for g in groups %}
+  <section class="concept-index__section" id="letter-{{ g.letter }}" aria-labelledby="letter-heading-{{ g.letter }}">
+    <h2 class="concept-index__letter-heading" id="letter-heading-{{ g.letter }}">{{ g.letter }}</h2>
+    <ul class="concept-index__entries" role="list">
+      {% for ent in g.entries %}
+      {% set termSlug = ent.term | slugify %}
+      <li class="concept-index__entry" id="entry-{{ termSlug }}" data-term="{{ ent.term | lower }}">
+
+        <h3 class="concept-index__term">{{ ent.term }}</h3>
+
+        {% if ent.see %}
+        <p class="concept-index__see">See:
+          {% for ref in ent.see %}
+          <a class="concept-index__xref" href="#entry-{{ ref | slugify }}">{{ ref }}</a>{% if not loop.last %}; {% endif %}
+          {% endfor %}
+        </p>
+        {% endif %}
+
+        {% if ent.entries and ent.entries.length %}
+        <ul class="concept-index__sub-entries" role="list">
+          {% for sub in ent.entries %}
+          <li class="concept-index__sub-entry">
+            <span class="concept-index__sub-term">{{ sub.sub_term }}</span>
+            {% if sub.references and sub.references.length %}
+            <span class="concept-index__refs">
+              {% for ref in sub.references %}
+              <a class="concept-index__ref" href="{{ ref.url }}"{% if ref.section %} data-section="{{ ref.section | slugify }}"{% endif %}>
+                <cite>{{ ref.title }}</cite>{% if ref.section %} <span class="concept-index__ref-section">{{ ref.section }}</span>{% endif %}
+              </a>{% if not loop.last %}; {% endif %}
+              {% endfor %}
+            </span>
+            {% endif %}
+
+            {% if sub.sub_sub_entries and sub.sub_sub_entries.length %}
+            <ul class="concept-index__sub-sub-entries" role="list">
+              {% for ss in sub.sub_sub_entries %}
+              <li class="concept-index__sub-sub-entry">
+                <span class="concept-index__sub-sub-term">{{ ss.term }}</span>
+                {% if ss.references and ss.references.length %}
+                <span class="concept-index__refs">
+                  {% for ref in ss.references %}
+                  <a class="concept-index__ref" href="{{ ref.url }}"{% if ref.section %} data-section="{{ ref.section | slugify }}"{% endif %}>
+                    <cite>{{ ref.title }}</cite>{% if ref.section %} <span class="concept-index__ref-section">{{ ref.section }}</span>{% endif %}
+                  </a>{% if not loop.last %}; {% endif %}
+                  {% endfor %}
+                </span>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if ent.see_also and ent.see_also.length %}
+        <p class="concept-index__see-also">See also:
+          {% for ref in ent.see_also %}
+          <a class="concept-index__xref" href="#entry-{{ ref | slugify }}">{{ ref }}</a>{% if not loop.last %}; {% endif %}
+          {% endfor %}
+        </p>
+        {% endif %}
+
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+
+</main>
+
+<script src="/assets/js/concept-index.js?v={{ buildTime }}" defer></script>

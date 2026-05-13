@@ -1,0 +1,168 @@
+---
+layout: base
+title: Reading history
+description: Your reading history — articles you've finished or marked as read, kept locally in your browser. Nothing leaves your device.
+permalink: /reading-history/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/reader/">Reader</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Reading history</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Reading history</h1>
+      <p class="page-header__lede">
+        Every article you've finished reading or marked as read on this device. Stored in your browser, nowhere else. Clearing site data will erase this list.
+      </p>
+    </header>
+
+    <div id="reading-history-empty" style="font-family: var(--font-body); padding: var(--space-8); border: 1px dashed var(--color-rule); text-align: center; color: var(--color-ink-muted);" hidden>
+      <p style="margin-bottom: var(--space-3);">You haven't marked anything as read yet.</p>
+      <p>Open any article and click <strong>Mark as read</strong> in the action row, or scroll an article past 95% to have it auto-tracked.</p>
+    </div>
+
+    <div id="reading-history-summary" style="display: flex; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); font-family: var(--font-ui); font-size: var(--text-sm);" hidden>
+      <span><strong data-rh-total>0</strong> articles read</span>
+      <span><strong data-rh-manual>0</strong> manually marked</span>
+      <span><strong data-rh-auto>0</strong> auto-completed</span>
+      <button type="button" id="rh-clear" style="margin-left: auto; background: none; border: 1px solid var(--color-rule); padding: var(--space-1) var(--space-3); cursor: pointer; font-family: inherit; font-size: inherit; color: var(--color-ink-muted);"
+        onclick="if(confirm('Clear your entire reading history? This cannot be undone.')){localStorage.removeItem('tft-read-manual');localStorage.removeItem('tft-read-pct');location.reload();}">Clear all</button>
+    </div>
+
+    <ul id="reading-history-list" class="reading-history-list" style="list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-rule);"></ul>
+
+  </div>
+</div>
+
+<style>
+.reading-history-list li {
+  border-bottom: 1px solid var(--color-rule);
+  padding: var(--space-4) 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+}
+.reading-history-list a {
+  font-family: var(--font-headline);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.reading-history-list a:hover { color: var(--color-accent); }
+.reading-history-list .rh-meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.reading-history-list .rh-pill {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-muted);
+}
+.reading-history-list .rh-pill--manual { color: var(--color-accent); border-color: var(--color-accent); }
+.reading-history-list .rh-actions {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+}
+.reading-history-list .rh-actions button {
+  background: none;
+  border: 0;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  padding: 0;
+}
+.reading-history-list .rh-actions button:hover { color: var(--color-accent); }
+.reading-history-list .rh-listen { margin-top: var(--space-2); }
+</style>
+
+<script>
+(function () {
+  'use strict';
+  function load(k) { try { return JSON.parse(localStorage.getItem(k)) || (k.endsWith('manual') ? {} : {}); } catch (e) { return {}; } }
+  function fmt(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function init() {
+    var list = document.getElementById('reading-history-list');
+    var empty = document.getElementById('reading-history-empty');
+    var summary = document.getElementById('reading-history-summary');
+    if (!list) return;
+    var manual = load('tft-read-manual');
+    var pct = load('tft-read-pct');
+    var entries = [];
+    Object.keys(manual).forEach(function (url) {
+      var m = manual[url];
+      entries.push({ url: url, title: m.title || url, section: m.section || '', date: m.markedAt, source: 'manual', pct: pct[url] || 100 });
+    });
+    Object.keys(pct).forEach(function (url) {
+      if (manual[url]) return;
+      if (pct[url] < 95) return;
+      entries.push({ url: url, title: url, section: '', date: '', source: 'auto', pct: pct[url] });
+    });
+    entries.sort(function (a, b) {
+      if (!a.date && !b.date) return a.url.localeCompare(b.url);
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return b.date.localeCompare(a.date);
+    });
+    if (!entries.length) {
+      empty.hidden = false;
+      return;
+    }
+    summary.hidden = false;
+    summary.querySelector('[data-rh-total]').textContent = entries.length;
+    summary.querySelector('[data-rh-manual]').textContent = entries.filter(function (e) { return e.source === 'manual'; }).length;
+    summary.querySelector('[data-rh-auto]').textContent   = entries.filter(function (e) { return e.source === 'auto'; }).length;
+    var listen = (window.__tftAudioBar && window.__tftAudioBar.renderListenButton) || function () { return ''; };
+    list.innerHTML = entries.map(function (e) {
+      var pill = e.source === 'manual'
+        ? '<span class="rh-pill rh-pill--manual">Marked read</span>'
+        : '<span class="rh-pill">Auto</span>';
+      var section = e.section ? '<span class="rh-meta">' + e.section + '</span>' : '';
+      var date    = e.date ? '<span class="rh-meta">' + fmt(e.date) + '</span>' : '';
+      var lbtn    = listen(e.url, e.title || e.url);
+      return '<li>' +
+        '<div>' +
+          '<a href="' + e.url + '">' + (e.title || e.url) + '</a>' +
+          '<div style="margin-top: 4px; display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">' + pill + section + date + '</div>' +
+          (lbtn ? '<div class="rh-listen">' + lbtn + '</div>' : '') +
+        '</div>' +
+        '<div class="rh-actions"><button type="button" data-rh-remove="' + e.url + '">Remove</button></div>' +
+        '</li>';
+    }).join('');
+    list.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('[data-rh-remove]');
+      if (!btn) return;
+      var url = btn.getAttribute('data-rh-remove');
+      var m = load('tft-read-manual');
+      delete m[url];
+      try { localStorage.setItem('tft-read-manual', JSON.stringify(m)); } catch (e) {}
+      var p = load('tft-read-pct');
+      delete p[url];
+      try { localStorage.setItem('tft-read-pct', JSON.stringify(p)); } catch (e) {}
+      btn.closest('li').remove();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

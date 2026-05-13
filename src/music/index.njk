@@ -1,0 +1,316 @@
+---
+layout: base
+title: Freethought Music
+description: Songs and playlists connected to the freethought tradition, with a persistent background player that follows you across the site.
+permalink: /music/
+---
+
+<div class="container music-hub">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Freethought Music</li>
+    </ol>
+  </nav>
+
+  <header class="music-hub__hero">
+    <p class="music-hub__kicker">A soundtrack for thinking</p>
+    <h1 class="music-hub__title">Freethought Music</h1>
+    <p class="music-hub__lede">
+      A curated collection of songs and playlists connected to the freethought tradition, with a background player that follows you across the site so the music never stops when you navigate to the next piece.
+    </p>
+    <p class="music-hub__meta">
+      {{ songs | length }} song{{ "s" if songs.length != 1 else "" }} &nbsp;&middot;&nbsp;
+      {{ playlists | length }} playlist{{ "s" if playlists.length != 1 else "" }}
+    </p>
+  </header>
+
+  {# ── Entry cards ── #}
+  <div class="music-hub__entries">
+    <a href="/music/songs/" class="music-hub__entry">
+      <span class="music-hub__entry-kicker">Browse individually</span>
+      <h2 class="music-hub__entry-title">Songs <span aria-hidden="true">&rarr;</span></h2>
+      <p class="music-hub__entry-desc">{{ songs | length }} hand-picked tracks with lyrics that reflect freethought, humanist, and rationalist ideas. Click play on any song to hear just that track; it follows you across the site.</p>
+    </a>
+    <a href="/music/playlists/" class="music-hub__entry">
+      <span class="music-hub__entry-kicker">Browse collections</span>
+      <h2 class="music-hub__entry-title">Playlists <span aria-hidden="true">&rarr;</span></h2>
+      <p class="music-hub__entry-desc">{{ playlists | length }} background playlists grouped by mood, era, or theme. Hit play on one and keep reading; the track advances automatically.</p>
+    </a>
+  </div>
+
+  {# ── How the player works ── #}
+  <section class="music-hub__section" id="how-it-works">
+    <h2 class="music-hub__section-title">How the player works</h2>
+    <div class="music-hub__grid">
+      <div class="music-hub__tile">
+        <p class="music-hub__tile-num" aria-hidden="true">1</p>
+        <h3 class="music-hub__tile-title">Click play on a song or playlist</h3>
+        <p class="music-hub__tile-desc">A compact bar appears at the bottom of the screen with play/pause, skip, volume, and the current track name. That&rsquo;s your persistent player.</p>
+      </div>
+      <div class="music-hub__tile">
+        <p class="music-hub__tile-num" aria-hidden="true">2</p>
+        <h3 class="music-hub__tile-title">Read anywhere on the site</h3>
+        <p class="music-hub__tile-desc">Navigate to an article, the library, a reader tool, anywhere. The music keeps going without re-buffering. We store track and time in your browser so it can resume across reloads.</p>
+      </div>
+      <div class="music-hub__tile">
+        <p class="music-hub__tile-num" aria-hidden="true">3</p>
+        <h3 class="music-hub__tile-title">Stop whenever</h3>
+        <p class="music-hub__tile-desc">The close button on the player bar stops playback and clears its state. The bar also hides itself on pages where audio would interrupt your reading flow.</p>
+      </div>
+    </div>
+
+    <div class="music-hub__notes">
+      <p><strong>Privacy.</strong> The player uses YouTube&rsquo;s IFrame API under the hood. Once you press play, YouTube sees the video request and may set its own cookies for the session. We do not store anything beyond the current track + timestamp in your browser&rsquo;s local storage. Nothing is sent to us. Full detail in <a href="/privacy/#videos">our privacy policy</a>.</p>
+      <p><strong>Why YouTube?</strong> Licensing for streaming music on an independent publication is otherwise prohibitive. YouTube&rsquo;s IFrame API is free, has the broadest catalogue, and keeps royalties flowing to the artists we feature. The trade-off is the cookie behavior above, which we disclose transparently.</p>
+    </div>
+  </section>
+
+  {# ── How to submit ── #}
+  <section class="music-hub__section" id="submit">
+    <h2 class="music-hub__section-title">Submit a song or playlist</h2>
+    <p class="music-hub__section-lede">
+      We add songs and playlists on merit. If you know a track whose lyrics reflect freethought, humanist, or rationalist ideas, or a playlist curated for the same spirit, tell us.
+    </p>
+
+    <div class="music-hub__submit">
+      <a href="/music/submit/" class="music-hub__submit-card">
+        <span class="music-hub__submit-kicker">Song</span>
+        <h3 class="music-hub__submit-title">Suggest a song</h3>
+        <p class="music-hub__submit-desc">Title, artist, a YouTube link, and a line or two on what makes it a freethought piece. We verify before adding.</p>
+        <span class="music-hub__submit-arrow" aria-hidden="true">Submit &rarr;</span>
+      </a>
+      <a href="/music/playlists/submit/" class="music-hub__submit-card">
+        <span class="music-hub__submit-kicker">Playlist</span>
+        <h3 class="music-hub__submit-title">Suggest a playlist</h3>
+        <p class="music-hub__submit-desc">Playlist name, YouTube Music playlist URL, and a short description of the mood or theme. We accept curated lists, not random aggregations.</p>
+        <span class="music-hub__submit-arrow" aria-hidden="true">Submit &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.music-hub { padding-top: var(--space-10); padding-bottom: var(--space-20); }
+
+/* Hero */
+.music-hub__hero {
+  max-width: 780px;
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-8);
+  border-bottom: 3px solid var(--color-ink);
+}
+.music-hub__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+.music-hub__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+}
+.music-hub__lede {
+  font-family: var(--font-body);
+  font-size: clamp(var(--text-md), 2vw, var(--text-lg));
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 60ch;
+  margin-bottom: var(--space-3);
+}
+.music-hub__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+
+/* Entry cards */
+.music-hub__entries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-16);
+}
+.music-hub__entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-8);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-top: 4px solid var(--color-ink);
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: border-top-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.music-hub__entry:hover,
+.music-hub__entry:focus-visible {
+  border-top-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  outline: none;
+}
+.music-hub__entry-kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-faint);
+}
+.music-hub__entry-title {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+.music-hub__entry:hover .music-hub__entry-title { color: var(--color-accent); }
+.music-hub__entry-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+/* Section */
+.music-hub__section {
+  max-width: 880px;
+  margin-bottom: var(--space-16);
+}
+.music-hub__section-title {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-6);
+  border-bottom: 2px solid var(--color-ink);
+}
+.music-hub__section-lede {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
+}
+
+/* How-it-works tiles */
+.music-hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+.music-hub__tile {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  padding: var(--space-6);
+}
+.music-hub__tile-num {
+  font-family: var(--font-headline);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+.music-hub__tile-title {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+}
+.music-hub__tile-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+.music-hub__notes {
+  padding: var(--space-6);
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-rule-heavy);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+}
+.music-hub__notes p + p { margin-top: var(--space-3); }
+.music-hub__notes a { color: var(--color-link); }
+
+/* Submit cards */
+.music-hub__submit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+.music-hub__submit-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-top: 3px solid var(--color-ink);
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: border-top-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.music-hub__submit-card:hover {
+  border-top-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+.music-hub__submit-kicker {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-faint);
+}
+.music-hub__submit-title {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin: 0;
+  line-height: var(--leading-snug);
+}
+.music-hub__submit-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+.music-hub__submit-arrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+  margin-top: var(--space-2);
+}
+</style>

@@ -1,0 +1,670 @@
+<header class="masthead" role="banner" data-pagefind-ignore>
+  <div class="container">
+
+    {# ── Nameplate ── title centered, hamburger left, icon actions right #}
+    <div class="masthead__nameplate">
+      <div class="masthead__lead">
+        <button
+          class="nav-drawer-toggle js-only"
+          id="nav-drawer-toggle"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+          type="button"
+          onclick="var d=document.getElementById('nav-drawer');d.classList.add('is-open');d.setAttribute('aria-hidden','false');this.setAttribute('aria-expanded','true');document.getElementById('nav-drawer-close').focus();">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        {# ── Watch Live (red-dot button next to the hamburger) ── #}
+        {% if site.live and site.live.active and site.live.url %}
+        <a class="masthead__live" href="{{ site.live.url }}" target="_blank" rel="noopener"
+           data-umami-event="watch-live"
+           aria-label="Watch live{% if site.live.title %} — {{ site.live.title }}{% endif %}"
+           title="{{ site.live.title or 'Watch live' }}{% if site.live.platform %} on {{ site.live.platform | capitalize }}{% endif %}">
+          <span class="masthead__live-dot" aria-hidden="true"></span>
+          <span class="masthead__live-label">Watch live</span>
+        </a>
+        {% endif %}
+      </div>
+      <a href="/" class="masthead__title notranslate" aria-label="{{ site.title }}, Home">
+        {{ site.title }}
+      </a>
+      <button
+        class="masthead__search-mobile"
+        type="button"
+        aria-label="Search"
+        title="Search"
+        onclick="var m=document.getElementById('search-modal'),o=document.getElementById('search-overlay');if(m){m.classList.add('is-open');m.setAttribute('aria-hidden','false');o&&o.classList.add('is-open');document.body.style.overflow='hidden';var i=document.getElementById('search-input');i&&i.focus();}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <div class="masthead__actions">
+
+        {# Search, primary discovery #}
+        <button
+          class="masthead__icon-btn js-only"
+          id="search-open"
+          aria-label="Search"
+          aria-expanded="false"
+          aria-controls="search-modal"
+          type="button"
+          title="Search"
+          onclick="var m=document.getElementById('search-modal'),o=document.getElementById('search-overlay');if(m){m.classList.add('is-open');m.setAttribute('aria-hidden','false');o&&o.classList.add('is-open');document.body.style.overflow='hidden';var i=document.getElementById('search-input');i&&i.focus();}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
+        {# Reader tools — single entry point that opens the hub page
+           with notes, reading list, reading history, calendars, etc.
+           Replaces the Notes / Reading list / Surprise icons that
+           previously lived here. #}
+        <a href="/reader-tools/"
+           class="masthead__icon-btn"
+           aria-label="Reader tools"
+           title="Reader tools">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </a>
+
+        {# Display settings, global (includes language, theme, font, spacing) #}
+        <div class="masthead__settings-wrap" style="position:relative;">
+          <button
+            class="masthead__icon-btn js-only"
+            id="global-settings-btn"
+            type="button"
+            aria-label="Display settings"
+            title="Display settings"
+            onclick="var p=document.getElementById('global-settings-panel');if(p)p.classList.toggle('is-open');">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+              <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+              <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+            </svg>
+          </button>
+        </div>
+
+
+      </div>
+    </div>
+
+    {# Global settings panel — world-class display settings #}
+    <div id="global-settings-panel" class="gs-panel" role="dialog" aria-labelledby="gs-panel-title" aria-hidden="true">
+
+      <header class="gs-panel__header">
+        <div>
+          <p class="gs-panel__kicker">Display</p>
+          <h2 class="gs-panel__title" id="gs-panel-title">Reading settings</h2>
+        </div>
+        <button type="button" class="gs-panel__close" aria-label="Close display settings" onclick="this.closest('.gs-panel').classList.remove('is-open');">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+
+      {# ── Live preview ── #}
+      <div class="gs-preview" aria-hidden="true">
+        <p class="gs-preview__label">Preview</p>
+        <p class="gs-preview__sample">&ldquo;The hands that help are better far than lips that pray.&rdquo;</p>
+        <p class="gs-preview__attrib">&mdash; Robert G. Ingersoll</p>
+      </div>
+
+      {# ── Quick profiles ── #}
+      <section class="gs-section">
+        <h3 class="gs-section__title">Quick profiles</h3>
+        <div class="gs-profiles" role="group" aria-label="Preset reading profiles">
+          <button class="gs-profile-btn" data-gs-profile="default" type="button">
+            <span class="gs-profile-btn__title">Default</span>
+            <span class="gs-profile-btn__desc">Source Serif</span>
+          </button>
+          <button class="gs-profile-btn" data-gs-profile="comfort" type="button">
+            <span class="gs-profile-btn__title">Comfort</span>
+            <span class="gs-profile-btn__desc">Lora, sepia, relaxed</span>
+          </button>
+          <button class="gs-profile-btn" data-gs-profile="low-vision" type="button">
+            <span class="gs-profile-btn__title">Low-vision</span>
+            <span class="gs-profile-btn__desc">Atkinson Hyperlegible</span>
+          </button>
+          <button class="gs-profile-btn" data-gs-profile="night" type="button">
+            <span class="gs-profile-btn__title">Night</span>
+            <span class="gs-profile-btn__desc">Dark, wide spacing</span>
+          </button>
+        </div>
+      </section>
+
+      {# ── Type ── #}
+      <section class="gs-section">
+        <h3 class="gs-section__title">Type</h3>
+
+        <div class="gs-row">
+          <label class="gs-row__label" for="gs-font-select">Typeface</label>
+          <select id="gs-font-select" class="gs-select">
+            <optgroup label="Site fonts">
+              <option value="default">Source Serif (default)</option>
+              <option value="sans">DM Sans</option>
+              <option value="lora">Lora</option>
+              <option value="playfair">Playfair Display</option>
+            </optgroup>
+            <optgroup label="Serif">
+              <option value="georgia">Georgia</option>
+              <option value="palatino">Palatino</option>
+              <option value="times">Times New Roman</option>
+              <option value="garamond">Garamond</option>
+              <option value="bookman">Bookman Old Style</option>
+            </optgroup>
+            <optgroup label="Sans-serif">
+              <option value="system">System default</option>
+              <option value="arial">Arial / Helvetica</option>
+              <option value="verdana">Verdana</option>
+              <option value="trebuchet">Trebuchet MS</option>
+              <option value="tahoma">Tahoma</option>
+              <option value="century">Century Gothic</option>
+            </optgroup>
+            <optgroup label="Monospace">
+              <option value="mono">SF Mono / Consolas</option>
+              <option value="courier">Courier New</option>
+              <option value="lucida">Lucida Console</option>
+            </optgroup>
+            <optgroup label="Web fonts (loaded on demand)">
+              <option value="inter">Inter</option>
+              <option value="merriweather">Merriweather</option>
+              <option value="roboto">Roboto</option>
+              <option value="opensans">Open Sans</option>
+              <option value="baskerville">Libre Baskerville</option>
+              <option value="crimson">Crimson Pro</option>
+              <option value="ibmplex">IBM Plex Serif</option>
+              <option value="literata">Literata</option>
+              <option value="atkinson">Atkinson Hyperlegible</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="gs-row">
+          <p class="gs-row__label">Line spacing</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Line spacing">
+            <button class="gs-seg__btn" data-gs-spacing="tight" type="button">Tight</button>
+            <button class="gs-seg__btn is-active" data-gs-spacing="normal" type="button">Normal</button>
+            <button class="gs-seg__btn" data-gs-spacing="relaxed" type="button">Relaxed</button>
+          </div>
+        </div>
+
+        <div class="gs-row">
+          <p class="gs-row__label">Word spacing</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Word spacing">
+            <button class="gs-seg__btn is-active" data-gs-wordspace="normal" type="button">Normal</button>
+            <button class="gs-seg__btn" data-gs-wordspace="wide" type="button">Wide</button>
+            <button class="gs-seg__btn" data-gs-wordspace="wider" type="button">Wider</button>
+          </div>
+        </div>
+      </section>
+
+      {# ── Theme ── #}
+      <section class="gs-section">
+        <h3 class="gs-section__title">Theme</h3>
+        <div class="gs-themes" role="group" id="gs-theme-group" aria-label="Color theme">
+          <button class="gs-theme-btn is-active" data-gs-theme="auto" type="button" aria-label="Auto (follow system)">
+            <span class="gs-theme-btn__swatch gs-theme-btn__swatch--auto" aria-hidden="true"></span>
+            <span class="gs-theme-btn__label">Auto</span>
+          </button>
+          <button class="gs-theme-btn" data-gs-theme="light" type="button">
+            <span class="gs-theme-btn__swatch gs-theme-btn__swatch--light" aria-hidden="true"></span>
+            <span class="gs-theme-btn__label">Light</span>
+          </button>
+          <button class="gs-theme-btn" data-gs-theme="sepia" type="button">
+            <span class="gs-theme-btn__swatch gs-theme-btn__swatch--sepia" aria-hidden="true"></span>
+            <span class="gs-theme-btn__label">Sepia</span>
+          </button>
+          <button class="gs-theme-btn" data-gs-theme="cream" type="button">
+            <span class="gs-theme-btn__swatch gs-theme-btn__swatch--cream" aria-hidden="true"></span>
+            <span class="gs-theme-btn__label">Cream</span>
+          </button>
+          <button class="gs-theme-btn" data-gs-theme="dark" type="button">
+            <span class="gs-theme-btn__swatch gs-theme-btn__swatch--dark" aria-hidden="true"></span>
+            <span class="gs-theme-btn__label">Dark</span>
+          </button>
+        </div>
+      </section>
+
+      {# ── Article tools ── shown only on pages that have an .article-body #}
+      <section class="gs-section gs-article-only">
+        <h3 class="gs-section__title">Article tools</h3>
+
+        <div class="gs-row">
+          <p class="gs-row__label">Reading ruler</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Reading ruler">
+            <button class="gs-seg__btn is-active" data-gs-ruler="off" type="button">Off</button>
+            <button class="gs-seg__btn" data-gs-ruler="on" type="button">On</button>
+          </div>
+        </div>
+        <div class="gs-row gs-ruler-opts" hidden>
+          <label class="gs-row__label" for="gs-ruler-color">Ruler color</label>
+          <select id="gs-ruler-color" class="gs-select">
+            <option value="accent">Accent</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Amber</option>
+            <option value="black">Black</option>
+          </select>
+        </div>
+        <div class="gs-row gs-ruler-opts" hidden>
+          <p class="gs-row__label">Ruler style</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Ruler style">
+            <button class="gs-seg__btn is-active" data-gs-ruler-style="solid" type="button">Solid</button>
+            <button class="gs-seg__btn" data-gs-ruler-style="dashed" type="button">Dashed</button>
+            <button class="gs-seg__btn" data-gs-ruler-style="dotted" type="button">Dotted</button>
+            <button class="gs-seg__btn" data-gs-ruler-style="glow" type="button">Glow</button>
+          </div>
+        </div>
+
+        <div class="gs-row">
+          <p class="gs-row__label">Paragraph numbers</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Paragraph numbers">
+            <button class="gs-seg__btn is-active" data-gs-paranums="off" type="button">Off</button>
+            <button class="gs-seg__btn" data-gs-paranums="on" type="button">On</button>
+          </div>
+        </div>
+
+        <div class="gs-row gs-desktop-only">
+          <p class="gs-row__label">Auto-scroll</p>
+          <div class="gs-row__control gs-seg" role="group" aria-label="Auto-scroll">
+            <button class="gs-seg__btn is-active" data-gs-autoscroll="off" type="button">Off</button>
+            <button class="gs-seg__btn" data-gs-autoscroll="on" type="button">On</button>
+          </div>
+        </div>
+        <div class="gs-row gs-desktop-only gs-autoscroll-opts" hidden>
+          <label class="gs-row__label" for="gs-autoscroll-speed">Scroll speed</label>
+          <div class="gs-row__control gs-size">
+            <span class="gs-size__min" aria-hidden="true">&minus;</span>
+            <input type="range" class="gs-size__slider" id="gs-autoscroll-speed" min="1" max="10" step="1" value="3" aria-label="Auto-scroll speed">
+            <span class="gs-size__max" aria-hidden="true">+</span>
+          </div>
+        </div>
+      </section>
+
+      {% if site.gtranslate %}
+      {# ── Language ── #}
+      <section class="gs-section">
+        <h3 class="gs-section__title">Language</h3>
+        <div class="gs-row">
+          <div class="gs-row__control">
+            <div class="gtranslate_wrapper"></div>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+      {# ── Footer ── #}
+      <footer class="gs-panel__footer">
+        <button type="button" class="gs-reset" onclick="if(window.__resetGlobalSettings)window.__resetGlobalSettings();">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Reset to defaults
+        </button>
+        <p class="gs-panel__save-note">Your settings are saved automatically and persist across sessions on this device.</p>
+      </footer>
+
+    </div>
+
+    {# ── Section Nav ── #}
+    <nav class="site-nav" aria-label="Main navigation">
+      <div class="site-nav__inner">
+        <ul class="site-nav__list" role="list">
+          {% for item in nav %}
+          {% set sectionItems = collections[item.collection] if item.collection %}
+          {% set hasDropdown = item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
+          <li class="site-nav__item{% if hasDropdown %} site-nav__item--has-dropdown{% endif %}">
+            <a
+              class="site-nav__link"
+              href="{{ item.url }}"
+              {% if hasDropdown %}id="nav-{{ item.key }}" aria-haspopup="true" aria-expanded="false"{% endif %}
+              {% if page.url == item.url %}aria-current="page"{% endif %}>
+              {{ item.label }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {# ── Nav Dropdowns, siblings of .site-nav__inner so they escape overflow:hidden ── #}
+      {% for item in nav %}
+      {% set sectionItems = collections[item.collection] if item.collection %}
+      {% set hasDropdown = item.type == "library" or item.type == "more" or (sectionItems and sectionItems.length) %}
+      {% if hasDropdown %}
+      <div class="nav-dropdown" id="dropdown-{{ item.key }}" aria-label="{{ item.label }}">
+        {% if item.type == "more" %}
+          <div class="nav-mega">
+            {% for col in megaMenu %}
+            <div class="nav-mega__col">
+              <p class="nav-mega__heading">{{ col.heading }}</p>
+              {% for link in col.links %}
+              <a href="{{ link.url }}" class="nav-mega__link">
+                <span class="nav-mega__title">{{ link.title }}</span>
+              </a>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        {% elif item.type == "library" %}
+          {% for w in library.works %}
+            {% if w.featured and not w.parentWork %}
+              <a href="/library/{{ w.slug }}/" class="nav-dropdown__item">
+                <span class="nav-dropdown__title">{{ w.title }}</span>
+                {% if w.description %}<span class="nav-dropdown__desc">{{ w.description }}</span>{% endif %}
+              </a>
+            {% endif %}
+          {% endfor %}
+          <a href="/library/subjects/" class="nav-dropdown__footer">Browse by Subject</a>
+          <a href="/library/authors/" class="nav-dropdown__footer">Browse by Author</a>
+          <a href="/library/" class="nav-dropdown__footer">View full library →</a>
+        {% else %}
+          {# Subsection keys are keyed by collection slug (which matches sectionSlug on section pages);
+             item.key sometimes differs from item.collection (e.g. science-tech vs science-technology). #}
+          {% set subs = subsections[item.collection] if subsections[item.collection] else (subsections[item.key] if subsections[item.key] else []) %}
+          {% set topTags = collections[item.collection] | topTagsForSection(6) %}
+          {% set latest = sectionItems | reverse | limit(4) %}
+          {% if subs.length or topTags.length or latest.length %}
+            {% if subs.length %}
+            <div class="nav-section-col">
+              <p class="nav-section-col__heading">Subsections</p>
+              {% for sub in subs %}
+              <a href="{{ item.url }}?s={{ sub | slugify }}" class="nav-section-col__link">{{ sub }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <div class="nav-section-col{% if subs.length %} nav-section-col--bordered{% endif %}">
+              <p class="nav-section-col__heading">Top Topics</p>
+              {% if topTags.length %}
+                {% for tag in topTags %}
+                <a href="/topics/{{ tag | slugify }}/" class="nav-section-col__link">{{ tag | titleCase }}</a>
+                {% endfor %}
+              {% else %}
+                <p class="nav-section-col__empty">No topics yet</p>
+              {% endif %}
+            </div>
+            {% if latest.length %}
+            <div class="nav-section-col nav-section-col--latest nav-section-col--bordered">
+              <p class="nav-section-col__heading">Latest</p>
+              {% for article in latest %}
+              <a href="{{ article.url }}" class="nav-section-col__article">
+                <span class="nav-section-col__article-title">{{ article.data.title }}</span>
+                {% if article.data.date %}<span class="nav-section-col__article-date">{{ article.data.date | readableDate }}</span>{% endif %}
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endif %}
+          <div class="nav-dropdown__footer-row">
+            {% if item.key == "letters" %}
+            <a href="/letters/submit/" class="nav-dropdown__footer-link nav-dropdown__footer-link--cta">Write us a letter →</a>
+            {% endif %}
+            <a href="{{ item.url }}" class="nav-dropdown__footer-link nav-dropdown__footer-link--all">All {{ item.label | lower }} →</a>
+          </div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endfor %}
+    </nav>
+
+  </div>{# /.container #}
+</header>
+
+{# ── Announcement banner — sits between the section nav above and
+   the quote bar below so it reads as part of the publication-state
+   strip rather than chrome floating above the masthead. #}
+{% include "partials/site-announcement.njk" %}
+
+{# ── Daily Quote Bar (homepage only) ──
+   Full-bleed strip; inner content constrained to container width
+   so the quote text aligns with the section-nav row above it. #}
+{# \u2500\u2500 Site motto strip (home page only) \u2500\u2500
+   Single fixed quotation \u2014 the publication's motto. Always rendered
+   server-side; visibility is gated by `body[data-page-url="/"]` (set
+   by the inline script below + spa-nav.js on every page load /
+   contentswap) so the strip survives SPA nav cleanly without
+   leaking onto non-home pages. #}
+<div class="quote-bar" id="quote-bar" data-pagefind-ignore>
+  <div class="container quote-bar__inner">
+    <a class="quote-bar__link" href="/quotes/" title="View quotes collection">
+      <span class="quote-bar__text">&ldquo;The hands that help are better far than lips that pray.&rdquo;</span>
+      <span class="quote-bar__author">&mdash; Robert G. Ingersoll</span>
+    </a>
+  </div>
+</div>
+
+{# ── Search Modal ── (lives outside header for z-index stacking) #}
+<div class="search-overlay js-only" id="search-overlay" aria-hidden="true" onclick="var m=document.getElementById('search-modal'),o=this;m.classList.remove('is-open');m.setAttribute('aria-hidden','true');o.classList.remove('is-open');document.body.style.overflow='';document.getElementById('search-input').value='';document.getElementById('search-results').innerHTML='';"></div>
+
+<div
+  class="search-modal js-only"
+  id="search-modal"
+  role="dialog"
+  aria-label="Search"
+  aria-hidden="true"
+  aria-modal="true">
+
+  <div class="search-modal__header">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;color:var(--color-ink-faint)">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input
+      class="search-modal__input"
+      id="search-input"
+      type="search"
+      placeholder="Search articles, topics, authors…"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+      aria-label="Search query"
+      aria-controls="search-results"
+      aria-autocomplete="list">
+    <button
+      class="search-modal__voice js-only"
+      id="voice-search-btn"
+      type="button"
+      aria-label="Search by voice"
+      title="Search by voice"
+      hidden>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </button>
+    <button
+      class="search-modal__close"
+      id="search-close"
+      type="button"
+      aria-label="Close search"
+      onclick="var m=document.getElementById('search-modal'),o=document.getElementById('search-overlay');m.classList.remove('is-open');m.setAttribute('aria-hidden','true');o&&o.classList.remove('is-open');document.body.style.overflow='';document.getElementById('search-input').value='';document.getElementById('search-results').innerHTML='';">
+      ✕
+    </button>
+  </div>
+
+  <div class="search-filters" id="search-filters" aria-label="Filter results by section">
+    <button class="search-filter-btn is-active" data-filter-section="" type="button">All</button>
+    {% for key, section in site.sections %}
+    <button class="search-filter-btn" data-filter-section="{{ section.label }}" type="button">{{ section.label }}</button>
+    {% endfor %}
+    <button class="search-filter-btn" data-filter-section="Quotes" type="button">Quotes</button>
+    <button class="search-filter-btn" data-filter-section="Videos" type="button">Videos</button>
+    <button class="search-filter-btn" data-filter-section="Timeline" type="button">Timeline</button>
+  </div>
+
+  <div class="search-modal__results" id="search-results" role="listbox" aria-label="Search results">
+  </div>
+
+  <div class="search-modal__footer" aria-hidden="true">
+    <span><kbd>↑↓</kbd> navigate</span>
+    <span><kbd>↵</kbd> open</span>
+    <span><kbd>Esc</kbd> close</span>
+    <span><kbd>/</kbd> open from anywhere</span>
+  </div>
+
+</div>
+
+{# ── Nav Drawer ── #}
+
+<nav
+  class="nav-drawer js-only"
+  id="nav-drawer"
+  aria-label="Full site navigation"
+  aria-hidden="true">
+
+  <div class="nav-drawer__header">
+    <a href="/" class="nav-drawer__brand notranslate" aria-label="{{ site.title }}, Home">
+      <img src="/assets/favicon.svg" alt="" aria-hidden="true" width="32" height="32">
+      <span class="nav-drawer__brand-stack">
+        <span class="nav-drawer__label">{{ site.title }}</span>
+        <span class="nav-drawer__edition" id="nd-edition" aria-label="Today's date"></span>
+      </span>
+    </a>
+    <button class="nav-drawer__close" id="nav-drawer-close" type="button" aria-label="Close navigation menu" onclick="var d=document.getElementById('nav-drawer');d.classList.remove('is-open');d.setAttribute('aria-hidden','true');document.getElementById('nav-drawer-toggle').setAttribute('aria-expanded','false');">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="nav-drawer__scroll">
+
+    {# ── Search form, in-place, submits to /search/ without leaving the drawer ── #}
+    <form class="nav-drawer__search" role="search" action="/search/" method="get" aria-label="Site search">
+      <svg class="nav-drawer__search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <label for="nav-drawer-search-input" class="visually-hidden">Search</label>
+      <input
+        id="nav-drawer-search-input"
+        class="nav-drawer__search-input"
+        type="search"
+        name="q"
+        placeholder="Search articles, topics, authors…"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-label="Search query">
+      <button type="submit" class="nav-drawer__search-submit" aria-label="Submit search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="13 6 19 12 13 18"/>
+        </svg>
+      </button>
+    </form>
+
+    {# ── Quick actions grid ── #}
+    <div class="nav-drawer__quick" role="group" aria-label="Quick actions">
+      <a href="/random/" class="nav-drawer__quick-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+        <span>Surprise me</span>
+      </a>
+      <a href="/reader-tools/" class="nav-drawer__quick-btn" id="nd-readertools-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Reader tools</span>
+        <span class="nav-drawer__quick-badge" id="nd-readinglist-count" hidden></span>
+      </a>
+      <button type="button" class="nav-drawer__quick-btn" aria-label="Display settings"
+        onclick="var d=document.getElementById('nav-drawer'),t=document.getElementById('nav-drawer-toggle');if(d){d.classList.remove('is-open');d.setAttribute('aria-hidden','true');}if(t)t.setAttribute('aria-expanded','false');setTimeout(function(){var p=document.getElementById('global-settings-panel');if(p)p.classList.add('is-open');},150);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+        <span>Display</span>
+      </button>
+    </div>
+
+    {# ── Sections grid: tile per section ── #}
+    <p class="nav-drawer__section-label">Sections</p>
+    <ul class="nav-drawer__sections" role="list">
+      {% for item in nav %}
+      {% if item.collection %}
+      {% set sec = site.sections[item.collection] %}
+      <li>
+        <a class="nav-drawer__section-tile" href="{{ item.url }}"{% if sec and sec.description %} data-tippy-content="{{ sec.description }}"{% endif %}{% if page.url == item.url %} aria-current="page"{% endif %}>
+          <span class="nav-drawer__section-name">{{ item.label }}</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+    {# ── Latest stories: 5 newest across the publication ── #}
+    {% if collections.allContent and collections.allContent.length %}
+    <p class="nav-drawer__section-label">Latest stories</p>
+    <ul class="nav-drawer__latest" role="list">
+      {% for post in collections.allContent | limit(5) %}
+      <li>
+        <a class="nav-drawer__latest-row" href="{{ post.url }}"{% if page.url == post.url %} aria-current="page"{% endif %}>
+          <span class="nav-drawer__latest-meta">
+            {% if post.data.section %}<span class="nav-drawer__latest-kicker">{{ post.data.section }}</span>{% endif %}
+            <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+          </span>
+          <span class="nav-drawer__latest-title">{{ post.data.title }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {# ── Additional nav groups (from drawerLinks.json, editable via Pages CMS) ── #}
+    {% for group in drawerLinks %}
+    <div class="nav-drawer__divider"></div>
+    {% if group.heading %}
+    <p class="nav-drawer__section-label">{{ group.heading }}</p>
+    {% endif %}
+    <ul class="nav-drawer__list{% if not group.small %} nav-drawer__list--cols{% endif %}" role="list">
+      {% for link in group.links %}
+      <li><a class="nav-drawer__link{% if group.small %} nav-drawer__link--small{% endif %}" href="{{ link.url }}">{{ link.label }}</a></li>
+      {% endfor %}
+    </ul>
+    {% if group.showSupportBadgeAfter %}
+    <div class="nav-drawer__support">
+      <a class="tip-badge" href="/support/"
+         aria-label="Support {{ site.title }}">Support {{ site.title }}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+  </div>{# /.nav-drawer__scroll #}
+
+  {# ── Footer ── #}
+  <div class="nav-drawer__footer">
+    <div class="nav-drawer__shortcuts" aria-label="Keyboard shortcuts">
+      <span class="nav-drawer__shortcut"><kbd>/</kbd> Search</span>
+      <span class="nav-drawer__shortcut"><kbd>g</kbd> <kbd>h</kbd> Home</span>
+      <span class="nav-drawer__shortcut"><kbd>Esc</kbd> Close</span>
+    </div>
+    <p class="nav-drawer__footer-byline">
+      {{ site.footerByline or site.tagline }}
+    </p>
+    <div class="nav-drawer__footer-meta">
+      <span>&copy; {{ currentYear }} {{ site.title }}</span>
+    </div>
+  </div>
+
+</nav>
+
+<script>
+(function () {
+  // Edition kicker — render today's date in newspaper format
+  var ed = document.getElementById('nd-edition');
+  if (ed) {
+    try {
+      var fmt = new Intl.DateTimeFormat(document.documentElement.lang || 'en', {
+        weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+      });
+      ed.textContent = fmt.format(new Date());
+    } catch (e) {}
+  }
+
+  // Reading-list + notes badges
+  var PREFIX = window.__PREFIX || 'tft';
+  function readArr(key) {
+    try { var v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+  }
+  function setBadge(id, n) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (n > 0) { el.textContent = n > 99 ? '99+' : String(n); el.hidden = false; }
+    else { el.hidden = true; }
+  }
+  setBadge('nd-readinglist-count', readArr(PREFIX + '-reading-list').length);
+  setBadge('nd-notes-count',       readArr(PREFIX + '-annotations').length);
+
+})();
+</script>

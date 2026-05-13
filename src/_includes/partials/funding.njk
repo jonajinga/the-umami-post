@@ -1,0 +1,39 @@
+{#
+  funding.njk — disclosure panel for "How We're Funded". Opened by the
+  matching tip-badge button in the article-header__support-row. Hidden
+  by default; the support-row button toggles [hidden] + aria-expanded.
+#}
+{% set fundAuthor = authors[author] if author and authors[author] else null %}
+{% set authorTipUrl = fundAuthor.tipping.kofi or fundAuthor.tipping.bmac or fundAuthor.tipping.patreon if fundAuthor else null %}
+{% set pubTipUrl = site.tipping.kofi or site.tipping.bmac or site.tipping.patreon %}
+<div id="funding-panel" class="funding funding--panel" data-article-disclosure hidden aria-labelledby="funding-heading">
+  <div class="funding__body">
+    <p class="funding__kicker">No ads. No sponsors. No paywalls.</p>
+    <h2 id="funding-heading" class="funding__heading">Funded entirely by readers</h2>
+    <p class="funding__lede">
+      {{ site.title }} runs on direct reader contributions and the unpaid time of its contributors, not advertising or platform deals. Reader tips go either to the publication&rsquo;s operating costs (hosting, public-records fees, the occasional travel for reporting) or, when sent through an author&rsquo;s individual link, directly to that writer. We take no money from advertisers, sponsors, partner networks, or syndication platforms.
+    </p>
+
+    <ul class="funding__bullets">
+      <li><strong>What publication-level support pays for:</strong> hosting and infrastructure, public-records and FOIA fees, archival and software costs, and the occasional reporting expense. Itemised on the <a href="/costs/">costs page</a>.</li>
+      <li><strong>How contributors are compensated:</strong> {{ site.title }} does not currently pay contributors a fee or salary. Writers publish here because they want their work read; reader tips through a writer&rsquo;s individual link are the only compensation they receive for a piece.</li>
+      <li><strong>What this funding model doesn&rsquo;t include:</strong> ads, sponsorships, native content, tracking pixels, paywalls, or syndication-network fees. There are none, and editorial decisions are not influenced by individual reader contributions.</li>
+    </ul>
+
+    <div class="funding__actions">
+      {% if authorTipUrl and fundAuthor.name %}
+      <a class="funding__action funding__action--primary" href="{{ authorTipUrl }}" target="_blank" rel="noopener noreferrer" data-umami-event="support-author">
+        Support {{ fundAuthor.name }}
+      </a>
+      {% endif %}
+      {% if pubTipUrl %}
+      <a class="funding__action" href="{{ pubTipUrl }}" target="_blank" rel="noopener noreferrer" data-umami-event="support-publication">
+        Support {{ site.title }}
+      </a>
+      {% endif %}
+      <a class="funding__action funding__action--ghost" href="/support/" data-umami-event="support-learn">
+        Read the full disclosure &rsaquo;
+      </a>
+    </div>
+  </div>
+</div>

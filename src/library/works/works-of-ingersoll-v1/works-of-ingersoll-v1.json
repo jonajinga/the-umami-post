@@ -1,0 +1,18 @@
+{
+  "workSlug": "works-of-ingersoll-v1",
+  "workTitle": "The Works of Robert G. Ingersoll, Vol. 1",
+  "author": "Robert G. Ingersoll",
+  "authorSlug": "robert-ingersoll",
+  "authorDates": "1833–1899",
+  "originalPublication": 1909,
+  "originalLanguage": "English",
+  "translator": null,
+  "edition": "Dresden Edition",
+  "source": "Project Gutenberg",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/38801",
+  "type": "lectures",
+  "subjects": ["Freethought", "Philosophy", "Religion", "Agnosticism", "Liberty"],
+  "difficulty": "Accessible",
+  "era": "19th Century",
+  "shortWork": false
+}

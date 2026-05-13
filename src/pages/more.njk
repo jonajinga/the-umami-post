@@ -1,0 +1,193 @@
+---
+layout: base
+title: "Beyond the Articles"
+description: Everything beyond the articles, projects, community, reader tools, contribute, and more.
+permalink: /more/
+---
+
+{% set cardStyle = 'style="display:block;padding:var(--space-6);border:1px solid var(--color-rule);text-decoration:none;color:var(--color-ink);"' %}
+{% set h2Style = 'style="font-family:var(--font-headline);font-size:var(--text-md);margin:0 0 var(--space-2);"' %}
+{% set descStyle = 'style="font-size:var(--text-sm);color:var(--color-ink-muted);margin:0;"' %}
+{% set sectionStyle = 'style="margin-bottom: var(--space-12);"' %}
+{% set gridStyle = 'style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-6);"' %}
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Beyond the Articles</h1>
+    <p class="page-header__lede">
+      {{ site.title }} is more than a newspaper. Here is everything else we offer, all free, all without accounts.
+    </p>
+  </header>
+
+  {# ── Freethought Projects ── #}
+  <section {{ sectionStyle | safe }}>
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-4);">Freethought Projects</h2>
+    <div {{ gridStyle | safe }}>
+
+      <a href="/music/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Freethought Music</h3>
+        <p {{ descStyle | safe }}>Curated playlists for reading and thinking, plays in the background across the site.</p>
+      </a>
+
+      <a href="/glossary/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Glossary of Terms</h3>
+        <p {{ descStyle | safe }}>86 philosophical terms with definitions, etymology, and key figures.</p>
+      </a>
+
+      <a href="/timeline/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Historical Timeline</h3>
+        <p {{ descStyle | safe }}>2,400 years of freethought history, from Socrates to the present.</p>
+      </a>
+
+      <a href="/gallery/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Photo Gallery</h3>
+        <p {{ descStyle | safe }}>Nature photography with lightbox, zoom, download, and filters.</p>
+      </a>
+
+      <a href="/library/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Public Domain Library</h3>
+        <p {{ descStyle | safe }}>Full texts from the freethought tradition, read online with annotations, highlights, and bookmarks.</p>
+      </a>
+
+      <a href="/quotes/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Quotes Collection</h3>
+        <p {{ descStyle | safe }}>Curated freethought quotes, save, share, copy, and filter by author or topic.</p>
+      </a>
+
+      <a href="/bookshelf/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Recommended Reading</h3>
+        <p {{ descStyle | safe }}>Annotated reading recommendations with category, difficulty, and guidance.</p>
+      </a>
+
+      <a href="/resources/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Resources</h3>
+        <p {{ descStyle | safe }}>Education, legal rights, personal support, and media tools.</p>
+      </a>
+
+      <a href="/thought-experiments/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Thought Experiments</h3>
+        <p {{ descStyle | safe }}>Classic thought experiments examined, what they prove and what they don't.</p>
+      </a>
+
+      <a href="/trials/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Trials of Thought</h3>
+        <p {{ descStyle | safe }}>Landmark trials where ideas were the defendant, Socrates to Rushdie.</p>
+      </a>
+
+      <a href="/videos/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Video Library</h3>
+        <p {{ descStyle | safe }}>Lectures, debates, and documentaries from the freethought tradition.</p>
+      </a>
+
+    </div>
+  </section>
+
+  {# ── Freethought Community ── #}
+  <section {{ sectionStyle | safe }}>
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-4);">Freethought Community</h2>
+    <div {{ gridStyle | safe }}>
+
+      <a href="/community/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Community Directory</h3>
+        <p {{ descStyle | safe }}>National and international organizations and groups for freethinkers.</p>
+      </a>
+
+      <a href="/events/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Events Calendar</h3>
+        <p {{ descStyle | safe }}>Conferences, conventions, meetups, and observances worldwide.</p>
+      </a>
+
+      <a href="/newsletter/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Newsletter</h3>
+        <p {{ descStyle | safe }}>New articles delivered to your inbox. Free, no tracking, unsubscribe anytime.</p>
+      </a>
+
+      <a href="/reader/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>RSS Reader</h3>
+        <p {{ descStyle | safe }}>Follow freethought publications in one place.</p>
+      </a>
+
+    </div>
+  </section>
+
+  {# ── Contribute ── #}
+  <section {{ sectionStyle | safe }}>
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-4);">Contribute</h2>
+    <div {{ gridStyle | safe }}>
+
+      <a href="/contribute/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Write for Us</h3>
+        <p {{ descStyle | safe }}>Guidelines for pitching and submitting articles.</p>
+      </a>
+
+      <a href="/submit/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Submit an Article</h3>
+        <p {{ descStyle | safe }}>Pitch a piece for publication.</p>
+      </a>
+
+      <a href="/support/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Support Us</h3>
+        <p {{ descStyle | safe }}>Help keep us independent, reader support is the only kind we take.</p>
+      </a>
+
+    </div>
+  </section>
+
+  {# ── Reader Tools ── #}
+  <section {{ sectionStyle | safe }}>
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-4);">Reader Tools</h2>
+    <div {{ gridStyle | safe }}>
+
+      <a href="/search/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Search</h3>
+        <p {{ descStyle | safe }}>Full-text search across every article, library text, and project page.</p>
+      </a>
+
+      <a href="/notes/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Notes & Highlights</h3>
+        <p {{ descStyle | safe }}>All your highlights, notes, and bookmarks across the site.</p>
+      </a>
+
+      <a href="/reading-list/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Reading List</h3>
+        <p {{ descStyle | safe }}>Articles you have saved to read later.</p>
+      </a>
+
+      <a href="/your-data/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Your Data</h3>
+        <p {{ descStyle | safe }}>Export, import, or clear your browser data.</p>
+      </a>
+
+    </div>
+  </section>
+
+  {# ── About & Transparency ── #}
+  <section>
+    <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-4);">About & Transparency</h2>
+    <div {{ gridStyle | safe }}>
+
+      <a href="/about/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>About Us</h3>
+        <p {{ descStyle | safe }}>What we are, why we exist, and what we stand for.</p>
+      </a>
+
+      <a href="/transparency/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Transparency</h3>
+        <p {{ descStyle | safe }}>Features, tech stack, changelog, corrections, open source, and public analytics.</p>
+      </a>
+
+      <a href="/legal/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Legal</h3>
+        <p {{ descStyle | safe }}>Privacy, terms, cookies, accessibility, and community guidelines.</p>
+      </a>
+
+      <a href="/contact/" {{ cardStyle | safe }}>
+        <h3 {{ h2Style | safe }}>Contact</h3>
+        <p {{ descStyle | safe }}>Get in touch, send feedback, or submit a tip.</p>
+      </a>
+
+    </div>
+  </section>
+
+</div>

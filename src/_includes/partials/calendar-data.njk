@@ -1,0 +1,29 @@
+{# Shared article-data JSON block for calendar pages.
+   Emits every published article's metadata so the client-side
+   calendar can render full article cards in any view (day, week,
+   month, year). Keep field names in sync with calendar-shared.js. #}
+<script id="cal-articles-data" type="application/json">
+{
+  "articles": [
+    {%- for item in collections.allContent -%}
+    {%- if not loop.first -%},{%- endif %}
+    {
+      "url": {{ item.url | dump | safe }},
+      "title": {{ item.data.title | dump | safe }},
+      "description": {{ (item.data.description or "") | dump | safe }},
+      "section": {{ (item.data.section or "") | dump | safe }},
+      "subsection": {{ (item.data.subsection or "") | dump | safe }},
+      "author": {{ (item.data.author or "") | dump | safe }},
+      "authorName": {{ (item.data.authorName or "") | dump | safe }},
+      "date": {{ (item.date | htmlDateString) | dump | safe }},
+      "image": {{ (item.data.image or "") | dump | safe }},
+      "imageAlt": {{ (item.data.imageAlt or "") | dump | safe }},
+      "wordCount": {{ item.templateContent | wordCount | replace(",", "") | replace(" words", "") | default(0, true) }},
+      "hasAudio": {% if audioManifest[item.url] %}true{% else %}false{% endif %},
+      "audioMp3": {{ (audioManifest[item.url].mp3 if audioManifest[item.url] else "") | dump | safe }},
+      "audioDuration": {{ audioManifest[item.url].duration if audioManifest[item.url] else 0 }}
+    }
+    {%- endfor %}
+  ]
+}
+</script>

@@ -1,0 +1,49 @@
+---
+layout: base
+title: Corrections
+description: A record of every correction and material update made to articles in The Freethinking Times.
+permalink: /corrections/
+---
+
+<div class="container" style="max-width: 800px; padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header style="padding-bottom: var(--space-8); border-bottom: 3px solid var(--color-ink); margin-bottom: var(--space-8);">
+    <h1 style="font-family: var(--font-masthead); font-size: var(--text-3xl); margin-bottom: var(--space-3);">Corrections</h1>
+    <p style="color: var(--color-ink-muted); font-size: var(--text-md); font-style: italic; max-width: 60ch;">
+      When errors of fact occur, we correct them promptly and record every change here. Transparency about mistakes is not a weakness, it is evidence of a commitment to accuracy.
+    </p>
+    <p style="font-family: var(--font-ui); font-size: var(--text-sm); margin-top: var(--space-4);">
+      Found an error? <a href="/corrections/report/" style="color: var(--color-link); font-weight: 600;">Report a correction</a>
+    </p>
+  </header>
+
+  {% if collections.correctionsLog and collections.correctionsLog.length %}
+
+  {% for article in collections.correctionsLog %}
+  <div class="correction-entry">
+
+    <div class="correction-entry__article">
+      <a class="correction-entry__title" href="{{ article.url }}">{{ article.data.title }}</a>
+      <span class="correction-entry__section">
+        {% if article.data.section %}{{ article.data.section }}{% endif %}
+        · Originally published {{ article.date | readableDate }}
+      </span>
+    </div>
+
+    {% for correction in article.data.corrections %}
+    <div class="correction-entry__item">
+      <time class="correction-entry__date" datetime="{{ correction.date }}">{{ correction.date }}</time>
+      <p class="correction-entry__desc">{{ correction.description }}</p>
+    </div>
+    {% endfor %}
+
+  </div>
+  {% endfor %}
+
+  {% else %}
+  <p style="color: var(--color-ink-faint); font-style: italic;">
+    No corrections on record. We aim to publish accurately the first time.
+  </p>
+  {% endif %}
+
+</div>

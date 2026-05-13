@@ -1,0 +1,40 @@
+date: "2026-04-13"
+title: SPA navigation, music player, gallery, reviews, audit fixes
+sections:
+  - label: SPA navigation
+    entries:
+      - Pages load without full page refresh — music and global state persist across navigation
+      - Article and reader pages use full reload so reader tools initialize properly
+      - Fetched pages cached in memory for instant revisits
+      - Closes drawer, search, and settings panels on navigation
+  - label: Music player
+    entries:
+      - Persistent background YouTube player at /music/
+      - Dark mini bar at bottom with transport controls (play/pause/prev/next/volume)
+      - Music continues playing across page navigation via localStorage state
+      - Custom playlist URL input accepts YouTube and YouTube Music URLs
+      - Song suggestion form at /music/submit/
+  - label: Photo gallery
+    entries:
+      - Gallery page at /gallery/ with responsive grid and category/licence/source filters
+      - Lightbox viewer with zoom in/out, keyboard controls (+/- arrows Escape), and download
+      - Photo submission form at /gallery/submit/ accepting hosted image links
+  - label: Reviews section
+    entries:
+      - New editorial section at /reviews/ for book, film, podcast, and documentary reviews
+      - Star ratings, media type badges, creator and year metadata
+      - Added to nav bar, Pagefind search, and CMS config
+  - label: Footer & sitemap
+    entries:
+      - Merged Explore into Projects — everything is now a Freethought Project
+      - Split Submit into Get Involved + Suggest Content
+      - Merged Transparency + Legal into one section
+      - Every link has a title tooltip describing the destination
+      - Sitemap rewritten to match footer structure with all pages listed
+  - label: Accessibility audit fixes
+    entries:
+      - Dark mode ink-faint contrast raised from 3.7:1 to 5.0:1 (WCAG AA compliant)
+      - Replaced 5 hardcoded 11px font sizes with var(--text-xs) token
+      - Mobile calendar touch targets increased from 36px to 44px
+      - Privacy policy updated with YouTube API, Tippy.js, instant.page, SPA, music player disclosures
+      - Cookies policy updated with YouTube music player cookies

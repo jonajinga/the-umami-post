@@ -1,0 +1,84 @@
+---
+layout: base
+title: Topics
+description: "Browse all topics covered in {{ site.title }}, tag clouds, related topics, and the most-written-about subjects."
+permalink: /topics/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Topics</h1>
+    <p class="page-header__lede">
+      Every subject covered across {{ site.title }}, sized by how often we have written about it. Each topic links to its own archive.
+    </p>
+  </header>
+
+  {% set topics = collections.allContent | topicStats(6) %}
+  {% set maxCount = (topics[0].count if topics.length else 1) %}
+
+  {# ── Cloud view ── #}
+  <section style="margin-bottom: var(--space-12);">
+    <h2 style="font-family:var(--font-headline);font-size:var(--text-lg);margin-bottom:var(--space-4);">Topic cloud</h2>
+    <div class="topic-cloud">
+      {% for t in topics %}
+      {% set weight = (t.count / maxCount) %}
+      {% set size = 0.85 + weight * 0.9 %}
+      <a href="/topics/{{ t.tag | slugify }}/"
+        class="topic-cloud__item"
+        style="font-size:{{ size }}rem;"
+        title="{{ t.count }} article{% if t.count != 1 %}s{% endif %}">
+        {{ t.tag }}
+        <span class="topic-cloud__count">{{ t.count }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ── Top topics with related clusters ── #}
+  <section>
+    <h2 style="font-family:var(--font-headline);font-size:var(--text-lg);margin-bottom:var(--space-2);">Most covered topics</h2>
+    <p style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-ink-muted);max-width:55ch;margin-bottom:var(--space-6);">
+      Our most frequent subjects, with the topics that most often appear alongside them.
+    </p>
+    <div class="topic-grid">
+      {% for t in topics | limit(12) %}
+      <article class="topic-card">
+        <header class="topic-card__header">
+          <a href="/topics/{{ t.tag | slugify }}/" class="topic-card__title">{{ t.tag }}</a>
+          <span class="topic-card__count">{{ t.count }} article{% if t.count != 1 %}s{% endif %}</span>
+        </header>
+
+        {% if t.related.length %}
+        <div>
+          <p class="topic-card__label">Related topics</p>
+          <div class="topic-card__chips">
+            {% for r in t.related %}
+            <a href="/topics/{{ r.tag | slugify }}/" class="topic-card__chip">{{ r.tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if t.top.length %}
+        <div>
+          <p class="topic-card__label">Latest</p>
+          <ul class="topic-card__latest">
+            {% for item in t.top %}
+            <li class="topic-card__latest-item">
+              <a href="{{ item.url }}" class="topic-card__latest-link">{{ item.data.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if topics.length == 0 %}
+  <p style="font-family:var(--font-ui);font-size:var(--text-sm);color:var(--color-ink-faint);font-style:italic;">No topics tagged yet.</p>
+  {% endif %}
+
+</div>

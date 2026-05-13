@@ -1,0 +1,14 @@
+---
+permalink: /api/authors.json
+eleventyExcludeFromCollections: true
+---
+{%- set list = [] -%}
+{%- for slug, a in authors -%}
+  {%- set item = { "slug": slug, "name": a.name, "bio": a.bio, "role": a.role, "avatar": a.avatar, "url": site.url + "/author/" + slug + "/" } -%}
+  {%- set list = (list.push(item), list) -%}
+{%- endfor -%}
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ list.length }},
+  "authors": {{ list | toJSON | safe }}
+}

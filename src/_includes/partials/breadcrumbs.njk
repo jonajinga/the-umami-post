@@ -1,0 +1,71 @@
+{# Sitewide breadcrumbs partial.
+
+   Auto-generates crumbs from page.url path segments. The home page
+   suppresses itself (would just render a single "Home" crumb). Pages
+   that explicitly set `hideBreadcrumbs: true` in front-matter opt out.
+
+   Label resolution per segment, in priority order:
+   1. Front-matter `breadcrumbLabel` for the final crumb (the page itself)
+   2. site.sections[slug].label if the segment is a known section key
+   3. Title-cased slug (foo-bar → Foo Bar) as a fallback
+
+   The final crumb is rendered as the current-page label and is not a
+   link. Earlier crumbs link to /segment-1/, /segment-1/segment-2/, etc.
+#}
+{%- if not hideBreadcrumbs and page.url and page.url != '/' -%}
+{%- set _segments = page.url.split('/') -%}
+{%- set _crumbs = [] -%}
+{%- set _crumbs = (_crumbs.push({ url: '/', label: 'Home' }), _crumbs) -%}
+{%- set _path = '' -%}
+{%- for seg in _segments -%}
+  {%- if seg -%}
+    {%- set _path = _path + '/' + seg -%}
+    {%- set _label = '' -%}
+    {%- set _url = _path + '/' -%}
+    {%- if site.sections[seg] and site.sections[seg].label -%}
+      {%- set _label = site.sections[seg].label -%}
+    {%- elif seg == 'author' -%}
+      {# /author/ has no index page; the publication's author list lives
+         at /contributors/. Remap the intermediate crumb so it doesn't
+         link to a 404. #}
+      {%- set _label = 'Contributors' -%}
+      {%- set _url = '/contributors/' -%}
+    {%- else -%}
+      {%- set _label = seg | replace('-', ' ') | replace('_', ' ') | title -%}
+    {%- endif -%}
+    {%- set _crumbs = (_crumbs.push({ url: _url, label: _label }), _crumbs) -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- set _last = _crumbs.length - 1 -%}
+{# Resolve what the last crumb will actually display, then suppress
+   the trailing crumb when it duplicates the one before it (e.g. a
+   library chapter whose page title matches the work title, which
+   produced "Home / Library / Common Sense / Common Sense"). #}
+{%- set _lastLabel = _crumbs[_last].label -%}
+{%- if breadcrumbLabel -%}
+  {%- set _lastLabel = breadcrumbLabel -%}
+{%- elif title and _last > 0 -%}
+  {%- set _lastLabel = title -%}
+{%- endif -%}
+{%- set _skipLast = false -%}
+{%- if _last > 0 and _lastLabel == _crumbs[_last - 1].label -%}
+  {%- set _skipLast = true -%}
+  {%- set _last = _last - 1 -%}
+{%- endif -%}
+
+<nav class="breadcrumbs-bar" aria-label="Breadcrumb">
+  <ol class="breadcrumbs-bar__list container">
+    {%- for crumb in _crumbs -%}
+    {%- if not (_skipLast and loop.index0 == _crumbs.length - 1) -%}
+    <li class="breadcrumbs-bar__item{% if loop.index0 == _last %} breadcrumbs-bar__item--current{% endif %}">
+      {%- if loop.index0 == _last -%}
+      <span aria-current="page">{% if breadcrumbLabel %}{{ breadcrumbLabel }}{% elif title and loop.index0 > 0 %}{{ title }}{% else %}{{ crumb.label }}{% endif %}</span>
+      {%- else -%}
+      <a class="breadcrumbs-bar__link" href="{{ crumb.url }}">{{ crumb.label }}</a>
+      {%- endif -%}
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ol>
+</nav>
+{%- endif -%}

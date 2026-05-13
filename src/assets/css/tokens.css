@@ -1,0 +1,194 @@
+/* ============================================================
+   THE FREETHINKING TIMES — Design Tokens
+   All visual variables live here. Edit this file to retheme.
+   ============================================================ */
+
+:root {
+  /* ── Color: Light Mode ─────────────────────────────────── */
+  --color-bg:           #F4F1EB;   /* Warm newsprint */
+  --color-bg-alt:       #EAE6DE;   /* Slightly darker panels */
+  --color-bg-inset:     #E0DBCF;   /* Card backgrounds */
+  --color-ink:          #1A1A1A;   /* Primary text */
+  --color-ink-muted:    #3D3B39;   /* Secondary text, datelines — darkened for WCAG AA on all background variants */
+  --color-ink-faint:    #4F4A48;   /* Captions, metadata — 4.8:1 on bg-inset (#E0DBCF), 7.1:1 on default bg */
+  --color-rule:         #C8C2B6;   /* Horizontal rules, borders */
+  --color-rule-heavy:   #8A847A;   /* Strong dividers */
+
+  /* ── Color: Accent ─────────────────────────────────────── */
+  --color-accent:       #C0392B;   /* Vermillion — breaking, labels */
+  --color-accent-hover: #A93226;
+  --color-link:         #2C5F8A;   /* Slate blue — links */
+  --color-link-hover:   #1A3F5C;
+
+  /* ── Color: Selection ──────────────────────────────────── */
+  --color-selection:     #6A1B9A;  /* Pansy purple */
+  --color-selection-ink: #ffffff;
+
+  /* ── Color: Section Accents ────────────────────────────── */
+  --color-news:                #C0392B;
+  --color-opinion:             #2C5F8A;
+  --color-analysis:            #5D4037;
+  --color-arts-culture:        #6A1B9A;
+  --color-science:             #1B5E20;
+  --color-history:             #75540A;   /* darkened from #BF8C00 — 5.1:1 on card bg */
+  --color-letters:             #37474F;
+  --color-thought-experiments: #1D5C6E;
+  --color-trials:              #6B2A2A;
+  --color-glossary:            #3D5A47;
+  --color-bookshelf:           #7A5232;
+  --color-reviews:             #8B6914;
+
+  /* ── Typography: Families ──────────────────────────────── */
+  --font-masthead:   'Playfair Display', Georgia, serif;
+  --font-headline:   'Lora', Georgia, serif;
+  --font-body:       'Source Serif 4', Georgia, serif;
+  --font-ui:         'DM Sans', system-ui, sans-serif;
+
+  /* ── Typography: Scale (Major Third — 1.25) ────────────── */
+  --text-xs:    0.75rem;    /*  ~12px */
+  --text-sm:    0.875rem;   /*  ~14px */
+  --text-base:  1rem;       /*  ~16px */
+  --text-md:    1.25rem;    /*  ~20px */
+  --text-lg:    1.563rem;   /*  ~25px */
+  --text-xl:    1.953rem;   /*  ~31px */
+  --text-2xl:   2.441rem;   /*  ~39px */
+  --text-3xl:   3.052rem;   /*  ~49px */
+  --text-4xl:   3.815rem;   /*  ~61px */
+  --text-masthead: clamp(2.5rem, 6vw, 5rem);
+
+  /* ── Typography: Line Heights ──────────────────────────── */
+  --leading-tight:   1.15;
+  --leading-snug:    1.3;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose:   1.9;
+
+  /* ── Spacing ────────────────────────────────────────────── */
+  --space-1:    0.25rem;
+  --space-2:    0.5rem;
+  --space-3:    0.75rem;
+  --space-4:    1rem;
+  --space-5:    1.25rem;
+  --space-6:    1.5rem;
+  --space-8:    2rem;
+  --space-10:   2.5rem;
+  --space-12:   3rem;
+  --space-16:   4rem;
+  --space-20:   5rem;
+  --space-24:   6rem;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --max-width:        1280px;
+  --max-width-prose:  720px;
+  --gutter:           clamp(1rem, 4vw, 2rem);
+  --column-gap:       var(--space-8);
+
+  /* ── Borders & Radius ───────────────────────────────────── */
+  --radius-sm:    2px;
+  --radius-md:    4px;
+  --border-width: 1px;
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.10);
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* ── Z-Index ────────────────────────────────────────────── */
+  --z-nav:     100;
+  --z-overlay: 200;
+  --z-modal:   300;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINT CONTRACT
+   ============================================================
+   CSS custom properties don't work inside @media queries, so
+   these values are documented here as the single source of
+   truth. Every @media (max-width: X) and @media (min-width: X)
+   in this codebase MUST snap to one of the seven canonical
+   bands below — no ad-hoc px values.
+
+     --bp-xs    360px   Smallest phone (iPhone SE 1)
+     --bp-sm    480px   Large phone portrait
+     --bp-md    640px   Phone landscape / very small tablet portrait
+     --bp-tab   768px   Tablet portrait (iPad mini / iPad)
+     --bp-lg   1024px   Tablet landscape / small laptop
+     --bp-xl   1180px   Standard desktop
+     --bp-2xl  1280px   Wide desktop (matches --max-width)
+
+   Orientation: mobile-first where reasonable. New rules should
+   prefer min-width (progressive enhancement). Existing max-width
+   queries are normalised but not flipped wholesale — see
+   plan-an-all-out-compiled-blossom.md for the audit context.
+   ============================================================ */
+
+/* ── Dark Mode Tokens ──────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg:           #141414;
+  --color-bg-alt:       #1E1E1E;
+  --color-bg-inset:     #252525;
+  --color-ink:          #E8E4DC;
+  --color-ink-muted:    #A8A49C;
+  --color-ink-faint:    #9E9A96;   /* raised from #8A8580 — 5.5:1 on card bg (#252525) */
+  --color-rule:         #303030;
+  --color-rule-heavy:   #484440;
+  --color-accent:       #E05545;
+  --color-accent-hover: #C0392B;
+  --color-link:         #6B9EC7;
+  --color-link-hover:   #8FB8D8;
+
+  /* Selection — lighter purple for dark backgrounds */
+  --color-selection:     #B87ACC;
+  --color-selection-ink: #141414;
+
+  /* Section colors lightened for dark backgrounds */
+  --color-news:                #E05545;
+  --color-opinion:             #6B9EC7;
+  --color-analysis:            #A07868;
+  --color-arts-culture:        #B87ACC;
+  --color-science:             #5EAD64;
+  --color-history:             #D4A830;
+  --color-letters:             #7A9BA8;
+  --color-thought-experiments: #4B9AAE;
+  --color-trials:              #C07070;
+  --color-glossary:            #7AAE88;
+  --color-bookshelf:           #C4965E;
+}
+
+/* Also respect OS preference when no explicit theme is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg:           #141414;
+    --color-bg-alt:       #1E1E1E;
+    --color-bg-inset:     #252525;
+    --color-ink:          #E8E4DC;
+    --color-ink-muted:    #A8A49C;
+    --color-ink-faint:    #9E9A96;   /* raised from #8A8580 — 5.5:1 on card bg (#252525) */
+    --color-rule:         #303030;
+    --color-rule-heavy:   #484440;
+    --color-accent:       #E05545;
+    --color-accent-hover: #C0392B;
+    --color-link:         #6B9EC7;
+    --color-link-hover:   #8FB8D8;
+
+    /* Selection */
+    --color-selection:     #B87ACC;
+    --color-selection-ink: #141414;
+
+    /* Section colors lightened for dark backgrounds */
+    --color-news:                #E05545;
+    --color-opinion:             #6B9EC7;
+    --color-analysis:            #A07868;
+    --color-arts-culture:        #B87ACC;
+    --color-science:             #5EAD64;
+    --color-history:             #D4A830;
+    --color-letters:             #7A9BA8;
+    --color-thought-experiments: #4B9AAE;
+    --color-trials:              #C07070;
+    --color-glossary:            #7AAE88;
+    --color-bookshelf:           #C4965E;
+  }
+}

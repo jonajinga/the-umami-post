@@ -1,0 +1,48 @@
+---
+layout: base
+pagination:
+  data: timeline
+  size: 1
+  alias: event
+  addAllPagesToCollections: true
+eleventyComputed:
+  # `| safe` here so apostrophes / ampersands in event.title aren't
+  # double-escaped: the eleventyComputed eval would auto-escape the
+  # value once, then the page templates would escape `&` to `&amp;`
+  # again at render time, producing literal `&amp;#39;` in output.
+  title: "{{ event.title | safe }}"
+  description: "{{ event.description | safe }}"
+permalink: /timeline/{{ event.title | slugify }}/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div style="max-width: var(--max-width-prose); margin: 0 auto;">
+
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/timeline/">Timeline</a></li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ event.title }}</li>
+      </ol>
+    </nav>
+
+    <article data-pagefind-body>
+      <div aria-hidden="true" style="display:none">
+        <span data-pagefind-meta="title">{% if event.year < 0 %}{{ event.year * -1 }} BCE{% else %}{{ event.year }}{% endif %}, {{ event.title }}</span>
+        <span data-pagefind-meta="section">Timeline</span>
+        <span data-pagefind-filter="section">Timeline</span>
+        <span data-pagefind-filter="era">{{ event.era }}</span>
+      </div>
+
+      <p style="font-family:var(--font-ui);font-size:var(--text-sm);font-weight:700;color:var(--color-accent);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 var(--space-2);">
+        {% if event.year < 0 %}{{ event.year * -1 }} BCE{% else %}{{ event.year }}{% endif %}
+        <span style="color:var(--color-ink-faint);font-weight:400;"> &middot; {{ event.era }}</span>
+      </p>
+
+      <h1 style="font-family:var(--font-headline);font-size:clamp(1.4rem,3vw,var(--text-xl));margin:0 0 var(--space-4);line-height:var(--leading-snug);">{{ event.title }}</h1>
+
+      <p style="font-family:var(--font-body);font-size:var(--text-md);color:var(--color-ink-muted);margin:0;line-height:var(--leading-relaxed);">{{ event.description }}</p>
+    </article>
+
+  </div>
+</div>

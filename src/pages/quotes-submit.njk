@@ -1,0 +1,77 @@
+---
+layout: base
+title: "Submit a Quote"
+description: Know a great freethought quote? Submit it for our curated collection.
+permalink: /quotes/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/quotes/">Quotes</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Submit a Quote</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Submit a Quote</h1>
+      <p class="page-header__lede">
+        Know a great quote from the freethought tradition? We'd love to add it to our <a href="/quotes/">collection</a>.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <p>We look for quotes that are well-sourced, thought-provoking, and relevant to the freethought tradition, reason, secularism, science, liberty of conscience, and the examined life. Please verify the attribution before submitting. You can also send quote suggestions via <a href="/contact/">our contact form</a>.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Quote submission, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Quote Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="quote-text">The quote <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="quote-text-hint">The exact text of the quote. Please use the original wording, not a paraphrase.</span>
+          <textarea class="w3f__textarea" name="quote" id="quote-text" rows="4" required aria-required="true" aria-describedby="quote-text-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="quote-author">Author <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="author" id="quote-author" required aria-required="true" placeholder="e.g. Carl Sagan">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="quote-source">Source <span class="w3f__optional">(optional)</span></label>
+            <span class="w3f__hint" id="quote-source-hint">Book, speech, interview, letter, etc.</span>
+            <input class="w3f__input" type="text" name="source" id="quote-source" aria-describedby="quote-source-hint" placeholder="e.g. The Demon-Haunted World, 1995">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="quote-context">Context or notes <span class="w3f__optional">(optional)</span></label>
+          <span class="w3f__hint" id="quote-context-hint">Why is this quote significant? Any relevant context about when or why it was said?</span>
+          <textarea class="w3f__textarea" name="context" id="quote-context" rows="3" aria-describedby="quote-context-hint" maxlength="1000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="quote-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="quote-name" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="quote-email">Email <span class="w3f__optional">(optional, if you'd like credit)</span></label>
+            <input class="w3f__input" type="email" name="email" id="quote-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Quote</button>
+        <p class="w3f__privacy">We verify all quotes before adding them. Misattributed or fabricated quotes will not be published.</p>
+      </form>
+
+    </div>
+  </div>
+</div>

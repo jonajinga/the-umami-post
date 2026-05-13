@@ -1,0 +1,25 @@
+name: Scheduled publish
+
+# Triggers a Cloudflare Pages rebuild so articles with a future `date` field
+# become visible once their publish time has passed.
+#
+# Runs daily at 00:05 UTC. To change the cadence, edit the cron expression below.
+
+on:
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages deploy hook
+        env:
+          DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "CLOUDFLARE_DEPLOY_HOOK secret is not set; skipping."
+            exit 0
+          fi
+          curl -X POST -f "$DEPLOY_HOOK"

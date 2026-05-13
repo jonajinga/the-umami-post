@@ -1,0 +1,207 @@
+---
+layout: base
+title: "Editorial Board"
+description: Kanban-style view of articles by status, draft, in review, scheduled, published.
+permalink: /editorial/board/
+eleventyExcludeFromCollections: true
+isEditorial: true
+---
+
+{% set board = collections.allContent | editorialBoard %}
+{% set stats = board | editorialBoardStats %}
+{% set wip = board | wipLimits %}
+{% set edits = 30 | recentEdits %}
+{% set authorSlugs = [] %}
+{% for slug in authors | keys | sort %}{% if slug != "staff" %}{% set authorSlugs = (authorSlugs.push(slug), authorSlugs) %}{% endif %}{% endfor %}
+
+<div class="container eb-page">
+
+  {% include "partials/editorial-pivot.njk" %}
+
+  <header class="eb-page__header">
+    <h1 class="eb-page__title">Editorial Board</h1>
+    <p class="eb-page__lede">
+      Pitched &rarr; Drafting &rarr; In review &rarr; Scheduled &rarr;
+      Published. Cards stuck more than seven days are flagged via a
+      colour-graded left edge. Click any card to open its detail flyout.
+    </p>
+
+    <div class="eb-toolbar" role="toolbar" aria-label="Board filters">
+      <input type="search" id="eb-search" class="eb-toolbar__input" placeholder="Filter cards by title, author, or tag…" aria-label="Filter cards" aria-keyshortcuts="/">
+      <select id="eb-section" class="eb-toolbar__select" aria-label="Filter by section">
+        <option value="">All sections</option>
+        {% for key, section in site.sections %}
+        {% if key in ["news","opinion","analysis","arts-culture","science-technology","history","letters","reviews"] %}
+        <option value="{{ section.label }}">{{ section.label }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+      <select id="eb-author" class="eb-toolbar__select" aria-label="Filter by author">
+        <option value="">All authors</option>
+        {% for slug in authorSlugs %}
+        <option value="{{ slug }}">{{ authors[slug].name or slug }}</option>
+        {% endfor %}
+      </select>
+      <label class="eb-toolbar__check"><input type="checkbox" id="eb-stuck"> Stuck only</label>
+      <label class="eb-toolbar__check"><input type="checkbox" id="eb-overdue"> Overdue only</label>
+      <button type="button" id="eb-swimlanes" class="eb-toolbar__btn" aria-pressed="false">Swim-lanes</button>
+      <span class="eb-toolbar__group">
+        <button type="button" id="eb-copy-md" class="eb-toolbar__btn" title="Copy filtered cards as a Markdown table">Copy MD</button>
+        <button type="button" id="eb-copy-csv" class="eb-toolbar__btn" title="Download filtered cards as CSV">CSV</button>
+      </span>
+    </div>
+  </header>
+
+  {# ── Per-day publishing rhythm strip ── #}
+  {% set agenda = collections.allContent | schedulingAgenda(7) %}
+  <div class="eb-rhythm" aria-label="This week's publishing rhythm">
+    {% for slot in agenda %}
+    <div class="eb-rhythm__slot{% if slot.items.length %} eb-rhythm__slot--filled{% endif %}">
+      <div class="eb-rhythm__weekday">{{ slot.weekday }}</div>
+      <div class="eb-rhythm__day">{{ slot.dayOfMonth }}</div>
+      <div class="eb-rhythm__count">{{ slot.items.length or 0 }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="eb-board" id="eb-board">
+
+    {% for col in [
+      { key: "pitched",   label: "Pitched",       accent: "var(--color-ink-faint)",    empty: "No pitches in queue." },
+      { key: "drafting",  label: "Drafting",      accent: "var(--color-news)",         empty: "No drafts in flight." },
+      { key: "review",    label: "In Review",     accent: "var(--color-history)",      empty: "Nothing in review." },
+      { key: "scheduled", label: "Scheduled",     accent: "var(--color-arts-culture)", empty: "No pieces scheduled." },
+      { key: "published", label: "Published",     accent: "var(--color-science)",      empty: "Nothing published yet." },
+      { key: "spiked",    label: "Spiked / Held", accent: "var(--color-rule-heavy)",   empty: "Nothing spiked." }
+    ] %}
+    {% set cards = board[col.key] %}
+    {% set columnStats = stats[col.key] %}
+    {% set columnWip = wip[col.key] %}
+    <div class="eb-col" data-col="{{ col.key }}">
+      <div class="eb-col__header" style="border-top: 3px solid {{ col.accent }};">
+        <div>
+          <h2 class="eb-col__title">{{ col.label }}</h2>
+          {% if columnStats.count %}
+          <p class="eb-col__sla">
+            median {{ columnStats.median }}d
+            {% if columnStats.oldest > columnStats.median %} &middot; oldest {{ columnStats.oldest }}d{% endif %}
+          </p>
+          {% endif %}
+          {% if columnWip and columnWip.limit %}
+          <p class="eb-col__wip{% if columnWip.breach %} eb-col__wip--breach{% endif %}">
+            {{ columnWip.count }} / {{ columnWip.limit }} typical
+            {% if columnWip.breach %}&middot; over WIP{% endif %}
+          </p>
+          {% endif %}
+        </div>
+        <span class="eb-col__count" data-col-count="{{ col.key }}">{{ cards.length }}</span>
+      </div>
+      <div class="eb-col__body">
+        {% for c in cards | limit(60) %}
+        {% set ageClass = "" %}
+        {% if c.daysInStatus != null and col.key not in ["published", "spiked"] %}
+          {% if c.daysInStatus >= 15 %}{% set ageClass = "eb-card--age-4" %}
+          {% elif c.daysInStatus >= 8 %}{% set ageClass = "eb-card--age-3" %}
+          {% elif c.daysInStatus >= 5 %}{% set ageClass = "eb-card--age-2" %}
+          {% elif c.daysInStatus >= 3 %}{% set ageClass = "eb-card--age-1" %}{% endif %}
+        {% endif %}
+        <button type="button" class="eb-card{% if ageClass %} {{ ageClass }}{% endif %}{% if c.isOverdue %} eb-card--overdue{% endif %}"
+                data-search="{{ ((c.title or '') + ' ' + (c.author or '') + ' ' + (c.tags | join(' '))) | lower }}"
+                data-section="{{ c.section }}"
+                data-author-slug="{{ c.authorSlug }}"
+                data-author-name="{{ c.author }}"
+                data-stuck="{{ c.stuckLevel }}"
+                data-overdue="{{ 'true' if c.isOverdue else 'false' }}"
+                data-col="{{ col.key }}"
+                data-url="{{ c.url }}"
+                data-title="{{ c.title }}"
+                data-days-in-status="{{ c.daysInStatus or '' }}"
+                data-due-date="{{ c.dueDate or '' }}"
+                data-word-count="{{ c.wordCount or '' }}"
+                data-editor="{{ c.editor or '' }}"
+                data-reviewer="{{ c.reviewer or '' }}"
+                data-tags="{{ c.tags | join(',') }}"
+                data-spiked-reason="{{ c.spikedReason or '' }}">
+          <header class="eb-card__head">
+            <span class="eb-card__section">{{ c.section }}</span>
+          </header>
+          <span class="eb-card__title-link">{{ c.title }}</span>
+          <div class="eb-card__meta">
+            <span class="eb-card__author">{{ c.author or "Unattributed" }}</span>
+            {% if c.daysInStatus != null and col.key not in ["published", "spiked"] %}
+            <span class="eb-card__age">{{ c.daysInStatus }}d in {{ col.label | lower }}</span>
+            {% endif %}
+            {% if c.wordCount %}
+            <span class="eb-card__words">{{ c.wordCount }} words</span>
+            {% endif %}
+            {% if c.dueDate %}
+            <span class="eb-card__due{% if c.isOverdue %} eb-card__due--overdue{% endif %}">due {{ c.dueDate }}</span>
+            {% endif %}
+          </div>
+          {% if c.editor or c.reviewer %}
+          <div class="eb-card__assigns">
+            {% if c.editor %}<span class="eb-card__role">ed: {{ authors[c.editor].name or c.editor }}</span>{% endif %}
+            {% if c.reviewer %}<span class="eb-card__role">rv: {{ authors[c.reviewer].name or c.reviewer }}</span>{% endif %}
+          </div>
+          {% endif %}
+          {% if col.key == "spiked" and c.spikedReason %}
+          <p class="eb-card__spiked-reason">{{ c.spikedReason }}</p>
+          {% endif %}
+        </button>
+        {% endfor %}
+        {% if not cards.length %}<p class="eb-empty">{{ col.empty }}</p>{% endif %}
+        {% if cards.length > 60 %}<p class="eb-empty">Showing 60 of {{ cards.length }}.</p>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  {# ── Recent edits panel — git log of src/content ── #}
+  {% if edits.length %}
+  <details class="eb-edits">
+    <summary class="eb-edits__summary">Recent edits ({{ edits.length }})</summary>
+    <ul class="eb-edits__list">
+      {% for e in edits %}
+      <li class="eb-edits__item">
+        <code class="eb-edits__hash">{{ e.hash }}</code>
+        <span class="eb-edits__msg">{{ e.message }}</span>
+        <span class="eb-edits__author">{{ e.author }}</span>
+        <time class="eb-edits__time" datetime="{{ e.iso }}">{{ e.iso | readableDate }}</time>
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+
+</div>
+
+{# ── Card flyout (slide-in side drawer) ── #}
+<aside id="eb-flyout" class="eb-flyout" role="dialog" aria-labelledby="eb-flyout-title" aria-hidden="true">
+  <header class="eb-flyout__header">
+    <div>
+      <p class="eb-flyout__kicker" id="eb-flyout-section">Section</p>
+      <h2 class="eb-flyout__title" id="eb-flyout-title">Card</h2>
+    </div>
+    <button type="button" id="eb-flyout-close" class="eb-flyout__close" aria-label="Close card detail">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </header>
+  <div class="eb-flyout__body">
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Status</span><span class="eb-flyout__value" id="eb-flyout-status">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Author</span><span class="eb-flyout__value" id="eb-flyout-author">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Days in status</span><span class="eb-flyout__value" id="eb-flyout-days">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Due date</span><span class="eb-flyout__value" id="eb-flyout-due">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Word count</span><span class="eb-flyout__value" id="eb-flyout-words">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Editor</span><span class="eb-flyout__value" id="eb-flyout-editor">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Reviewer</span><span class="eb-flyout__value" id="eb-flyout-reviewer">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Tags</span><span class="eb-flyout__value" id="eb-flyout-tags">—</span></div>
+    <div class="eb-flyout__field"><span class="eb-flyout__label">Spiked reason</span><span class="eb-flyout__value" id="eb-flyout-spiked">—</span></div>
+  </div>
+  <div class="eb-flyout__actions">
+    <a id="eb-flyout-open" class="eb-flyout__action" href="#">Open article &nearr;</a>
+    <a id="eb-flyout-source" class="eb-flyout__action" href="#" target="_blank" rel="noopener">View source &nearr;</a>
+  </div>
+</aside>
+
+<script src="/assets/js/editorial-board.js?v={{ buildTime }}" defer></script>

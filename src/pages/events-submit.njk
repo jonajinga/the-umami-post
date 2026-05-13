@@ -1,0 +1,96 @@
+---
+layout: base
+title: "Submit an Event"
+description: Know of a freethought event? Submit it for our events calendar.
+permalink: /events/submit/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/events/">Events</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Submit an Event</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Submit an Event</h1>
+      <p class="page-header__lede">
+        Know of a conference, convention, meetup, or observance relevant to the freethought community? Tell us about it.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Event submission, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Event Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="evt-name">Event name <span class="w3f__required">*</span></label>
+          <input class="w3f__input" type="text" name="event_name" id="evt-name" required aria-required="true">
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-start">Start date <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="date" name="start_date" id="evt-start" required aria-required="true">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-end">End date <span class="w3f__optional">(if multi-day)</span></label>
+            <input class="w3f__input" type="date" name="end_date" id="evt-end">
+          </div>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-location">Location <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="location" id="evt-location" required aria-required="true" placeholder="City, State or Online">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-type">Event type</label>
+            <select class="w3f__select" name="event_type" id="evt-type">
+              <option value="Conference">Conference</option>
+              <option value="Convention">Convention</option>
+              <option value="Meetup">Meetup</option>
+              <option value="Online">Online event</option>
+              <option value="Observance">Observance / awareness day</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="evt-url">Event website <span class="w3f__optional">(optional)</span></label>
+          <input class="w3f__input" type="url" name="event_url" id="evt-url" placeholder="https://" inputmode="url">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="evt-desc">Description <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="evt-desc-hint">One or two sentences about the event</span>
+          <textarea class="w3f__textarea" name="description" id="evt-desc" rows="4" required aria-required="true" aria-describedby="evt-desc-hint" maxlength="1000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-your-name">Your name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="evt-your-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="evt-your-email">Your email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="evt-your-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Event</button>
+        <p class="w3f__privacy">We review all submissions and add qualifying events to our <a href="/events/">events calendar</a>. You can also send event details via <a href="/contact/">our contact form</a>.</p>
+      </form>
+
+    </div>
+  </div>
+</div>

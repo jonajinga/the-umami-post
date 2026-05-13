@@ -1,0 +1,338 @@
+---
+layout: base
+title: Word Scramble
+description: Reconstruct a famous freethinking quote from its scrambled words.
+permalink: /games/word-scramble/
+---
+
+{% block head %}
+<style>
+  .scramble-progress {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-faint);
+    margin-bottom: var(--space-5);
+    text-align: center;
+  }
+
+  .scramble-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    min-height: 4rem;
+    padding: var(--space-4);
+    border: 1px dashed var(--color-rule-heavy);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-6);
+    align-content: flex-start;
+  }
+
+  .scramble-answer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    min-height: 4rem;
+    padding: var(--space-4);
+    border: 1px solid var(--color-rule-heavy);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-4);
+    align-content: flex-start;
+    background: var(--color-bg-alt);
+  }
+
+  .scramble-label {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-faint);
+    margin-bottom: var(--space-2);
+    display: block;
+  }
+
+  .word-chip {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-rule-heavy);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .word-chip:hover {
+    border-color: var(--color-ink);
+    background: var(--color-bg-alt);
+  }
+
+  .word-chip--placed {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    border-color: var(--color-ink);
+  }
+
+  .word-chip--placed:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .scramble-controls {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .scramble-feedback {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    min-height: 1.5em;
+    text-align: center;
+    font-style: italic;
+    color: var(--color-ink-muted);
+  }
+
+  .scramble-correct {
+    padding: var(--space-5);
+    border: 1px solid var(--color-rule);
+    border-top: 3px solid var(--color-accent);
+    text-align: center;
+    display: none;
+  }
+
+  .scramble-correct.is-visible { display: block; }
+
+  .scramble-correct__quote {
+    font-family: var(--font-headline);
+    font-size: var(--text-lg);
+    font-style: italic;
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+    margin-bottom: var(--space-2);
+  }
+
+  .scramble-correct__attribution {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-faint);
+    margin-bottom: var(--space-5);
+  }
+</style>
+{% endblock %}
+
+<div class="game-page">
+
+  <div class="game-header">
+    <a href="/games/" class="game-back">← Games</a>
+    <h1 class="game-title">Word Scramble</h1>
+    <p class="game-description">Click words to arrange them into the correct order. Click a placed word to return it.</p>
+  </div>
+
+  <p class="scramble-progress" id="scramble-progress"></p>
+
+  <span class="scramble-label">Available words</span>
+  <div class="scramble-pool" id="word-pool"></div>
+
+  <span class="scramble-label">Your answer</span>
+  <div class="scramble-answer" id="word-answer"></div>
+
+  <div class="scramble-controls">
+    <button class="game-btn" id="check-btn" type="button">Check</button>
+    <button class="game-btn" id="clear-btn" type="button">Clear</button>
+  </div>
+
+  <p class="scramble-feedback" id="scramble-feedback"></p>
+
+  <div class="scramble-correct" id="correct-panel">
+    <p class="scramble-correct__quote" id="correct-quote"></p>
+    <p class="scramble-correct__attribution" id="correct-attr"></p>
+    <button class="game-btn game-btn--accent" id="next-quote-btn" type="button">Next Quote →</button>
+  </div>
+
+</div>
+
+{% block scripts %}
+<script>
+(function () {
+  'use strict';
+
+  var quotes = [
+    {
+      words: ["The", "unexamined", "life", "is", "not", "worth", "living."],
+      attribution: "Socrates"
+    },
+    {
+      words: ["All", "great", "truths", "begin", "as", "blasphemies."],
+      attribution: "George Bernard Shaw"
+    },
+    {
+      words: ["The", "truth", "is", "rarely", "pure", "and", "never", "simple."],
+      attribution: "Oscar Wilde"
+    },
+    {
+      words: ["Doubt", "is", "the", "origin", "of", "wisdom."],
+      attribution: "René Descartes"
+    },
+    {
+      words: ["Man", "is", "condemned", "to", "be", "free."],
+      attribution: "Jean-Paul Sartre"
+    }
+  ];
+
+  var order    = shuffleIndices(quotes.length);
+  var qIndex   = 0;
+  var placed   = [];
+  var available = [];
+  var solved   = false;
+
+  var poolEl      = document.getElementById('word-pool');
+  var answerEl    = document.getElementById('word-answer');
+  var feedbackEl  = document.getElementById('scramble-feedback');
+  var progressEl  = document.getElementById('scramble-progress');
+  var checkBtn    = document.getElementById('check-btn');
+  var clearBtn    = document.getElementById('clear-btn');
+  var correctPanel = document.getElementById('correct-panel');
+  var correctQuote = document.getElementById('correct-quote');
+  var correctAttr  = document.getElementById('correct-attr');
+  var nextBtn     = document.getElementById('next-quote-btn');
+
+  function shuffleIndices(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function shuffleArray(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function loadQuote() {
+    var q = quotes[order[qIndex]];
+    placed    = [];
+    available = shuffleArray(q.words.slice());
+
+    // Ensure scrambled (if shuffle returns original order, shuffle again)
+    while (available.join(' ') === q.words.join(' ')) {
+      available = shuffleArray(q.words.slice());
+    }
+
+    solved = false;
+    feedbackEl.textContent = '';
+    correctPanel.classList.remove('is-visible');
+    progressEl.textContent = 'Quote ' + (qIndex + 1) + ' of ' + quotes.length;
+    render();
+  }
+
+  function render() {
+    poolEl.innerHTML = '';
+    answerEl.innerHTML = '';
+
+    available.forEach(function (word, i) {
+      var chip = makeChip(word, false, function () { pickWord(i); });
+      poolEl.appendChild(chip);
+    });
+
+    placed.forEach(function (word, i) {
+      var chip = makeChip(word, true, function () { returnWord(i); });
+      answerEl.appendChild(chip);
+    });
+  }
+
+  function makeChip(text, isPlaced, onClick) {
+    var el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'word-chip' + (isPlaced ? ' word-chip--placed' : '');
+    el.textContent = text;
+    el.addEventListener('click', onClick);
+    return el;
+  }
+
+  function pickWord(i) {
+    if (solved) return;
+    placed.push(available[i]);
+    available.splice(i, 1);
+    feedbackEl.textContent = '';
+    render();
+  }
+
+  function returnWord(i) {
+    if (solved) return;
+    available.push(placed[i]);
+    placed.splice(i, 1);
+    feedbackEl.textContent = '';
+    render();
+  }
+
+  checkBtn.addEventListener('click', function () {
+    if (solved) return;
+    var q = quotes[order[qIndex]];
+
+    if (placed.length === 0) {
+      feedbackEl.textContent = 'Place some words first.';
+      return;
+    }
+
+    if (placed.length < q.words.length) {
+      feedbackEl.textContent = 'Not all words placed yet.';
+      return;
+    }
+
+    if (placed.join(' ') === q.words.join(' ')) {
+      solved = true;
+      feedbackEl.textContent = '';
+      correctQuote.textContent = '\u201c' + q.words.join(' ').replace(/\.$/, '') + '\u201d';
+      correctAttr.textContent = '\u2014 ' + q.attribution;
+      correctPanel.classList.add('is-visible');
+
+      if (qIndex >= quotes.length - 1) {
+        nextBtn.textContent = 'Play Again';
+      } else {
+        nextBtn.textContent = 'Next Quote \u2192';
+      }
+    } else {
+      feedbackEl.textContent = 'Not quite \u2014 try again.';
+    }
+  });
+
+  clearBtn.addEventListener('click', function () {
+    if (solved) return;
+    while (placed.length) {
+      available.push(placed.pop());
+    }
+    feedbackEl.textContent = '';
+    render();
+  });
+
+  nextBtn.addEventListener('click', function () {
+    qIndex++;
+    if (qIndex >= quotes.length) {
+      qIndex = 0;
+      order  = shuffleIndices(quotes.length);
+    }
+    loadQuote();
+  });
+
+  loadQuote();
+}());
+</script>
+{% endblock %}

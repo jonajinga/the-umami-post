@@ -1,0 +1,152 @@
+---
+layout: layouts/base.njk
+---
+<div class="library-home">
+  <div class="container">
+
+    {# ── Hero ── #}
+    <header class="library-hero">
+      <h1 class="library-hero__headline">{{ title or "The Library" }}</h1>
+      <p class="library-hero__deck">{{ description or "A curated collection of public domain texts, philosophy, history, science, literature, freely readable and fully annotated." }}</p>
+      <div style="display:flex;justify-content:center;margin-top:var(--space-4);">
+        <p style="font-family: var(--font-ui); font-size: var(--text-sm); margin: 0;">
+          Know a public domain text we should publish? <a href="/library/submit/" style="color: var(--color-link); font-weight: 600;">Suggest it</a>
+        </p>
+      </div>
+    </header>
+
+    {# ── Featured Works ── #}
+    <section class="library-featured" aria-labelledby="featured-heading">
+      <h2 class="library-featured__heading" id="featured-heading">Featured Works</h2>
+      {% set featuredWorks = [] %}
+      {% for w in library.works %}
+        {% if w.featured and not w.parentWork %}{% set featuredWorks = (featuredWorks.push(w), featuredWorks) %}{% endif %}
+      {% endfor %}
+      {% if featuredWorks.length %}
+        <div class="library-featured__grid">
+          {% for w in featuredWorks %}
+            <a class="library-work-card" href="/library/{{ w.slug }}/">
+              <p class="library-work-card__era">{{ w.era or "" }}</p>
+              <h3 class="library-work-card__title">{{ w.title }}</h3>
+              <p class="library-work-card__author">{{ w.author or "" }}</p>
+              {% if w.description %}
+                <p class="library-work-card__desc">{{ w.description }}</p>
+              {% endif %}
+              <div class="library-work-card__meta">
+                <span>{{ w.type | title }}</span>
+                {% if w.difficulty %}<span>{{ w.difficulty }}</span>{% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="library-featured__empty">No featured works yet. Works added to the library will appear here when marked as featured.</p>
+      {% endif %}
+    </section>
+
+    {# ── Full Catalogue ── #}
+    <section class="library-catalogue" aria-labelledby="catalogue-heading">
+      <h2 class="library-catalogue__heading" id="catalogue-heading">Complete Catalogue</h2>
+
+      {% if library.works and library.works.length %}
+
+        {# Build subject/type/era option lists from data #}
+        {% set subjectOptions = [] %}
+        {% set types = [] %}
+        {% set eras = [] %}
+        {% for w in library.works %}
+          {% if not w.parentWork %}
+          {% for s in (w.subjects or []) %}
+            {% if s not in subjectOptions %}{% set subjectOptions = subjectOptions.concat([s]) %}{% endif %}
+          {% endfor %}
+          {% if w.type and w.type not in types %}{% set types = types.concat([w.type]) %}{% endif %}
+          {% if w.era and w.era not in eras %}{% set eras = eras.concat([w.era]) %}{% endif %}
+          {% endif %}
+        {% endfor %}
+
+        <div class="library-filter-bar" aria-label="Filter catalogue">
+          <span class="library-filter-bar__label">Filter:</span>
+
+          <select id="filter-subject" aria-label="Filter by subject">
+            <option value="">All subjects</option>
+            {% for s in subjectOptions | sort %}
+              <option value="{{ s }}">{{ s }}</option>
+            {% endfor %}
+          </select>
+
+          <select id="filter-type" aria-label="Filter by type">
+            <option value="">All types</option>
+            {% for t in types | sort %}
+              <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+          </select>
+
+          <select id="filter-era" aria-label="Filter by era">
+            <option value="">All eras</option>
+            {% for e in eras | sort %}
+              <option value="{{ e }}">{{ e }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <table class="library-table" aria-label="Library catalogue">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col" class="library-table__author">Author</th>
+              <th scope="col" class="library-table__type">Type</th>
+              <th scope="col" class="library-table__era">Era</th>
+            </tr>
+          </thead>
+          <tbody id="catalogue-body">
+            {% for w in library.works %}
+              {% if not w.parentWork %}
+              <tr data-subject="{{ (w.subjects or []) | join(',') }}" data-type="{{ w.type or '' }}" data-era="{{ w.era or '' }}">
+                <td class="library-table__title-cell">
+                  <a href="/library/{{ w.slug }}/">{{ w.title }}</a>
+                </td>
+                <td class="library-table__author">{% if w.authorSlug %}<a href="/library/authors/#{{ w.authorSlug }}" style="color:var(--color-ink);text-decoration:none;border-bottom:1px dotted var(--color-rule);">{{ w.author }}</a>{% else %}{{ w.author or ", " }}{% endif %}</td>
+                <td class="library-table__type">{{ w.type or ", " }}</td>
+                <td class="library-table__era">{{ w.era or (w.year ~ " CE") or ", " }}</td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+        <p class="library-catalogue__empty">No works in the catalogue yet. Check back soon.</p>
+      {% endif %}
+    </section>
+
+  </div>
+</div>
+
+{% block scripts %}
+<script>
+(function () {
+  var filterSubject = document.getElementById('filter-subject');
+  var filterType    = document.getElementById('filter-type');
+  var filterEra     = document.getElementById('filter-era');
+  var rows          = document.querySelectorAll('#catalogue-body tr');
+
+  function applyFilters() {
+    var subject = filterSubject ? filterSubject.value : '';
+    var type    = filterType    ? filterType.value    : '';
+    var era     = filterEra     ? filterEra.value     : '';
+    rows.forEach(function (row) {
+      var rowSubjects = row.dataset.subject ? row.dataset.subject.split(',') : [];
+      var match =
+        (!subject || rowSubjects.indexOf(subject) !== -1) &&
+        (!type    || row.dataset.type === type)           &&
+        (!era     || row.dataset.era  === era);
+      row.hidden = !match;
+    });
+  }
+
+  if (filterSubject) filterSubject.addEventListener('change', applyFilters);
+  if (filterType)    filterType.addEventListener('change', applyFilters);
+  if (filterEra)     filterEra.addEventListener('change', applyFilters);
+}());
+</script>
+{% endblock %}

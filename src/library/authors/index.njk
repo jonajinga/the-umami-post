@@ -1,0 +1,33 @@
+---
+layout: base
+title: Library Authors
+description: Browse the public domain library by author.
+permalink: /library/authors/
+---
+<div class="library-discovery" data-pagefind-ignore>
+  <div class="container">
+
+    <header class="library-discovery__header">
+      <a class="library-discovery__back" href="/library/">&larr; Library</a>
+      <h1 class="library-discovery__title">Authors</h1>
+      <p class="library-discovery__deck">{{ library.authors.length }} author{{ "s" if library.authors.length !== 1 }} in the library.</p>
+    </header>
+
+    <ul class="library-author-list" role="list">
+      {% for author in library.authors | sort(false, false, 'name') %}
+        {% set worksCount = 0 %}
+        {% for w in library.works %}
+          {% if w.authorSlug === author.slug %}{% set worksCount = worksCount + 1 %}{% endif %}
+        {% endfor %}
+        <li class="library-author-list__item">
+          <a class="library-author-list__link" href="/library/authors/{{ author.slug }}/">
+            <span class="library-author-list__name">{{ author.name }}</span>
+            {% if author.dates %}<span class="library-author-list__dates">{{ author.dates }}</span>{% endif %}
+          </a>
+          <span class="library-author-list__meta">{{ author.nationality or "" }}{% if worksCount %} &middot; {{ worksCount }} work{{ "s" if worksCount !== 1 }}{% endif %}</span>
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>

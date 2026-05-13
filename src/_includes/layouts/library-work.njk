@@ -1,0 +1,170 @@
+---
+layout: layouts/base.njk
+---
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "{{ workTitle }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author }}"
+  },
+  "datePublished": "{{ originalPublication }}",
+  "inLanguage": "{{ originalLanguage or 'en' }}",
+  "isAccessibleForFree": true,
+  "url": "{{ site.url }}/library/{{ workSlug }}/"
+}
+</script>
+{% endblock %}
+{# Context div, read by library.js #}
+<div id="library-context"
+     data-work-slug="{{ workSlug }}"
+     data-chapter-slug=""
+     data-chapter-title=""
+     hidden></div>
+
+<div class="library-work-landing">
+  <div class="container">
+
+    <article class="library-work-hero">
+      <a class="library-work-hero__back" href="/library/">&larr; Library</a>
+
+      {% if era %}<p class="library-work-hero__era">{{ era }}</p>{% endif %}
+
+      <h1 class="library-work-hero__title">{{ title }}</h1>
+
+      {% if author %}
+        <p class="library-work-hero__author">{{ author }}{% if authorDates %} ({{ authorDates }}){% endif %}</p>
+      {% endif %}
+
+      <div class="library-work-hero__meta">
+        {% if originalPublication %}<span>{{ originalPublication | formatYear }}</span>{% endif %}
+        {% if subjects %}<span>{{ subjects | join(', ') }}</span>{% endif %}
+        {% if type %}<span>{{ type }}</span>{% endif %}
+      </div>
+
+      {% if content %}
+        <div class="library-work-hero__intro">{{ content | safe }}</div>
+      {% endif %}
+
+      <div class="library-work-hero__actions">
+        {# "Continue Reading" link, chapter is determined client-side from saved progress #}
+        <a id="continue-reading-btn" href="#chapter-list" class="btn btn-secondary" hidden>Continue Reading</a>
+        <a id="start-reading-btn" href="#chapter-list" class="btn btn-primary">Start Reading</a>
+      </div>
+    </article>
+
+    {# ── Volume List (for multi-volume works) ── #}
+    {% if isParent and volumes %}
+      <nav class="library-chapter-list" id="chapter-list" aria-label="Volumes">
+        <h2 class="library-chapter-list__heading">
+          {{ volumes | length }} Volume{{ "s" if volumes.length !== 1 }}
+        </h2>
+        {% for volSlug in volumes %}
+          {% set vol = null %}
+          {% for w in library.works %}
+            {% if w.slug == volSlug %}{% set vol = w %}{% endif %}
+          {% endfor %}
+          {% if vol %}
+          <a class="library-chapter-item"
+             href="/library/{{ volSlug }}/">
+            <span class="library-chapter-item__number">{{ loop.index }}</span>
+            <span class="library-chapter-item__body">
+              <span class="library-chapter-item__title">{{ vol.title }}</span>
+              {% if vol.description %}
+                <span class="library-chapter-item__subtitle">{{ vol.description }}</span>
+              {% endif %}
+            </span>
+            <span class="library-chapter-item__meta">
+              {{ vol.chapters }} chapter{{ "s" if vol.chapters !== 1 }}
+            </span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+    {# ── Chapter List (for single-volume works) ── #}
+    {% else %}
+      {% set chapters = collections.libraryByWork | chaptersForWork(workSlug) %}
+      {% if chapters and chapters.length %}
+        <nav class="library-chapter-list" id="chapter-list" aria-label="Chapters">
+          <h2 class="library-chapter-list__heading">
+            {{ chapters.length }} Chapter{{ "s" if chapters.length !== 1 }}
+          </h2>
+          {% for ch in chapters %}
+            <a class="library-chapter-item"
+               href="{{ ch.url }}"
+               data-chapter-slug="{{ ch.page.fileSlug }}">
+              <span class="library-chapter-item__number">{{ ch.data.chapterNumber or loop.index }}</span>
+              <span class="library-chapter-item__body">
+                <span class="library-chapter-item__title">{{ ch.data.title }}</span>
+                {% if ch.data.subtitle %}
+                  <span class="library-chapter-item__subtitle">{{ ch.data.subtitle }}</span>
+                {% endif %}
+              </span>
+              <span class="library-chapter-item__meta">
+                <span class="library-chapter-item__complete" aria-label="Not completed">&#9675;</span>
+              </span>
+            </a>
+          {% endfor %}
+        </nav>
+      {% else %}
+        <p style="font-family:var(--font-ui);font-size:var(--text-sm);color:var(--color-ink-faint);padding:var(--space-8) 0;">
+          No chapters available yet.
+        </p>
+      {% endif %}
+    {% endif %}
+
+  </div>
+</div>
+
+{% block scripts %}
+<script src="/assets/js/library.js" defer></script>
+<script>
+// Mark completed chapters and show Continue Reading button
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var workSlug = (document.getElementById('library-context') || {}).dataset.workSlug || '';
+    var key = (window.__PREFIX || 'tft') + '-lib-completed-' + workSlug;
+    var completed;
+    try { completed = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { completed = []; }
+
+    // Update completion indicators
+    document.querySelectorAll('.library-chapter-item').forEach(function (link) {
+      var slug = link.dataset.chapterSlug;
+      var mark = link.querySelector('.library-chapter-item__complete');
+      if (slug && completed.indexOf(slug) !== -1 && mark) {
+        mark.classList.add('library-chapter-item__complete--done');
+        mark.setAttribute('aria-label', 'Completed');
+        mark.textContent = '✓';
+      }
+    });
+
+    // Find last in-progress chapter and show Continue Reading
+    if (!completed.length) return;
+    var allLinks = Array.from(document.querySelectorAll('.library-chapter-item'));
+    var lastCompleted = null;
+    allLinks.forEach(function (link) {
+      if (completed.indexOf(link.dataset.chapterSlug) !== -1 && link.dataset.chapterSlug) lastCompleted = link;
+    });
+    // "Continue" = chapter after last completed, else start of uncompleted
+    var target = null;
+    if (lastCompleted) {
+      var idx = allLinks.indexOf(lastCompleted);
+      target = allLinks[idx + 1] || lastCompleted; // stay on last if all done
+    }
+    if (target) {
+      var btn = document.getElementById('continue-reading-btn');
+      var startBtn = document.getElementById('start-reading-btn');
+      if (btn) {
+        btn.href = target.href;
+        btn.removeAttribute('hidden');
+      }
+      if (startBtn) startBtn.setAttribute('hidden', '');
+    }
+  });
+}());
+</script>
+{% endblock %}

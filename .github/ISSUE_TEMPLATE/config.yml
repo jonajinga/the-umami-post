@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Submit an article (no GitHub account needed)
+    url: https://thefreethinkingtimes.com/contribute/
+    about: Use the on-site submission form if you don't have a GitHub account.
+
+  - name: Report a correction (no GitHub account needed)
+    url: https://thefreethinkingtimes.com/corrections/
+    about: Report factual errors in published articles via the corrections page.
+
+  - name: Security vulnerability
+    url: https://github.com/jonajinga/the-freethinking-times/blob/main/SECURITY.md
+    about: Do not open a public issue for security vulnerabilities — see SECURITY.md.
+
+  - name: General editorial contact
+    url: mailto:hello@thefreethinkingtimes.com
+    about: Editorial questions, pitches, and inquiries not covered above.

@@ -1,0 +1,262 @@
+---
+layout: layouts/base.njk
+---
+
+{% block head %}
+{% if sectionSlug %}
+<link rel="alternate" type="application/rss+xml" title="{{ site.sections[sectionSlug].label or title }}, {{ site.title }}" href="{{ site.url }}/feed-{{ sectionSlug }}.xml">
+{% endif %}
+{% endblock %}
+
+<div class="container section-index">
+
+  {# Section Header #}
+  <header class="section-header">
+    <h1 class="section-badge section-badge--{{ sectionSlug or (title | lower | replace(' ','-')) }}"
+        style="font-family: var(--font-masthead); font-size: var(--text-3xl); margin-bottom: var(--space-3);">
+      {{ title }}
+    </h1>
+    {% if description %}
+    <p style="color: var(--color-ink-muted); font-size: var(--text-md); max-width: 60ch; font-style: italic;">
+      {{ description }}
+    </p>
+    {% endif %}
+    {% if sectionSlug == "letters" %}
+    <p style="font-family: var(--font-ui); font-size: var(--text-sm); margin-top: var(--space-4);">
+      Have something to say? <a href="/letters/submit/" style="color: var(--color-link); font-weight: 600;">Write a letter</a>
+    </p>
+    {% endif %}
+    {% if collections[sectionSlug] and collections[sectionSlug].length %}
+    <div style="margin-top:var(--space-4);">
+      {% set viewFilter = "section=" + sectionSlug %}
+      {% set rssHref = "/feed-" + sectionSlug + ".xml" %}
+      {% set rssFeed = "section-" + sectionSlug %}
+      {% set rssLabel = site.sections[sectionSlug].label or title %}
+      {% include "partials/archive-views-buttons.njk" %}
+    </div>
+    <div class="archive-views" style="margin-top: var(--space-3);">
+      <a href="/knowledge-map/?section={{ sectionSlug }}" class="btn archive-views__btn">Knowledge Map</a>
+      <a href="/editorial-calendar/?section={{ site.sections[sectionSlug].label or title }}" class="btn archive-views__btn">Editorial Calendar</a>
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="section-grid">
+
+    {# Main content: article list #}
+    <div class="section-grid__main">
+      {% set sectionItems = collections[sectionSlug] if collections[sectionSlug] else [] %}
+
+      {% if sectionItems.length == 0 %}
+      <p style="color: var(--color-ink-muted); font-style: italic;">No articles published yet. Check back soon.</p>
+      {% else %}
+
+      {# Subsection filter, only renders if there are subsections for this section #}
+      {% set subs = subsections[sectionSlug] if subsections and subsections[sectionSlug] else [] %}
+      {% if subs.length %}
+      <div class="filter-row">
+        <div class="subsection-filter" id="subsection-filter" role="group" aria-label="Filter by subsection">
+          <span class="subsection-filter__label">Subsection:</span>
+          <button class="subsection-filter__btn is-active" data-sub="all" type="button">All</button>
+          {% for sub in subs %}
+          <button class="subsection-filter__btn" data-sub="{{ sub | slugify }}" type="button">{{ sub }}</button>
+          {% endfor %}
+        </div>
+        <button class="filter-row__next" type="button" aria-label="Show more subsections" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      {% endif %}
+
+      {# Reading time filter #}
+      <div class="filter-row">
+        <div class="reading-filter" id="reading-filter" role="group" aria-label="Filter by reading time">
+          <span class="reading-filter__label">Filter:</span>
+          <button class="reading-filter__btn is-active" data-filter="all" type="button">All</button>
+          <button class="reading-filter__btn" data-filter="short" type="button">Short reads <span class="reading-filter__hint">(&lt;5 min)</span></button>
+          <button class="reading-filter__btn" data-filter="long" type="button">Long reads <span class="reading-filter__hint">(&gt;15 min)</span></button>
+        </div>
+        <button class="filter-row__next" type="button" aria-label="Show more filters" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      {# Lead story #}
+      {% set leadArticle = sectionItems[0] %}
+      <div class="section-lead js-filterable" data-reading-mins="{{ leadArticle.templateContent | readingMins }}" data-subsection="{{ leadArticle.data.subsection | slugify if leadArticle.data.subsection else '' }}"
+           style="padding-bottom: var(--space-8); border-bottom: 1px solid var(--color-rule); margin-bottom: var(--space-8);">
+        {% set article = leadArticle %}
+        {% set size = "lg" %}
+        {% set showImage = true %}
+        {% include "partials/article-card.njk" %}
+      </div>
+
+      {# Remaining articles #}
+      <ul class="article-list" role="list">
+        {% for item in sectionItems %}
+        {% if not loop.first %}
+        <li class="article-list__item js-filterable" data-reading-mins="{{ item.templateContent | readingMins }}" data-subsection="{{ item.data.subsection | slugify if item.data.subsection else '' }}">
+          {% set article = item %}
+          {% set size = "sm" %}
+          {% include "partials/article-card.njk" %}
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+
+      <p class="reading-filter__empty" id="filter-empty" hidden>No articles match this filter.</p>
+
+      {% endif %}
+    </div>
+
+    {# Sidebar #}
+    <aside class="section-grid__sidebar">
+
+      <div class="sidebar-widget">
+        <p class="sidebar-widget__title">Other Sections</p>
+        <ul style="list-style: none; padding: 0;">
+          {% for item in nav %}
+          {% if item.label != title %}
+          <li style="padding: var(--space-2) 0; border-bottom: 1px solid var(--color-rule);">
+            <a href="{{ item.url }}" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-muted); text-decoration: none;">
+              {{ item.label }}
+            </a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var rBtns = document.querySelectorAll('.reading-filter__btn');
+  var sBtns = document.querySelectorAll('.subsection-filter__btn');
+  var items = document.querySelectorAll('.js-filterable');
+  var empty = document.getElementById('filter-empty');
+  if (!items.length) return;
+
+  var state = { reading: 'all', sub: 'all' };
+
+  function apply() {
+    var visible = 0;
+    items.forEach(function (item) {
+      var mins = parseInt(item.getAttribute('data-reading-mins'), 10) || 1;
+      var sub  = item.getAttribute('data-subsection') || '';
+      var okRead = state.reading === 'all'
+        || (state.reading === 'short' && mins < 5)
+        || (state.reading === 'long'  && mins > 15);
+      var okSub = state.sub === 'all' || sub === state.sub;
+      var show = okRead && okSub;
+      item.hidden = !show;
+      if (show) visible++;
+    });
+    if (empty) empty.hidden = visible > 0;
+  }
+
+  function setActive(group, value) {
+    group.forEach(function (b) {
+      b.classList.toggle('is-active', b.getAttribute(group === rBtns ? 'data-filter' : 'data-sub') === value);
+    });
+  }
+
+  rBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      state.reading = btn.getAttribute('data-filter');
+      setActive(rBtns, state.reading);
+      apply();
+    });
+  });
+
+  // Keep the Showcase / Timeline buttons' hrefs in sync with the active
+  // subsection so the filtered views always match what's visible on the
+  // page.
+  var viewLinks = document.querySelectorAll('.archive-views .archive-views__btn');
+  var sectionSlugAttr = (document.querySelector('.section-badge[class*="section-badge--"]') || {}).className || '';
+  var sectionSlug = (sectionSlugAttr.match(/section-badge--([a-z0-9-]+)/) || [])[1] || '';
+  function updateViewLinks() {
+    if (!viewLinks.length || !sectionSlug) return;
+    viewLinks.forEach(function (a) {
+      var base = a.getAttribute('href').split('?')[0];
+      var qs = 'section=' + encodeURIComponent(sectionSlug);
+      if (state.sub && state.sub !== 'all') qs += '&subsection=' + encodeURIComponent(state.sub);
+      a.setAttribute('href', base + '?' + qs);
+    });
+  }
+
+  sBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      state.sub = btn.getAttribute('data-sub');
+      setActive(sBtns, state.sub);
+      // Update URL (?s=slug) without a reload so the view is shareable/bookmarkable
+      var url = new URL(window.location.href);
+      if (state.sub === 'all') url.searchParams.delete('s');
+      else url.searchParams.set('s', state.sub);
+      window.history.replaceState({}, '', url.toString());
+      apply();
+      updateViewLinks();
+    });
+  });
+
+  // Honour ?s=subsection-slug on initial load (from the header dropdown)
+  var params = new URLSearchParams(window.location.search);
+  var initSub = params.get('s');
+  if (initSub && sBtns.length) {
+    var target = Array.prototype.find.call(sBtns, function (b) {
+      return b.getAttribute('data-sub') === initSub;
+    });
+    if (target) {
+      state.sub = initSub;
+      setActive(sBtns, initSub);
+      apply();
+      updateViewLinks();
+      // Scroll the filter into view so the reader sees they're on a subsection
+      setTimeout(function () {
+        var bar = document.getElementById('subsection-filter');
+        if (bar) bar.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }, 50);
+    }
+  }
+  // First paint: lock the view links to the current (possibly default) state.
+  updateViewLinks();
+
+  // Filter-row arrow: shows a rightward chevron beside a scrollable bar
+  // when it overflows. Click advances the scroll by one viewport; when
+  // the bar reaches the right edge, we switch to a leftward chevron to
+  // wind it back. Hidden entirely when the bar fits.
+  document.querySelectorAll('.filter-row').forEach(function (row) {
+    var bar = row.querySelector('.subsection-filter, .reading-filter');
+    var btn = row.querySelector('.filter-row__next');
+    if (!bar || !btn) return;
+
+    function atEnd() { return bar.scrollLeft + bar.clientWidth >= bar.scrollWidth - 1; }
+    function overflows() { return bar.scrollWidth > bar.clientWidth + 1; }
+
+    function update() {
+      if (!overflows()) { btn.hidden = true; return; }
+      btn.hidden = false;
+      btn.setAttribute('aria-label', atEnd() ? 'Scroll filters back to start' : 'Show more filters');
+      btn.classList.toggle('filter-row__next--back', atEnd());
+    }
+
+    btn.addEventListener('click', function () {
+      bar.scrollTo({ left: atEnd() ? 0 : bar.scrollLeft + bar.clientWidth - 40, behavior: 'smooth' });
+    });
+    bar.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+
+    // Vertical wheel -> horizontal scroll on desktop
+    bar.addEventListener('wheel', function (e) {
+      if (!overflows()) return;
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      bar.scrollLeft += e.deltaY;
+    }, { passive: false });
+  });
+}());
+</script>

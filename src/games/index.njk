@@ -1,0 +1,35 @@
+---
+layout: base
+title: Games
+description: Browser games from The Freethinking Times, puzzles, trivia, and diversions for the intellectually curious.
+permalink: /games/
+---
+
+<div class="container" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Games</li>
+    </ol>
+  </nav>
+
+  <header style="margin-bottom: var(--space-10); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
+    <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-4);">Games</h1>
+    <p style="font-size: var(--text-lg); color: var(--color-ink-muted); font-style: italic; max-width: 60ch; line-height: var(--leading-normal);">
+      Puzzles, trivia, and diversions for the intellectually curious.
+      All games run in your browser, no account required, nothing collected.
+    </p>
+  </header>
+
+  <div class="projects-grid">
+    {% for game in games %}
+    <a href="{{ game.url }}" class="project-card">
+      <h2 class="project-card__title">{{ game.title }}</h2>
+      <p class="project-card__description">{{ game.description }}</p>
+    </a>
+    {% endfor %}
+  </div>
+
+</div>

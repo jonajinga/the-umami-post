@@ -1,0 +1,135 @@
+[
+  {
+    "heading": "Library",
+    "headingUrl": "/library/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Library", "url": "/library/" },
+      { "label": "Bookshelf", "url": "/bookshelf/" },
+      { "label": "Quotes", "url": "/quotes/" },
+      { "label": "Glossary", "url": "/glossary/" },
+      { "label": "Documents", "url": "/documents/" }
+    ]
+  },
+  {
+    "heading": "History",
+    "headingUrl": "/timeline/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Timeline", "url": "/timeline/" },
+      { "label": "Trials of Thought", "url": "/trials/" },
+      { "label": "Thought Experiments", "url": "/thought-experiments/" }
+    ]
+  },
+  {
+    "heading": "Media",
+    "headingUrl": "/projects/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Photo Gallery", "url": "/gallery/" },
+      { "label": "Videos", "url": "/videos/" },
+      { "label": "Music", "url": "/music/" },
+      { "label": "Knowledge Map", "url": "/knowledge-map/" },
+      { "label": "Games", "url": "/games/" },
+      { "label": "All projects →", "url": "/projects/" }
+    ]
+  },
+  {
+    "heading": "Reader Tools",
+    "headingUrl": "/reader-tools/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Search", "url": "/search/" },
+      { "label": "Reading List", "url": "/reading-list/" },
+      { "label": "Notes & Highlights", "url": "/notes/" },
+      { "label": "Reading History", "url": "/reading-history/" },
+      { "label": "Reading Calendar", "url": "/reading-calendar/" },
+      { "label": "Print Basket", "url": "/print-basket/" },
+      { "label": "All reader tools →", "url": "/reader-tools/" }
+    ]
+  },
+  {
+    "heading": "Discover",
+    "headingUrl": "/archives/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Archives", "url": "/archives/" },
+      { "label": "Most Read", "url": "/most-read/" },
+      { "label": "Random", "url": "/random/" },
+      { "label": "Newsletter", "url": "/newsletter/" },
+      { "label": "RSS Reader", "url": "/reader/" },
+      { "label": "Feeds", "url": "/feeds/" }
+    ]
+  },
+  {
+    "heading": "Community",
+    "headingUrl": "/community/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Directory", "url": "/community/" },
+      { "label": "Events", "url": "/events/" },
+      { "label": "Community Guidelines", "url": "/community-guidelines/" }
+    ]
+  },
+  {
+    "heading": "Contribute",
+    "headingUrl": "/contribute/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Submit", "url": "/submit/" },
+      { "label": "Contribute", "url": "/contribute/" },
+      { "label": "Templates", "url": "/templates/" },
+      { "label": "Volunteer", "url": "/volunteer/" },
+      { "label": "Tips & Letters", "url": "/tips/" },
+      { "label": "Survey", "url": "/survey/" },
+      { "label": "Republish", "url": "/license/" }
+    ]
+  },
+  {
+    "heading": "About",
+    "headingUrl": "/about/",
+    "showSupportBadgeAfter": true,
+    "small": false,
+    "links": [
+      { "label": "About Us", "url": "/about/" },
+      { "label": "Start Here", "url": "/start-here/" },
+      { "label": "Masthead", "url": "/masthead/" },
+      { "label": "Contributors", "url": "/contributors/" },
+      { "label": "Contact", "url": "/contact/" }
+    ]
+  },
+  {
+    "heading": "Inside",
+    "headingUrl": "/transparency/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Editorial Ethics", "url": "/ethics/" },
+      { "label": "Editorial Handbook", "url": "/editorial/" },
+      { "label": "Transparency", "url": "/transparency/" },
+      { "label": "Costs", "url": "/costs/" },
+      { "label": "Changelog", "url": "/changelog/" },
+      { "label": "Features", "url": "/features/" }
+    ]
+  },
+  {
+    "heading": "Build",
+    "headingUrl": "/stack/",
+    "showSupportBadgeAfter": false,
+    "small": false,
+    "links": [
+      { "label": "Tech Stack", "url": "/stack/" },
+      { "label": "Style Guide", "url": "/style-guide/" },
+      { "label": "Open Source", "url": "/open-source/" },
+      { "label": "Accessibility", "url": "/accessibility/" },
+      { "label": "Legal", "url": "/legal/" }
+    ]
+  }
+]

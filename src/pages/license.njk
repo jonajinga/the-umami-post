@@ -1,0 +1,99 @@
+---
+layout: base
+title: Republication license
+description: The terms under which articles from The Freethinking Times can be
+  republished. Free to reuse under CC BY-NC-ND 4.0 with attribution and no
+  derivatives.
+permalink: /license/
+---
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Republication license</h1>
+    <p class="page-header__lede">
+      Every article on {{ site.title }} is released under a Creative Commons license. You are free to republish, quote, translate, and mirror our work &mdash; provided you follow four short rules.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#license">CC&nbsp;BY-NC-ND&nbsp;4.0</a>
+      <a href="#rules">The four rules</a>
+      <a href="#grab-code">How to grab an article</a>
+      <a href="#webmentions">Reciprocal conversation</a>
+      <a href="#contact">Commercial license</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="license">Creative Commons BY-NC-ND 4.0</h2>
+      <p>Articles on {{ site.title }} are licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="license" data-umami-event="license-learn">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International</a>.</p>
+      <p>That license gives you the right to share and republish our work &mdash; including in magazines, newsletters, blogs, archives, classroom materials, and academic papers &mdash; without asking permission first. In exchange you agree to four things.</p>
+
+      <h2 id="rules">The four rules</h2>
+
+      <h3>1. Attribution</h3>
+      <p>Credit {{ site.title }} clearly, and link back to the original article URL at the top of the text. A line like &ldquo;<em>Originally published by <a href="{{ site.url }}/">{{ site.title }}</a> on [date].</em>&rdquo; is ideal. Include the author&rsquo;s byline.</p>
+
+      <h3>2. No derivatives</h3>
+      <p>Don&rsquo;t edit the article beyond tiny relative fixes (&ldquo;last Tuesday&rdquo; &rarr; the date, &ldquo;here in Paris&rdquo; &rarr; &ldquo;in Paris&rdquo; if your readership is elsewhere). No cuts, no remixes, no translations repackaged as original work. If you need a condensed version or a translation, contact us and we&rsquo;ll review it.</p>
+
+      <h3>3. Non-commercial</h3>
+      <p>You can&rsquo;t sell our work, put it behind a paywall, or syndicate it into a commercial platform (Apple News, Google News Showcase, paid newsletters). Free republication on your own site, in a free newsletter, or in a non-commercial print publication is fine. A for-profit site whose model is advertising against <em>other</em> content is fine; one that monetizes <em>our</em> articles specifically is not.</p>
+
+      <h3>4. Webmentions welcome</h3>
+      <p>If your site can send <a href="https://indieweb.org/Webmention" target="_blank" rel="noopener">webmentions</a>, we&rsquo;d love to hear from you. When you publish your repost or response, your site can POST to our endpoint and the mention shows up on the canonical article. This is how the decentralized web keeps track of itself &mdash; no platform, no account, just two websites talking.</p>
+
+      <h2 id="grab-code">How to grab an article</h2>
+      <p>Most articles we intend for broad republication have a <strong>Republish this story</strong> section above the comments. Expand <em>Grab the HTML</em>, copy the textarea&rsquo;s contents, and paste into your CMS&rsquo; HTML view. The grab-code includes the attribution paragraph, the article body with headings and links intact, and a canonical link back. Your CMS will apply its own typography on top.</p>
+      <p>If you want to republish an article that doesn&rsquo;t show the grab surface, email us &mdash; most pieces are eligible; the flag just isn&rsquo;t on by default.</p>
+
+      <h2 id="webmentions">Reciprocal conversation</h2>
+      <p>We read and display webmentions from every republisher, reply, like, and repost we receive. We link back to you. This is a two-way street &mdash; republishing our work means your readers may end up on our site, and our readers may end up on yours.</p>
+
+      <h2 id="contact">Commercial license</h2>
+      <p>Need to use {{ site.title }} work in a paid product, an educational anthology for sale, a broadcast, or a consulting deliverable? Commercial licenses are case-by-case, mostly affordable, and money goes straight into more reporting. Tell us what you have in mind and we&rsquo;ll get back to you.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Commercial license inquiry, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Commercial License">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="license-name">Name <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="text" name="name" id="license-name" required aria-required="true" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="license-email">Email <span class="w3f__required">*</span></label>
+            <input class="w3f__input" type="email" name="email" id="license-email" required aria-required="true" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="license-org">Organization</label>
+          <input class="w3f__input" type="text" name="organization" id="license-org" autocomplete="organization">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="license-piece">Which article?</label>
+          <input class="w3f__input" type="text" name="article_url" id="license-piece" placeholder="URL or title">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="license-use">Intended use <span class="w3f__required">*</span></label>
+          <textarea class="w3f__textarea" name="message" id="license-use" rows="6" required aria-required="true" maxlength="5000" placeholder="Paid product? Broadcast? Educational anthology? Tell us the context, the audience, the timeline, and whether money changes hands."></textarea>
+        </div>
+
+        <div class="w3f__status" role="status" aria-live="polite" aria-atomic="true"></div>
+        <button type="submit" class="w3f__submit" data-umami-event="license-inquiry-submit">Send inquiry</button>
+        <p class="w3f__privacy">Delivered to our editorial inbox via Web3Forms. We never sell or share submissions. See our <a href="/privacy/#contact-forms">privacy policy</a> for what Web3Forms does with form data and how long we retain messages.</p>
+      </form>
+
+    </div>
+
+  </div>
+</div>

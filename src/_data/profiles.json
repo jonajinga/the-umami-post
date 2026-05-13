@@ -1,0 +1,53 @@
+{
+  "standard": {
+    "label": "Standard Article",
+    "description": "A regular reported or written article. Default profile.",
+    "icon": "document"
+  },
+  "interview": {
+    "label": "Interview / Q&A",
+    "description": "Question-and-answer format with a subject. Renders the intro and Q&A block.",
+    "icon": "microphone",
+    "badge": "Interview"
+  },
+  "longread": {
+    "label": "Long-form Investigation",
+    "description": "Multi-section deep-dive with additional sourcing box and extended reading time display.",
+    "icon": "book",
+    "badge": "Long read",
+    "minReadingMinutes": 15
+  },
+  "photoessay": {
+    "label": "Photo Essay",
+    "description": "Image-driven narrative. Full-bleed images and minimal chrome.",
+    "icon": "image",
+    "badge": "Photo Essay",
+    "fullBleed": true
+  },
+  "podcast": {
+    "label": "Podcast Episode",
+    "description": "Audio-first post. Shows an audio player above the transcript. Set `audioUrl` in front matter.",
+    "icon": "headphones",
+    "badge": "Podcast",
+    "requiresAudio": true
+  },
+  "datavisualization": {
+    "label": "Data Visualization",
+    "description": "Chart or interactive piece. Renders a full-width figure area. Set `embedUrl` in front matter.",
+    "icon": "chart",
+    "badge": "Data"
+  },
+  "brief": {
+    "label": "Brief",
+    "description": "A short-form news brief under 300 words. No by-line, no share buttons.",
+    "icon": "bolt",
+    "badge": "Brief",
+    "maxReadingMinutes": 2
+  },
+  "explainer": {
+    "label": "Explainer",
+    "description": "Contextual piece that breaks down a topic. Renders with an on-page summary box at the top.",
+    "icon": "info",
+    "badge": "Explainer"
+  }
+}

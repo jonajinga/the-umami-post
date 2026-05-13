@@ -1,0 +1,13 @@
+date: "2026-03-01"
+title: Initial launch
+entries:
+  - Published first articles across News, Opinion, Analysis, History, Arts & Culture, Science & Technology, and Letters
+  - Full-site search powered by Pagefind — built at deploy time, no backend required
+  - Dark mode with system preference detection, manual toggle, and localStorage persistence
+  - RSS feed at /feed.xml covering all sections
+  - Print-optimised CSS for long-form reading and PDF saving
+  - Per-section article collections with lead story and article list layouts
+  - Author pages with bio and article history
+  - Tag / topic index pages
+  - Breaking news banner (conditional)
+  - Nav drawer for mobile with full site navigation

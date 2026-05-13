@@ -1,0 +1,25 @@
+{#
+  archive-views-buttons.njk — showcase + timeline CTA pair that targets
+  the unified /archives/showcase/ and /archives/timeline/ views. Pass a
+  `viewFilter` string (e.g. "author=jon-ajinga" or "section=news&subsection=politics"
+  or "topic=climate"); omit for the full archive.
+
+  Optional `rssHref` adds a third button (RSS feed for the surface).
+  Pass `rssFeed` (e.g. "section-news", "topic-climate") for analytics.
+#}
+{% set _qs = ("?" + viewFilter) if viewFilter else "" %}
+{% set _viewsSize = viewsSize or "" %}
+<div class="archive-views {% if _viewsSize %}archive-views--{{ _viewsSize }}{% endif %}" role="group" aria-label="Alternate views">
+  {# Showcase intentionally opts out of SPA-nav: it's a fullscreen overlay
+     that reparents itself into document.body and hides the site-wrapper.
+     An SPA swap breaks that back-button behaviour (bfcache restores the
+     displaced DOM). Full reload keeps history clean. #}
+  <a href="/archives/showcase/{{ _qs }}" class="btn archive-views__btn" data-no-spa>Showcase</a>
+  <a href="/archives/timeline/{{ _qs }}" class="btn archive-views__btn">Timeline</a>
+  {% if rssHref %}
+  <a href="{{ rssHref }}" class="btn archive-views__btn archive-views__btn--rss" data-umami-event="rss-sub"{% if rssFeed %} data-umami-event-feed="{{ rssFeed }}"{% endif %} aria-label="RSS feed{% if rssLabel %} — {{ rssLabel }}{% endif %}">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;vertical-align:-2px;"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+    RSS
+  </a>
+  {% endif %}
+</div>

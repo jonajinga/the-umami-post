@@ -1,0 +1,6 @@
+# Cloudflare Pages redirect rules
+# Format: /old-path  /new-path  status-code
+
+# 404 catch-all (Cloudflare handles this via 404.html automatically)
+# Add redirects here as the site grows, e.g.:
+# /old-section/*  /new-section/:splat  301

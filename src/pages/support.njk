@@ -1,0 +1,123 @@
+---
+layout: base
+title: Support The Freethinking Times
+description: The Freethinking Times is funded entirely by readers, no ads, no sponsors, ever. Support the publication or individual authors directly.
+permalink: /support/
+---
+
+{% set pubTipUrl = site.tipping.kofi or site.tipping.bmac or site.tipping.patreon %}
+{% set authors_with_tipping = [] %}
+{% for slug, a in authors %}
+  {% if slug != "staff" and a.tipping and (a.tipping.kofi or a.tipping.bmac or a.tipping.patreon) %}
+    {% set authors_with_tipping = (authors_with_tipping.push({slug: slug, name: a.name, url: a.tipping.kofi or a.tipping.bmac or a.tipping.patreon}), authors_with_tipping) %}
+  {% endif %}
+{% endfor %}
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <h1 class="page-header__title">
+        {{ supportContent.headerHeading }}
+      </h1>
+      <p class="page-header__lede">
+        {{ supportContent.headerSubtitle }}
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <h2>How We're Funded</h2>
+      {% for p in supportContent.howFunded %}<p>{{ p }}</p>{% endfor %}
+
+      <h2>Where Your Support Goes</h2>
+      {% for p in supportContent.whereSupportGoes %}<p>{{ p }}</p>{% endfor %}
+
+      <h2>Two Ways to Support</h2>
+
+    </div>
+
+    {# ── Support options ── #}
+    <div style="margin: var(--space-8) 0 var(--space-10);">
+
+      {# Publication + Author blocks #}
+      <div class="support-two-col">
+
+        {# Publication support #}
+        <div class="support-block">
+          <div class="support-block__eyebrow">The Publication</div>
+          <h3 class="support-block__heading">Support {{ site.title }}</h3>
+          <p class="support-block__body">{{ supportContent.publicationBlockBody }}</p>
+          {% if pubTipUrl %}
+          <div class="support-block__actions">
+            <a class="tip-badge tip-badge--pub"
+               href="{{ pubTipUrl }}" target="_blank" rel="noopener noreferrer"
+               data-tippy-content="Support {{ site.title }}. Reader contributions cover hosting, public-records fees, and reporting costs. We don&rsquo;t pay contributors a fee &mdash; tips sent through an author&rsquo;s individual link go directly to the writer."
+               data-tippy-theme="badge" data-tippy-placement="top">
+              <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ site.shortTitle or site.title }}</span>
+            </a>
+            <a class="support-block__learn" href="/transparency/">How we operate &rarr;</a>
+          </div>
+          {% endif %}
+        </div>
+
+        {# Author support #}
+        <div class="support-block">
+          <div class="support-block__eyebrow">Individual Authors</div>
+          <h3 class="support-block__heading">Support a Contributor</h3>
+          <p class="support-block__body">{{ supportContent.authorBlockBody }}</p>
+          {% if authors_with_tipping.length %}
+          <div class="support-block__author-list">
+            {% for a in authors_with_tipping %}
+            <a class="tip-badge"
+               href="{{ a.url }}" target="_blank" rel="noopener noreferrer"
+               data-tippy-content="Support {{ a.name }} directly. Your tip goes entirely to the author."
+               data-tippy-theme="badge" data-tippy-placement="top">
+              <span class="tip-badge__label">support</span><span class="tip-badge__value">{{ a.name }}</span>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr style="margin-bottom: var(--space-10);">
+
+    {# Email subscribe #}
+    <div style="margin-bottom: var(--space-10);">
+      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin-bottom: var(--space-3);">
+        {{ supportContent.nobudgetHeading }}
+      </h2>
+      <p style="color: var(--color-ink-muted); font-size: var(--text-base); max-width: 55ch; margin-bottom: var(--space-6); line-height: var(--leading-normal);">
+        {{ supportContent.nobudgetBody }}
+      </p>
+      {% set subscribeVariant = "inline" %}
+      {% include "partials/subscribe.njk" %}
+    </div>
+
+    <hr style="margin-bottom: var(--space-10);">
+
+    <div class="article-body">
+      <h2>Other ways to help</h2>
+
+      <p><strong>Share specific pieces.</strong> When an article is worth reading, send it to one person who would find it genuinely useful. Not broadcast, targeted. A good article landing in front of the right reader is worth more than a hundred passive impressions.</p>
+
+      <p><strong>Link to us.</strong> If you write, blog, or maintain any kind of online presence, linking to pieces you found valuable is how independent publications build the search presence that brings new readers.</p>
+
+      <p><strong>Write a letter.</strong> Reader correspondence published in the Letters section is part of the publication's editorial content. A thoughtful response to something we've published contributes to the work directly. <a href="/letters/submit/">Write a letter</a>.</p>
+
+      <p><strong>Tell us what we're missing.</strong> The best editorial tip is a story that matters and isn't being told. If you know of something that deserves investigation, <a href="/tips/">send us a tip</a>.</p>
+    </div>
+
+    {# Closing note #}
+    <div style="border-top: 1px solid var(--color-rule); padding-top: var(--space-8); margin-top: var(--space-10);">
+      <p style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-faint); font-style: italic;">
+        {{ supportContent.closingNote }}
+      </p>
+    </div>
+
+  </div>
+</div>

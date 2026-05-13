@@ -1,0 +1,10 @@
+name: Darwin Day
+date: "2027-02-12"
+location: Worldwide
+region: International
+type: observance
+url: https://darwinday.org
+description: Celebrating science and reason on the anniversary of Charles Darwin's birth.
+recurrence: annual
+recurrenceMonth: 2
+recurrenceDay: 12

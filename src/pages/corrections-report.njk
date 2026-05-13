@@ -1,0 +1,82 @@
+---
+layout: base
+title: "Report a Correction"
+description: Found an error? Help us get it right. Report a correction to any article or library text.
+permalink: /corrections/report/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/corrections/">Corrections</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Report a Correction</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Report a Correction</h1>
+      <p class="page-header__lede">
+        Accuracy matters. If you have found an error in any article or library text, please let us know.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <p>All verified corrections are published in our <a href="/corrections/">corrections log</a> and noted on the article itself. We take this seriously. You can also send corrections directly via <a href="/contact/">our contact form</a>.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f" style="margin: var(--space-6) 0;">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Correction report, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Correction Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="corr-url">Article URL or title <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="corr-url-hint">Paste the URL of the article or library page containing the error</span>
+          <input class="w3f__input" type="text" name="article_url" id="corr-url" required aria-required="true" aria-describedby="corr-url-hint" placeholder="https://thefreethinkingtimes.com/...">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="corr-error">What is the error? <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="corr-error-hint">Quote the specific text that is incorrect</span>
+          <textarea class="w3f__textarea" name="error_description" id="corr-error" rows="4" required aria-required="true" aria-describedby="corr-error-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="corr-correct">What should it say? <span class="w3f__required">*</span></label>
+          <span class="w3f__hint" id="corr-correct-hint">What is the correct information? Include a source if possible.</span>
+          <textarea class="w3f__textarea" name="correct_information" id="corr-correct" rows="4" required aria-required="true" aria-describedby="corr-correct-hint" maxlength="2000"></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="corr-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="corr-name" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="corr-email">Email <span class="w3f__optional">(optional, if you'd like us to follow up)</span></label>
+            <input class="w3f__input" type="email" name="email" id="corr-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Submit Correction</button>
+        <p class="w3f__privacy">You do not need to provide your name or email. We verify all corrections independently before publishing them.</p>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// Auto-fill article URL if user came from an article page
+(function () {
+  var ref = document.referrer;
+  var input = document.getElementById('corr-url');
+  if (ref && input && !input.value && ref.indexOf('thefreethinkingtimes.com') !== -1) {
+    input.value = ref;
+  }
+}());
+</script>

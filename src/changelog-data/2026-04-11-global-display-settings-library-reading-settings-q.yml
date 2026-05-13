@@ -1,0 +1,41 @@
+date: "2026-04-11"
+title: Global display settings, library reading settings, quotes showcase
+sections:
+  - label: Reading experience
+    entries:
+      - >-
+        Global display settings panel in masthead: font (27 options across system serif, sans, mono, and Bunny web fonts
+        loaded on demand), font size, line spacing, word spacing, and unified theme selector (Auto / Light / Sepia /
+        Cream / Dark)
+      - >-
+        Article reading settings expanded to match: 27 fonts (dropdown with optgroups), line spacing
+        (tight/normal/relaxed/loose), text width (narrow/normal/wide), word spacing, background presets, reading ruler,
+        paragraph numbers, auto-scroll with speed control, and reset to defaults
+      - >-
+        Reading ruler now constrained to article body width instead of spanning the full screen; updates on window
+        resize
+      - Background selector active state (is-active) now correctly highlights the selected background button
+      - Reader panel no longer auto-opens on mobile (screens <= 768px)
+  - label: Public Domain Library
+    entries:
+      - >-
+        Full reading settings panel added to library chapter and short layouts — identical to article settings (27
+        fonts, spacing, width, background, ruler, paragraph numbers, auto-scroll)
+      - Fixed duplicate reading-settings IDs that prevented the settings panel from opening on library pages
+      - Reading settings panel placed in the action toolbar for immediate visibility (not in the hidden sticky header)
+  - label: Quotes
+    entries:
+      - >-
+        Daily quote bar below the masthead header — shows a quote from the collection, rotating every 10 seconds with a
+        fade transition; links to the showcase page
+      - >-
+        Quotes Showcase at /quotes/showcase/ — full-screen screensaver-style page cycling through all quotes with
+        crossfade transitions, auto-advance (10s), Fisher-Yates shuffle, prev/next buttons, keyboard navigation (arrow
+        keys, space, P to pause, Escape to exit), progress bar, and pause/play toggle
+      - >-
+        Showcase respects current theme — uses --color-bg and --color-ink custom properties so dark mode, sepia, and
+        cream all work
+  - label: Mobile
+    entries:
+      - Action button icons shrink on small screens (<=480px) to fit on a single row without wrapping
+      - Reader panel auto-open disabled on mobile to avoid covering the article

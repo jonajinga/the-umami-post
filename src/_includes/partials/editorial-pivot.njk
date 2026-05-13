@@ -1,0 +1,19 @@
+{# Shared chrome strip rendered on all three editorial surfaces.
+   Three-tab segmented control + a freshness stamp. The active tab is
+   computed from page.url. #}
+<nav class="ed-pivot" aria-label="Editorial surfaces">
+  <div class="ed-pivot__tabs" role="tablist">
+    <a role="tab" class="ed-pivot__tab{% if page.url == '/dashboard/' %} is-active{% endif %}"
+       href="/dashboard/"
+       {% if page.url == '/dashboard/' %}aria-current="page" aria-selected="true"{% else %}aria-selected="false"{% endif %}>Dashboard</a>
+    <a role="tab" class="ed-pivot__tab{% if page.url == '/editorial/board/' %} is-active{% endif %}"
+       href="/editorial/board/"
+       {% if page.url == '/editorial/board/' %}aria-current="page" aria-selected="true"{% else %}aria-selected="false"{% endif %}>Board</a>
+    <a role="tab" class="ed-pivot__tab{% if page.url == '/editorial-calendar/' %} is-active{% endif %}"
+       href="/editorial-calendar/"
+       {% if page.url == '/editorial-calendar/' %}aria-current="page" aria-selected="true"{% else %}aria-selected="false"{% endif %}>Calendar</a>
+  </div>
+  <p class="ed-pivot__stamp" title="Snapshot built {{ editorialSnapshot }}">
+    Snapshot built <time datetime="{{ editorialSnapshot }}">{{ editorialSnapshot | readableDate }}</time>
+  </p>
+</nav>

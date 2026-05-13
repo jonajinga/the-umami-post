@@ -1,0 +1,9 @@
+---
+permalink: /api/articles.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ collections.allContent.length }},
+  "articles": {{ collections.allContent | toApiArticles(site.url) | toJSON | safe }}
+}

@@ -1,0 +1,79 @@
+name: Notify on publish
+
+# When a new article is committed to main, POST article metadata to any
+# user-configured webhook URLs (Zapier, IFTTT, Discord, Slack, etc).
+#
+# Setup: add these repo secrets under Settings > Secrets and variables > Actions:
+#   WEBHOOK_URL  — a single webhook endpoint (required)
+# Optional: WEBHOOK_SECRET — included as X-Webhook-Secret header for verification.
+#
+# Webhook payload:
+#   { "event": "article.published", "site": "...", "articles": [ { "title", "url", "section", "author", "date", "description" } ] }
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/**/*.md"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Collect new articles
+        id: collect
+        run: |
+          # Find .md files added in this push
+          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'src/content/**/*.md' || true)
+          if [ -z "$NEW_FILES" ]; then
+            echo "No new articles in this push"
+            echo "count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Build JSON array by extracting front matter from each file
+          echo "Collecting metadata from: $NEW_FILES"
+          ARTICLES="["
+          FIRST=1
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            [ ! -f "$f" ] && continue
+            TITLE=$(awk '/^title:/{sub(/^title:[[:space:]]*/,"");gsub(/^"|"$/,"");print;exit}' "$f")
+            DESC=$(awk '/^description:/{sub(/^description:[[:space:]]*/,"");gsub(/^"|"$/,"");print;exit}' "$f")
+            SECTION=$(awk '/^section:/{sub(/^section:[[:space:]]*/,"");gsub(/^"|"$/,"");print;exit}' "$f")
+            AUTHOR=$(awk '/^authorName:/{sub(/^authorName:[[:space:]]*/,"");gsub(/^"|"$/,"");print;exit}' "$f")
+            DATE=$(awk '/^date:/{sub(/^date:[[:space:]]*/,"");print;exit}' "$f")
+            SLUG=$(basename "$f" .md)
+            SECTION_SLUG=$(dirname "$f" | sed 's|src/content/||')
+            URL="/${SECTION_SLUG}/${SLUG}/"
+            [ $FIRST -eq 0 ] && ARTICLES="${ARTICLES},"
+            ARTICLES="${ARTICLES}$(jq -n --arg t "$TITLE" --arg d "$DESC" --arg s "$SECTION" --arg a "$AUTHOR" --arg dt "$DATE" --arg u "$URL" '{title:$t,description:$d,section:$s,author:$a,date:$dt,url:$u}')"
+            FIRST=0
+          done <<< "$NEW_FILES"
+          ARTICLES="${ARTICLES}]"
+          echo "count=1" >> "$GITHUB_OUTPUT"
+          echo "articles<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$ARTICLES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: POST to webhook
+        if: steps.collect.outputs.count != '0'
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+          ARTICLES_JSON: ${{ steps.collect.outputs.articles }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "WEBHOOK_URL secret not set; skipping."
+            exit 0
+          fi
+          PAYLOAD=$(jq -n --argjson a "$ARTICLES_JSON" --arg site "${{ github.repository }}" '{event:"article.published",site:$site,articles:$a}')
+          curl -X POST -f \
+            -H "Content-Type: application/json" \
+            ${WEBHOOK_SECRET:+-H "X-Webhook-Secret: $WEBHOOK_SECRET"} \
+            -d "$PAYLOAD" \
+            "$WEBHOOK_URL"

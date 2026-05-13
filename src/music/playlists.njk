@@ -1,0 +1,357 @@
+---
+layout: base
+title: Playlists — Freethought Music
+description: Background playlists for reading, thinking, and reflecting, each playable in the persistent background player that follows you across the site.
+permalink: /music/playlists/
+---
+
+<div class="container music-sub">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/projects/">Projects</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/music/">Freethought Music</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Playlists</li>
+    </ol>
+  </nav>
+
+  <header class="music-sub__header">
+    <p class="music-sub__kicker">Playlists</p>
+    <h1 class="music-sub__title">{{ playlists | length }} background collections</h1>
+    <p class="music-sub__lede">
+      Curated playlists for reading, thinking, and reflecting. Press play on one and keep reading &mdash; the track advances automatically, and the player follows you across the site.
+    </p>
+    <p class="music-sub__meta">
+      Know a playlist we should include? <a href="/music/playlists/submit/">Suggest a playlist &rarr;</a>
+    </p>
+  </header>
+
+  {# Custom URL #}
+  <div class="music-sub__custom">
+    <label for="custom-url" class="music-sub__custom-label">Play your own YouTube Music playlist</label>
+    <div class="music-sub__custom-row">
+      <input type="url" id="custom-url" placeholder="Paste a YouTube Music playlist or channel URL…" autocomplete="off">
+      <button type="button" id="custom-play" class="music-sub__custom-btn">Play</button>
+    </div>
+  </div>
+
+  {# Search + category #}
+  <div class="music-sub__controls">
+    <div class="music-sub__search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="music-search" placeholder="Filter by name or description…" autocomplete="off">
+    </div>
+    <select id="music-cat" aria-label="Category">
+      <option value="">All categories</option>
+      {% set cats = [] %}
+      {% for pl in playlists %}{% if pl.category and pl.category not in cats %}{% set cats = cats.concat([pl.category]) %}{% endif %}{% endfor %}
+      {% for cat in cats %}<option>{{ cat }}</option>{% endfor %}
+    </select>
+  </div>
+
+  <p id="music-status" class="music-sub__status" aria-live="polite"></p>
+
+  <div class="playlist-grid" id="music-grid">
+    {% for pl in playlists %}
+    <article class="playlist-card" data-search="{{ pl.name | lower }} {{ pl.description | lower }}" data-cat="{{ pl.category }}">
+      <div class="playlist-card__body">
+        {% if pl.category %}<span class="playlist-card__cat">{{ pl.category }}</span>{% endif %}
+        <h2 class="playlist-card__title">{{ pl.name }}</h2>
+        <p class="playlist-card__desc">{{ pl.description }}</p>
+      </div>
+      <div class="playlist-card__actions">
+        <button type="button" class="playlist-card__play" data-pid="{{ pl.playlistId }}" data-name="{{ pl.name | escape }}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21"/></svg>
+          Play
+        </button>
+        <a href="https://music.youtube.com/playlist?list={{ pl.playlistId }}" target="_blank" rel="noopener" class="playlist-card__link">YouTube Music &nearr;</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <p id="music-empty" class="music-sub__empty" hidden>No playlists match your filters.</p>
+</div>
+
+<style>
+.music-sub { padding-top: var(--space-10); padding-bottom: var(--space-20); }
+
+.music-sub__header {
+  max-width: 780px;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 3px solid var(--color-ink);
+}
+.music-sub__kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+.music-sub__title {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+}
+.music-sub__lede {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+  max-width: 62ch;
+}
+.music-sub__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+.music-sub__meta a { color: var(--color-link); }
+
+/* Custom URL */
+.music-sub__custom {
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  border-left: 3px solid var(--color-accent);
+  margin-bottom: var(--space-6);
+}
+.music-sub__custom-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-2);
+}
+.music-sub__custom-row { display: flex; gap: var(--space-2); }
+.music-sub__custom input {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  min-height: 44px;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+.music-sub__custom input::placeholder { color: var(--color-ink-faint); font-style: italic; }
+.music-sub__custom-btn {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  padding: 0 var(--space-5);
+  min-height: 44px;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.music-sub__custom-btn:hover { background: var(--color-accent); }
+
+/* Controls */
+.music-sub__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+.music-sub__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 260px;
+  min-width: 200px;
+  max-width: 460px;
+  padding: 0 var(--space-3);
+  min-height: 44px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-faint);
+}
+.music-sub__search:focus-within { border-color: var(--color-ink); background: var(--color-bg); color: var(--color-ink); }
+.music-sub__search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  min-height: 44px;
+}
+.music-sub__search input:focus { outline: none; }
+.music-sub__search input::placeholder { color: var(--color-ink-faint); font-style: italic; }
+.music-sub__controls select {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  border: 1px solid var(--color-rule);
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+.music-sub__status {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-4);
+  min-height: 1.2em;
+}
+.music-sub__status:empty { display: none; }
+.music-sub__empty {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  padding: var(--space-10) 0;
+  text-align: center;
+}
+
+/* Playlist grid */
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-6);
+}
+.playlist-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-top: 3px solid var(--color-ink);
+  transition: border-top-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.playlist-card:hover {
+  border-top-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.playlist-card--hidden { display: none; }
+.playlist-card__body {
+  flex: 1;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.playlist-card__cat {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+.playlist-card__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  margin: 0;
+  color: var(--color-ink);
+}
+.playlist-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+.playlist-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+.playlist-card__play {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.playlist-card__play:hover { background: var(--color-accent); }
+.playlist-card__link {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-link);
+  text-decoration: none;
+  margin-left: auto;
+}
+.playlist-card__link:hover { text-decoration: underline; }
+</style>
+
+<script>
+(function () {
+  // Custom URL
+  document.getElementById('custom-play').addEventListener('click', function () {
+    var url = document.getElementById('custom-url').value.trim();
+    if (!url) return;
+    var id = null;
+    var m = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+    if (m) id = m[1];
+    if (!id) { m = url.match(/\/channel\/(UC[a-zA-Z0-9_-]+)/); if (m) id = 'UU' + m[1].substring(2); }
+    if (!id) { m = url.match(/(PL[a-zA-Z0-9_-]{10,}|OLAK[a-zA-Z0-9_-]+|RDCLAK[a-zA-Z0-9_-]+)/); if (m) id = m[1]; }
+    if (id && window.musicPlayer) window.musicPlayer.loadPlaylist(id, 'Custom Playlist');
+    else alert('Paste a YouTube Music playlist or channel URL');
+  });
+  document.getElementById('custom-url').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('custom-play').click();
+  });
+
+  // Filtering
+  var search = document.getElementById('music-search');
+  var cat    = document.getElementById('music-cat');
+  var cards  = document.querySelectorAll('.playlist-card');
+  var empty  = document.getElementById('music-empty');
+  var status = document.getElementById('music-status');
+
+  function apply() {
+    var q = (search.value || '').toLowerCase().trim();
+    var c = cat.value;
+    var n = 0;
+    cards.forEach(function (card) {
+      var show = (!q || card.dataset.search.indexOf(q) !== -1) && (!c || card.dataset.cat === c);
+      card.classList.toggle('playlist-card--hidden', !show);
+      if (show) n++;
+    });
+    if (empty) empty.hidden = n > 0;
+    if (status) {
+      if (!q && !c) status.textContent = '';
+      else status.textContent = n + ' of ' + cards.length + ' playlist' + (cards.length === 1 ? '' : 's') + ' match.';
+    }
+  }
+  search.addEventListener('input', apply);
+  cat.addEventListener('change', apply);
+
+  // Wire play buttons
+  document.querySelectorAll('.playlist-card__play').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pid = btn.getAttribute('data-pid');
+      var name = btn.getAttribute('data-name');
+      if (pid && window.musicPlayer) window.musicPlayer.loadPlaylist(pid, name);
+    });
+  });
+}());
+</script>

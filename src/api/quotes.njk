@@ -1,0 +1,9 @@
+---
+permalink: /api/quotes.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ quotes.length }},
+  "quotes": {{ quotes | toJSON | safe }}
+}

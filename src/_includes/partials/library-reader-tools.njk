@@ -1,0 +1,308 @@
+{#
+  Library reader tools action bar.
+  Drop this partial inside .library-body-wrapper, after the <h1>.
+  Expects: workTitle, author, originalPublication, readingTimeMinutes, page.url, site.url, page.fileSlug, title
+#}
+
+<div class="article-header__actions library-reader-actions">
+
+  {# 1. Reader panel #}
+  <button class="article-action-btn library-panel-toggle" type="button"
+    aria-label="Reader"
+    aria-expanded="false"
+    aria-controls="library-panel">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+  </button>
+
+  {# 2. Save to reading list #}
+  <button class="article-action-btn bookmark-btn" id="bookmark-btn" type="button" aria-label="Save to reading list"
+    data-url="{{ page.url }}"
+    data-title="{{ workTitle }}: {{ title }}"
+    data-section="Library"
+    data-date="{{ originalPublication }}"
+    data-mins="{{ readingTimeMinutes or 0 }}">
+    <svg class="bookmark-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+    </svg>
+    <span class="btn-label">Save</span>
+  </button>
+
+  {# 2. Share #}
+  <div class="share-wrap">
+    <button class="article-action-btn" id="share-btn" type="button"
+      aria-label="Share this text" aria-expanded="false" aria-controls="share-panel"
+      data-title="{{ workTitle }}: {{ title }}"
+      data-url="{{ site.url }}{{ page.url }}">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <span class="btn-label">Share</span>
+    </button>
+    <div id="share-panel" class="share-panel" hidden role="menu">
+      <a class="share-panel__item" id="share-twitter"  href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X / Twitter
+      </a>
+      <a class="share-panel__item" id="share-facebook" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+      <a class="share-panel__item" id="share-linkedin" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a class="share-panel__item" id="share-reddit"  href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+        Reddit
+      </a>
+      <a class="share-panel__item" id="share-bluesky" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 568 501" fill="currentColor" aria-hidden="true"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.209C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.889-129.52 80.653-149.07-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.66 0 75.293 0 57.947 0-28.906 76.135-1.611 123.121 33.664z"/></svg>
+        Bluesky
+      </a>
+      <a class="share-panel__item" id="share-mastodon" href="#" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 74 79" fill="currentColor" aria-hidden="true"><path d="M73.7014 17.4323C72.5616 9.05152 65.1774 2.4469 56.424 1.1671C54.9472 0.950843 49.3518 0.163185 36.3901 0.163185H36.2933C23.3281 0.163185 20.5465 0.950843 19.0697 1.1671C10.56 2.41145 2.78877 8.34604 0.903306 16.826C-0.00357854 21.0022 -0.100361 25.6322 0.068224 29.8793C0.308274 35.9699 0.354113 42.0498 0.91436 48.1158C1.30054 52.1309 1.94863 56.1158 2.85116 60.0428C4.38616 66.6564 11.3077 72.2018 18.1071 74.674C25.3658 77.2579 33.2044 77.7447 40.7259 76.0832C41.5504 75.8995 42.3649 75.6935 43.1693 75.4654C44.9192 74.9477 46.8901 74.3625 48.5903 73.4578C50.5512 72.4484 52.6405 71.6906 54.8072 71.1972C60.5459 69.8936 63.5516 68.2696 65.5728 63.8064C68.1284 58.0558 69.4851 51.8392 69.5624 45.5509C69.5754 44.3821 70.1476 28.3366 70.1476 26.9658C70.1542 22.4227 71.5994 21.3484 73.7014 17.4323Z"/><path fill="white" d="M61.0244 25.5705V46.8777H52.3878V26.2006C52.3878 21.7833 50.7207 19.5372 47.3566 19.5372C43.6516 19.5372 41.7942 21.9943 41.7942 26.8522V37.4655H33.2089V26.8522C33.2089 21.9943 31.3515 19.5372 27.6465 19.5372C24.2824 19.5372 22.6154 21.7833 22.6154 26.2006V46.8777H13.9788V25.5705C13.9788 21.1568 15.1415 17.6392 17.4705 15.0235C19.8744 12.4078 23.0184 11.0734 26.9101 11.0734C31.4145 11.0734 34.8321 12.7486 37.116 16.0991L39.5018 20.0767L41.8877 16.0991C44.1716 12.7486 47.5892 11.0734 52.0936 11.0734C55.9853 11.0734 59.1293 12.4078 61.5332 15.0235C63.8622 17.6392 65.0249 21.1568 65.0249 25.5705H61.0244V25.5705Z"/></svg>
+        Mastodon
+      </a>
+      <hr class="share-panel__divider" aria-hidden="true">
+      <button class="share-panel__item" id="share-copy" type="button" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+        Copy link
+      </button>
+      <a class="share-panel__item" id="share-email" href="#" role="menuitem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Email
+      </a>
+    </div>
+  </div>
+
+  {# Reading settings are now handled by the global display-settings panel
+     (masthead → Display button). Article-only controls (ruler, paragraph
+     numbers, auto-scroll) appear there automatically on library pages. #}
+  {% if false %}
+  <div class="reading-settings-wrap">
+    <button class="article-action-btn" id="reading-settings-btn" type="button"
+      aria-label="Reading settings"
+      aria-expanded="false"
+      aria-controls="reading-settings-panel">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+        <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+        <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+      </svg>
+      <span class="btn-label">Reading</span>
+    </button>
+    <div id="reading-settings-panel" class="reading-settings-panel" hidden>
+      <button class="rs-panel-close" type="button" aria-label="Close reading settings" onclick="this.parentElement.hidden=true;var b=document.getElementById('reading-settings-btn');if(b)b.setAttribute('aria-expanded','false');">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="rs-group">
+        <label class="rs-label" for="rs-font-size">Text size</label>
+        <div class="rs-size-row">
+          <span class="rs-size-a rs-small" aria-hidden="true">A</span>
+          <input type="range" class="rs-slider" id="rs-font-size" min="14" max="24" step="1" value="18" aria-label="Font size in pixels">
+          <span class="rs-size-a rs-large" aria-hidden="true">A</span>
+        </div>
+      </div>
+      <div class="rs-group">
+        <label class="rs-label" for="rs-font-select">Font</label>
+        <select id="rs-font-select" class="rs-select">
+          <optgroup label="Site fonts">
+            <option value="serif">Source Serif (default)</option>
+            <option value="sans">DM Sans</option>
+            <option value="lora">Lora</option>
+            <option value="playfair">Playfair Display</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="georgia">Georgia</option>
+            <option value="palatino">Palatino</option>
+            <option value="times">Times New Roman</option>
+            <option value="garamond">Garamond</option>
+            <option value="bookman">Bookman Old Style</option>
+          </optgroup>
+          <optgroup label="Sans-serif">
+            <option value="system">System default</option>
+            <option value="arial">Arial / Helvetica</option>
+            <option value="verdana">Verdana</option>
+            <option value="trebuchet">Trebuchet MS</option>
+            <option value="tahoma">Tahoma</option>
+            <option value="century">Century Gothic</option>
+          </optgroup>
+          <optgroup label="Monospace">
+            <option value="mono">SF Mono / Consolas</option>
+            <option value="courier">Courier New</option>
+            <option value="lucida">Lucida Console</option>
+          </optgroup>
+          <optgroup label="Web fonts (loaded on demand)">
+            <option value="inter">Inter</option>
+            <option value="merriweather">Merriweather</option>
+            <option value="roboto">Roboto</option>
+            <option value="opensans">Open Sans</option>
+            <option value="baskerville">Libre Baskerville</option>
+            <option value="crimson">Crimson Pro</option>
+            <option value="ibmplex">IBM Plex Serif</option>
+            <option value="literata">Literata</option>
+            <option value="atkinson">Atkinson Hyperlegible</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="rs-group">
+        <p class="rs-label" id="rs-spacing-label">Line spacing</p>
+        <div class="rs-btngroup" role="group" aria-labelledby="rs-spacing-label">
+          <button class="rs-btn rs-icon-btn" data-rs-spacing="tight" type="button" title="Tight" aria-label="Tight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="3" y1="19" x2="21" y2="19"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn is-active" data-rs-spacing="normal" type="button" title="Normal" aria-label="Normal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="5" x2="21" y2="5"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn" data-rs-spacing="relaxed" type="button" title="Relaxed" aria-label="Relaxed">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="4" x2="21" y2="4"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="20" x2="21" y2="20"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn" data-rs-spacing="loose" type="button" title="Loose" aria-label="Loose">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="3" x2="21" y2="3"/><line x1="3" y1="13" x2="21" y2="13"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="rs-group">
+        <p class="rs-label" id="rs-width-label">Text width</p>
+        <div class="rs-btngroup" role="group" aria-labelledby="rs-width-label">
+          <button class="rs-btn rs-icon-btn" data-rs-width="narrow" type="button" title="Narrow" aria-label="Narrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="4" x2="17" y2="4"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="14" x2="17" y2="14"/><line x1="7" y1="19" x2="13" y2="19"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn is-active" data-rs-width="normal" type="button" title="Normal" aria-label="Normal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="4"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="14" x2="20" y2="14"/><line x1="4" y1="19" x2="14" y2="19"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn" data-rs-width="wide" type="button" title="Wide" aria-label="Wide">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="4" x2="22" y2="4"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="2" y1="14" x2="22" y2="14"/><line x1="2" y1="19" x2="16" y2="19"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="rs-group">
+        <p class="rs-label" id="rs-word-spacing-label">Word spacing</p>
+        <div class="rs-btngroup" role="group" aria-labelledby="rs-word-spacing-label">
+          <button class="rs-btn rs-icon-btn is-active" data-rs-wordspace="normal" type="button" title="Normal" aria-label="Normal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="2" y="7" width="9" height="10" rx="1"/><rect x="13" y="7" width="9" height="10" rx="1"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn" data-rs-wordspace="wide" type="button" title="Wide" aria-label="Wide">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="1" y="7" width="8" height="10" rx="1"/><rect x="13" y="7" width="8" height="10" rx="1"/></svg>
+          </button>
+          <button class="rs-btn rs-icon-btn" data-rs-wordspace="wider" type="button" title="Wider" aria-label="Wider">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="1" y="7" width="7" height="10" rx="1"/><rect x="14" y="7" width="7" height="10" rx="1"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="rs-group rs-toggles">
+        <label class="rs-toggle">
+          <input type="checkbox" id="rs-ruler" class="rs-toggle__input">
+          <span class="rs-toggle__label">Reading ruler</span>
+        </label>
+        <div id="rs-ruler-options" hidden style="margin-top:var(--space-2);padding-left:var(--space-1);">
+          <div style="margin-bottom:var(--space-2);">
+            <label style="font-size:var(--text-xs);color:var(--color-ink-faint);display:block;margin-bottom:var(--space-1);">Thickness</label>
+            <input type="range" class="rs-slider" id="rs-ruler-thick" min="1" max="8" step="1" value="2" aria-label="Ruler thickness">
+          </div>
+          <div style="margin-bottom:var(--space-2);">
+            <label style="font-size:var(--text-xs);color:var(--color-ink-faint);display:block;margin-bottom:var(--space-1);">Color</label>
+            <div class="rs-btngroup" role="group">
+              <button class="rs-swatch is-active" data-rs-ruler-color="accent" type="button" style="background:var(--color-accent);" title="Accent" aria-label="Accent"></button>
+              <button class="rs-swatch" data-rs-ruler-color="red" type="button" style="background:#e53e3e;" title="Red" aria-label="Red"></button>
+              <button class="rs-swatch" data-rs-ruler-color="blue" type="button" style="background:#3182ce;" title="Blue" aria-label="Blue"></button>
+              <button class="rs-swatch" data-rs-ruler-color="green" type="button" style="background:#38a169;" title="Green" aria-label="Green"></button>
+              <button class="rs-swatch" data-rs-ruler-color="yellow" type="button" style="background:#d69e2e;" title="Yellow" aria-label="Yellow"></button>
+              <button class="rs-swatch" data-rs-ruler-color="black" type="button" style="background:#111;" title="Black" aria-label="Black"></button>
+              <button class="rs-swatch" data-rs-ruler-color="white" type="button" style="background:#eee;border:1px solid var(--color-rule);" title="White" aria-label="White"></button>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:var(--text-xs);color:var(--color-ink-faint);display:block;margin-bottom:var(--space-1);">Style</label>
+            <div class="rs-btngroup" role="group">
+              <button class="rs-btn rs-icon-btn is-active" data-rs-ruler-style="solid" type="button" title="Solid" aria-label="Solid">
+                <svg width="16" height="2" viewBox="0 0 16 2"><line x1="0" y1="1" x2="16" y2="1" stroke="currentColor" stroke-width="2"/></svg>
+              </button>
+              <button class="rs-btn rs-icon-btn" data-rs-ruler-style="dashed" type="button" title="Dashed" aria-label="Dashed">
+                <svg width="16" height="2" viewBox="0 0 16 2"><line x1="0" y1="1" x2="16" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2"/></svg>
+              </button>
+              <button class="rs-btn rs-icon-btn" data-rs-ruler-style="dotted" type="button" title="Dotted" aria-label="Dotted">
+                <svg width="16" height="2" viewBox="0 0 16 2"><line x1="0" y1="1" x2="16" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="1 2"/></svg>
+              </button>
+              <button class="rs-btn rs-icon-btn" data-rs-ruler-style="glow" type="button" title="Glow" aria-label="Glow">
+                <svg width="16" height="6" viewBox="0 0 16 6"><line x1="0" y1="3" x2="16" y2="3" stroke="currentColor" stroke-width="2" filter="url(#glow2)"/><defs><filter id="glow2"><feGaussianBlur stdDeviation="1" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <label class="rs-toggle">
+          <input type="checkbox" id="rs-para-nums" class="rs-toggle__input">
+          <span class="rs-toggle__label">Paragraph numbers</span>
+        </label>
+      </div>
+      <div class="rs-group" id="rs-autoscroll-group">
+        <label class="rs-toggle">
+          <input type="checkbox" id="rs-autoscroll" class="rs-toggle__input">
+          <span class="rs-toggle__label">Auto-scroll</span>
+        </label>
+        <div id="rs-autoscroll-speed" hidden style="margin-top:var(--space-2);">
+          <input type="range" class="rs-slider" id="rs-scroll-speed" min="1" max="10" step="1" value="3" aria-label="Scroll speed">
+          <div style="display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-ink-faint);"><span>Slow</span><span>Fast</span></div>
+        </div>
+      </div>
+      <button type="button" style="font-family:var(--font-ui);font-size:var(--text-xs);color:var(--color-ink-faint);background:none;border:none;cursor:pointer;padding:var(--space-1) 0;" onclick="if(window.__resetReadingSettings)window.__resetReadingSettings();">Reset to defaults</button>
+    </div>
+  </div>
+  {% endif %}
+
+  {# 6. Download #}
+  <div class="download-wrap">
+    <button class="article-action-btn" id="download-btn" type="button"
+      aria-label="Download text"
+      aria-expanded="false"
+      aria-controls="download-panel"
+      data-title="{{ workTitle }}: {{ title }}"
+      data-author="{{ author }}"
+      data-date="{{ originalPublication }}"
+      data-url="{{ site.url }}{{ page.url }}"
+      data-slug="{{ page.fileSlug }}">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      <span class="btn-label">Download</span>
+    </button>
+    <div id="download-panel" class="download-panel" hidden role="menu">
+      <button class="download-panel__item" id="dl-txt" type="button" role="menuitem">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+        Plain text (.txt)
+      </button>
+      <button class="download-panel__item" id="dl-md" type="button" role="menuitem">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        Markdown (.md)
+      </button>
+    </div>
+  </div>
+
+  {# 7. Cite #}
+  <button class="article-action-btn" id="cite-btn" type="button" aria-label="Cite this work" aria-expanded="false" aria-controls="cite-modal">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.685.54-2.293.44-.6 1.05-1.05 1.83-1.343.78-.295 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.824-2.556 1.51-.755.685-1.347 1.54-1.78 2.563-.432 1.025-.65 2.218-.65 3.58 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44zm9 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.132-1.54-.022-.16-.95.1-1.685.54-2.294.44-.606 1.05-1.056 1.83-1.35.78-.294 1.56-.43 2.34-.43v-1.52c-.976 0-1.94.16-2.886.48-.95.32-1.8.825-2.556 1.51-.755.686-1.347 1.54-1.78 2.565-.432 1.022-.65 2.216-.65 3.578 0 1.36.22 2.47.65 3.33.432.86 1.02 1.5 1.76 1.92.74.42 1.57.63 2.48.63.97 0 1.79-.22 2.46-.66.67-.44 1.17-1.03 1.5-1.77.33-.74.5-1.55.5-2.44z"/>
+    </svg>
+    <span class="btn-label">Cite</span>
+  </button>
+
+</div>
+
+{# Citation data, consumed by progress.js to build formatted citations #}
+<div id="cite-data"
+  data-title="{{ title }}"
+  data-author="{{ author }}"
+  data-date="{{ originalPublication }}"
+  data-publication="{{ workTitle }}"
+  data-url="{{ site.url }}{{ page.url }}"
+  hidden></div>

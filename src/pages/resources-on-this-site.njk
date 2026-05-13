@@ -1,0 +1,88 @@
+---
+layout: base
+title: "On This Site, Resources"
+description: Everything The Freethinking Times offers, library, quotes, videos, timeline, projects, games, and reader tools.
+permalink: /resources/on-this-site/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/resources/">Resources</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">On This Site</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">On This Site</h1>
+    <p class="page-header__lede">
+      Everything {{ site.title }} makes available to readers, all free, all without accounts.
+    </p>
+  </header>
+
+  <div class="hub-card-grid">
+
+    <a href="/library/" class="hub-card">
+      <h2 class="hub-card__title">Public Domain Library</h2>
+      <p class="hub-card__desc">{{ library.works | length }} works by {{ library.authors | length }} authors, fully readable online with annotations, highlights, and bookmarks.</p>
+    </a>
+
+    <a href="/quotes/" class="hub-card">
+      <h2 class="hub-card__title">Quotes</h2>
+      <p class="hub-card__desc">{{ quotes | length }} curated freethought quotes, save, share, copy, filter by author, topic, or era.</p>
+    </a>
+
+    <a href="/videos/" class="hub-card">
+      <h2 class="hub-card__title">Video Library</h2>
+      <p class="hub-card__desc">{{ videos | length }} curated lectures, debates, and documentaries from the freethought tradition.</p>
+    </a>
+
+    <a href="/timeline/" class="hub-card">
+      <h2 class="hub-card__title">Freethought Timeline</h2>
+      <p class="hub-card__desc">{{ timeline | length }} milestone events spanning 2,400 years, from Socrates to the New Atheism.</p>
+    </a>
+
+    <a href="/glossary/" class="hub-card">
+      <h2 class="hub-card__title">Freethought Glossary</h2>
+      <p class="hub-card__desc">{{ collections.glossary.length }} philosophical terms with definitions, etymology, and key figures.</p>
+    </a>
+
+    <a href="/bookshelf/" class="hub-card">
+      <h2 class="hub-card__title">Freethinker's Bookshelf</h2>
+      <p class="hub-card__desc">{{ collections.bookshelf.length }} annotated book recommendations with category, difficulty, and reading guidance.</p>
+    </a>
+
+    <a href="/thought-experiments/" class="hub-card">
+      <h2 class="hub-card__title">Thought Experiments</h2>
+      <p class="hub-card__desc">{{ collections["thought-experiments"].length }} classic thought experiments examined, what they prove and what they don't.</p>
+    </a>
+
+    <a href="/trials/" class="hub-card">
+      <h2 class="hub-card__title">Trials of Thought</h2>
+      <p class="hub-card__desc">{{ collections["trials-of-thought"].length }} landmark trials where ideas were the defendant, Socrates to Rushdie.</p>
+    </a>
+
+    <a href="/games/" class="hub-card">
+      <h2 class="hub-card__title">Games</h2>
+      <p class="hub-card__desc">{{ games | length }} interactive games, trivia, puzzles, and word games.</p>
+    </a>
+
+    <a href="/reader/" class="hub-card">
+      <h2 class="hub-card__title">RSS Reader</h2>
+      <p class="hub-card__desc">Follow freethought publications right here, feeds updated at each site build.</p>
+    </a>
+
+    <a href="/notes/" class="hub-card">
+      <h2 class="hub-card__title">Notes &amp; Highlights</h2>
+      <p class="hub-card__desc">All your highlights, notes, and bookmarks across the site, export, import, print, share.</p>
+    </a>
+
+    <a href="/reading-list/" class="hub-card">
+      <h2 class="hub-card__title">Reading List</h2>
+      <p class="hub-card__desc">Save articles for later, stored in your browser, no account required.</p>
+    </a>
+
+  </div>
+</div>

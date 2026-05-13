@@ -1,0 +1,67 @@
+---
+layout: base
+title: Transparency
+description: How this publication works, what we build, and how we hold ourselves accountable.
+permalink: /transparency/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <h1 class="page-header__title">Transparency</h1>
+      <p class="page-header__lede">
+        A publication that demands transparency from others should practise it itself.
+      </p>
+    </header>
+
+    <div class="article-body">
+      <p>Everything about how this site works is public. The code is open source under the MIT license as <a href="https://projectbroadsheet.com" target="_blank" rel="noopener noreferrer">Project Broadsheet</a>, the analytics are public, the corrections are logged, and the editorial standards are written down. If we make a mistake, you will find it here before we try to hide it.</p>
+    </div>
+
+    <div class="hub-card-grid">
+      <a href="/features/" class="hub-card">
+        <h2 class="hub-card__title">Features</h2>
+        <p class="hub-card__desc">A complete inventory of every feature this site offers, reading tools, publishing infrastructure, and editorial systems.</p>
+      </a>
+      <a href="/stack/" class="hub-card">
+        <h2 class="hub-card__title">How It's Built</h2>
+        <p class="hub-card__desc">The technology behind every page, explained in plain language, with no marketing.</p>
+      </a>
+      <a href="/changelog/" class="hub-card">
+        <h2 class="hub-card__title">Changelog</h2>
+        <p class="hub-card__desc">A public record of every change made to this site, dated and categorised.</p>
+      </a>
+      <a href="/corrections/" class="hub-card">
+        <h2 class="hub-card__title">Corrections</h2>
+        <p class="hub-card__desc">Every factual correction we have published, logged permanently and linked from the original article.</p>
+      </a>
+      <a href="/open-source/" class="hub-card">
+        <h2 class="hub-card__title">Open Source</h2>
+        <p class="hub-card__desc">The full source code is available as Project Broadsheet under the MIT license. Fork it and launch your own publication.</p>
+      </a>
+      <a href="/style-guide/" class="hub-card">
+        <h2 class="hub-card__title">Style Guide</h2>
+        <p class="hub-card__desc">Brand identity, typography, colour palette, and UI patterns.</p>
+      </a>
+      <a href="/costs/" class="hub-card">
+        <h2 class="hub-card__title">Costs</h2>
+        <p class="hub-card__desc">A line-by-line breakdown of what it costs to run this publication and where reader contributions go.</p>
+      </a>
+      <a href="/license/" class="hub-card">
+        <h2 class="hub-card__title">Republication License</h2>
+        <p class="hub-card__desc">All articles ship under CC BY-NC-ND 4.0 — free to republish under attribution, no derivatives.</p>
+      </a>
+      <a href="/site-map/" class="hub-card">
+        <h2 class="hub-card__title">Sitemap</h2>
+        <p class="hub-card__desc">A complete directory of every page on the site, useful when you're looking for something specific.</p>
+      </a>
+      {% if site.analytics and site.analytics.dashboardUrl %}
+      <a href="{{ site.analytics.dashboardUrl }}" target="_blank" rel="noopener noreferrer" class="hub-card">
+        <h2 class="hub-card__title">Public Analytics</h2>
+        <p class="hub-card__desc">Our Umami analytics dashboard is public. You can see the same traffic data we see, no cookies, no tracking.</p>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

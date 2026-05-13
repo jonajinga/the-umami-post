@@ -1,0 +1,86 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  {# ── Homepage ── #}
+  <url>
+    <loc>{{ site.url }}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  {# ── Section index pages ── #}
+  {% set sectionSlugs = ["news", "opinion", "analysis", "history", "arts-culture", "science-technology", "letters"] %}
+  {% for slug in sectionSlugs %}
+  <url>
+    <loc>{{ site.url }}/{{ slug }}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  {% endfor %}
+
+  {# ── Library index and browse pages ── #}
+  <url>
+    <loc>{{ site.url }}/library/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}/library/subjects/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>{{ site.url }}/library/authors/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  {# ── Library works (landing pages) ── #}
+  {% for work in collections.libraryWorks %}
+  <url>
+    <loc>{{ site.url }}{{ work.url }}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  {% endfor %}
+
+  {# ── Library chapters ── #}
+  {% for ch in collections.libraryChapters %}
+  <url>
+    <loc>{{ site.url }}{{ ch.url }}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endfor %}
+
+  {# ── Key static pages ── #}
+  {% set staticPages = [
+    "/about/", "/masthead/", "/ethics/", "/support/", "/submit/",
+    "/contributors/", "/reading-list/", "/archives/", "/editions/",
+    "/corrections/", "/changelog/", "/topics/", "/start-here/",
+    "/documents/", "/editorial/", "/newsletter/", "/features/",
+    "/license/", "/feeds/"
+  ] %}
+  {% for p in staticPages %}
+  <url>
+    <loc>{{ site.url }}{{ p }}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  {% endfor %}
+
+  {# ── Articles ── #}
+  {% for item in collections.allContent %}
+  <url>
+    <loc>{{ site.url }}{{ item.url }}</loc>
+    <lastmod>{{ (item.data.lastUpdated or item.date) | isoDate }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  {% endfor %}
+
+</urlset>

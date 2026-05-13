@@ -1,0 +1,21 @@
+---
+layout: base
+title: Events
+description: Freethought conferences, conventions, meetups, and observances, interactive calendar with filtering.
+permalink: /events/
+---
+
+<div class="cal-page container">
+
+  <header class="cal-page__header">
+    <h1 class="cal-page__title">Events</h1>
+    <p class="cal-page__dek">Conferences, conventions, meetups, and observances for freethinkers worldwide.</p>
+    <p class="cal-page__submit">Know of an event? <a href="/events/submit/">Submit it</a> or use <a href="/contact/">our contact form</a>.</p>
+  </header>
+
+  <script type="application/json" id="cal-data">{{ events | dump | safe }}</script>
+  <div id="cal-root" role="application" aria-label="Events calendar" tabindex="-1"></div>
+
+</div>
+
+<script src="/assets/js/calendar.js" defer></script>

@@ -1,0 +1,30 @@
+---
+layout: base
+title: Surprise Me, The Freethinking Times
+description: Taking you to a random article.
+permalink: /random/
+eleventyExcludeFromCollections: true
+---
+
+<div class="container" style="text-align: center; padding: var(--space-20) var(--space-4);">
+  <p style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-ink-faint); letter-spacing: 0.04em;">
+    Taking you somewhere interesting&hellip;
+  </p>
+  <p style="margin-top: var(--space-6); font-size: var(--text-sm); color: var(--color-ink-faint);">
+    If you are not redirected, <a id="random-fallback" href="/archives/">browse the archives</a>.
+  </p>
+</div>
+
+<script>
+(function () {
+  var urls = [
+    {% for item in collections.allContent -%}
+    "{{ item.url }}"{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ];
+  if (!urls.length) return;
+  var dest = urls[Math.floor(Math.random() * urls.length)];
+  document.getElementById('random-fallback').href = dest;
+  window.location.replace(dest);
+})();
+</script>

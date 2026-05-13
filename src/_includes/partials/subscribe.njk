@@ -1,0 +1,72 @@
+{#
+  Subscribe Form Partial
+  Usage: {% set subscribeVariant = "inline" %}{% include "partials/subscribe.njk" %}
+  Variants: "inline" (between articles), "sidebar" (sidebar widget), "footer" (footer strip)
+  Copy is editable via Pages CMS → Site Settings → subscribe
+#}
+
+{% set variant = subscribeVariant or "inline" %}
+
+{% if variant == "inline" %}
+{# ── Full inline block, between articles or end of article ── #}
+<aside class="subscribe-block" aria-label="Subscribe to The Freethinking Times">
+  <p class="subscribe-block__eyebrow">{{ site.subscribe.eyebrow or "Newsletter" }}</p>
+  <h2 class="subscribe-block__heading">{{ site.subscribe.heading or "One email, one article." }}</h2>
+  <p class="subscribe-block__body">{{ site.subscribe.body or "New pieces in your inbox the moment they publish." }}</p>
+  <form class="subscribe-form" data-action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" novalidate>
+    <label for="subscribe-email-inline" class="visually-hidden">Your email address</label>
+    <input
+      class="subscribe-form__input"
+      id="subscribe-email-inline"
+      type="email"
+      name="email"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required>
+    <button class="subscribe-form__btn" type="submit">Subscribe</button>
+  </form>
+  <div class="subscribe-status" role="alert" aria-live="polite"></div>
+  <p class="subscribe-block__notice">{{ site.subscribe.notice or "Free. Unsubscribe anytime." }}</p>
+</aside>
+
+{% elif variant == "sidebar" %}
+{# ── Sidebar widget ── #}
+<div class="sidebar-widget subscribe-block--sidebar" aria-label="Subscribe">
+  <p class="sidebar-widget__title"><a href="/newsletter/" style="color:var(--color-link);text-decoration:underline;text-underline-offset:2px;">Newsletter</a></p>
+  <p class="subscribe-block__body">{{ site.subscribe.sidebarBody or "Direct to your inbox when pieces publish." }}</p>
+  <form class="subscribe-form" data-action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" novalidate>
+    <label for="subscribe-email-sidebar" class="visually-hidden">Your email address</label>
+    <input
+      class="subscribe-form__input"
+      id="subscribe-email-sidebar"
+      type="email"
+      name="email"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required>
+    <button class="subscribe-form__btn" type="submit">Subscribe</button>
+  </form>
+  <div class="subscribe-status" role="alert" aria-live="polite"></div>
+</div>
+
+{% elif variant == "footer" %}
+{# ── Footer strip ── #}
+<div class="subscribe-block--footer" aria-label="Subscribe">
+  <h3 class="subscribe-block__heading">{{ site.subscribe.footerHeading or "Subscribe to the newsletter" }}</h3>
+  <p class="subscribe-block__body">{{ site.subscribe.footerBody or "One email, one article. Free. Unsubscribe anytime." }}</p>
+  <form class="subscribe-form" data-action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" novalidate>
+    <label for="subscribe-email-footer" class="visually-hidden">Your email address</label>
+    <input
+      class="subscribe-form__input"
+      id="subscribe-email-footer"
+      type="email"
+      name="email"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required>
+    <button class="subscribe-form__btn" type="submit">Subscribe</button>
+  </form>
+  <div class="subscribe-status" role="alert" aria-live="polite"></div>
+</div>
+
+{% endif %}

@@ -1,0 +1,66 @@
+date: "2026-04-12"
+title: Navigation overhaul, article redesign, new pages, Pagefind fixes, quality polish
+sections:
+  - label: Navigation
+    entries:
+      - Nav bar reduced to 7 editorial sections + More mega-dropdown
+      - >-
+        More mega-dropdown: 5-column layout (Explore, Projects, Community, About, Reader Tools) with title + subtitle
+        descriptions
+      - >-
+        Hamburger menu redesigned: no uppercase links, visual hierarchy via font weight, toolbar pinned to bottom,
+        language toggle inline
+      - >-
+        Footer restructured: brand + newsletter combined, 8 columns (brand, Sections, Explore, Community, Contact &
+        Submit, Reader Tools, About, Transparency)
+      - "Dropdown timing: 150ms hide delay prevents accidental close when moving mouse to dropdown"
+  - label: Article pages
+    entries:
+      - Sidebar removed — article body now single-column, centered
+      - Table of contents moved to reader panel as Contents tab
+      - Related articles moved to reader panel as Related tab
+      - "New meta row under byline: word count, read time, listen time (~1.3x read), topic tags"
+      - Suggest a correction button added to article action bar
+      - Author bio card removed from article footer (redundant with byline link)
+      - Subscribe block removed from article pages
+      - Comments section padding and height reduced
+  - label: New pages
+    entries:
+      - Site Map at /site-map/ — visual directory of every page, Economist-style grid layout
+      - Terms of Use at /terms/ — plain-language terms covering content ownership, submissions, data
+      - Cookies Policy at /cookies/ — documents zero first-party cookies, localStorage approach, third-party cookies
+      - Accessibility at /accessibility/ — WCAG 2.2 AA commitment with detailed feature documentation
+      - How It's Built at /stack/ — plain-language explanation of the entire tech stack
+      - Explore hub at /more/ — landing page for all non-article content with card grids
+  - label: Search
+    entries:
+      - "Pagefind: added section filters for Glossary, Bookshelf, and Timeline (were indexed but not filterable)"
+      - Added Videos and Timeline filter buttons to search modal
+      - Fixed empty-query filter-only search (null instead of empty string)
+      - Improved no-results message for filter-only searches
+  - label: TTS improvements
+    entries:
+      - Listen button now shows controls without auto-playing — user clicks Play to start
+      - Network voices sorted above offline voices in voice selector
+      - "Chrome silent bug fix: cancel + 50ms delay before speak()"
+      - Speech stops automatically when navigating away
+  - label: Privacy and video
+    entries:
+      - YouTube embeds switched to youtube-nocookie.com (enhanced privacy mode — no cookies until play)
+      - Privacy policy updated with Videos/YouTube section
+      - Cookies policy updated with YouTube disclosure
+  - label: Style guide enforcement
+    entries:
+      - "All page headers standardized: clamp(1.8rem, 5vw, 3.815rem), padding-bottom space-6, margin-bottom space-10"
+      - "Container padding normalized: space-10 top, space-20 bottom on all standard pages"
+      - "Dark mode fix: video embed background changed from #000 to var(--color-ink)"
+      - "Form submit button contrast fixed in dark mode (color: var(--color-bg))"
+      - Form field background changed to --color-bg-alt for visibility in both modes
+      - Videos page title changed from 'Video Library' to 'Videos'
+  - label: Infrastructure
+    entries:
+      - "RSS feeds: switched to @11ty/eleventy-fetch with 1-hour disk cache"
+      - "Service worker: precache expanded to include reading-list, reading-settings, download, calendar, dictation JS"
+      - "Language selector: navbar globe icon opens dropdown, drawer selector enlarged"
+      - "Broken link audit: 0 broken internal links across 322 pages"
+      - eleventy-plugin-broken-links installed (disabled in config due to Eleventy v3 incompatibility)

@@ -1,0 +1,12 @@
+{
+  "hash": "f8b871cafb934d748e4df04366e32ceef40aa40d730635e070af73b54fed3075",
+  "voice": "af_heart",
+  "durationSec": 220.7,
+  "byteSize": 2649645,
+  "sourceMarkdownLength": 3380,
+  "sampleRate": 24000,
+  "chunkCount": 18,
+  "generatedAt": "2026-04-26T19:17:28.385Z",
+  "modelId": "onnx-community/Kokoro-82M-v1.0-ONNX",
+  "dtype": "q8"
+}

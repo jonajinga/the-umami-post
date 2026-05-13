@@ -1,0 +1,46 @@
+---
+layout: base
+title: Editions
+description: Browse The Freethinking Times by edition, periodical bundles of related articles published together.
+permalink: /editions/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header style="padding-bottom: var(--space-8); border-bottom: 3px solid var(--color-ink); margin-bottom: var(--space-8);">
+    <h1 style="font-family: var(--font-masthead); font-size: var(--text-3xl); margin-bottom: var(--space-3);">Editions</h1>
+    <p style="color: var(--color-ink-muted); font-size: var(--text-md); font-style: italic; max-width: 60ch;">
+      Periodically, we gather recent pieces into a numbered edition, a coherent issue with a unified theme, like a print newspaper. Each edition is its own artefact.
+    </p>
+  </header>
+
+  {% if collections.editionList and collections.editionList.length %}
+
+  <div class="editions-grid">
+    {% for editionNum in collections.editionList %}
+    {% set edArts = collections.allContent | editionArticles(editionNum) %}
+    <a class="edition-card" href="/editions/{{ editionNum }}/">
+      <span class="edition-card__number">No. {{ editionNum }}</span>
+      <span class="edition-card__count">{{ edArts.length }} article{% if edArts.length != 1 %}s{% endif %}</span>
+      {% if edArts.length %}
+      <span class="edition-card__date">{{ edArts[0].date | readableDate }}</span>
+      <ul class="edition-card__titles">
+        {% for art in edArts | limit(3) %}
+        <li>{{ art.data.title }}</li>
+        {% endfor %}
+        {% if edArts.length > 3 %}
+        <li style="color: var(--color-ink-faint);">+ {{ edArts.length - 3 }} more</li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <p style="color: var(--color-ink-faint); font-style: italic;">
+    No editions published yet. Add <code>edition: 1</code> to an article's front matter to create the first.
+  </p>
+  {% endif %}
+
+</div>

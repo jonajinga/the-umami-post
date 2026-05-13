@@ -1,0 +1,68 @@
+---
+layout: base
+title: About
+description: What The Freethinking Times is, why it exists, and what it stands for.
+permalink: /about/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">About</h1>
+    <p class="page-header__lede">
+      What this publication is, why it exists, and what it will and will not do.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#what-we-are">What we are</a>
+      <a href="#why-we-exist">Why we exist</a>
+      <a href="#what-we-stand-for">What we stand for</a>
+      <a href="#what-we-will-not-do">What we will not do</a>
+      <a href="#contact">Contact</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="what-we-are">What We Are</h2>
+      {% for p in aboutContent.whatWeAre %}<p>{{ p }}</p>{% endfor %}
+
+      <h2 id="why-we-exist">Why We Exist</h2>
+      {% for p in aboutContent.whyWeExist %}<p>{{ p }}</p>{% endfor %}
+
+      <h2 id="what-we-stand-for">What We Stand For</h2>
+      {% for p in aboutContent.whatWeStandFor %}<p>{{ p }}</p>{% endfor %}
+
+      <h2 id="what-we-will-not-do">What We Will Not Do</h2>
+      {% for p in aboutContent.whatWeWillNotDo %}<p>{{ p }}</p>{% endfor %}
+
+      <h2 id="contact">Contact</h2>
+
+      <p>General inquiries: <a href="/contact/">Contact form</a><br>
+      Editorial submissions: <a href="/submit/">Submit a piece</a><br>
+      Letters to the editor: <a href="/letters/submit/">Write a letter</a><br>
+      News tips: <a href="/tips/">Tip line</a> (anonymous submissions accepted)<br>
+      Corrections: <a href="/corrections/report/">Report a correction</a></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

@@ -1,0 +1,29 @@
+---
+permalink: /api/manifest.json
+eleventyExcludeFromCollections: true
+---
+{
+  "name": "{{ site.title }}",
+  "description": "{{ site.description }}",
+  "url": "{{ site.url }}",
+  "generated": "{{ page.date | htmlDateString }}",
+  "endpoints": [
+    { "path": "/api/articles.json", "returns": "All published articles with metadata" },
+    { "path": "/api/sections.json", "returns": "Editorial sections with descriptions and counts" },
+    { "path": "/api/authors.json", "returns": "All authors with bylines" },
+    { "path": "/api/quotes.json", "returns": "All quotes with author, source, era, tags" },
+    { "path": "/api/timeline.json", "returns": "Historical timeline entries" },
+    { "path": "/api/glossary.json", "returns": "All glossary terms with definitions" },
+    { "path": "/api/bookshelf.json", "returns": "Recommended reading entries" },
+    { "path": "/api/events.json", "returns": "Upcoming and past events" },
+    { "path": "/api/videos.json", "returns": "Video library entries" },
+    { "path": "/api/songs.json", "returns": "Freethought Music song collection" },
+    { "path": "/api/trials.json", "returns": "Trials of Thought entries" },
+    { "path": "/api/thought-experiments.json", "returns": "Thought experiments" }
+  ],
+  "feeds": {
+    "rss": "{{ site.url }}/feed.xml",
+    "sitemap": "{{ site.url }}/sitemap.xml",
+    "news": "{{ site.url }}/news-sitemap.xml"
+  }
+}

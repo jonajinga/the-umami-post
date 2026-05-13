@@ -1,0 +1,43 @@
+date: "2026-04-09"
+title: Persistent reader toolbar, Ingersoll library, tablet polish
+sections:
+  - label: Reader toolbar
+    entries:
+      - >-
+        The Highlight / Note / Bookmark / Share toolbar is now always visible at the bottom of article and library pages
+        — no longer requires text selection to appear
+      - >-
+        Highlight and Note buttons are dimmed when no text is selected; they light up when text is highlighted in the
+        article body
+      - Bookmark button works anytime — saves your current scroll position with a text excerpt
+      - Share button works when text is selected — shares via Web Share API or copies to clipboard
+  - label: Library
+    entries:
+      - >-
+        Added The Works of Robert G. Ingersoll, Vol. 1 (Dresden Edition, 1909) — nine lectures totaling ~98,580 words,
+        including The Gods, Humboldt, Thomas Paine, Individuality, Heretics and Heresies, The Ghosts, The Liberty of Man
+        Woman and Child, About Farming in Illinois, and What Must We Do to Be Saved?
+      - Added Robert G. Ingersoll author biography
+  - label: Import & Export
+    entries:
+      - Notes & Highlights page (/notes/) now supports JSON export and import for transferring data between devices
+      - Reading List page (/reading-list/) now supports JSON export and import
+      - Notes page titles are now clickable links to the source article or library page
+  - label: Tablet & mobile
+    entries:
+      - Masthead icon buttons and section nav hidden at 1180px to cover landscape tablets
+      - Hamburger drawer icons rebuilt as a 4-column CSS grid (36px buttons, 16px icons) for proper centering
+      - Notes icon added to hamburger drawer quick actions
+      - Footer bottom bar centers vertically on portrait mobile
+      - Footer site title uses clamp() to prevent wrapping on tablets
+  - label: Performance
+    entries:
+      - progress.js (32KB) now deferred on all layouts — was render-blocking
+      - search.js added to service worker pre-cache
+      - Search adds a retry with 2-second delay for pagefind index loading
+  - label: Fixes
+    entries:
+      - Bookmark indicators render after window.load for accurate positioning
+      - Bookmark jump subtracts 60px for fixed header offset
+      - Mobile highlights work without page refresh (cloned Range preserved)
+      - Annotation toolbar fallback to text-search when Range.surroundContents fails

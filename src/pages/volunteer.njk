@@ -1,0 +1,314 @@
+---
+layout: base
+title: Volunteer with us
+description: Open volunteer roles at The Freethinking Times. Editorial, research, and operational positions for people who want to support independent, rigorous journalism without joining a payroll.
+permalink: /volunteer/
+---
+
+{% set positions = [
+  {
+    slug: "fact-checker",
+    title: "Fact-checker",
+    commitment: "4–8 hrs/week",
+    remote: "Fully remote",
+    summary: "Verify claims, sources, and quotes in articles before publication. Read the piece line by line, flag anything that lacks a primary source, and write up findings the editor can act on.",
+    responsibilities: [
+      "Read each assigned piece line by line and flag every factual claim that needs sourcing.",
+      "Track each claim back to a primary source — official records, peer-reviewed studies, on-the-record interviews, etc.",
+      "Note attribution gaps, paraphrase / quote drift, and chronology errors in a fact-check memo.",
+      "Hand the memo back to the writer + editor with clear severity (must-fix vs. nice-to-tighten).",
+      "Re-check after revisions before the piece publishes."
+    ],
+    qualifications: [
+      "Comfortable reading at speed and resisting confirmation bias on subjects you have priors on.",
+      "Familiarity with at least one of: government records, court filings, academic databases, FOIA workflows.",
+      "Willing to say 'this claim cannot be sourced' to a writer you respect.",
+      "Bonus: a beat (climate, regulation, religion, tech, etc.) where you can move faster than the editor."
+    ],
+    apply: "Email a one-page note about your background and which beat you'd want to fact-check first."
+  },
+  {
+    slug: "copy-editor",
+    title: "Copy editor",
+    commitment: "3–6 hrs/week",
+    remote: "Fully remote",
+    summary: "Tighten prose, catch typos, enforce house style. The piece has been through a substantive edit; you're the last set of eyes before it ships.",
+    responsibilities: [
+      "Read each assigned piece for grammar, punctuation, agreement, and consistency.",
+      "Flag tonal lapses (ad copy creep, jargon overload, hedge-stacking) without rewriting voice.",
+      "Apply our house style: AP-derived with our overrides for serial commas, em-dash spacing, numerals, and Latin abbreviations.",
+      "Check headlines, deks, captions, and pull-quotes — these are where late errors usually hide.",
+      "Suggest cuts when a paragraph could be tighter; the writer decides."
+    ],
+    qualifications: [
+      "Demonstrable copy-editing experience or the equivalent obsessive reading habit.",
+      "Comfortable with Markdown and Git (or willing to learn — we'll pair-edit you through the first three).",
+      "Patience for serial-comma debates."
+    ],
+    apply: "Email a sample of a piece you've copy-edited, before and after."
+  },
+  {
+    slug: "researcher",
+    title: "Researcher",
+    commitment: "Per-project, ~10 hrs over 2 weeks",
+    remote: "Fully remote",
+    summary: "Pull background for active reporting. The writer pitches a question; you come back with the documents, dataset, prior coverage, or contact list that makes the piece possible.",
+    responsibilities: [
+      "Take a written research question from a writer or editor and produce a structured findings packet within an agreed window.",
+      "File records requests when needed (FOIA, state-level public records, court PACER, etc.).",
+      "Build a small bibliography of prior coverage and academic work on the topic.",
+      "Surface sources and contacts the writer might not know about.",
+      "Hand off cleanly so the writer can pick up without re-doing your work."
+    ],
+    qualifications: [
+      "Library, journalism, legal, or academic research background.",
+      "Comfortable with at least two of: government records portals, academic databases (JSTOR, etc.), FOIA workflow, archives, dataset cleanup.",
+      "Willing to scope your own work and stop when the answer is 'this question can't be answered with public sources'."
+    ],
+    apply: "Email a one-page sample of a research memo, redacted as needed."
+  },
+  {
+    slug: "translator",
+    title: "Translator",
+    commitment: "Per-piece, 2–6 hrs",
+    remote: "Fully remote",
+    summary: "Translate selected articles into other languages so coverage of regulation, religion, and institutional power isn't trapped in English. Translations publish under the author's byline plus a translator credit.",
+    responsibilities: [
+      "Translate full articles from English into your target language, preserving voice and cadence rather than producing literal word-for-word.",
+      "Flag idioms and culture-specific references that need translator notes.",
+      "Coordinate with a second native speaker for sensitive pieces (politics, religion, legal exposure).",
+      "Add a brief translator's note at the end of any piece that required adaptation choices worth surfacing."
+    ],
+    qualifications: [
+      "Native or near-native fluency in target language; fluent in English.",
+      "A piece of published translation we can read, even informal.",
+      "Bonus: subject-matter familiarity in one of our coverage areas."
+    ],
+    apply: "Email naming your target language(s) and including one translation sample (any genre)."
+  },
+  {
+    slug: "events-coordinator",
+    title: "Events coordinator",
+    commitment: "Variable; bursts around quarterly events",
+    remote: "Hybrid (remote planning, occasional in-person)",
+    summary: "Plan and run reader events — talks, panels, in-person meetups. We don't yet have a formal events programme; you'd help build one.",
+    responsibilities: [
+      "Propose 1–2 events per quarter (topic, format, target audience).",
+      "Coordinate venue, scheduling, RSVPs, and any speaker logistics.",
+      "Wire the events into the site's events calendar and into the newsletter.",
+      "Handle live moderation or hand off cleanly to whoever is moderating.",
+      "Write a brief post-event note for the publication's archive."
+    ],
+    qualifications: [
+      "Has run at least one public-facing event before, even informally.",
+      "Comfortable being the person who confirms the venue, sends the reminders, and answers the day-of-questions.",
+      "If hybrid: based in or able to travel to a major US metro."
+    ],
+    apply: "Email pitching the first event you'd want to run."
+  },
+  {
+    slug: "community-moderator",
+    title: "Community moderator",
+    commitment: "1–3 hrs/week",
+    remote: "Fully remote",
+    summary: "Read the comment thread, the webmention inbox, and the tip line. Surface what deserves an editorial response, hide what doesn't, escalate harassment.",
+    responsibilities: [
+      "Triage daily / weekly comment + webmention activity. Approve, hide, or flag.",
+      "Apply the community guidelines fairly and consistently.",
+      "Surface comments worth responding to or promoting into a Letters piece.",
+      "Escalate harassment, doxxing attempts, or coordinated review-bombing to the editor.",
+      "Maintain the blocklist when it grows."
+    ],
+    qualifications: [
+      "Calm under provocation. Public-internet veteran.",
+      "Read the community guidelines and agreed with the substance.",
+      "No active fights with subjects of our coverage; conflicts of interest disqualify."
+    ],
+    apply: "Email describing your prior moderation experience and one ambiguous comment thread you'd handle and why."
+  },
+  {
+    slug: "newsletter-curator",
+    title: "Newsletter curator",
+    commitment: "1–2 hrs/week",
+    remote: "Fully remote",
+    summary: "Build the weekly newsletter from the published archive. Choose what gets featured, write the connecting prose, send through Buttondown.",
+    responsibilities: [
+      "Read the week's published pieces and select 4–8 for the newsletter.",
+      "Write a 2–3 sentence editor's note for the top of the issue.",
+      "Pull cover image, dek, and lead sentence for each featured piece.",
+      "Send via Buttondown on the same day each week and watch for delivery issues.",
+      "Maintain a small evergreen file of pieces to re-feature on slow weeks."
+    ],
+    qualifications: [
+      "Strong instinct for which piece earns the lead spot in a given week.",
+      "Comfortable with Markdown and a newsletter sending tool (Buttondown is what we use).",
+      "Reliable delivery cadence."
+    ],
+    apply: "Email a sample issue you'd send this week, drawn from our recent archive."
+  },
+  {
+    slug: "developer",
+    title: "Developer / open-source contributor",
+    commitment: "Issue-by-issue",
+    remote: "Fully remote",
+    summary: "Help build the publication's underlying static-site stack — Project Broadsheet on GitHub. Issues, PRs, code review, design system work.",
+    responsibilities: [
+      "Pick up open issues on Project Broadsheet (the engine that runs this site).",
+      "Submit PRs with tests and clear commit messages.",
+      "Review other contributors' PRs.",
+      "Improve docs as you go — every change to the engine becomes part of the public Project Broadsheet docs."
+    ],
+    qualifications: [
+      "Familiar with Eleventy, Nunjucks, plain CSS, or willing to come up to speed.",
+      "Public GitHub history we can read.",
+      "Bonus: accessibility work, performance work, or design-system experience."
+    ],
+    apply: "Open a PR or an issue on the Project Broadsheet repo with your name on it; we'll find you."
+  }
+] %}
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <p class="page-header__eyebrow">Volunteer</p>
+    <h1 class="page-header__title">Help build {{ site.title }}</h1>
+    <p class="page-header__lede">
+      {{ site.title }} is a small, independent publication. Volunteers fill the roles a fully-funded newsroom would pay for. The publication does not currently pay contributors a fee or salary &mdash; volunteer work is contribution, not employment, and we're explicit about that up front. <a href="/license/">Republication terms</a>, <a href="/ethics/">editorial ethics</a>, <a href="/transparency/">how we operate</a>.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Open positions">
+      {% for p in positions %}
+      <a href="#{{ p.slug }}">{{ p.title }}</a>
+      {% endfor %}
+      <a href="#general">General volunteer interest</a>
+    </aside>
+
+    <div class="article-body">
+
+      <p>Each role below has a written brief: what you'd do, the rough time commitment, what we look for, and how to apply. Read the one that fits and email us per the apply note. If nothing fits but you want to help, jump to the <a href="#general">general volunteer interest</a> form at the bottom.</p>
+
+      {% for p in positions %}
+      <section id="{{ p.slug }}" class="volunteer-position">
+        <header class="volunteer-position__head">
+          <h2 class="volunteer-position__title">{{ p.title }}</h2>
+          <p class="volunteer-position__meta">
+            <span>{{ p.commitment }}</span>
+            <span>{{ p.remote }}</span>
+          </p>
+        </header>
+
+        <p class="volunteer-position__summary">{{ p.summary }}</p>
+
+        <h3>Responsibilities</h3>
+        <ul>
+          {% for r in p.responsibilities %}<li>{{ r }}</li>{% endfor %}
+        </ul>
+
+        <h3>What we look for</h3>
+        <ul>
+          {% for q in p.qualifications %}<li>{{ q }}</li>{% endfor %}
+        </ul>
+
+        <h3>How to apply</h3>
+        <p>{{ p.apply }} Send to <a href="mailto:{{ site.email }}?subject=Volunteer%20application%20—%20{{ p.title | urlencode }}">{{ site.email }}</a> with the role name in the subject line.</p>
+      </section>
+      {% endfor %}
+
+      <section id="general" class="volunteer-position">
+        <header class="volunteer-position__head">
+          <h2 class="volunteer-position__title">General volunteer interest</h2>
+          <p class="volunteer-position__meta"><span>Open</span><span>No commitment yet</span></p>
+        </header>
+
+        <p>Want to help but don't see the right slot above? Tell us what you'd want to do and what time you have. We read every note. If we have something that fits, we'll write back; if we don't, we'll say so cleanly.</p>
+
+        <form action="https://api.web3forms.com/submit" method="POST" class="w3f">
+          <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+          <input type="hidden" name="subject" value="Volunteer interest, {{ site.title }}">
+          <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+          <input type="hidden" name="from_name" value="{{ site.title }} Volunteer Form">
+          <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="w3f__row">
+            <div class="w3f__group">
+              <label class="w3f__label" for="vol-name">Name <span class="w3f__required">*</span></label>
+              <input class="w3f__input" type="text" name="name" id="vol-name" required aria-required="true" autocomplete="name">
+            </div>
+            <div class="w3f__group">
+              <label class="w3f__label" for="vol-email">Email <span class="w3f__required">*</span></label>
+              <input class="w3f__input" type="email" name="email" id="vol-email" required aria-required="true" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="w3f__group">
+            <label class="w3f__label" for="vol-interest">Which role(s) interest you?</label>
+            <select class="w3f__select" name="role_interest" id="vol-interest">
+              <option value="">Select one</option>
+              {% for p in positions %}<option value="{{ p.title }}">{{ p.title }}</option>{% endfor %}
+              <option value="Other / not sure yet">Other / not sure yet</option>
+            </select>
+          </div>
+
+          <div class="w3f__group">
+            <label class="w3f__label" for="vol-experience">Relevant experience <span class="w3f__required">*</span></label>
+            <textarea class="w3f__textarea" name="experience" id="vol-experience" rows="5" required aria-required="true" maxlength="3000" placeholder="What have you done that's relevant to the role you picked? Links welcome."></textarea>
+          </div>
+
+          <div class="w3f__group">
+            <label class="w3f__label" for="vol-time">Realistic time you can give</label>
+            <input class="w3f__input" type="text" name="time_commitment" id="vol-time" placeholder="e.g. ~3 hrs/week, evenings UK time">
+          </div>
+
+          <div class="h-captcha" data-captcha="true"></div>
+          <div class="w3f__status" role="status" aria-live="polite" aria-atomic="true"></div>
+          <button type="submit" class="w3f__submit" data-umami-event="volunteer-submit">Send</button>
+          <p class="w3f__privacy">Delivered to our editorial inbox via Web3Forms. We never sell or share submissions. See our <a href="/privacy/#contact-forms">privacy policy</a> for what Web3Forms does with form data and how long we retain messages.</p>
+        </form>
+
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<style>
+.volunteer-position {
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+.volunteer-position:first-of-type { margin-top: var(--space-6); border-top: 0; padding-top: 0; }
+.volunteer-position__head {
+  margin-bottom: var(--space-4);
+}
+.volunteer-position__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-xl);
+  margin: 0 0 var(--space-2);
+  scroll-margin-top: 6rem;
+}
+.volunteer-position__meta {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+}
+.volunteer-position__summary {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-4);
+  max-width: 65ch;
+}
+</style>

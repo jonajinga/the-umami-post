@@ -1,0 +1,85 @@
+---
+layout: base
+title: "Send Feedback"
+description: Tell us what you think about The Freethinking Times, report bugs, suggest features, or say something kind.
+permalink: /feedback/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header class="page-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+          <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/contact/">Contact</a></li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Feedback</li>
+        </ol>
+      </nav>
+      <h1 class="page-header__title">Feedback</h1>
+      <p class="page-header__lede">
+        This site is built for readers. Your feedback makes it better.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="w3f">
+        <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+        <input type="hidden" name="subject" value="Site feedback, {{ site.title }}">
+        <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+        <input type="hidden" name="from_name" value="{{ site.title }} Feedback Form">
+        <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="fb-category">Category</label>
+          <select class="w3f__select" name="category" id="fb-category">
+            <option value="Bug report">Bug report, something is broken</option>
+            <option value="Feature suggestion">Feature suggestion, something you would like to see</option>
+            <option value="Content request">Content request, a topic you want us to cover</option>
+            <option value="Accessibility">Accessibility issue</option>
+            <option value="Compliment">Compliment, something you like</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="fb-page">Which page? <span class="w3f__optional">(if applicable)</span></label>
+          <span class="w3f__hint" id="fb-page-hint">Paste the URL or describe the page</span>
+          <input class="w3f__input" type="text" name="page_url" id="fb-page" aria-describedby="fb-page-hint" placeholder="https://thefreethinkingtimes.com/..." inputmode="url">
+        </div>
+
+        <div class="w3f__group">
+          <label class="w3f__label" for="fb-message">Your feedback <span class="w3f__required">*</span></label>
+          <textarea class="w3f__textarea" name="message" id="fb-message" rows="6" required aria-required="true" maxlength="5000" data-dictation></textarea>
+        </div>
+
+        <div class="w3f__row">
+          <div class="w3f__group">
+            <label class="w3f__label" for="fb-name">Your name <span class="w3f__optional">(optional)</span></label>
+            <input class="w3f__input" type="text" name="name" id="fb-name" autocomplete="name">
+          </div>
+          <div class="w3f__group">
+            <label class="w3f__label" for="fb-email">Email <span class="w3f__optional">(optional, if you'd like a response)</span></label>
+            <input class="w3f__input" type="email" name="email" id="fb-email" autocomplete="email">
+          </div>
+        </div>
+
+        <button type="submit" class="w3f__submit">Send Feedback</button>
+        <p class="w3f__privacy">Feedback goes directly to our inbox. We read everything. Or use <a href="/contact/">our contact form</a>.</p>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// Auto-fill page URL if user came from a site page
+(function () {
+  var ref = document.referrer;
+  var input = document.getElementById('fb-page');
+  if (ref && input && !input.value && ref.indexOf('thefreethinkingtimes.com') !== -1) {
+    input.value = ref;
+  }
+}());
+</script>

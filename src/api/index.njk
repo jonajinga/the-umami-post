@@ -1,0 +1,89 @@
+---
+permalink: /api/
+eleventyExcludeFromCollections: true
+layout: base
+title: "API"
+description: "Public JSON API for The Freethinking Times, articles, quotes, events, glossary, and more."
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+  <div class="container--prose">
+
+    <header style="margin-bottom: var(--space-8); padding-bottom: var(--space-6); border-bottom: 3px solid var(--color-ink);">
+      <h1 style="font-family: var(--font-masthead); font-size: clamp(1.8rem, 5vw, 3.815rem); margin-bottom: var(--space-4);">Public API</h1>
+      <p style="font-size: var(--text-lg); color: var(--color-ink-muted); font-style: italic; max-width: 55ch;">
+        Every piece of content on this site is also available as JSON. Use it for integrations, mirrors, research, or to build something new.
+      </p>
+    </header>
+
+    <div class="article-body">
+
+      <h2>Endpoints</h2>
+
+      <p>All endpoints are static JSON files regenerated on every build. No authentication required. CORS is enabled for client-side use.</p>
+
+      <table style="width:100%;font-size:var(--text-sm);border-collapse:collapse;margin:var(--space-6) 0;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--color-ink);text-align:left;">
+            <th style="padding:var(--space-2);">Endpoint</th>
+            <th style="padding:var(--space-2);">Returns</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/articles.json"><code>/api/articles.json</code></a></td><td style="padding:var(--space-2);">All published articles with metadata</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/sections.json"><code>/api/sections.json</code></a></td><td style="padding:var(--space-2);">Editorial sections with descriptions and article counts</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/authors.json"><code>/api/authors.json</code></a></td><td style="padding:var(--space-2);">All authors with their bylines and article counts</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/quotes.json"><code>/api/quotes.json</code></a></td><td style="padding:var(--space-2);">All quotes with author, source, era, and tags</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/timeline.json"><code>/api/timeline.json</code></a></td><td style="padding:var(--space-2);">Historical timeline entries</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/glossary.json"><code>/api/glossary.json</code></a></td><td style="padding:var(--space-2);">All glossary terms with definitions</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/bookshelf.json"><code>/api/bookshelf.json</code></a></td><td style="padding:var(--space-2);">Recommended reading entries</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/events.json"><code>/api/events.json</code></a></td><td style="padding:var(--space-2);">Upcoming and past events</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/videos.json"><code>/api/videos.json</code></a></td><td style="padding:var(--space-2);">Video library entries</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/songs.json"><code>/api/songs.json</code></a></td><td style="padding:var(--space-2);">Freethought Music song collection</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/trials.json"><code>/api/trials.json</code></a></td><td style="padding:var(--space-2);">Trials of Thought entries</td></tr>
+          <tr style="border-bottom:1px solid var(--color-rule);"><td style="padding:var(--space-2);"><a href="/api/thought-experiments.json"><code>/api/thought-experiments.json</code></a></td><td style="padding:var(--space-2);">Thought experiments</td></tr>
+          <tr><td style="padding:var(--space-2);"><a href="/api/manifest.json"><code>/api/manifest.json</code></a></td><td style="padding:var(--space-2);">Index of all endpoints with metadata</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Example: Fetching recent articles</h2>
+
+      <pre style="background:var(--color-bg-alt);padding:var(--space-4);border:1px solid var(--color-rule);overflow-x:auto;font-size:var(--text-sm);"><code>fetch('{{ site.url }}/api/articles.json')
+  .then(r =&gt; r.json())
+  .then(data =&gt; {
+    console.log(`${data.count} articles`);
+    data.articles.slice(0, 5).forEach(a =&gt; {
+      console.log(`${a.title}, ${a.section}`);
+    });
+  });</code></pre>
+
+      <h2>Data format</h2>
+
+      <p>Each endpoint returns a JSON object with:</p>
+      <ul>
+        <li><code>generated</code>, ISO 8601 timestamp of the build</li>
+        <li><code>count</code>, total items in the response</li>
+        <li><code>[collection_name]</code>, array of items (e.g. <code>articles</code>, <code>quotes</code>, <code>events</code>)</li>
+      </ul>
+
+      <h2>Usage terms</h2>
+
+      <p>The API is free to use for any purpose, commercial or non-commercial, with the following conditions:</p>
+      <ul>
+        <li>Content remains the property of its authors (editorial articles) or the public domain (library texts)</li>
+        <li>Attribution is appreciated but not required</li>
+        <li>Please be considerate with request volume, these are static files on a CDN, but high-frequency polling should use the RSS feed instead</li>
+        <li>Let us know what you build, we'd love to see it</li>
+      </ul>
+
+      <h2>Feeds and sitemaps</h2>
+
+      <ul>
+        <li><a href="/feed.xml"><code>/feed.xml</code></a>, RSS feed of recent articles</li>
+        <li><a href="/sitemap.xml"><code>/sitemap.xml</code></a>, XML sitemap of all pages</li>
+        <li><a href="/news-sitemap.xml"><code>/news-sitemap.xml</code></a>, Google News sitemap</li>
+      </ul>
+
+    </div>
+  </div>
+</div>

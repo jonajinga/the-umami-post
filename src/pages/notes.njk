@@ -1,0 +1,130 @@
+---
+layout: base
+title: Notes & Highlights
+description: All your highlights, annotations, and bookmarks across the site. Stored locally in your browser, no account required.
+permalink: /notes/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  {# ── Print-only cover page (hidden on screen via CSS below) ── #}
+  <div class="print-cover" aria-hidden="true">
+    <div class="print-cover__head">
+      <p class="print-cover__eyebrow">A reader compilation from</p>
+      <h1 class="print-cover__publication">{{ site.title }}</h1>
+      <p class="print-cover__line">{{ site.url }}</p>
+    </div>
+    <div class="print-cover__body">
+      <h2 class="print-cover__heading">Notes &amp; Highlights</h2>
+      <p class="print-cover__lede">Your annotations, highlights, and bookmarks across the site, exported on the date below. Each article appears as its own section starting on the next page.</p>
+      <div class="print-cover__contents" id="print-cover-contents"><!-- populated by notes-page.js at print time --></div>
+    </div>
+    <div class="print-cover__foot">
+      <p class="print-cover__date" id="print-cover-date"></p>
+      <p class="print-cover__note">Stored in the reader's browser. No copy of these notes is held by {{ site.title }}.</p>
+    </div>
+  </div>
+
+  <header class="page-header notes-screen-header">
+    <h1 class="page-header__title">Notes &amp; Highlights</h1>
+    <p class="page-header__lede">
+      Your highlights, notes, and bookmarks across the site. Stored in your browser, nothing is sent anywhere.
+    </p>
+  </header>
+
+  <div id="notes-page-root">
+    <p style="color: var(--color-ink-faint); font-style: italic;">Loading…</p>
+  </div>
+
+</div>
+
+<style>
+.print-cover { display: none; }
+@media print {
+  /* Reset noise: hide controls, search box, filter bar, action buttons */
+  button, input, select,
+  .article-action-btn,
+  .library-annotation-item__actions,
+  .library-bookmark-item__delete,
+  .search-filter-btn,
+  .reading-list-clear { display: none !important; }
+
+  /* Keep inline links inside annotations visible */
+  [data-page-section] a[style] { display: inline !important; }
+
+  /* Suppress on-screen header; cover page is the first page */
+  .notes-screen-header { display: none !important; }
+  .print-cover { display: block !important; page-break-after: always; padding: 0; }
+
+  /* Per-page section: each article's annotations on its own
+   * printed section with consistent typography */
+  [data-page-section] {
+    page-break-inside: auto;
+    margin-bottom: 0.4in !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  [data-page-section] > div:first-child {
+    border-bottom: 1.5pt solid #111 !important;
+    margin-bottom: 12pt !important;
+    padding-bottom: 6pt !important;
+    page-break-after: avoid;
+  }
+  /* Article title in section header */
+  [data-page-section] > div:first-child a {
+    font-family: Georgia, serif !important;
+    font-size: 16pt !important;
+    color: #111 !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+  }
+  [data-page-section] > div:first-child span {
+    font-family: Helvetica, Arial, sans-serif !important;
+    font-size: 8pt !important;
+    color: #666 !important;
+  }
+  /* Each note / highlight card */
+  [data-note-type] {
+    background: transparent !important;
+    border: none !important;
+    border-left: 3pt solid #c0392b !important;
+    border-radius: 0 !important;
+    padding: 6pt 0 6pt 14pt !important;
+    margin: 8pt 0 !important;
+    page-break-inside: avoid;
+    font-family: Georgia, serif !important;
+    font-size: 11pt !important;
+    color: #222 !important;
+    line-height: 1.5 !important;
+  }
+  [data-note-type="notes"] { border-left-color: #1a5f8e !important; }
+  /* Quote text */
+  [data-note-type] blockquote,
+  [data-note-type] .annotation-quote,
+  [data-note-type] mark {
+    font-style: italic;
+    color: #444 !important;
+    background: transparent !important;
+    margin-bottom: 4pt;
+  }
+  /* Note body itself */
+  [data-note-type] .annotation-note,
+  [data-note-type] p {
+    color: #111 !important;
+    font-style: normal;
+  }
+  /* Date stamps */
+  [data-note-type] time,
+  [data-note-type] .annotation-date {
+    font-family: Helvetica, Arial, sans-serif !important;
+    font-size: 8pt !important;
+    color: #888 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+</style>
+
+{# notes-page.js is loaded site-wide from base.njk so SPA-nav onto
+   /notes/ binds correctly. No per-page script tag needed here. #}

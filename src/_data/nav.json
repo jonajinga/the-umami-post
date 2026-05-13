@@ -1,0 +1,11 @@
+[
+  { "label": "News",           "url": "/news/",               "key": "news",         "collection": "news" },
+  { "label": "Opinion",        "url": "/opinion/",            "key": "opinion",      "collection": "opinion" },
+  { "label": "Analysis",       "url": "/analysis/",           "key": "analysis",     "collection": "analysis" },
+  { "label": "Arts & Culture", "url": "/arts-culture/",       "key": "arts-culture", "collection": "arts-culture" },
+  { "label": "Science & Tech", "url": "/science-technology/", "key": "science-tech", "collection": "science-technology" },
+  { "label": "History",        "url": "/history/",            "key": "history",      "collection": "history" },
+  { "label": "Letters",        "url": "/letters/",            "key": "letters",      "collection": "letters" },
+  { "label": "Reviews",        "url": "/reviews/",            "key": "reviews",      "collection": "reviews" },
+  { "label": "Explore",        "url": "/more/",               "key": "more",         "type": "more" }
+]

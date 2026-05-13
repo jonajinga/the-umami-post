@@ -1,0 +1,85 @@
+name: Sync Umami stats
+
+# Pulls per-article pageviews + share/like event counts from Umami Cloud
+# into src/_data/articleStats.json, commits the change if anything moved,
+# and triggers a Cloudflare Pages rebuild so the article meta line and
+# the /most-read/ chart pick up the fresh numbers.
+#
+# Schedule: daily at 03:00 UTC (off-peak for Umami).
+# Manual run: Actions tab → Sync Umami stats → Run workflow.
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Pull Umami metrics
+        env:
+          UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
+          UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
+        run: |
+          if [ -z "$UMAMI_API_KEY" ] || [ -z "$UMAMI_WEBSITE_ID" ]; then
+            echo "UMAMI_API_KEY or UMAMI_WEBSITE_ID secret not set; skipping."
+            exit 0
+          fi
+          node scripts/sync-stats.mjs
+
+      - name: Commit if changed
+        run: |
+          if [ -z "$(git status --porcelain src/_data/articleStats.json)" ]; then
+            echo "No changes to articleStats.json."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Snapshot the freshly-generated stats to a temp file so we can
+          # reapply it onto the latest origin/main on each retry attempt.
+          # This avoids the brittle "rebase a commit through unrelated
+          # main changes" path that kept failing on conflict resolution.
+          cp src/_data/articleStats.json /tmp/articleStats.json
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git checkout main
+            git reset --hard origin/main
+            cp /tmp/articleStats.json src/_data/articleStats.json
+            if [ -z "$(git status --porcelain src/_data/articleStats.json)" ]; then
+              echo "Stats already up to date on origin/main."
+              exit 0
+            fi
+            git add src/_data/articleStats.json
+            git commit -m "chore(stats): sync Umami article stats"
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push attempt $attempt failed; refetching and retrying"
+            sleep 4
+          done
+          echo "All push attempts failed."
+          exit 1
+
+      - name: Trigger Cloudflare Pages rebuild
+        if: success()
+        env:
+          DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "CLOUDFLARE_DEPLOY_HOOK secret not set; skipping rebuild trigger."
+            exit 0
+          fi
+          curl -X POST -f "$DEPLOY_HOOK"

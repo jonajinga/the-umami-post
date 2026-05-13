@@ -1,0 +1,145 @@
+---
+layout: base
+title: Accessibility
+description: Our commitment to making The Freethinking Times accessible to all
+  readers, and what we have done to achieve it.
+permalink: /accessibility/
+---
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="page-header">
+    <h1 class="page-header__title">Accessibility</h1>
+    <p class="page-header__lede">
+      Here is what we do to make this site usable by everyone.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#commitment">Our commitment</a>
+      <a href="#what-we-built">What we have built</a>
+      <a href="#known-limitations">Known limitations</a>
+      <a href="#reporting">Reporting issues</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="commitment">Our commitment</h2>
+
+      <p>{{ site.title }} is designed to meet <strong>WCAG 2.2 Level AA</strong> standards. We aim to make every page readable, navigable, and usable for people with visual, auditory, motor, and cognitive disabilities. This is not a compliance checkbox, it is part of how we think about publishing.</p>
+
+      <h2 id="what-we-built">What we have built</h2>
+
+      <h3>Visual accessibility</h3>
+      <ul>
+        <li><strong>Colour contrast:</strong> All text meets or exceeds 4.5:1 contrast ratio against its background. Large text meets 3:1. Both light and dark modes are tested.</li>
+        <li><strong>Dark mode:</strong> A full dark theme is available via the toggle in the header. It respects your system preference on first visit.</li>
+        <li><strong>Font sizing:</strong> Global display settings and per-page reading settings allow you to increase text size from 14px to 24px.</li>
+        <li><strong>Font choice:</strong> 27 fonts available across system serif, sans-serif, monospace, and web fonts (loaded on demand from Bunny Fonts), including high-legibility options like Atkinson Hyperlegible.</li>
+        <li><strong>Highlight colours:</strong> 6 highlight colour options so users can categorise and distinguish annotations visually; colours adapt across all themes (light, dark, sepia, cream).</li>
+        <li><strong>Reading ruler:</strong> Customisable guide line to help track reading position, adjustable thickness, colour, and style; fixed position on mobile devices.</li>
+        <li><strong>No motion by default:</strong> Animations respect <code>prefers-reduced-motion</code>. Transitions are disabled for users who prefer reduced motion.</li>
+      </ul>
+
+      <h3>Keyboard navigation</h3>
+      <ul>
+        <li><strong>Skip-to-main link:</strong> The first element on every page is a "Skip to main content" link, visible on keyboard focus.</li>
+        <li><strong>Focus indicators:</strong> All interactive elements have visible focus rings when navigated by keyboard.</li>
+        <li><strong>Keyboard-accessible dropdowns:</strong> Navigation dropdowns open on focus as well as hover.</li>
+        <li><strong>Calendar navigation:</strong> The events calendar supports arrow keys, Enter, Escape, PageUp/PageDown.</li>
+        <li><strong>Search shortcuts:</strong> Press <kbd>/</kbd> to open search, arrow keys to navigate results, Enter to open, Escape to close.</li>
+      </ul>
+
+      <h3>Screen readers</h3>
+      <ul>
+        <li><strong>Semantic HTML:</strong> We use proper heading hierarchy (h1-h3), landmark regions (<code>nav</code>, <code>main</code>, <code>footer</code>), and list markup.</li>
+        <li><strong>ARIA labels:</strong> All icon-only buttons have <code>aria-label</code> attributes. Interactive toggles use <code>aria-expanded</code>.</li>
+        <li><strong>Form labels:</strong> Every form input has an associated <code>label</code> element. Required fields use <code>aria-required</code>. Hints are connected via <code>aria-describedby</code>.</li>
+        <li><strong>Live regions:</strong> Form status messages and search results use <code>aria-live</code> for screen reader announcements.</li>
+        <li><strong>Image alt text:</strong> All meaningful images have descriptive alt text. Decorative images use <code>aria-hidden="true"</code>.</li>
+      </ul>
+
+      <h3>Reading tools</h3>
+      <ul>
+        <li><strong>Reading settings:</strong> Full reading settings panel available on both article and library pages, font, size, line spacing, text width, word spacing, reading ruler, and auto-scroll.</li>
+        <li><strong>Rich-text notes:</strong> WYSIWYG editor with formatting toolbar, no markdown syntax required for bold, italic, lists, quotes, or links.</li>
+        <li><strong>Voice search:</strong> Speak to search instead of typing (Chrome, Edge, Safari).</li>
+        <li><strong>Form dictation:</strong> Dictate into form textareas using your device's microphone.</li>
+        <li><strong>Glossary pronunciation:</strong> Hear any glossary term spoken aloud.</li>
+      </ul>
+
+      <h3>Touch and mobile</h3>
+      <ul>
+        <li><strong>Touch targets:</strong> All buttons and interactive elements meet 44x44px minimum touch target size.</li>
+        <li><strong>Responsive design:</strong> Every page adapts to screen sizes from 320px to ultrawide.</li>
+        <li><strong>No hover-only interactions:</strong> Everything accessible by hover is also accessible by tap or keyboard.</li>
+      </ul>
+
+      <h3>Gallery lightbox</h3>
+      <ul>
+        <li><strong>Keyboard controls:</strong> Arrow keys to move between images, <kbd>+</kbd>/<kbd>-</kbd> to zoom in and out, <kbd>0</kbd> to reset zoom, <kbd>Escape</kbd> to close.</li>
+        <li><strong>Focus trapping:</strong> Focus stays within the lightbox while it is open.</li>
+      </ul>
+
+      <h3>Music player</h3>
+      <ul>
+        <li><strong>Keyboard accessible:</strong> Play/pause, skip, volume, and close buttons are all keyboard-focusable with visible focus rings.</li>
+        <li><strong>Non-intrusive:</strong> The player bar at the bottom of the page does not obscure content, page padding adjusts when the bar is visible.</li>
+      </ul>
+
+      <h3>SPA navigation</h3>
+      <ul>
+        <li><strong>Instant transitions:</strong> Most page navigations swap content without a full reload, reducing wait times and avoiding blank-screen flashes.</li>
+        <li><strong>Graceful fallback:</strong> Pages with complex interactive features (articles, library entries) use full reloads to ensure all reader tools initialise correctly.</li>
+      </ul>
+
+      <h3>Performance as accessibility</h3>
+      <ul>
+        <li><strong>Fast loading:</strong> Pages are pre-built static HTML served from a global CDN. No waiting for server-side rendering.</li>
+        <li><strong>Offline support:</strong> Previously visited pages work without an internet connection.</li>
+        <li><strong>Low bandwidth:</strong> No tracking scripts, no advertising payloads. The site works on slow connections.</li>
+      </ul>
+
+      <h2 id="known-limitations">Known limitations</h2>
+
+      <ul>
+        <li>The GTranslate machine translation widget has its own accessibility characteristics that we cannot fully control.</li>
+        <li>The Cusdis comment system renders in an iframe with its own styling.</li>
+        <li>Some interactive features (voice search, dictation) are not supported in Firefox.</li>
+        <li>The hCaptcha widget on forms has its own accessibility trade-offs.</li>
+      </ul>
+
+      <h2 id="reporting">Reporting issues</h2>
+
+      <p>If you encounter an accessibility barrier on this site, please let us know. We take every report seriously and fix issues as quickly as we can.</p>
+
+      <ul>
+        <li><strong>Contact form:</strong> <a href="/contact/">send us a message</a> with "Accessibility" as the subject</li>
+        <li><strong>Feedback form:</strong> <a href="/feedback/">send feedback</a> and select "Accessibility issue" as the category</li>
+      </ul>
+
+      <p>When reporting, please include: the page URL, what you were trying to do, what assistive technology you are using (if any), and what happened.</p>
+
+      <p><em>Last updated: {{ currentYear }}</em></p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

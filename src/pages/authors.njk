@@ -1,0 +1,13 @@
+---
+layout: layouts/author.njk
+pagination:
+  data: authors
+  size: 1
+  alias: authorSlug
+  resolve: keys
+permalink: "/author/{{ authorSlug }}/"
+eleventyComputed:
+  title: "{{ authors[authorSlug].name | safe }}"
+  bio: "{{ authors[authorSlug].bio | safe }}"
+  role: "{{ authors[authorSlug].role | safe }}"
+---

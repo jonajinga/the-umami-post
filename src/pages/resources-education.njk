@@ -1,0 +1,87 @@
+---
+layout: base
+title: "Education, Resources"
+description: Critical thinking curricula, science education tools, and resources for teaching rational inquiry.
+permalink: /resources/education/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/resources/">Resources</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Education</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">Education</h1>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#critical-thinking">Critical thinking</a>
+      <a href="#science-education">Science education</a>
+      <a href="#philosophy">Philosophy for young people</a>
+      <a href="#debate">Debate and rhetoric</a>
+      <a href="#for-educators">For educators</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="critical-thinking">Critical thinking</h2>
+      <ul>
+        <li><strong><a href="https://www.criticalthinking.org" target="_blank" rel="noopener noreferrer">Foundation for Critical Thinking</a></strong>, Research-based frameworks, lesson plans, and assessment tools for teaching critical thinking at all levels.</li>
+        <li><strong><a href="https://yourlogicalfallacyis.com" target="_blank" rel="noopener noreferrer">Your Logical Fallacy Is</a></strong>, Visual guide to common logical fallacies. Printable poster available.</li>
+        <li><strong><a href="https://yourbias.is" target="_blank" rel="noopener noreferrer">Your Bias Is</a></strong>, Companion to the fallacy guide, covering cognitive biases.</li>
+        <li><strong><a href="https://www.coursera.org/learn/critical-thinking-skills" target="_blank" rel="noopener noreferrer">Coursera: Critical Thinking Skills</a></strong>, Free online course from the University of London.</li>
+      </ul>
+
+      <h2 id="science-education">Science education</h2>
+      <ul>
+        <li><strong><a href="https://ncse.ngo" target="_blank" rel="noopener noreferrer">National Center for Science Education</a></strong>, Defends the teaching of evolution and climate science in public schools. Resources for teachers and parents.</li>
+        <li><strong><a href="https://www.khanacademy.org" target="_blank" rel="noopener noreferrer">Khan Academy</a></strong>, Free courses in biology, chemistry, physics, and cosmology.</li>
+        <li><strong><a href="https://undsci.berkeley.edu" target="_blank" rel="noopener noreferrer">Understanding Science (UC Berkeley)</a></strong>, How science works, a free resource for teachers and students.</li>
+      </ul>
+
+      <h2 id="philosophy">Philosophy for young people</h2>
+      <ul>
+        <li><strong><a href="https://www.teachingchildrenphilosophy.org" target="_blank" rel="noopener noreferrer">Teaching Children Philosophy</a></strong>, Discussion guides linked to children's books. Free and well-organized.</li>
+        <li><strong><a href="https://plato.stanford.edu" target="_blank" rel="noopener noreferrer">Stanford Encyclopedia of Philosophy</a></strong>, The definitive free reference for academic philosophy.</li>
+        <li><strong><a href="https://www.philosophyexperiments.com" target="_blank" rel="noopener noreferrer">Philosophy Experiments</a></strong>, Interactive thought experiments for exploring ethical and philosophical questions.</li>
+      </ul>
+
+      <h2 id="debate">Debate and rhetoric</h2>
+      <ul>
+        <li><strong><a href="https://www.ironchariots.wiki" target="_blank" rel="noopener noreferrer">Iron Chariots Wiki</a></strong>, Counter-apologetics resource covering common religious arguments and responses.</li>
+        <li><strong><a href="https://rationalwiki.org" target="_blank" rel="noopener noreferrer">RationalWiki</a></strong>, Community wiki analyzing pseudoscience, authoritarianism, and fundamentalism.</li>
+      </ul>
+
+      <h2 id="for-educators">For educators</h2>
+      <ul>
+        <li><strong><a href="https://www.campquest.org/educators" target="_blank" rel="noopener noreferrer">Camp Quest Educator Resources</a></strong>, Secular education activities and curricula.</li>
+        <li><strong><a href="https://www.secularstudents.org/resources" target="_blank" rel="noopener noreferrer">Secular Student Alliance Resources</a></strong>, Starting and running secular student groups.</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

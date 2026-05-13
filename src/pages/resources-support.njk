@@ -1,0 +1,115 @@
+---
+layout: base
+title: "Personal Support, Resources"
+description: Support for deconversion, secular therapy, grief without religion, and coming out as a nonbeliever.
+permalink: /resources/support/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/resources/">Resources</a></li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">Personal Support</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-header__title">Personal Support</h1>
+    <p class="page-header__lede">
+      Leaving religion can be one of the most difficult experiences in a person's life. You are not alone.
+    </p>
+  </header>
+
+  <div class="sg-layout">
+
+    <aside class="sg-nav" aria-label="Page sections">
+      <a href="#crisis">If you are in crisis</a>
+      <a href="#deconversion">Deconversion support</a>
+      <a href="#secular-therapy">Secular therapy</a>
+      <a href="#grief">Grief without religion</a>
+      <a href="#coming-out">Coming out</a>
+      <a href="#books">Books that help</a>
+    </aside>
+
+    <div class="article-body">
+
+      <h2 id="crisis">If you are in crisis</h2>
+
+      <p>If you are experiencing a mental health crisis, please reach out immediately:</p>
+      <ul>
+        <li><strong>988 Suicide & Crisis Lifeline:</strong> Call or text <strong>988</strong> (US)</li>
+        <li><strong>Crisis Text Line:</strong> Text HOME to <strong>741741</strong></li>
+        <li><strong>International Association for Suicide Prevention:</strong> <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" rel="noopener noreferrer">Find your country's crisis line</a></li>
+      </ul>
+
+      <h2 id="deconversion">Deconversion support</h2>
+
+      <p>Leaving a faith community means losing a social network, a worldview, and sometimes family relationships. These organizations provide support for people going through this process:</p>
+
+      <ul>
+        <li><strong><a href="https://www.recoveringfromreligion.org" target="_blank" rel="noopener noreferrer">Recovering from Religion</a></strong>, Free support groups, a hotline (1-844-368-2848), and resources for people leaving religion. Their motto: "You are not alone."</li>
+        <li><strong><a href="https://journeyfree.org" target="_blank" rel="noopener noreferrer">JourneyFree</a></strong>, Founded by Dr. Marlene Winell, who coined the term "Religious Trauma Syndrome." Support groups and resources.</li>
+        <li><strong><a href="https://www.exmuslims.org" target="_blank" rel="noopener noreferrer">Ex-Muslims of North America</a></strong>, Community and advocacy for former Muslims.</li>
+        <li><strong><a href="https://faithlessofgalilee.com" target="_blank" rel="noopener noreferrer">Faithless of Galilee</a></strong>, Support for former Orthodox and Ultra-Orthodox Jews.</li>
+      </ul>
+
+      <h2 id="secular-therapy">Secular therapy</h2>
+
+      <p>Finding a therapist who won't try to bring you back to faith is important. These directories specialize in secular mental health care:</p>
+
+      <ul>
+        <li><strong><a href="https://www.seculartherapy.org" target="_blank" rel="noopener noreferrer">Secular Therapy Project</a></strong>, Directory of therapists who provide evidence-based, non-religious mental health care. Free to search.</li>
+        <li><strong><a href="https://www.psychologytoday.com" target="_blank" rel="noopener noreferrer">Psychology Today</a></strong>, Filter by "non-religious" or "secular" in the therapist directory.</li>
+      </ul>
+
+      <h2 id="grief">Grief without religion</h2>
+
+      <p>Processing death and loss without the framework of an afterlife requires its own resources:</p>
+
+      <ul>
+        <li><strong><a href="https://griefbeyondbelief.org" target="_blank" rel="noopener noreferrer">Grief Beyond Belief</a></strong>, Support for people grieving without religion. Peer support community and resources.</li>
+        <li><strong>Secular celebrants:</strong> The <a href="https://americanhumanist.org/celebrant-services/" target="_blank" rel="noopener noreferrer">American Humanist Association</a> certifies secular celebrants who can officiate funerals, memorials, weddings, and other life events.</li>
+      </ul>
+
+      <h2 id="coming-out">Coming out as a nonbeliever</h2>
+
+      <p>Telling family, friends, or your community that you no longer believe can be daunting. Some guidance:</p>
+
+      <ul>
+        <li><strong>There is no rush.</strong> You do not owe anyone an announcement. Come out when you are ready and when it is safe to do so.</li>
+        <li><strong>Financial independence first.</strong> If you are dependent on religious family for housing or finances, secure your independence before disclosing.</li>
+        <li><strong>Start with safe people.</strong> Tell a trusted friend before telling family.</li>
+        <li><strong><a href="https://www.recoveringfromreligion.org/hotline" target="_blank" rel="noopener noreferrer">Call the RfR Hotline</a></strong> (1-844-368-2848) if you need someone to talk to first.</li>
+      </ul>
+
+      <h2 id="books">Books that help</h2>
+
+      <ul>
+        <li><em>Leaving the Fold</em> by Marlene Winell, The definitive guide to recovery from fundamentalism</li>
+        <li><em>The Demon-Haunted World</em> by Carl Sagan, A gentle, warm introduction to scientific thinking</li>
+        <li><em>Godless</em> by Dan Barker, A former evangelical preacher's deconversion story</li>
+        <li><em>Why I Am Not a Christian</em> by Bertrand Russell, <a href="/library/why-i-am-not-a-christian/">Read it free in our library</a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = document.querySelectorAll('.sg-nav a');
+  var sections = Array.from(links).map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s && s.offsetTop <= scrollY) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle('sg-active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

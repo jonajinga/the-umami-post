@@ -1,0 +1,4 @@
+{
+  "layout": "book-entry",
+  "permalink": "/bookshelf/{{ page.fileSlug }}/"
+}

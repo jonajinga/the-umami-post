@@ -1,0 +1,78 @@
+{#
+  Article Card Partial
+  Usage: {% include "partials/article-card.njk" %}
+  Expected variables: article (collection item), size ("lg"|"md"|"sm"|"xs"), showImage (bool)
+  Call like: {% set article = item %}{% set size = "md" %}{% include "partials/article-card.njk" %}
+#}
+
+{% set headlineSize = size or "md" %}
+{% set sectionKey = article.data.section | slugify %}
+
+<article class="article-card">
+
+  {# Optional image #}
+  {% if showImage and article.data.image %}
+  <a href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+    <img
+      class="article-card__image"
+      src="{{ article.data.image }}"
+      alt="{{ article.data.imageAlt or article.data.title }}"
+      width="800"
+      height="450"
+      loading="{{ 'eager' if priority else 'lazy' }}"
+      {% if priority %}fetchpriority="high"{% endif %}>
+  </a>
+  {% endif %}
+
+  {# Eyebrow: section + subsection + date #}
+  <div class="article-card__eyebrow">
+    {% if article.data.section %}
+    <a href="/{{ sectionKey }}/" class="section-badge section-badge--{{ sectionKey }}">
+      {{ article.data.section }}
+    </a>
+    {% endif %}
+    {% if article.data.subsection and article.data.section %}
+    <a href="/{{ sectionKey }}/?s={{ article.data.subsection | slugify }}" class="dateline dateline--link" aria-label="Filter {{ article.data.section }} to {{ article.data.subsection }}">{{ article.data.subsection }}</a>
+    {% endif %}
+    <a href="/archives/#{{ article.date | htmlDateString }}" class="dateline">
+      <time datetime="{{ article.date | htmlDateString }}">{{ article.date | shortDate }}</time>
+    </a>
+  </div>
+
+  {# Headline #}
+  <a class="article-card__headline article-card__headline--{{ headlineSize }}" href="{{ article.url }}">
+    {{ article.data.title }}
+  </a>
+
+  {# Dek / summary #}
+  {% if article.data.description and headlineSize != "xs" %}
+  <p class="article-card__dek">{{ article.data.description }}</p>
+  {% endif %}
+
+  {# Listen button — its own row so the byline below stays a clean
+     single-line text flow instead of wrapping awkwardly around a
+     30 px pill. #}
+  {% set listenUrl = article.url %}
+  {% set listenTitle = article.data.title %}
+  {% set listenSize = "sm" %}
+  {% set _aud = audioManifest[listenUrl] %}
+  {% if _aud %}
+  <div class="article-card__listen">
+    {% include "partials/listen-button.njk" %}
+  </div>
+  {% endif %}
+
+  {# Byline — each segment is its own span so the CSS can drop a
+     hairline rule between them in place of dot separators. #}
+  <p class="article-card__byline">
+    {% if article.data.author %}
+    <span class="article-card__byline-item">By <a href="/author/{{ article.data.author | slugify }}/"
+      {% if authors[article.data.author] and authors[article.data.author].bio %}data-tippy-content="{{ authors[article.data.author].bio }}" data-tippy-theme="author-bio"{% endif %}>{{ authors[article.data.author].name or article.data.authorName or article.data.author }}</a></span>
+    {% endif %}
+    {% if article.templateContent %}
+    <span class="article-card__byline-item">{{ article.templateContent | readingTime }}</span>
+    <span class="article-card__byline-item">{{ article.templateContent | wordCount }}</span>
+    {% endif %}
+  </p>
+
+</article>

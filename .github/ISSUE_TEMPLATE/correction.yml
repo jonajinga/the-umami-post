@@ -1,0 +1,100 @@
+name: Correction Report
+description: Report a factual error, misquotation, or misleading framing in a published article.
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We take corrections seriously. If you've found a factual error, misquotation,
+        or materially misleading statement in a published piece, please use this form.
+
+        If you don't have a GitHub account, you can also report corrections via
+        [hello@thefreethinkingtimes.com](mailto:hello@thefreethinkingtimes.com).
+
+        This form is for **factual corrections** — wrong facts, wrong dates, wrong names,
+        misquotations, or misleading framing. If you simply disagree with the argument
+        or conclusions of a piece, please consider writing a [letter to the editor](https://thefreethinkingtimes.com/submit/)
+        or submitting a response piece.
+
+  - type: input
+    id: article
+    attributes:
+      label: Article title or URL
+      placeholder: '"City's Affordable Housing Fund Diverted..." or https://thefreethinkingtimes.com/news/...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: What is incorrect?
+      description: |
+        Quote the specific sentence, claim, quote, or statement that contains the error.
+        Be as precise as possible — "the third paragraph" is less useful than the actual text.
+      placeholder: |
+        The article states: "The contract was awarded on March 14, 2025."
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should it say?
+      description: What is the accurate information? Include a source if possible.
+      placeholder: |
+        The contract was awarded on September 8, 2024, not March 2025. This is
+        documented in the City Controller's office contract register, available at
+        [URL].
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source for the correction
+      description: |
+        What evidence supports the correction? A document, a public record, your
+        own first-hand knowledge, or another verifiable source.
+      placeholder: |
+        City of Denver contract register (public record):
+        https://denvergov.org/contracts/...
+        Entry dated September 8, 2024, contract #2024-XXXX.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How significant is this error?
+      options:
+        - Minor factual error (wrong date, number, or name with limited impact)
+        - Significant factual error (wrong in a way that changes the story's meaning)
+        - Misquotation (a direct quote is inaccurate or taken out of context)
+        - Misleading framing (factually correct but creates a false impression)
+        - May require retraction consideration
+    validations:
+      required: true
+
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to this article
+      description: This helps us understand the context of your correction.
+      options:
+        - Reader with no personal stake
+        - I am a source quoted or referenced in this article
+        - I am the subject of this article
+        - I am a domain expert in the topic covered
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have verified the correction against a primary source or first-hand knowledge.
+          required: true
+        - label: I am requesting a factual correction, not asking the publication to change its editorial conclusions or opinion.
+          required: true

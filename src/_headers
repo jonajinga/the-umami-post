@@ -1,0 +1,18 @@
+# Cloudflare Pages headers
+# Format: path / header: value
+
+# ── Security headers (applied to all pages) ─────────────────────────────────
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# ── Public JSON API — enable CORS, cache for 1 hour ─────────────────────────
+/api/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Cache-Control: public, max-age=3600
+  Content-Type: application/json; charset=utf-8

@@ -1,0 +1,97 @@
+---
+permalink: /sw.js
+eleventyExcludeFromCollections: true
+---
+const CACHE = '{{ site.storagePrefix }}-{{ buildTime }}';
+const STATIC = [
+  '/assets/css/main.css',
+  '/assets/js/theme.js',
+  '/assets/js/drawer.js',
+  '/assets/js/smart-header.js',
+  '/assets/js/search.js',
+  '/assets/js/subscribe.js',
+  '/assets/js/annotations.js',
+  '/assets/js/progress.js',
+  '/assets/js/reading-list.js',
+  '/assets/js/download.js',
+  '/assets/js/calendar.js',
+  '/assets/js/dictation.js',
+  '/assets/js/music-player.js',
+  '/assets/js/spa-nav.js',
+  '/assets/js/glossary-tips.js',
+  '/assets/js/global-settings.js',
+  '/assets/js/revision-history.js',
+  '/assets/js/keyboard-shortcuts.js',
+  '/assets/js/reader-panel-migrate.js',
+  '/assets/js/cite-inline.js',
+  '/assets/js/footnotes.js',
+  '/assets/js/reading-progress.js',
+  '/assets/favicon.svg',
+  '/offline.html'
+];
+
+self.addEventListener('install', function (e) {
+  e.waitUntil(
+    caches.open(CACHE).then(function (cache) {
+      return cache.addAll(STATIC);
+    })
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function (e) {
+  e.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); })
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', function (e) {
+  var req = e.request;
+  if (req.method !== 'GET') return;
+
+  // Never intercept CMS admin, let it talk to the network directly
+  if (new URL(req.url).pathname.startsWith('/admin/')) return;
+
+  // CSS / JS, network-first so deploys are picked up immediately,
+  // falling back to cache when offline. Cache-first served stale JS
+  // for too long after deploys.
+  if (req.url.match(/\.(css|js)(\?|$)/)) {
+    e.respondWith(
+      fetch(req).then(function (res) {
+        var clone = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(req, clone); });
+        return res;
+      }).catch(function () { return caches.match(req); })
+    );
+    return;
+  }
+
+  // Static binary assets: cache-first (these don't change between builds
+  // for the same URL, favicon / images / fonts).
+  if (req.url.match(/\.(svg|png|jpg|woff2?)(\?|$)/)) {
+    e.respondWith(
+      caches.match(req).then(function (cached) {
+        return cached || fetch(req).then(function (res) {
+          var clone = res.clone();
+          caches.open(CACHE).then(function (c) { c.put(req, clone); });
+          return res;
+        });
+      })
+    );
+    return;
+  }
+
+  // HTML pages: network-first, fallback to offline page
+  e.respondWith(
+    fetch(req).catch(function () {
+      return caches.match(req).then(function (cached) {
+        return cached || caches.match('/offline.html');
+      });
+    })
+  );
+});

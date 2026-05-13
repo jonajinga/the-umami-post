@@ -1,0 +1,3 @@
+{
+  "permalink": "/letters/{{ page.fileSlug }}/"
+}

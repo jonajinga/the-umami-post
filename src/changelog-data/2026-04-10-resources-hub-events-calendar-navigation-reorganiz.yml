@@ -1,0 +1,36 @@
+date: "2026-04-10"
+title: Resources hub, events calendar, navigation reorganization
+sections:
+  - label: Resources hub
+    entries:
+      - Resources page (/resources/) rewritten as a hub page with 5 category cards
+      - "New sub-page: /resources/education/ — critical thinking curricula, science education, debate guides"
+      - >-
+        New sub-page: /resources/legal/ — full guide on First Amendment, workplace rights, school prayer, reporting
+        violations
+      - "New sub-page: /resources/support/ — deconversion support, secular therapy, grief resources, coming-out guidance"
+      - >-
+        New sub-page: /resources/tools/ — logical fallacy guides, counter-apologetics, debate prep, fact-checking,
+        podcasts
+      - "New sub-page: /resources/on-this-site/ — grid of all site features with descriptions and dynamic counts"
+  - label: Events calendar
+    entries:
+      - Events page (/events/) rebuilt with full interactive calendar component
+      - Month, week, day, and list views with view switcher
+      - Event popup with full details on click (name, date range, location, region, type, description, website link)
+      - Type and region filters — conference, convention, meetup, online, observance
+      - Upcoming/past toggle for filtering by time
+      - Previous/next navigation and Today button
+      - Color-coded event types with legend
+      - "Responsive: falls back to list view on mobile"
+      - Events data expanded from 5 to 20 events with type, region, and multi-day support
+  - label: Navigation
+    entries:
+      - >-
+        Hamburger drawer reorganized into 5 labeled groups: Sections, Explore, Community & Events, Resources & Tools,
+        About
+      - "Footer reorganized from 4 mixed columns to 5 semantic columns: Sections, Explore, Community, Reader Tools, About"
+      - Footer grid now responsive at 5 → 3 → 2 → 1 columns
+      - >-
+        Editorial sections (News–Letters) separated from content collections (Library, Quotes, Videos, etc.) in all
+        navigation

@@ -1,0 +1,9 @@
+---
+permalink: /api/events.json
+eleventyExcludeFromCollections: true
+---
+{
+  "generated": "{{ page.date | htmlDateString }}",
+  "count": {{ events.length }},
+  "events": {{ events | toJSON | safe }}
+}

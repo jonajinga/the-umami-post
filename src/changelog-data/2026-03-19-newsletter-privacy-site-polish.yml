@@ -1,0 +1,45 @@
+date: "2026-03-19"
+title: Newsletter, privacy & site polish
+sections:
+  - label: Newsletter
+    entries:
+      - >-
+        New /newsletter/ page — full landing page with signup form, what to expect, past issues link, and alternative
+        follow options
+      - /newsletter/welcome/ — redirect destination after form submission; confirms subscription and sets expectations
+      - >-
+        /newsletter/confirmed/ — redirect destination after clicking Buttondown's confirmation link; links to Start
+        Here, Library, and Reading List
+      - >-
+        subscribe.js now redirects to /newsletter/welcome/ on successful form submission instead of showing an inline
+        message
+      - >-
+        New .subscribe-form--stacked CSS modifier for the vertical form layout on the newsletter page — restores right
+        border and adjusts border-radius correctly
+  - label: Privacy & transparency
+    entries:
+      - >-
+        Privacy policy updated: Buttondown section now accurately states open tracking and click tracking are disabled;
+        UTM parameter use explained
+      - Public Umami analytics dashboard linked from the privacy policy Analytics section
+      - >-
+        Analytics link added to footer bottom bar alongside Privacy, Corrections, Changelog, Sitemap, RSS — reordered
+        with transparency items first
+      - >-
+        All contact email addresses unified to hello@thefreethinkingtimes.com — corrected misspelled domain
+        (freetimingtimes) in about.njk, submit.njk, and support.njk
+      - Privacy policy short-version subtitle updated
+  - label: Site polish
+    entries:
+      - >-
+        Text selection highlight colour changed from red accent to pansy purple (#6A1B9A light / #B87ACC dark) — new
+        --color-selection and --color-selection-ink design tokens
+      - >-
+        Pullquote share tooltip character limit raised from 400 to 600 — allows longer meaningful quotes to trigger the
+        share button
+      - >-
+        Hamburger nav drawer: added Newsletter and Start Here, removed duplicate Games entry (already present in primary
+        nav above divider)
+      - >-
+        Sitemap updated to include /library/, /library/subjects/, /library/authors/, all library work landing pages
+        (collections.libraryWorks), and all library chapters (collections.libraryChapters)
