@@ -103,11 +103,10 @@
   margin-top: var(--space-2);
 }
 
-/* -- Recipe meta bar (time / yield / difficulty chips) ---
- * Flex-wrap layout so items pack left-to-right with no empty grid
- * cells (the prior 4-col grid left blank slots when a recipe didn't
- * supply every meta field). The rough.js frame is painted around
- * the natural content height; no chasing empty cells. */
+/* -- Recipe meta bar (time / yield / difficulty chips + actions)
+ * Actions stack in a fixed-width left column; everything else
+ * flows in the natural right column. Rough.js frame wraps the
+ * whole thing so the overview reads as one card. */
 .recipe-meta-bar {
   display: flex;
   flex-wrap: wrap;
@@ -118,6 +117,35 @@
   margin: 0 0 var(--space-8);
   border: 0;
   position: relative;
+}
+.recipe-meta-bar__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  flex: 0 0 180px;
+  padding-right: var(--space-6);
+  border-right: 1px solid var(--color-rule-heavy);
+  align-self: stretch;
+}
+.recipe-meta-bar__actions .recipe-actions__btn,
+.recipe-meta-bar__actions .wake-switch {
+  width: 100%;
+  justify-content: flex-start;
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .recipe-meta-bar__actions {
+    flex: 1 1 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 0 var(--space-3);
+    margin-bottom: var(--space-2);
+    border-right: 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .recipe-meta-bar__actions .recipe-actions__btn,
+  .recipe-meta-bar__actions .wake-switch { width: auto; }
 }
 .recipe-meta-bar__item {
   display: flex;
