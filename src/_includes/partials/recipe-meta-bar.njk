@@ -12,6 +12,13 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v8M5 10h14l-1 12H6L5 10z"/></svg>
       <span>Cook mode</span>
     </a>
+    {% if nutrition %}
+    <button type="button" class="recipe-actions__btn" aria-haspopup="dialog" aria-controls="nutrition-modal"
+      onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span>Full label</span>
+    </button>
+    {% endif %}
     <button type="button" class="wake-switch" data-wake-lock-toggle aria-pressed="false" aria-label="Keep screen awake" data-umami-event="recipe-wake-lock">
       <span class="wake-switch__track" aria-hidden="true">
         <span class="wake-switch__thumb"></span>
@@ -74,11 +81,6 @@
     <div class="recipe-meta-bar__nutrition-stack">
       <div class="recipe-meta-bar__nutrition-head">
         <p class="recipe-meta-bar__nutrition-eyebrow">Per serving</p>
-        <button type="button" class="recipe-meta-bar__nutrition-btn" aria-haspopup="dialog" aria-controls="nutrition-modal"
-          onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <span>Full label</span>
-        </button>
       </div>
       <div class="recipe-meta-bar__nutrition-row">
         {% if nutrition.calories %}
