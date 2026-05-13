@@ -60,23 +60,28 @@
   // -- Decoration drawers --------------------------------------------
 
   function drawDivider(el, rough) {
+    // Straight hand-drawn rule — used as a section break line in
+    // place of native CSS borders. Renders as a single rough line
+    // with minimal jitter; opt into a wavier look via data-rough-
+    // wave="1" on the element.
     el.innerHTML = '';
     var w = el.clientWidth || 600;
-    var h = 24;
+    var wave = el.getAttribute('data-rough-wave') === '1';
+    var h = wave ? 20 : 10;
     var s = svg(w, h);
     el.appendChild(s);
     var rc = rough.svg(s);
     var color = colorFor(el.getAttribute('data-rough-color') || 'accent');
-    // A gentle wave: bezier through three points
-    var d = 'M 4 12 Q ' + (w / 4) + ' 4, ' + (w / 2) + ' 12 T ' + (w - 4) + ' 12';
-    var path = rc.path(d, {
-      stroke: color,
-      strokeWidth: 1.5,
-      roughness: 0.5,
-      bowing: 1,
-      disableMultiStroke: false
-    });
-    s.appendChild(path);
+    if (wave) {
+      var d = 'M 4 ' + (h / 2) + ' Q ' + (w / 4) + ' 2, ' + (w / 2) + ' ' + (h / 2) + ' T ' + (w - 4) + ' ' + (h / 2);
+      s.appendChild(rc.path(d, {
+        stroke: color, strokeWidth: 1.5, roughness: 0.5, bowing: 1
+      }));
+    } else {
+      s.appendChild(rc.line(0, h / 2, w, h / 2, {
+        stroke: color, strokeWidth: 2, roughness: 0.6, bowing: 0
+      }));
+    }
   }
 
   function drawStars(el, rough) {
@@ -147,7 +152,7 @@
       var capPath = 'M ' + (cx - capW / 2) + ' ' + (capCy + capH / 2 - 1) +
                     ' a ' + (capW / 2) + ' ' + capH + ' 0 0 1 ' + capW + ' 0 z';
       s.appendChild(rc.path(capPath, {
-        stroke: ink, strokeWidth: 2,
+        stroke: ink, strokeWidth: 2.6,
         roughness: 0.5,
         fill: filled ? fill : 'none',
         fillStyle: 'solid'
@@ -156,7 +161,7 @@
       var stemW = size * 0.42;
       var stemH = size * 0.36;
       s.appendChild(rc.rectangle(cx - stemW / 2, capCy + capH / 2 - 2, stemW, stemH, {
-        stroke: ink, strokeWidth: 2,
+        stroke: ink, strokeWidth: 2.6,
         roughness: 0.5,
         fill: filled ? colorFor('olive') : 'none',
         fillStyle: 'solid'

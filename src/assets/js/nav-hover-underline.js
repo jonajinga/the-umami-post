@@ -51,8 +51,27 @@
   }
 
   function bind() {
-    var links = document.querySelectorAll('.site-nav__link');
-    links.forEach(function (a) {
+    // Apply animated rough-notation hover underline to every link
+    // surface that should feel "hand-drawn live" — top nav links,
+    // mega-menu items, drawer section tiles, footer link columns,
+    // article-card titles, breadcrumb crumbs, and explicit opt-ins
+    // via `.rn-hover` or `data-rough-hover="underline"`.
+    var sel = [
+      '.site-nav__link',
+      '.nav-mega__link',
+      '.nav-section-col__link',
+      '.nav-section-col__article',
+      '.nav-dropdown__footer-link',
+      '.nav-dropdown__footer',
+      '.nav-drawer__link',
+      '.nav-drawer__latest-row',
+      '.site-footer__nav a',
+      '.breadcrumbs-bar__link',
+      '.card__title a',
+      '.rn-hover',
+      '[data-rough-hover="underline"]'
+    ].join(',');
+    document.querySelectorAll(sel).forEach(function (a) {
       if (a.dataset.navUnderlineBound === '1') return;
       a.dataset.navUnderlineBound = '1';
       a.addEventListener('mouseenter', function () { annotate(a); });
