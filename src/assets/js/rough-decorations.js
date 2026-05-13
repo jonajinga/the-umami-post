@@ -277,8 +277,8 @@
     var color = colorFor(el.getAttribute('data-rough-color') || 'ink');
     var path = rc.rectangle(2, 2, w - 4, h - 4, {
       stroke: color,
-      strokeWidth: 1.2,
-      roughness: 0.5,
+      strokeWidth: 2,
+      roughness: 0.6,
       fill: 'none'
     });
     s.appendChild(path);

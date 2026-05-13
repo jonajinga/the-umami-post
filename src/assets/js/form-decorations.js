@@ -77,8 +77,8 @@
     var rc = rough.svg(s);
     s.appendChild(rc.rectangle(3, 3, w - 6, h - 6, {
       stroke: color,
-      strokeWidth: opts.strokeWidth || 1.2,
-      roughness: opts.roughness || 0.5,
+      strokeWidth: opts.strokeWidth || 2,
+      roughness: opts.roughness || 0.6,
       fill: opts.fill || 'none',
       fillStyle: opts.fillStyle || 'solid'
     }));
