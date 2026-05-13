@@ -18,7 +18,7 @@
        topics. Library pages have no compact-header pattern, so the
        button has nothing to control there and is suppressed. #}
     {% if readerPanelId != "library-panel" %}
-    <button id="ann-info-btn" class="annotation-toolbar__btn" data-rough="frame" data-rough-color="accent" type="button" aria-label="Show article details" aria-expanded="false" title="Article details">
+    <button id="ann-info-btn" class="annotation-toolbar__btn" type="button" aria-label="Show article details" aria-expanded="false" title="Article details">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     </button>
     {% endif %}
@@ -26,8 +26,8 @@
        is suppressed on isReadingPage layouts so this is the only set of
        these IDs in the DOM. progress.js toggles is-visible. #}
     <div id="reading-floats" class="reading-floats annotation-toolbar__slot">
-      <span class="reading-pct toolbar-floats" id="reading-pct" data-rough="frame" data-rough-color="accent"></span>
-      <button class="back-to-top toolbar-floats" id="back-to-top" type="button" aria-label="Back to top" data-rough="frame" data-rough-color="accent">
+      <span class="reading-pct toolbar-floats" id="reading-pct"></span>
+      <button class="back-to-top toolbar-floats" id="back-to-top" type="button" aria-label="Back to top">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="12" y1="20" x2="12" y2="4"/>
           <polyline points="5 11 12 4 19 11"/>
@@ -37,18 +37,18 @@
     {# Reader-panel toggle. Layout-specific aria-controls + class so
        the right panel opens (article-notes-panel vs library-panel)
        and the right JS handler binds. #}
-    <button class="annotation-toolbar__btn {{ readerToggleClass }}" data-rough="frame" data-rough-color="accent" type="button" aria-label="Open Reader panel" aria-controls="{{ readerPanelId }}" aria-expanded="false" title="Reader">
+    <button class="annotation-toolbar__btn {{ readerToggleClass }}" type="button" aria-label="Open Reader panel" aria-controls="{{ readerPanelId }}" aria-expanded="false" title="Reader">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
     </button>
-    <button id="ann-highlight-btn" class="annotation-toolbar__btn annotation-toolbar__btn--needs-selection" data-rough="frame" data-rough-color="accent" type="button" aria-label="Highlight selection" title="Highlight">
+    <button id="ann-highlight-btn" class="annotation-toolbar__btn annotation-toolbar__btn--needs-selection" type="button" aria-label="Highlight selection" title="Highlight">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
     </button>
-    <button id="ann-annotate-btn" class="annotation-toolbar__btn annotation-toolbar__btn--needs-selection" data-rough="frame" data-rough-color="accent" type="button" aria-label="Add note" title="Note">
+    <button id="ann-annotate-btn" class="annotation-toolbar__btn annotation-toolbar__btn--needs-selection" type="button" aria-label="Add note" title="Note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     </button>
     {# Bookmark this spot — pin icon, distinct from the Save (reading-list)
        bookmark migrated into ann-save-slot. #}
-    <button id="ann-bookmark-btn" class="annotation-toolbar__btn" data-rough="frame" data-rough-color="accent" type="button" aria-label="Bookmark this spot" title="Bookmark this spot">
+    <button id="ann-bookmark-btn" class="annotation-toolbar__btn" type="button" aria-label="Bookmark this spot" title="Bookmark this spot">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
     </button>
     {# Engagement state group: save / like / mark-read slots populated
@@ -59,13 +59,13 @@
     <div id="ann-mark-read-slot" class="annotation-toolbar__slot"></div>
     {# Output / distribution group: collect → share → republish. #}
     <div id="ann-pdf-basket-slot" class="annotation-toolbar__slot"></div>
-    <button id="ann-share-btn" class="annotation-toolbar__btn" data-rough="frame" data-rough-color="accent" type="button" aria-label="Share, download, print" aria-controls="ann-share-popover" aria-expanded="false" title="Share, download, print">
+    <button id="ann-share-btn" class="annotation-toolbar__btn" type="button" aria-label="Share, download, print" aria-controls="ann-share-popover" aria-expanded="false" title="Share, download, print">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
     </button>
     {# Republish — toggles the open-license panel. Only renders when
        the article opts in via the `syndicate` front-matter flag. #}
     {% if syndicate %}
-    <button id="ann-republish-btn" class="annotation-toolbar__btn" data-rough="frame" data-rough-color="accent" type="button" aria-label="Republication terms and grab-code" aria-expanded="false" aria-controls="republish-panel" title="Republish"
+    <button id="ann-republish-btn" class="annotation-toolbar__btn" type="button" aria-label="Republication terms and grab-code" aria-expanded="false" aria-controls="republish-panel" title="Republish"
       data-umami-event="license-learn"
       onclick="window.toggleArticleDisclosure(this);">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
@@ -76,7 +76,7 @@
        host article comments, so the button is suppressed entirely
        rather than rendered-then-hidden. #}
     {% if readerPanelId != "library-panel" %}
-    <button id="ann-comments-btn" class="annotation-toolbar__btn" data-rough="frame" data-rough-color="accent" type="button" aria-label="Jump to comments" title="Comments"
+    <button id="ann-comments-btn" class="annotation-toolbar__btn" type="button" aria-label="Jump to comments" title="Comments"
       onclick="window.__umamiShowComments(null, true);">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     </button>

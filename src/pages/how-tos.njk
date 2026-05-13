@@ -1,0 +1,44 @@
+---
+layout: base
+title: How-Tos
+description: Step-by-step kitchen how-tos — foundational moves, specialty techniques, and the small details that make food better.
+permalink: /how-tos/
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="recipe-hero">
+    <span class="recipe-hero__eyebrow">Kitchen reference</span>
+    <h1 class="recipe-hero__title">How-Tos</h1>
+    <p class="recipe-hero__dek">Foundational moves, specialty techniques, and the small details that make food better. Every entry is a step-by-step.</p>
+  </header>
+
+  {% set howtos = collections.techniques | reverse %}
+  {% if howtos.length > 0 %}
+  <section style="margin-top: var(--space-10);">
+    <div class="recipe-grid">
+      {% for technique in howtos %}
+        {% set recipe = {
+          url: technique.url,
+          data: {
+            title: technique.data.title,
+            hero: technique.data.hero,
+            heroAlt: technique.data.heroAlt,
+            course: technique.data.subsection,
+            author: technique.data.author,
+            totalTime: technique.data.totalTime,
+            cuisine: technique.data.cuisine,
+            difficulty: technique.data.level
+          }
+        } %}
+        {% include "partials/recipe-card.njk" %}
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-faint); margin-top: var(--space-8);">No how-tos yet. <a href="/submit/technique/" style="color: var(--color-accent);">Pitch one</a>.</p>
+  {% endif %}
+
+</div>
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

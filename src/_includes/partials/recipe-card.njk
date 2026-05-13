@@ -1,12 +1,13 @@
-{# Recipe card. Photo on top with a save-to-reading-list heart in
-   the corner; section eyebrow, title, byline below. Rough.js
-   sketched outer frame matches the publication's hand-drawn skin.
-   Used on the home page grid and /recipes/ index. #}
-<a class="card card--recipe" href="{{ recipe.url }}" data-rough="frame" data-rough-color="ink"
+{# Recipe card. Photo on top with a save heart in the corner;
+   section eyebrow (clickable to topic), title, author byline
+   (clickable to author page), and mushroom difficulty rating. #}
+<article class="card card--recipe" data-rough="frame" data-rough-color="ink"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
   {% if recipe.data.hero %}
   <div class="card__photo">
-    <img src="{{ recipe.data.hero }}" alt="{{ recipe.data.heroAlt or recipe.data.title }}" loading="lazy" decoding="async">
+    <a href="{{ recipe.url }}" aria-label="{{ recipe.data.title | escape }}">
+      <img src="{{ recipe.data.hero }}" alt="{{ recipe.data.heroAlt or recipe.data.title }}" loading="lazy" decoding="async">
+    </a>
     <button type="button" class="card__save" aria-label="Save {{ recipe.data.title | escape }} to your reading list"
       onclick="event.preventDefault();event.stopPropagation();this.classList.toggle('is-saved');">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -14,15 +15,17 @@
   </div>
   {% endif %}
   <div class="card__body">
-    {% if recipe.data.course %}<span class="card__eyebrow">{{ recipe.data.course }}</span>{% endif %}
-    <h3 class="card__title">{{ recipe.data.title }}</h3>
+    {% if recipe.data.course %}<a class="card__eyebrow" href="/topics/{{ recipe.data.course | slugify }}/">{{ recipe.data.course }}</a>{% endif %}
+    <h3 class="card__title"><a href="{{ recipe.url }}">{{ recipe.data.title }}</a></h3>
     {% if recipe.data.author %}
-    <p class="card__byline">By {{ authors[recipe.data.author].name or recipe.data.author }}</p>
+    <p class="card__byline">By <a href="/author/{{ recipe.data.author | slugify }}/">{{ authors[recipe.data.author].name or recipe.data.author }}</a></p>
     {% endif %}
     <div class="card__meta">
-      {% if recipe.data.totalTime %}<span>{{ recipe.data.totalTime | duration }}</span>{% endif %}
-      {% if recipe.data.cuisine %}<span>{{ recipe.data.cuisine }}</span>{% endif %}
-      {% if recipe.data.difficulty %}<span>Difficulty {{ recipe.data.difficulty }}/5</span>{% endif %}
+      {% if recipe.data.totalTime %}<span class="card__meta-time">{{ recipe.data.totalTime | duration }}</span>{% endif %}
+      {% if recipe.data.cuisine %}<a class="card__meta-tag" href="/topics/{{ recipe.data.cuisine | slugify }}/">{{ recipe.data.cuisine }}</a>{% endif %}
+      {% if recipe.data.difficulty %}
+      <span class="card__meta-difficulty" data-rough="difficulty" data-rough-level="{{ recipe.data.difficulty }}" aria-label="Difficulty {{ recipe.data.difficulty }} of 5"></span>
+      {% endif %}
     </div>
   </div>
-</a>
+</article>

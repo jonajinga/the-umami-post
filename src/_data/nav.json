@@ -56,6 +56,28 @@
     ]
   },
   {
+    "label": "How-Tos",
+    "url": "/how-tos/",
+    "key": "how-tos",
+    "type": "hub",
+    "submenu": [
+      { "heading": "Kitchen basics", "links": [
+        { "title": "Knife skills",       "url": "/techniques/?s=Knife%20skills" },
+        { "title": "Heat & searing",     "url": "/techniques/?s=Heat" },
+        { "title": "Stocks & sauces",    "url": "/techniques/?s=Stocks%20%26%20sauces" }
+      ]},
+      { "heading": "Specialty", "links": [
+        { "title": "Doughs & batters",   "url": "/techniques/?s=Doughs%20%26%20batters" },
+        { "title": "Fermentation",       "url": "/techniques/?s=Fermentation" },
+        { "title": "Preservation",       "url": "/techniques/?s=Preservation" }
+      ]},
+      { "heading": "Reference", "links": [
+        { "title": "Cooking glossary",   "url": "/glossary/" },
+        { "title": "All how-tos →",      "url": "/how-tos/" }
+      ]}
+    ]
+  },
+  {
     "label": "Stories",
     "url": "/stories/",
     "key": "stories",

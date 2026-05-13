@@ -12,8 +12,8 @@ layout: layouts/base.njk
       Tested recipes, technique guides, food journalism, and reviews -- written by cooks, for cooks. Every recipe is licensed Creative Commons. Every line of code is on GitHub.
     </p>
     <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-      <a href="/recipes/" class="btn btn--primary" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;">Browse Recipes</a>
-      <a href="/submit/recipe/" class="btn" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);border:1px solid var(--color-rule);padding:10px 20px;text-decoration:none;display:inline-block;">Submit a Recipe</a>
+      <a href="/recipes/" class="btn btn--primary" data-rough="frame" data-rough-color="accent" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;position:relative;">Browse Recipes</a>
+      <a href="/submit/recipe/" class="btn" data-rough="frame" data-rough-color="ink" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);padding:10px 20px;text-decoration:none;display:inline-block;position:relative;">Submit a Recipe</a>
     </p>
   </section>
 
@@ -43,14 +43,23 @@ layout: layouts/base.njk
         <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="olive">Techniques</h2>
         <a href="/techniques/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-techniques); text-decoration: none;">All techniques &rarr;</a>
       </header>
-      <ul style="list-style:none;padding:0;margin:0;">
+      <div class="recipe-grid">
         {% for item in latestTechniques %}
-        <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-rule);">
-          <a href="{{ item.url }}" style="font-family: var(--font-headline); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); text-decoration: none; display: block; line-height: var(--leading-snug);">{{ item.data.title }}</a>
-          {% if item.data.dek %}<p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-muted); margin: 4px 0 0; font-style: italic;">{{ item.data.dek }}</p>{% endif %}
-        </li>
+          {% set recipe = {
+            url: item.url,
+            data: {
+              title: item.data.title,
+              hero: item.data.hero,
+              heroAlt: item.data.heroAlt,
+              course: item.data.subsection or "Technique",
+              author: item.data.author,
+              totalTime: item.data.totalTime,
+              difficulty: item.data.level
+            }
+          } %}
+          {% include "partials/recipe-card.njk" %}
         {% endfor %}
-      </ul>
+      </div>
     </div>
     {% endif %}
 
@@ -61,14 +70,21 @@ layout: layouts/base.njk
         <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="reviews">Reviews</h2>
         <a href="/reviews/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-reviews); text-decoration: none;">All reviews &rarr;</a>
       </header>
-      <ul style="list-style:none;padding:0;margin:0;">
+      <div class="recipe-grid">
         {% for item in latestReviews %}
-        <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-rule);">
-          <a href="{{ item.url }}" style="font-family: var(--font-headline); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); text-decoration: none; display: block; line-height: var(--leading-snug);">{{ item.data.title }}</a>
-          {% if item.data.dek %}<p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-ink-muted); margin: 4px 0 0; font-style: italic;">{{ item.data.dek }}</p>{% endif %}
-        </li>
+          {% set recipe = {
+            url: item.url,
+            data: {
+              title: item.data.title,
+              hero: item.data.hero,
+              heroAlt: item.data.heroAlt,
+              course: item.data.reviewType or "Review",
+              author: item.data.author
+            }
+          } %}
+          {% include "partials/recipe-card.njk" %}
         {% endfor %}
-      </ul>
+      </div>
     </div>
     {% endif %}
   </section>
@@ -81,8 +97,8 @@ layout: layouts/base.njk
       Every recipe is tested. Every contributor is credited. The whole codebase is open source on GitHub. Submit a recipe, pitch a story, or open a pull request -- whichever feels like your speed.
     </p>
     <p style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
-      <a href="/submit/" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;">Ways to contribute</a>
-      <a href="https://github.com/jonajinga/the-umami-post" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);border:1px solid var(--color-rule);padding:10px 20px;text-decoration:none;display:inline-block;">View on GitHub</a>
+      <a href="/submit/" data-rough="frame" data-rough-color="accent" style="font-family:var(--font-ui);font-weight:600;background:var(--color-accent);color:var(--color-bg);padding:10px 20px;text-decoration:none;display:inline-block;position:relative;">Ways to contribute</a>
+      <a href="https://github.com/jonajinga/the-umami-post" data-rough="frame" data-rough-color="ink" style="font-family:var(--font-ui);font-weight:600;background:var(--color-bg);color:var(--color-ink);padding:10px 20px;text-decoration:none;display:inline-block;position:relative;">View on GitHub</a>
     </p>
   </section>
 

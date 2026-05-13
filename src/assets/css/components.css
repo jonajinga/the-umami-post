@@ -1724,6 +1724,8 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 .site-nav:has(#nav-recipes:focus)    #dropdown-recipes,
 .site-nav:has(#nav-techniques:hover) #dropdown-techniques,
 .site-nav:has(#nav-techniques:focus) #dropdown-techniques,
+.site-nav:has(#nav-how-tos:hover)    #dropdown-how-tos,
+.site-nav:has(#nav-how-tos:focus)    #dropdown-how-tos,
 .site-nav:has(#nav-stories:hover)    #dropdown-stories,
 .site-nav:has(#nav-stories:focus)    #dropdown-stories,
 .site-nav:has(#nav-reviews:hover)    #dropdown-reviews,
@@ -2737,6 +2739,21 @@ body.is-home .quote-bar {
 .site-footer__social a svg { position: relative; z-index: 1; }
 
 .site-footer__tip { margin-top: var(--space-2); }
+.btn--support {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+.btn--support:hover { color: var(--color-accent); }
 
 /* Newsletter block */
 .site-footer__newsletter-blurb {

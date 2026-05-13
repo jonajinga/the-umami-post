@@ -294,7 +294,8 @@ module.exports = function (eleventyConfig) {
               // Nav dropdown trigger / target IDs -- the IDs are emitted from
               // a Nunjucks {{ item.key }} so PurgeCSS can't see them as
               // literal strings in source templates.
-              "nav-recipes", "nav-techniques", "nav-stories", "nav-reviews",
+              "nav-recipes", "nav-techniques", "nav-how-tos", "nav-stories", "nav-reviews",
+              "dropdown-how-tos",
               "nav-seasonal", "nav-submit", "nav-more",
               "dropdown-recipes", "dropdown-techniques", "dropdown-stories",
               "dropdown-reviews", "dropdown-seasonal", "dropdown-submit",
