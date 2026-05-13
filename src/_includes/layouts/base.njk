@@ -381,6 +381,11 @@
        and .page-header__title sitewide; opt-in via [data-rough] anywhere) ── #}
   <script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
 
+  {# ── Form decorations (rough.js field frames + rough-notation
+       underline on required markers). Only activates on pages with
+       a form.w3f present; otherwise no-ops. #}
+  <script src="/assets/js/form-decorations.js?v={{ buildTime }}" defer></script>
+
   {# ── Instant Page (prefetch on hover), loaded last so it never touches the critical path ── #}
   <script src="/assets/js/instant.page.js?v={{ buildTime }}" type="module"></script>
 </body>

@@ -149,6 +149,24 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   position: relative;
 }
 
+/* form-decorations.js wraps every text-ish control in a .rough-field
+ * span so the rough SVG can sit behind it. The control loses its
+ * native border; the rough outline is the only visible frame. */
+.rough-field {
+  position: relative;
+  display: block;
+}
+.rough-field > input,
+.rough-field > textarea,
+.rough-field > select {
+  border: 0 !important;
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  outline: none;
+}
+
 /* -- Recipe layout grid: ingredients + instructions ------- */
 .recipe-body {
   display: grid;
