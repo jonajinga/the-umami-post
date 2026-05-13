@@ -46,7 +46,14 @@
   {% set _fat = nutrition.totalFat or nutrition.fat %}
   {% set _carbs = nutrition.totalCarbs or nutrition.carbs %}
   <div class="recipe-meta-bar__nutrition-group" aria-label="Nutrition per serving">
-    <p class="recipe-meta-bar__nutrition-eyebrow">Per serving</p>
+    <div class="recipe-meta-bar__nutrition-head">
+      <p class="recipe-meta-bar__nutrition-eyebrow">Per serving</p>
+      <button type="button" class="recipe-meta-bar__nutrition-btn" data-rough="frame" data-rough-color="accent" aria-haspopup="dialog" aria-controls="nutrition-modal"
+        onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span>Full label</span>
+      </button>
+    </div>
     <div class="recipe-meta-bar__nutrition-row">
       {% if nutrition.calories %}
       <div class="recipe-meta-bar__item recipe-meta-bar__item--macro">
@@ -72,11 +79,6 @@
         <span class="recipe-meta-bar__value">{{ nutrition.protein }}</span>
       </div>
       {% endif %}
-      <button type="button" class="recipe-meta-bar__nutrition-btn" data-rough="frame" data-rough-color="accent" aria-haspopup="dialog" aria-controls="nutrition-modal"
-        onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-        <span>Full label</span>
-      </button>
     </div>
   </div>
   {% endif %}

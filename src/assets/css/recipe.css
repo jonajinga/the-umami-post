@@ -165,6 +165,13 @@
   align-self: stretch;
   flex: 0 1 auto;
 }
+.recipe-meta-bar__nutrition-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
 .recipe-meta-bar__nutrition-eyebrow {
   font-family: var(--font-ui);
   font-size: var(--text-xs);
@@ -291,20 +298,32 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
 }
 .recipe-headnote {
   max-width: var(--max-width-prose);
-  margin: var(--space-6) auto var(--space-6);
+  /* Anchor to the LEFT, not centered, so the headnote sits below
+   * the title at the same x-position. The auto-margin was pulling
+   * it visually centred under the wide hero. */
+  margin: var(--space-6) 0;
   padding-top: var(--space-4);
-  /* Rough.js straight line drawn above the headnote via the
-   * adjacent .rough-divider element; suppress the CSS border. */
   border-top: 0;
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-muted);
-  text-align: left;
+  text-align: left !important;
   text-indent: 0;
   hyphens: none;
 }
-.recipe-headnote p { text-align: left; }
+.recipe-headnote p { text-align: left !important; text-indent: 0; }
+/* Kill the drop cap inside the headnote — at this position it
+ * makes the paragraph read centred. Drop cap stays elsewhere
+ * in the recipe (Cook's notes, source, etc.) where the column
+ * is narrower. */
+.recipe-headnote > p:first-of-type::first-letter {
+  font-size: 1em;
+  float: none;
+  line-height: inherit;
+  margin: 0;
+  font-weight: inherit;
+}
 .recipe-headnote > :first-child { margin-top: 0; }
 .recipe-headnote > :last-child { margin-bottom: 0; }
 
@@ -459,7 +478,7 @@ select option {
 }
 .unit-switch__btn {
   position: relative;
-  z-index: 2;
+  z-index: 5 !important;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -471,6 +490,8 @@ select option {
   padding: 0;
   transition: color var(--transition-fast);
   white-space: nowrap;
+  text-shadow: none;
+  opacity: 1 !important;
 }
 /* Inactive label = the button NOT covered by the saffron thumb.
  * Hardcoded cocoa so neither theme can wash it out. */
@@ -1077,6 +1098,42 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
   margin: var(--space-3) 0 0;
   padding: 0;
   border: 0;
+}
+
+/* Stacked variant for the .recipe-overview left column — Print
+ * / Cook mode / Keep awake live in a vertical column to the left
+ * of the meta bar. */
+.recipe-overview {
+  display: grid;
+  grid-template-columns: minmax(180px, 200px) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: stretch;
+  margin: 0 0 var(--space-8);
+}
+.recipe-actions--stack {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: var(--space-3);
+  margin: 0;
+}
+.recipe-actions--stack .recipe-actions__btn,
+.recipe-actions--stack .wake-switch {
+  width: 100%;
+  justify-content: flex-start;
+}
+@media (max-width: 768px) {
+  .recipe-overview {
+    grid-template-columns: 1fr;
+  }
+  .recipe-actions--stack {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .recipe-actions--stack .recipe-actions__btn,
+  .recipe-actions--stack .wake-switch {
+    width: auto;
+  }
 }
 .recipe-actions__btn {
   display: inline-flex;

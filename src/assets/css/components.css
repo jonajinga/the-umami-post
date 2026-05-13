@@ -14,35 +14,37 @@
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-xs);
-  min-height: 40px;
+  min-height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 8px 0;
-  /* Stick with the header on scroll so readers always see where they
-   * are. Header sets its own top offsets via JS; the breadcrumb bar
-   * sits flush underneath. */
+  padding: 2px 0;
   position: sticky;
   top: var(--breadcrumbs-top, 56px);
   z-index: 60;
 }
 .breadcrumbs-bar__list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   list-style: none;
   padding: 0 var(--gutter);
-  line-height: 1.4;
+  line-height: 1;
   margin-block: 0;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
-  row-gap: 2px;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   width: 100%;
 }
-.breadcrumbs-bar__item { align-items: center; }
+.breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
+.breadcrumbs-bar__item { align-items: center; flex-shrink: 0; }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
 .breadcrumbs-bar__item--current {
   /* Don't ellipsize the current page; let it overflow into the

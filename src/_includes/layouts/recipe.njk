@@ -56,11 +56,23 @@ isReadingPage: true
       &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}" data-rough="underline" data-rough-color="ink">{{ page.date | readableDate }}</a>
       {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}" data-rough="underline" data-rough-color="ink">{{ updated | readableDate }}</a>{% endif %}
     </p>
+  </header>
 
-    {# Recipe-level actions sit immediately under the byline so the
-       cook can hit Print / Cook mode / wake lock the moment they
-       decide to make the dish. #}
-    <div class="recipe-actions">
+  {# Rough rule above the headnote — replaces the CSS border-top. #}
+  {% if content and content.length > 0 %}
+  <div class="rough-divider rough-divider--prose" data-rough="divider" data-rough-color="ink" aria-hidden="true"></div>
+  <section class="recipe-headnote article-body">
+    {{ content | safe }}
+  </section>
+  {% endif %}
+
+  <div class="rough-divider" data-rough="divider" data-rough-color="accent" aria-hidden="true"></div>
+
+  {# Overview row — left column stacks recipe-level actions (Print
+     / Cook mode / Keep screen awake), right side carries the meta
+     bar (time, yield, difficulty, nutrition, tags). #}
+  <div class="recipe-overview">
+    <div class="recipe-actions recipe-actions--stack">
       <a class="recipe-actions__btn" href="{{ page.url }}print/?auto=1" data-rough="frame" data-rough-color="ink" data-umami-event="recipe-print">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         <span>Print recipe</span>
@@ -76,19 +88,9 @@ isReadingPage: true
         <span class="wake-switch__label">Keep my screen awake</span>
       </button>
     </div>
-  </header>
 
-  {# Rough rule above the headnote — replaces the CSS border-top. #}
-  {% if content and content.length > 0 %}
-  <div class="rough-divider rough-divider--prose" data-rough="divider" data-rough-color="ink" aria-hidden="true"></div>
-  <section class="recipe-headnote article-body">
-    {{ content | safe }}
-  </section>
-  {% endif %}
-
-  <div class="rough-divider" data-rough="divider" data-rough-color="accent" aria-hidden="true"></div>
-
-  {% include "partials/recipe-meta-bar.njk" %}
+    {% include "partials/recipe-meta-bar.njk" %}
+  </div>
 
   <div class="recipe-body">
     <aside class="recipe-body__ingredients">
