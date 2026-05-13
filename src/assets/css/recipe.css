@@ -316,19 +316,17 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   margin: var(--space-4) 0 var(--space-6);
 }
 
-/* Any element opted into a rough-frame loses its native border so the
- * sketched SVG outline doesn't double up with a 1px CSS rule. The
- * frame sits over the element via position:absolute, so we also keep
- * position:relative on the host. */
+/* Rough.js removed — elements that used data-rough='frame' now get
+ * a native 2px ink border so the visual structure stays. */
 [data-rough="frame"] {
-  border: 0 !important;
+  border: 2px solid var(--color-ink);
   position: relative;
 }
-/* Same idea for rough underlines — strip the native text-decoration
- * so the hand-drawn line stands alone. */
 [data-rough="underline"] {
-  text-decoration: none !important;
-  border-bottom: 0 !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-accent);
 }
 
 /* form-decorations.js wraps every text-ish control in a .rough-field

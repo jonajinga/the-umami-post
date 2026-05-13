@@ -278,13 +278,8 @@
   <script>
   window.__glossaryTerms=[{% for entry in collections.glossary %}{ term:"{{ entry.data.title | escape }}", def:"{{ entry.data.description | escape }}", url:"{{ entry.url }}" }{% if not loop.last %},{% endif %}{% endfor %}];
   </script>
-  <script src="/assets/js/popper.min.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/tippy.min.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/tippy-rough.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/glossary-tips.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/author-bio-tippy.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/badge-tips.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/footer-tips.js?v={{ buildTime }}" defer></script>
+  {# Tippy.js + rough.js tooltip stack removed per editorial
+       direction; native title attributes carry the same hover hints. #}
 
   {# ── Revision history (opt-in via site.repo config) ── #}
   {% if site.repo and site.repo.owner %}
@@ -378,16 +373,9 @@
   <script defer src="{{ site.analytics.scriptUrl }}" data-website-id="{{ site.analytics.websiteId }}"></script>
   {% endif %}
 
-  {# ── Rough.js hand-drawn decorations (auto-applies to .recipe-hero__title
-       and .page-header__title sitewide; opt-in via [data-rough] anywhere) ── #}
-  <script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
-  <script src="/assets/js/nav-hover-underline.js?v={{ buildTime }}" defer></script>
+  {# Rough.js + rough-notation + form-decorations removed; the
+     site relies on native CSS borders and underlines now. #}
   <script src="/assets/js/card-save.js?v={{ buildTime }}" defer></script>
-
-  {# ── Form decorations (rough.js field frames + rough-notation
-       underline on required markers). Only activates on pages with
-       a form.w3f present; otherwise no-ops. #}
-  <script src="/assets/js/form-decorations.js?v={{ buildTime }}" defer></script>
 
   {# ── Instant Page (prefetch on hover), loaded last so it never touches the critical path ── #}
   <script src="/assets/js/instant.page.js?v={{ buildTime }}" type="module"></script>

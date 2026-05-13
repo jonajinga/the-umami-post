@@ -40,6 +40,9 @@ isReadingPage: true
 <article class="recipe container" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
 
   <header class="recipe-hero" data-meta-collapsed="false">
+    <span class="recipe-hero__eyebrow">
+      <a href="/recipes/" class="recipe-hero__eyebrow-link">Recipe</a>{% if course %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ course | slugify }}/" class="recipe-hero__eyebrow-link">{{ course }}</a>{% endif %}{% if cuisine %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ cuisine | slugify }}/" class="recipe-hero__eyebrow-link">{{ cuisine }}</a>{% endif %}
+    </span>
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}

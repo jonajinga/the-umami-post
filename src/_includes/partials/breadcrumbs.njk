@@ -66,21 +66,6 @@
     </li>
     {%- endif -%}
     {%- endfor -%}
-    {# Recipe + technique + review eyebrow chips appended as
-       breadcrumb tail crumbs so course / cuisine / type live in
-       the breadcrumb row instead of duplicating below the hero. #}
-    {%- if course -%}
-    <li class="breadcrumbs-bar__item breadcrumbs-bar__item--chip"><a class="breadcrumbs-bar__link" href="/topics/{{ course | slugify }}/">{{ course }}</a></li>
-    {%- endif -%}
-    {%- if cuisine -%}
-    <li class="breadcrumbs-bar__item breadcrumbs-bar__item--chip"><a class="breadcrumbs-bar__link" href="/topics/{{ cuisine | slugify }}/">{{ cuisine }}</a></li>
-    {%- endif -%}
-    {%- if reviewType -%}
-    <li class="breadcrumbs-bar__item breadcrumbs-bar__item--chip"><a class="breadcrumbs-bar__link" href="/topics/{{ reviewType | slugify }}/">{{ reviewType }}</a></li>
-    {%- endif -%}
-    {%- if subsection and layout == 'layouts/technique.njk' -%}
-    <li class="breadcrumbs-bar__item breadcrumbs-bar__item--chip"><a class="breadcrumbs-bar__link" href="/topics/{{ subsection | slugify }}/">{{ subsection }}</a></li>
-    {%- endif -%}
   </ol>
 </nav>
 {%- endif -%}

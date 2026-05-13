@@ -28,6 +28,9 @@ isReadingPage: true
 <article class="recipe container" data-pagefind-body>
 
   <header class="recipe-hero" data-meta-collapsed="false">
+    <span class="recipe-hero__eyebrow">
+      <a href="/reviews/" class="recipe-hero__eyebrow-link">Review</a>{% if reviewType %} <span class="recipe-hero__eyebrow-sep" aria-hidden="true">&middot;</span> <a href="/topics/{{ reviewType | slugify }}/" class="recipe-hero__eyebrow-link">{{ reviewType }}</a>{% endif %}
+    </span>
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if subject and subject != title %}<p class="recipe-hero__dek"><strong>{{ subject }}</strong></p>{% endif %}
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
