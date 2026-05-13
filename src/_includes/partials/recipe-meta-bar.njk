@@ -1,11 +1,8 @@
-{# Meta bar: time / yield / difficulty / cuisine / diet chips.
-   Tags are clickable -- each routes to /topics/<slug>/, which is the
-   tag page auto-generated from collections.tagList. Course, cuisine,
-   diet, and free tags all share the flat tag namespace. #}
+{# Overview card. Two columns: a fixed-width actions stack on
+   the left (Print / Cook mode / Keep screen awake), and a
+   flexible right column carrying time chips, nutrition snapshot,
+   and tag chips, in that vertical order. #}
 <div class="recipe-meta-bar" data-rough="frame" data-rough-color="ink">
-  {# Recipe-level actions: stack on the far left of the overview
-     box so the cook can hit Print / Cook mode / wake lock right
-     where they read the time + yield + nutrition snapshot. #}
   <div class="recipe-meta-bar__actions">
     <a class="recipe-actions__btn" href="{{ page.url }}print/?auto=1" data-rough="frame" data-rough-color="ink" data-umami-event="recipe-print">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -22,42 +19,46 @@
       <span class="wake-switch__label">Keep my screen awake</span>
     </button>
   </div>
-  {% if totalTime %}
-  <div class="recipe-meta-bar__item">
-    <span class="recipe-meta-bar__label">Total time</span>
-    <span class="recipe-meta-bar__value">{{ totalTime | duration }}</span>
+
+  <div class="recipe-meta-bar__content">
+  <div class="recipe-meta-bar__times">
+    {% if totalTime %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Total time</span>
+      <span class="recipe-meta-bar__value">{{ totalTime | duration }}</span>
+    </div>
+    {% endif %}
+    {% if prepTime %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Prep</span>
+      <span class="recipe-meta-bar__value">{{ prepTime | duration }}</span>
+    </div>
+    {% endif %}
+    {% if cookTime %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Cook</span>
+      <span class="recipe-meta-bar__value">{{ cookTime | duration }}</span>
+    </div>
+    {% endif %}
+    {% if coolTime %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Cool</span>
+      <span class="recipe-meta-bar__value">{{ coolTime | duration }}</span>
+    </div>
+    {% endif %}
+    {% if yield %}
+    <div class="recipe-meta-bar__item">
+      <span class="recipe-meta-bar__label">Makes</span>
+      <span class="recipe-meta-bar__value" data-base-yield="{{ yield }}">{{ yield }}</span>
+    </div>
+    {% endif %}
+    {% if difficulty %}
+    <div class="recipe-meta-bar__item recipe-meta-bar__item--difficulty">
+      <span class="recipe-meta-bar__label">Difficulty</span>
+      <span data-rough="difficulty" data-rough-level="{{ difficulty }}" aria-label="Difficulty {{ difficulty }} of 5"></span>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
-  {% if prepTime %}
-  <div class="recipe-meta-bar__item">
-    <span class="recipe-meta-bar__label">Prep</span>
-    <span class="recipe-meta-bar__value">{{ prepTime | duration }}</span>
-  </div>
-  {% endif %}
-  {% if cookTime %}
-  <div class="recipe-meta-bar__item">
-    <span class="recipe-meta-bar__label">Cook</span>
-    <span class="recipe-meta-bar__value">{{ cookTime | duration }}</span>
-  </div>
-  {% endif %}
-  {% if coolTime %}
-  <div class="recipe-meta-bar__item">
-    <span class="recipe-meta-bar__label">Cool</span>
-    <span class="recipe-meta-bar__value">{{ coolTime | duration }}</span>
-  </div>
-  {% endif %}
-  {% if yield %}
-  <div class="recipe-meta-bar__item">
-    <span class="recipe-meta-bar__label">Makes</span>
-    <span class="recipe-meta-bar__value" data-base-yield="{{ yield }}">{{ yield }}</span>
-  </div>
-  {% endif %}
-  {% if difficulty %}
-  <div class="recipe-meta-bar__item recipe-meta-bar__item--difficulty">
-    <span class="recipe-meta-bar__label">Difficulty</span>
-    <span data-rough="difficulty" data-rough-level="{{ difficulty }}" aria-label="Difficulty {{ difficulty }} of 5"></span>
-  </div>
-  {% endif %}
   {# Nutrition macros — per-serving snapshot inline with time + yield
      so the cook sees calories alongside other essentials. A small
      "full label" button opens the FDA-style modal. #}
@@ -101,6 +102,11 @@
     </div>
   </div>
   {% endif %}
+  </div>{# /.recipe-meta-bar__content #}
+
+  {# Tags span both grid columns so they read as the full-width
+     footer of the overview card, under both the actions stack
+     and the time/nutrition column. #}
   {% if course or cuisine or diet or tags %}
   <div class="recipe-meta-bar__tags">
     {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="accent">{{ course }}</a>{% endif %}

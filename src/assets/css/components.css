@@ -13,17 +13,22 @@
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
-  font-size: var(--text-xs);
-  min-height: 28px;
+  font-size: 11px;
+  /* Single-line strip; height locked to ~24px so the bar reads
+   * as a thin scrollable strip rather than a chunky banner. */
+  height: 24px;
+  min-height: 0;
+  max-height: 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 2px 0;
+  padding: 0;
   position: sticky;
   top: var(--breadcrumbs-top, 56px);
   z-index: 60;
+  overflow: hidden;
 }
 .breadcrumbs-bar__list {
   display: flex;
@@ -33,7 +38,8 @@
   list-style: none;
   padding: 0 var(--gutter);
   line-height: 1;
-  margin-block: 0;
+  margin: 0;
+  height: 100%;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -44,7 +50,12 @@
   width: 100%;
 }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
-.breadcrumbs-bar__item { align-items: center; flex-shrink: 0; }
+.breadcrumbs-bar__item {
+  align-items: center;
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0;
+}
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
 .breadcrumbs-bar__item--current {
   /* Don't ellipsize the current page; let it overflow into the
