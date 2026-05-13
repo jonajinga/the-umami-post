@@ -363,9 +363,13 @@ select option {
   z-index: 2;
   background: transparent;
   border: 0;
-  color: var(--color-ink-muted);
+  /* Inactive label sits on the cream half of the track; use full
+   * ink for legibility, not muted (the muted brown was too faint
+   * against the cream and the user couldn't see Metric). */
+  color: var(--color-ink);
   cursor: pointer;
   font: inherit;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -373,7 +377,7 @@ select option {
   transition: color var(--transition-fast);
   white-space: nowrap;
 }
-.unit-switch__btn:hover { color: var(--color-ink); }
+.unit-switch__btn:hover { color: var(--color-accent); }
 /* Active = the button covered by the thumb */
 .unit-switch[data-active="us"]     .unit-switch__btn[data-target-unit="us"],
 .unit-switch[data-active="metric"] .unit-switch__btn[data-target-unit="metric"] {
@@ -404,14 +408,16 @@ select option {
 }
 /* Custom-scale stack: a tiny "Custom" label sits above the framed
  * input box. The box itself is the same 36px box as the preset
- * chips so the row reads as a single grid of equal-height pills. */
+ * chips so the row reads as a single grid of equal-height pills.
+ * Fixed width matches the other chips' visual rhythm — the prior
+ * flex:1 was stretching the box to fill the entire row. */
 .serving-scaler__custom-stack {
   display: inline-flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-end;
-  flex: 1 1 0;
-  min-width: 3.5rem;
+  flex: 0 0 auto;
+  width: 64px;
   gap: 2px;
 }
 .serving-scaler__custom-label {

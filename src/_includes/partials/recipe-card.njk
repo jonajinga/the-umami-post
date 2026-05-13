@@ -1,7 +1,7 @@
 {# Recipe card. Photo on top with a save heart in the corner;
    section eyebrow (clickable to topic), title, author byline
    (clickable to author page), and mushroom difficulty rating. #}
-<article class="card card--recipe" data-rough="frame" data-rough-color="ink"
+<article class="card card--recipe" data-rough="frame" data-rough-color="accent"
    {% if recipe.data.cuisine %}data-pagefind-filter="cuisine:{{ recipe.data.cuisine }}"{% endif %}>
   {% if recipe.data.hero %}
   <div class="card__photo">
