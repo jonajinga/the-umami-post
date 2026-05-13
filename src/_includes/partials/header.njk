@@ -527,8 +527,7 @@
   class="nav-drawer js-only"
   id="nav-drawer"
   aria-label="Full site navigation"
-  aria-hidden="true"
-  data-rough-skip-frame>
+  aria-hidden="true">
 
   <div class="nav-drawer__header">
     <a href="/" class="nav-drawer__brand notranslate" aria-label="{{ site.title }}, Home">
@@ -558,7 +557,8 @@
         autocomplete="off"
         autocorrect="off"
         spellcheck="false"
-        aria-label="Search query">
+        aria-label="Search query"
+        data-rough-skip-frame>
       <button type="submit" class="nav-drawer__search-submit" aria-label="Submit search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="5" y1="12" x2="19" y2="12"/>
@@ -569,16 +569,16 @@
 
     {# ── Quick actions grid ── #}
     <div class="nav-drawer__quick" role="group" aria-label="Quick actions">
-      <a href="/random/" class="nav-drawer__quick-btn">
+      <a href="/random/" class="nav-drawer__quick-btn" data-rough="frame" data-rough-color="ink">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
         <span>Surprise me</span>
       </a>
-      <a href="/reader-tools/" class="nav-drawer__quick-btn" id="nd-readertools-link">
+      <a href="/reader-tools/" class="nav-drawer__quick-btn" id="nd-readertools-link" data-rough="frame" data-rough-color="ink">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Reader tools</span>
         <span class="nav-drawer__quick-badge" id="nd-readinglist-count" hidden></span>
       </a>
-      <button type="button" class="nav-drawer__quick-btn" aria-label="Display settings"
+      <button type="button" class="nav-drawer__quick-btn" aria-label="Display settings" data-rough="frame" data-rough-color="ink"
         onclick="var d=document.getElementById('nav-drawer'),t=document.getElementById('nav-drawer-toggle');if(d){d.classList.remove('is-open');d.setAttribute('aria-hidden','true');}if(t)t.setAttribute('aria-expanded','false');setTimeout(function(){var p=document.getElementById('global-settings-panel');if(p)p.classList.add('is-open');},150);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
         <span>Display</span>
@@ -592,7 +592,7 @@
       {% if item.collection %}
       {% set sec = site.sections[item.collection] %}
       <li>
-        <a class="nav-drawer__section-tile" href="{{ item.url }}"{% if sec and sec.description %} data-tippy-content="{{ sec.description }}"{% endif %}{% if page.url == item.url %} aria-current="page"{% endif %}>
+        <a class="nav-drawer__section-tile" href="{{ item.url }}" data-rough="frame" data-rough-color="accent"{% if sec and sec.description %} data-tippy-content="{{ sec.description }}"{% endif %}{% if page.url == item.url %} aria-current="page"{% endif %}>
           <span class="nav-drawer__section-name">{{ item.label }}</span>
         </a>
       </li>

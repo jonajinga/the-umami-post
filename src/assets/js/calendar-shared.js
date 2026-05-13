@@ -589,6 +589,10 @@
       else if (state.view === 'year')  body = renderYearView(state);
       root.innerHTML = shellHTML(body);
       writeUrlState(state);
+      // Re-trigger rough.js decoration so newly-rendered cells +
+      // controls get their hand-drawn frames. spa:contentswap is the
+      // existing hook rough-decorations.js listens to.
+      try { document.dispatchEvent(new Event('spa:contentswap')); } catch (e) {}
     }
 
     paint();

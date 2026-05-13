@@ -145,14 +145,14 @@
     var accentColor = cssVar('--color-accent', '#D4793A');
     var bgAlt       = cssVar('--color-bg-alt', '#F2EBDE');
 
-    // 1. Form outer frames (w3f and subscribe)
-    document.querySelectorAll('form.w3f, form.subscribe-form, aside.subscribe-block').forEach(function (form) {
+    // 1. Form outer frames — w3f only. Subscribe forms have their
+    // input + button already rough-framed; an outer frame on a 100%-
+    // wide block paints visibly past the controls (a stray
+    // long-rectangle around small content).
+    document.querySelectorAll('form.w3f, aside.subscribe-block').forEach(function (form) {
       if (form.dataset.roughFrameBound === '1') return;
       if (shouldSkip(form)) return;
       form.dataset.roughFrameBound = '1';
-      // Strip the native border + box-shadow so the rough frame is the
-      // only outline. Keep the accent top border slot for the rough
-      // frame's saffron stroke.
       form.style.border = '0';
       form.style.boxShadow = 'none';
       requestAnimationFrame(function () { paintFrame(form, rough, accentColor); });
