@@ -335,13 +335,76 @@ aside.subscribe-block,
 .card,
 .recipe-card,
 .article-comments,
-.site-footer__masthead,
 .nutrition,
 #nutrition-modal,
 #makeahead-modal,
 #republish-panel {
   border: 2px solid var(--color-ink);
 }
+.site-footer__masthead { border: 0; }
+
+/* Numbered step circle for instruction-list (rough.js variant
+ * removed; this is the native CSS replacement). */
+.instruction-list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+.instruction-list__item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.instruction-list__item:last-child { border-bottom: 0; }
+.instruction-list__step {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: 2px solid var(--color-ink);
+  border-radius: 50%;
+  font-family: var(--font-headline);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1;
+}
+.instruction-list__body { min-width: 0; }
+.instruction-list__body > :first-child { margin-top: 0; }
+.instruction-list__body > :last-child { margin-bottom: 0; }
+.instruction-list__image { margin: var(--space-3) 0 0; }
+.instruction-list__image img { width: 100%; height: auto; display: block; border: 2px solid var(--color-ink); }
+
+/* Thicker borders on scale buttons + the scaler container so the
+ * cluster reads as a deliberate control panel. */
+.recipe-scaler { padding: var(--space-4); }
+.serving-scaler__btn,
+.unit-toggle__btn {
+  border-width: 2px;
+  border-color: var(--color-ink);
+}
+.serving-scaler__btn--active,
+.unit-toggle__btn--active {
+  border-color: var(--color-ink);
+}
+
+/* nav-drawer search submit — small dark icon button */
+.nav-drawer__search-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+.nav-drawer__search-submit:hover { background: var(--color-accent); }
+.nav-drawer__search-submit svg { width: 18px; height: 18px; }
 
 /* form-decorations.js wraps every text-ish control in a .rough-field
  * span so the rough SVG can sit behind it. The control loses its
@@ -576,6 +639,10 @@ select option {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Match the parent .unit-switch height exactly so the label
+   * vertical-centres regardless of font-metric drift. */
+  height: 100%;
+  line-height: 1;
   padding: 0;
   transition: color var(--transition-fast);
   white-space: nowrap;
@@ -857,21 +924,19 @@ body.cooking-mode .cooking-mode__exit { display: inline-block; }
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
-  border: 0;
-  padding: 6px;
+  /* Solid 2px ink border, no shadow. Hover thickens to 3px in
+   * accent so the affordance reads without a stamp shadow. */
+  border: 2px solid var(--color-ink);
+  padding: 0;
   text-decoration: none;
   color: var(--color-ink);
   position: relative;
-  /* Soft baseline shadow keeps the card readable; on hover the
-   * card snaps to a hard offset "stamp" shadow that matches the
-   * nutrition + make-ahead modal treatment. */
-  box-shadow: 0 1px 2px rgba(43, 31, 24, 0.06), 0 8px 24px -10px rgba(43, 31, 24, 0.18);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 .card:hover,
 .recipe-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0 var(--color-ink);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
 }
 .card__photo,
 .recipe-card__photo {

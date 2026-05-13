@@ -1,12 +1,10 @@
 {# Numbered step-by-step instructions. Expects: instructions (array
-   of { body, image, imageAlt }). Body is markdown-rendered HTML.
-   The step "1, 2, 3..." circles are rendered as rough.js sketched
-   discs via rough-decorations.js -- the data-rough-text attribute
-   gets baked into a sketched SVG circle with the number inside. #}
+   of { body, image, imageAlt }). The step number is rendered as a
+   filled circle via CSS (the rough.js variant was removed). #}
 <ol class="instruction-list">
   {% for step in instructions %}
   <li class="instruction-list__item" id="step-{{ loop.index }}">
-    <div class="instruction-list__step"></div>
+    <div class="instruction-list__step" aria-hidden="true">{{ loop.index }}</div>
     <div class="instruction-list__body">{{ step.body | safe }}</div>
     {% if step.image %}
     <figure class="instruction-list__image">

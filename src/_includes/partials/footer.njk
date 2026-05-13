@@ -114,8 +114,12 @@
     {# ── Bottom meta strip ── single-line row covering every legal,
          compliance, and site/build link. Ordered: required legal →
          compliance/safety policies → site meta. #}
+    {# ── Bottom meta strip ── single-line row covering the copyright,
+         every legal, compliance, and site/build link. Ordered:
+         © → required legal → compliance/safety → site meta. #}
     <nav class="site-footer__legal" aria-label="Legal, policies, and site info">
       <ul>
+        <li class="site-footer__copyright">&copy; {{ currentYear }} {{ site.title }}</li>
         <li><a href="/license/" rel="license">License (CC BY-NC-ND 4.0)</a></li>
         <li><a href="/privacy/">Privacy</a></li>
         <li><a href="/terms/">Terms</a></li>
@@ -125,7 +129,6 @@
         <li><a href="/community-guidelines/">Community guidelines</a></li>
         <li><a href="/code-of-conduct/">Code of conduct</a></li>
         <li><a href="/security/">Security</a></li>
-        <li class="site-footer__legal-sep" aria-hidden="true"></li>
         <li><a href="/changelog/">Changelog</a></li>
         <li><a href="/features/">Features</a></li>
         <li><a href="/style-guide/">Style guide</a></li>
@@ -134,14 +137,6 @@
         <li><a href="https://github.com/jonajinga/the-umami-post" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
     </nav>
-
-    {# ── Bottom bar ── #}
-    <div class="site-footer__bottom">
-      <p class="site-footer__copyright">
-        &copy; {{ currentYear }} {{ site.title }}. Articles licensed under
-        <a href="/license/" rel="license">CC&nbsp;BY-NC-ND&nbsp;4.0</a>.
-      </p>
-    </div>
 
   </div>{# /.container #}
 </footer>

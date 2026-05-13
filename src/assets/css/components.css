@@ -32,13 +32,14 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  /* Left-aligned to the container's gutter — matches where the
-   * hamburger toggle sits in the masthead row above. */
+  /* Match container alignment: max-width + auto margins + gutter
+   * padding — same x as the hamburger and section-nav row above. */
   justify-content: flex-start;
   list-style: none;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: 0 var(--gutter);
   line-height: 1;
-  margin: 0;
   height: 100%;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
@@ -2838,6 +2839,13 @@ body.is-home .quote-bar {
 }
 .site-footer__meta li,
 .site-footer__legal li { white-space: nowrap; }
+.site-footer__legal li.site-footer__copyright {
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-right: var(--space-2);
+  padding-right: var(--space-2);
+  border-right: 1px solid var(--color-rule);
+}
 .site-footer__meta a,
 .site-footer__legal a {
   color: var(--color-ink-faint);
