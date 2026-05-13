@@ -165,10 +165,18 @@
       'textarea, select'
     ).forEach(function (el) { bindControl(el, rough, inkColor); });
 
-    // 3. Submit buttons and primary CTA buttons
+    // 3. Submit buttons and primary CTA buttons — paint the rough
+    // frame with a dark fill so the button's bg-colored text reads.
+    // The previous cream fill collided with white-on-cream button
+    // labels and disappeared the words.
     document.querySelectorAll(
       'button[type="submit"], .w3f__submit, .subscribe-form__btn'
-    ).forEach(function (b) { bindButton(b, rough, inkColor, bgAlt); });
+    ).forEach(function (b) {
+      bindButton(b, rough, inkColor, inkColor);
+      // Force the label color in case the original stylesheet
+      // expected a dark CSS background-color we just stripped.
+      b.style.color = cssVar('--color-bg', '#FAF6EF');
+    });
 
     // 4. Generic CTA buttons (anywhere on the site)
     document.querySelectorAll('.btn, .btn--primary, .btn--ghost').forEach(function (b) {
