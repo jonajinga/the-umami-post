@@ -412,6 +412,13 @@ module.exports = function (eleventyConfig) {
     return dt.toISO();
   });
 
+  eleventyConfig.addFilter("dateFormat", (dateObj, fmt) => {
+    const dt = typeof dateObj === "string"
+      ? DateTime.fromISO(dateObj, { zone: "utc" })
+      : DateTime.fromJSDate(dateObj, { zone: "utc" });
+    return dt.toFormat(fmt || "yyyy-LL-dd");
+  });
+
   eleventyConfig.addFilter("readingTime", (content) => {
     const text = content.replace(/(<([^>]+)>)/gi, "");
     const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;

@@ -1,0 +1,36 @@
+---
+layout: base
+pagination:
+  data: ingredientIndex
+  size: 1
+  alias: ingredient
+  addAllPagesToCollections: true
+permalink: "/ingredients/{{ ingredient.slug }}/"
+eleventyComputed:
+  title: "{{ ingredient.name | capitalize }}"
+  description: "Every Umami Post recipe that uses {{ ingredient.name }}."
+---
+
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <header class="recipe-hero">
+    <a href="/ingredients/" class="recipe-hero__eyebrow">Ingredients</a>
+    <h1 class="recipe-hero__title">{{ ingredient.name | capitalize }}</h1>
+    <p class="recipe-hero__dek">{{ ingredient.recipes.length }} recipe{% if ingredient.recipes.length != 1 %}s{% endif %} that use {{ ingredient.name }}.</p>
+  </header>
+
+  <section style="margin-top: var(--space-8);">
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4);grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+      {% for r in ingredient.recipes %}
+      <li>
+        <a href="{{ r.url }}" data-rough="frame" data-rough-color="ink" style="display:block;padding:var(--space-4);text-decoration:none;color:var(--color-ink);font-family:var(--font-headline);font-weight:600;line-height:var(--leading-snug);position:relative;">
+          {{ r.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+</div>
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

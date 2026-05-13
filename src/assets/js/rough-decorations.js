@@ -71,9 +71,9 @@
     var d = 'M 4 12 Q ' + (w / 4) + ' 4, ' + (w / 2) + ' 12 T ' + (w - 4) + ' 12';
     var path = rc.path(d, {
       stroke: color,
-      strokeWidth: 2,
-      roughness: 1.8,
-      bowing: 2,
+      strokeWidth: 1.5,
+      roughness: 0.5,
+      bowing: 1,
       disableMultiStroke: false
     });
     s.appendChild(path);
@@ -100,8 +100,8 @@
       var pts = starPoints(cx, cy, size * 0.45, size * 0.18, 5);
       var poly = rc.polygon(pts, {
         stroke: ink,
-        strokeWidth: 1.5,
-        roughness: 1.6,
+        strokeWidth: 1.2,
+        roughness: 0.5,
         fill: filled ? fill : 'none',
         fillStyle: 'hachure',
         fillWeight: 1.5,
@@ -147,8 +147,8 @@
       var capPath = 'M ' + (cx - capW / 2) + ' ' + (capCy + capH / 2 - 1) +
                     ' a ' + (capW / 2) + ' ' + capH + ' 0 0 1 ' + capW + ' 0 z';
       s.appendChild(rc.path(capPath, {
-        stroke: ink, strokeWidth: 1.3,
-        roughness: 1.8,
+        stroke: ink, strokeWidth: 1.1,
+        roughness: 0.5,
         fill: filled ? fill : 'none',
         fillStyle: filled ? 'solid' : 'hachure',
         fillWeight: 1.2,
@@ -158,8 +158,8 @@
       var stemW = size * 0.42;
       var stemH = size * 0.36;
       s.appendChild(rc.rectangle(cx - stemW / 2, capCy + capH / 2 - 2, stemW, stemH, {
-        stroke: ink, strokeWidth: 1.3,
-        roughness: 1.4,
+        stroke: ink, strokeWidth: 1.1,
+        roughness: 0.5,
         fill: filled ? colorFor('olive') : 'none',
         fillStyle: 'hachure',
         fillWeight: 1,
@@ -168,10 +168,10 @@
       // Two cream cap spots, but only on filled mushrooms
       if (filled) {
         s.appendChild(rc.circle(cx - capW * 0.18, capCy - 1, 3, {
-          stroke: bg, strokeWidth: 1, roughness: 1.2, fill: bg, fillStyle: 'solid'
+          stroke: bg, strokeWidth: 1, roughness: 0.5, fill: bg, fillStyle: 'solid'
         }));
         s.appendChild(rc.circle(cx + capW * 0.18, capCy + 2, 2.5, {
-          stroke: bg, strokeWidth: 1, roughness: 1.2, fill: bg, fillStyle: 'solid'
+          stroke: bg, strokeWidth: 1, roughness: 0.5, fill: bg, fillStyle: 'solid'
         }));
       }
     }
@@ -188,8 +188,8 @@
     var ink  = colorFor('ink');
     var circle = rc.circle(size / 2, size / 2, size - 6, {
       stroke: ink,
-      strokeWidth: 1.6,
-      roughness: 1.8,
+      strokeWidth: 1.2,
+      roughness: 0.5,
       fill: fill,
       fillStyle: 'solid'
     });
@@ -245,8 +245,8 @@
     var color = colorFor(el.getAttribute('data-rough-color') || 'accent');
     var rect = rc.rectangle(2, 2, w - 4, h - 4, {
       stroke: color,
-      strokeWidth: 1.6,
-      roughness: 1.8,
+      strokeWidth: 1.2,
+      roughness: 0.5,
       fill: cssVar('--color-bg', '#FAF6EF'),
       fillStyle: 'solid'
     });
@@ -270,8 +270,8 @@
     var color = colorFor(el.getAttribute('data-rough-color') || 'ink');
     var path = rc.rectangle(6, 6, w - 12, h - 12, {
       stroke: color,
-      strokeWidth: 2,
-      roughness: 2.4,
+      strokeWidth: 1.2,
+      roughness: 0.5,
       fill: 'none'
     });
     s.appendChild(path);
@@ -296,8 +296,8 @@
     var color = colorFor(el.getAttribute('data-rough-color') || 'accent');
     var d = 'M 0 8 Q ' + (w / 3) + ' 16, ' + (w / 2) + ' 8 T ' + w + ' 8';
     s.appendChild(rc.path(d, {
-      stroke: color, strokeWidth: 3,
-      roughness: 2, bowing: 3
+      stroke: color, strokeWidth: 2,
+      roughness: 0.5, bowing: 1
     }));
   }
 

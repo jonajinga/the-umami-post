@@ -47,8 +47,8 @@
     var bg   = cssVar('--color-bg-alt', '#F2EBDE');
     s.appendChild(rc.rectangle(2, 2, w - 4, h - 4, {
       stroke: ink,
-      strokeWidth: 1.4,
-      roughness: 1.8,
+      strokeWidth: 1.1,
+      roughness: 0.5,
       fill: bg,
       fillStyle: 'solid'
     }));

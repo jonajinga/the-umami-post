@@ -39,8 +39,8 @@ isReadingPage: true
 
 <article class="recipe container" data-recipe-slug="{{ page.fileSlug }}" data-pagefind-body>
 
-  <header class="recipe-hero">
-    <span class="recipe-hero__eyebrow">Recipe{% if course %} &middot; {{ course }}{% endif %}{% if cuisine %} &middot; {{ cuisine }}{% endif %}</span>
+  <header class="recipe-hero" data-meta-collapsed="true">
+    {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-hero__eyebrow">Recipe &middot; {{ course }}{% if cuisine %} &middot; {{ cuisine }}{% endif %}</a>{% else %}<span class="recipe-hero__eyebrow">Recipe</span>{% endif %}
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
@@ -50,9 +50,9 @@ isReadingPage: true
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
-      &middot; {{ page.date | readableDate }}
-      {% if updated %} &middot; Updated {{ updated | readableDate }}{% endif %}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tooltip="View all from {{ authors[author].name or authorName or author }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
+      {% if updated %} &middot; Updated <a class="recipe-hero__date" href="/archive/?d={{ updated | dateFormat('yyyy-MM') }}">{{ updated | readableDate }}</a>{% endif %}
     </p>
   </header>
 

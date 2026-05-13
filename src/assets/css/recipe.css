@@ -16,6 +16,28 @@
   flex-direction: column;
   align-items: flex-start;
 }
+/* Collapsed-meta state -- mirrors article.njk's article-header
+ * pattern. Toolbar i-button toggles `data-meta-collapsed` and the
+ * preference persists in localStorage as `umami-article-meta-expanded`.
+ * When collapsed, the eyebrow + byline + meta-bar + divider are
+ * hidden so the title + dek + hero photo stand alone. */
+.recipe-hero[data-meta-collapsed="true"] .recipe-hero__eyebrow,
+.recipe-hero[data-meta-collapsed="true"] .recipe-hero__byline,
+.recipe-hero[data-meta-collapsed="true"] ~ .rough-divider,
+.recipe-hero[data-meta-collapsed="true"] ~ .recipe-meta-bar {
+  display: none;
+}
+.recipe-hero__author,
+.recipe-hero__date {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--color-rule);
+}
+.recipe-hero__author:hover,
+.recipe-hero__date:hover {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
 .recipe-hero__eyebrow {
   display: inline-block;
   font-family: var(--font-ui);

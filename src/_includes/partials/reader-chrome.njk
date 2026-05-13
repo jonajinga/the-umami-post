@@ -286,6 +286,108 @@
 
 </aside>
 
+{# Feedback button + popup -- lives at the bottom of every reading
+   page; reader-panel-migrate.js moves the button into the toolbar
+   slot and re-parents the popup to <body>. #}
+<div class="article-feedback-wrap" hidden>
+  <button class="article-action-btn" type="button" id="article-feedback-btn" aria-label="Send feedback" aria-expanded="false"
+    onclick="var p=document.getElementById('article-feedback-popup');p.hidden=!p.hidden;this.setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden){var self=this;setTimeout(function(){document.addEventListener('click',function cl(e){if(!p.contains(e.target)&&!self.contains(e.target)){p.hidden=true;self.setAttribute('aria-expanded','false');document.removeEventListener('click',cl);}});},10);}">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+    </svg>
+    <span class="btn-label">Feedback</span>
+  </button>
+  <div id="article-feedback-popup" class="article-feedback-popup" hidden>
+    <header class="article-feedback-popup__header">
+      <div class="article-feedback-popup__head-text">
+        <p class="article-feedback-popup__kicker">{{ site.title }}</p>
+        <h2 class="article-feedback-popup__title">Send feedback</h2>
+      </div>
+      <button type="button" class="article-feedback-popup__close" aria-label="Close feedback"
+        onclick="var p=document.getElementById('article-feedback-popup');p.hidden=true;var b=document.getElementById('article-feedback-btn');if(b)b.setAttribute('aria-expanded','false');">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+    <form class="article-feedback-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="{{ site.forms.accessKey }}">
+      <input type="hidden" name="subject" value="Feedback on {{ title | escape }}">
+      <input type="hidden" name="redirect" value="{{ site.url }}/thank-you/">
+      <input type="hidden" name="from_name" value="{{ site.title }} Feedback">
+      <input type="hidden" name="page_url" value="{{ site.url }}{{ page.url }}">
+      <input type="checkbox" name="botcheck" class="article-feedback-form__botcheck" tabindex="-1" autocomplete="off">
+
+      <label class="article-feedback-form__field">
+        <span class="article-feedback-form__label">Category</span>
+        <select name="category" class="article-feedback-form__input">
+          <option value="General feedback">General feedback</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Compliment">Compliment</option>
+        </select>
+      </label>
+
+      <label class="article-feedback-form__field">
+        <span class="article-feedback-form__label">Your feedback</span>
+        <textarea name="message" rows="4" required placeholder="Tell us what you think." class="article-feedback-form__input article-feedback-form__textarea"></textarea>
+      </label>
+
+      <label class="article-feedback-form__field">
+        <span class="article-feedback-form__label">Email <span class="article-feedback-form__label-hint">(optional, for a response)</span></span>
+        <input type="email" name="email" autocomplete="email" class="article-feedback-form__input">
+      </label>
+
+      <div class="article-feedback-form__actions">
+        <button type="submit" class="article-feedback-form__submit w3f__submit">Send feedback</button>
+      </div>
+
+      <div class="article-feedback-form__footer">
+        <p>We read every piece of feedback.</p>
+        <p>Found an error? <a href="/corrections/report/">Report a correction</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+{# Article-details toggle -- ann-info-btn shows/hides recipe-hero
+   metadata (eyebrow / byline / divider / meta-bar). Mirrors article.njk
+   but for recipe/technique/review which use .recipe-hero. #}
+<script>
+(function () {
+  var KEY = 'umami-article-meta-expanded';
+  function apply() {
+    var hero = document.querySelector('.recipe-hero');
+    var btn  = document.getElementById('ann-info-btn');
+    if (!hero) return;
+    var expanded = false;
+    try { expanded = localStorage.getItem(KEY) === 'true'; } catch (e) {}
+    hero.setAttribute('data-meta-collapsed', expanded ? 'false' : 'true');
+    if (btn) {
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.setAttribute('aria-label', expanded ? 'Hide article details' : 'Show article details');
+    }
+  }
+  function bind() {
+    var btn = document.getElementById('ann-info-btn');
+    if (!btn || btn.dataset.metaBound === '1') return;
+    btn.dataset.metaBound = '1';
+    btn.addEventListener('click', function () {
+      var current = false;
+      try { current = localStorage.getItem(KEY) === 'true'; } catch (e) {}
+      var next = !current;
+      try { localStorage.setItem(KEY, next ? 'true' : 'false'); } catch (e) {}
+      apply();
+    });
+  }
+  function run() { apply(); bind(); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  document.addEventListener('spa:contentswap', run);
+})();
+</script>
+
 {# Bottom-floating annotation toolbar #}
 {% set readerPanelId = "article-notes-panel" %}
 {% set readerToggleClass = "article-notes-toggle" %}

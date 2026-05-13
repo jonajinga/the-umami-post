@@ -46,24 +46,24 @@ isReadingPage: true
 
 <article class="recipe container" data-pagefind-body>
 
-  <header class="recipe-hero">
-    <span class="recipe-hero__eyebrow">Technique{% if subsection %} &middot; {{ subsection }}{% endif %}</span>
+  <header class="recipe-hero" data-meta-collapsed="true">
+    {% if subsection %}<a href="/topics/{{ subsection | slugify }}/" class="recipe-hero__eyebrow">Technique &middot; {{ subsection }}</a>{% else %}<span class="recipe-hero__eyebrow">Technique</span>{% endif %}
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
-    <figure class="recipe-hero__photo">
+    <figure class="recipe-hero__photo" data-rough="frame" data-rough-color="ink">
       <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
       {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
     </figure>
     {% endif %}
     <p class="recipe-hero__byline">
-      {% if author %}By <a href="/author/{{ author | slugify }}/">{{ authors[author].name or authorName or author }}</a>{% endif %}
-      &middot; {{ page.date | readableDate }}
+      {% if author %}By <a class="recipe-hero__author" href="/author/{{ author | slugify }}/" data-tooltip="View all from {{ authors[author].name or authorName or author }}">{{ authors[author].name or authorName or author }}</a>{% endif %}
+      &middot; <a class="recipe-hero__date" href="/archive/?d={{ page.date | dateFormat('yyyy-MM') }}">{{ page.date | readableDate }}</a>
     </p>
   </header>
 
   {% if totalTime or level or prerequisites %}
-  <div class="recipe-meta-bar">
+  <div class="recipe-meta-bar" data-rough="frame" data-rough-color="ink">
     {% if totalTime %}
     <div class="recipe-meta-bar__item">
       <span class="recipe-meta-bar__label">Total time</span>

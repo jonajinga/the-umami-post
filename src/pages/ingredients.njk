@@ -6,7 +6,7 @@ permalink: /ingredients/
 eleventyExcludeFromCollections: true
 ---
 
-<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+<div class="container ingredients-index" style="padding-top: var(--space-10); padding-bottom: var(--space-20); word-spacing: normal;">
 
   <header class="recipe-hero">
     <span class="recipe-hero__eyebrow">Index</span>
@@ -15,13 +15,15 @@ eleventyExcludeFromCollections: true
   </header>
 
   {% if ingredientIndex.length > 0 %}
-  <section style="margin-top: var(--space-8);">
+  <section style="margin-top: var(--space-8); word-spacing: normal;">
     <p style="font-family: var(--font-body); font-size: var(--text-md); color: var(--color-ink-muted); margin: 0 0 var(--space-6);">{{ ingredientIndex.length }} unique ingredients across {{ collections.recipes.length }} recipes.</p>
-    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:var(--space-3);grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:var(--space-3);grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));word-spacing:normal;">
       {% for ing in ingredientIndex %}
-      <li style="padding: var(--space-3); border: 1px solid var(--color-rule); font-family: var(--font-ui); font-size: var(--text-sm); display:flex; justify-content:space-between; align-items:baseline;">
-        <span style="font-weight:600;">{{ ing.name }}</span>
-        <span style="color:var(--color-ink-faint);">{{ ing.recipes.length }}</span>
+      <li>
+        <a href="/ingredients/{{ ing.slug }}/" style="padding: var(--space-3); font-family: var(--font-ui); font-size: var(--text-sm); display:flex; justify-content:space-between; align-items:baseline; text-decoration:none; color:var(--color-ink); position:relative; word-spacing:normal;" data-rough="frame" data-rough-color="ink">
+          <span style="font-weight:600;">{{ ing.name }}</span>
+          <span style="color:var(--color-ink-faint);">{{ ing.recipes.length }}</span>
+        </a>
       </li>
       {% endfor %}
     </ul>
@@ -31,3 +33,5 @@ eleventyExcludeFromCollections: true
   {% endif %}
 
 </div>
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
