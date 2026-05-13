@@ -572,7 +572,7 @@ isReadingPage: true
           {# 9. Feedback (popup form) #}
           <div class="article-feedback-wrap">
             <button class="article-action-btn" type="button" id="article-feedback-btn" aria-label="Send feedback" aria-expanded="false"
-              onclick="var p=document.getElementById('article-feedback-popup');p.hidden=!p.hidden;this.setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden){var self=this;setTimeout(function(){document.addEventListener('click',function cl(e){if(!p.contains(e.target)&&!self.contains(e.target)){p.hidden=true;self.setAttribute('aria-expanded','false');document.removeEventListener('click',cl);}});},10);}">
+              onclick="var p=document.getElementById('article-feedback-popup');p.hidden=!p.hidden;this.setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden){if(window.__umamiDecorateForms)window.__umamiDecorateForms();var self=this;setTimeout(function(){document.addEventListener('click',function cl(e){if(!p.contains(e.target)&&!self.contains(e.target)){p.hidden=true;self.setAttribute('aria-expanded','false');document.removeEventListener('click',cl);}});},10);}">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
               </svg>

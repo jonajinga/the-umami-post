@@ -198,6 +198,11 @@
       .catch(function () { /* libs failed to load -- silent no-op */ });
   }
 
+  // Exposed so any consumer that reveals a previously-hidden form
+  // (the feedback popup, the share popover, etc.) can trigger a
+  // re-decoration once the controls are measurable.
+  window.__umamiDecorateForms = init;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
