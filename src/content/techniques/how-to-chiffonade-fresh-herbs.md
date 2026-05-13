@@ -3,7 +3,7 @@ title: "How to Chiffonade Fresh Herbs"
 featured: true
 dek: "Thin ribbons of basil that don't bruise into black mush. Two minutes, one knife, no shortcuts."
 author: jon-ajinga
-date: 2026-05-19
+date: 2026-05-12
 subsection: Knife skills
 level: Beginner
 difficulty: 1

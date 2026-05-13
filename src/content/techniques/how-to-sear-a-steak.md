@@ -3,7 +3,7 @@ title: "How to Sear a Steak in a Cast-Iron Skillet"
 featured: true
 dek: "The thing every steak guide gets wrong: high heat is the enemy of crust until it isn't."
 author: jon-ajinga
-date: 2026-05-16
+date: 2026-05-11
 subsection: Heat
 level: Intermediate
 difficulty: 3

@@ -3,7 +3,7 @@ title: "Overnight Oats with Apple, Cardamom, and Toasted Pecans"
 featured: true
 dek: "Five minutes of work tonight buys you a breakfast tomorrow that tastes like you tried."
 author: jon-ajinga
-date: 2026-05-18
+date: 2026-05-13
 course: Breakfast
 cuisine: American
 diet:

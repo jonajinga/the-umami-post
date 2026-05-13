@@ -3,7 +3,7 @@ title: "Miso-Roasted Broccoli with Sesame and Lemon"
 featured: true
 dek: "A weeknight side that eats like the best part of a restaurant meal. Twenty-five minutes, one pan."
 author: jon-ajinga
-date: 2026-05-15
+date: 2026-05-11
 course: Sides
 cuisine: Japanese
 diet:
