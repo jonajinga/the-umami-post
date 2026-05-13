@@ -58,6 +58,14 @@ isReadingPage: true
     </p>
   </header>
 
+  {# Headnote — full-width prose row directly beneath the hero. This
+     is the narrative the cook reads before they roll up their sleeves. #}
+  {% if content and content.length > 0 %}
+  <section class="recipe-headnote article-body">
+    {{ content | safe }}
+  </section>
+  {% endif %}
+
   <div class="rough-divider" data-rough="divider" data-rough-color="accent" aria-hidden="true"></div>
 
   {% include "partials/recipe-meta-bar.njk" %}
@@ -80,45 +88,41 @@ isReadingPage: true
       <h2>Instructions</h2>
       {% include "partials/instruction-list.njk" %}
     </section>
-
-    <aside class="recipe-body__notes">
-      {% if notes %}
-      <div class="recipe-notes" data-rough="frame" data-rough-color="accent">
-        <h2>Cook's notes</h2>
-        {{ notes | safe }}
-      </div>
-      {% endif %}
-
-      {% if nutrition %}
-      <div class="recipe-notes" data-rough="frame" data-rough-color="olive">
-        <h2>Nutrition (per serving)</h2>
-        <p>
-          {% if nutrition.calories %}<strong>Calories:</strong> {{ nutrition.calories }}&nbsp;&middot;&nbsp;{% endif %}
-          {% if nutrition.protein %}<strong>Protein:</strong> {{ nutrition.protein }}&nbsp;&middot;&nbsp;{% endif %}
-          {% if nutrition.carbs %}<strong>Carbs:</strong> {{ nutrition.carbs }}&nbsp;&middot;&nbsp;{% endif %}
-          {% if nutrition.fat %}<strong>Fat:</strong> {{ nutrition.fat }}{% endif %}
-        </p>
-        <p style="font-size: var(--text-xs); color: var(--color-ink-faint); margin-top: var(--space-2);">Estimated. Actual values vary with substitutions.</p>
-      </div>
-      {% endif %}
-
-      {% if source %}
-      <div class="recipe-notes recipe-notes--source">
-        <h2>Source</h2>
-        <p>{{ source | safe }}</p>
-      </div>
-      {% endif %}
-
-      {% if content and content.length > 0 %}
-      <div class="recipe-notes recipe-notes--headnote">
-        <h2>Headnote</h2>
-        <div class="article-body recipe-prose">
-          {{ content | safe }}
-        </div>
-      </div>
-      {% endif %}
-    </aside>
   </div>
+
+  {# Footer row — Cook's notes + Source + Nutrition below the two-
+     column body so the cook only reaches for them after the recipe
+     is done. #}
+  {% if notes or source or nutrition %}
+  <section class="recipe-footer">
+    {% if notes %}
+    <div class="recipe-notes" data-rough="frame" data-rough-color="accent">
+      <h2>Cook's notes</h2>
+      {{ notes | safe }}
+    </div>
+    {% endif %}
+
+    {% if source %}
+    <div class="recipe-notes recipe-notes--source" data-rough="frame" data-rough-color="ink">
+      <h2>Source</h2>
+      <p>{{ source | safe }}</p>
+    </div>
+    {% endif %}
+
+    {% if nutrition %}
+    <div class="recipe-notes" data-rough="frame" data-rough-color="olive">
+      <h2>Nutrition (per serving)</h2>
+      <p>
+        {% if nutrition.calories %}<strong>Calories:</strong> {{ nutrition.calories }}&nbsp;&middot;&nbsp;{% endif %}
+        {% if nutrition.protein %}<strong>Protein:</strong> {{ nutrition.protein }}&nbsp;&middot;&nbsp;{% endif %}
+        {% if nutrition.carbs %}<strong>Carbs:</strong> {{ nutrition.carbs }}&nbsp;&middot;&nbsp;{% endif %}
+        {% if nutrition.fat %}<strong>Fat:</strong> {{ nutrition.fat }}{% endif %}
+      </p>
+      <p style="font-size: var(--text-xs); color: var(--color-ink-faint); margin-top: var(--space-2);">Estimated. Actual values vary with substitutions.</p>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
 
   <button type="button" class="cooking-mode__exit" onclick="document.body.classList.remove('cooking-mode');history.pushState({},'',location.pathname);">Exit cooking mode</button>
 

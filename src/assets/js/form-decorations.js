@@ -121,9 +121,18 @@
     el.style.position = 'relative';
     el.style.border = '0';
     el.style.boxShadow = 'none';
-    // Move text above the SVG layer
+    // Lift every child above the rough SVG. Bare text nodes can't
+    // carry a z-index, so wrap them in a span first — without this
+    // the SVG fill covers the button label completely.
     Array.from(el.childNodes).forEach(function (n) {
       if (n.nodeType === 1) { n.style.position = 'relative'; n.style.zIndex = '1'; }
+      else if (n.nodeType === 3 && n.nodeValue && n.nodeValue.trim()) {
+        var span = document.createElement('span');
+        span.textContent = n.nodeValue;
+        span.style.position = 'relative';
+        span.style.zIndex = '1';
+        n.parentNode.replaceChild(span, n);
+      }
     });
     requestAnimationFrame(function () {
       paintFrame(el, rough, color, { fill: fillBg || 'none', fillStyle: fillBg ? 'solid' : 'none' });

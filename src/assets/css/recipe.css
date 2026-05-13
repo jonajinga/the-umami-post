@@ -204,16 +204,33 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
 }
 @media (min-width: 1024px) {
   .recipe-body {
-    grid-template-columns: minmax(280px, 22rem) minmax(0, 1fr) minmax(260px, 20rem);
+    grid-template-columns: minmax(280px, 22rem) minmax(0, 1fr);
   }
-}
-@media (min-width: 1024px) {
   .recipe-body__ingredients { position: sticky; top: 5.5rem; align-self: start; }
-  .recipe-body__notes { position: sticky; top: 5.5rem; align-self: start; }
 }
-.recipe-body__notes { display: flex; flex-direction: column; gap: var(--space-6); }
-.recipe-body__notes .recipe-notes { margin: 0; }
-.recipe-body__notes .recipe-notes h2 {
+.recipe-headnote {
+  max-width: var(--max-width-prose);
+  margin: 0 auto var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+}
+.recipe-headnote > :first-child { margin-top: 0; }
+.recipe-headnote > :last-child { margin-bottom: 0; }
+
+.recipe-footer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  max-width: var(--max-width);
+  margin: var(--space-10) auto 0;
+}
+@media (min-width: 768px) {
+  .recipe-footer { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+.recipe-footer .recipe-notes { margin: 0; }
+.recipe-footer .recipe-notes h2 {
   font-family: var(--font-headline);
   font-size: var(--text-md);
   font-weight: 700;
@@ -221,13 +238,14 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-rule);
 }
-.recipe-prose {
-  font-size: var(--text-sm);
-  color: var(--color-ink-muted);
-  margin: 0;
+
+/* Browser-native select dropdown panel reads with explicit ink on bg.
+ * Without this, system defaults (white text on white) make the menu
+ * unreadable inside the dark modal. */
+select option {
+  background: var(--color-bg);
+  color: var(--color-ink);
 }
-.recipe-prose > :first-child { margin-top: 0; }
-.recipe-prose > :last-child { margin-bottom: 0; }
 
 /* -- Ingredient list -------------------------------------- */
 .recipe-body__ingredients h2,
