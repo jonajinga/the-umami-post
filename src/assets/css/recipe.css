@@ -200,28 +200,6 @@
   border-top: 1px solid var(--color-rule);
 }
 
-/* Nutrition group + time chips share a single row inside the
- * content column. A vertical accent rule separates them. The
- * 'Per serving' eyebrow + Full-label button share the nutrition
- * header row; macros sit on the baseline alongside the times. */
-.recipe-meta-bar__content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-6) var(--space-8);
-}
-.recipe-meta-bar__times {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-4) var(--space-6);
-  flex: 1 1 auto;
-}
-.recipe-meta-bar__times .recipe-meta-bar__item {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
 .recipe-meta-bar__nutrition-group {
   /* Own row beneath the time chips, separated by a horizontal
    * accent bar across the top. Full Label button anchors the
@@ -231,7 +209,7 @@
   align-items: center;
   gap: var(--space-4);
   padding-top: var(--space-4);
-  flex: 1 1 100%;
+  margin-top: var(--space-2);
   border-top: 3px solid var(--color-accent);
 }
 .recipe-meta-bar__nutrition-group .recipe-meta-bar__nutrition-btn {
@@ -342,6 +320,26 @@ aside.subscribe-block,
   border: 2px solid var(--color-ink);
 }
 .site-footer__masthead { border: 0; }
+
+/* Mushroom difficulty rating — uses the site favicon repeated 1-5
+ * times. Empty mushrooms are faded so a 2/5 reads as two solid
+ * mushrooms next to three ghosted ones. */
+.mushroom-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+}
+.mushroom-rating__item {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  transition: opacity var(--transition-fast);
+}
+.mushroom-rating__item--empty {
+  opacity: 0.25;
+  filter: grayscale(1);
+}
 
 /* Numbered step circle for instruction-list (rough.js variant
  * removed; this is the native CSS replacement). */
@@ -1289,12 +1287,16 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
     width: auto;
   }
 }
-.recipe-actions__btn {
+/* Unified styling: Print Recipe / Cook Mode / Keep Awake all share
+ * the same border, padding, height, and type ramp so they read as
+ * one row of equivalent action buttons. */
+.recipe-actions__btn,
+.wake-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   position: relative;
-  padding: var(--space-3) var(--space-6);
+  padding: 0 var(--space-4);
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   font-weight: 600;
@@ -1303,41 +1305,24 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
   color: var(--color-ink);
   text-decoration: none;
   background: var(--color-bg);
-  border: 0;
+  border: 2px solid var(--color-ink);
   cursor: pointer;
+  height: 44px;
   min-height: 44px;
-  transition: color var(--transition-fast);
-}
-.recipe-actions__btn:hover { color: var(--color-accent); }
-.recipe-actions__btn svg { position: relative; z-index: 1; }
-.recipe-actions__btn span { position: relative; z-index: 1; }
-
-/* Keep-screen-awake switch — toggle pill sitting alongside the
- * Print / Cook Mode action buttons. Track lights in accent when
- * the wake lock is active, thumb slides right. */
-.wake-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-ui);
-  /* Match the .recipe-actions__btn type ramp so PRINT RECIPE /
-   * COOK MODE / KEEP AWAKE all read at the same weight and size. */
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  min-height: 44px;
-  position: relative;
-  transition: color var(--transition-fast);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
 }
+.recipe-actions__btn:hover,
+.wake-switch:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.recipe-actions__btn svg,
+.recipe-actions__btn span,
+.wake-switch__label,
+.wake-switch__track { position: relative; z-index: 1; }
+
+.wake-switch.is-on { color: var(--color-ink); }
 .wake-switch__track,
 .wake-switch__label { position: relative; z-index: 1; }
 .wake-switch:hover,
