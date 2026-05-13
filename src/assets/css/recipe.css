@@ -439,11 +439,6 @@ select option {
   z-index: 2;
   background: transparent;
   border: 0;
-  /* Default = inactive button; lives on the cream half of the
-   * track. Force full ink with !important so any ancestor color
-   * (link colour, theme override) doesn't bleed through and make
-   * the label invisible. */
-  color: var(--color-ink) !important;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -454,11 +449,16 @@ select option {
   transition: color var(--transition-fast);
   white-space: nowrap;
 }
-/* Active = the button covered by the saffron thumb. Cream label
- * on saffron fill reads cleanly. */
+/* Inactive label: sits on the cream half of the track. Use a
+ * known-dark color (cocoa) so the label stays legible regardless
+ * of theme. The earlier var(--color-ink) approach inverted in
+ * dark mode and disappeared the inactive label. */
+.unit-switch__btn { color: #2b1f18 !important; }
+/* Active = the button covered by the saffron thumb. Cream on
+ * saffron reads cleanly in both themes. */
 .unit-switch[data-active="us"]     .unit-switch__btn[data-target-unit="us"],
 .unit-switch[data-active="metric"] .unit-switch__btn[data-target-unit="metric"] {
-  color: var(--color-bg) !important;
+  color: #faf6ef !important;
 }
 /* The rough.js frame SVG is appended last; make sure it sits
  * BEHIND the thumb + buttons. */
@@ -1082,19 +1082,22 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  padding: 0 var(--space-3);
+  padding: 6px var(--space-4);
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: var(--font-ui);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-ink-muted);
   min-height: 44px;
+  position: relative;
   transition: color var(--transition-fast);
 }
+.wake-switch__track,
+.wake-switch__label { position: relative; z-index: 1; }
 .wake-switch:hover,
 .wake-switch.is-on { color: var(--color-ink); }
 .wake-switch__track {

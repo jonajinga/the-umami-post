@@ -6,26 +6,9 @@
 {% set fat = nutrition.totalFat or nutrition.fat %}
 {% set carbs = nutrition.totalCarbs or nutrition.carbs %}
 
-<aside class="nutrition" data-rough="frame" data-rough-color="olive">
-  <p class="nutrition__eyebrow">Nutrition facts <span>(per serving)</span></p>
-
-  <ul class="nutrition__summary">
-    {% if nutrition.calories %}<li><strong>{{ nutrition.calories }}</strong><span>Calories</span></li>{% endif %}
-    {% if fat %}<li><strong>{{ fat }}</strong><span>Fat</span></li>{% endif %}
-    {% if carbs %}<li><strong>{{ carbs }}</strong><span>Carbs</span></li>{% endif %}
-    {% if nutrition.protein %}<li><strong>{{ nutrition.protein }}</strong><span>Protein</span></li>{% endif %}
-  </ul>
-
-  <button type="button" class="nutrition__toggle" aria-haspopup="dialog" aria-controls="nutrition-modal"
-    onclick="var m=document.getElementById('nutrition-modal');var o=document.getElementById('nutrition-overlay');if(!m)return;m.hidden=false;o.hidden=false;document.body.style.overflow='hidden';m.focus();">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    <span>Full nutrition label</span>
-  </button>
-</aside>
-
-{# Modal lives at body-end so its z-index escapes any clipping
-   ancestor. Open: clear `hidden` on overlay + dialog. Close on
-   overlay click, close button, or Escape. #}
+{# Nutrition summary lives in the meta bar now (per recipe.njk).
+   This partial only emits the modal so the meta bar's
+   "Full label" button has somewhere to open into. #}
 <div id="nutrition-overlay" class="modal-overlay" hidden
   onclick="this.hidden=true;document.getElementById('nutrition-modal').hidden=true;document.body.style.overflow='';"></div>
 

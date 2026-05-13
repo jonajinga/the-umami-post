@@ -58,7 +58,6 @@
     // via `.rn-hover` or `data-rough-hover="underline"`.
     var sel = [
       '.site-nav__link',
-      '.nav-mega__link',
       '.nav-section-col__link',
       '.nav-section-col__article',
       '.nav-dropdown__footer-link',
@@ -78,6 +77,19 @@
       a.addEventListener('mouseleave', function () { hide(a); });
       a.addEventListener('focus',      function () { annotate(a); });
       a.addEventListener('blur',       function () { hide(a); });
+    });
+    // Mega menu rows: the .nav-mega__link is full-column-width, so
+    // an underline drawn on the link itself spans the whole column.
+    // Target the inner .nav-mega__title span (which hugs the text)
+    // but trigger on the parent link so the hover area stays wide.
+    document.querySelectorAll('.nav-mega__link').forEach(function (a) {
+      if (a.dataset.navUnderlineBound === '1') return;
+      a.dataset.navUnderlineBound = '1';
+      var target = a.querySelector('.nav-mega__title') || a;
+      a.addEventListener('mouseenter', function () { annotate(target); });
+      a.addEventListener('mouseleave', function () { hide(target); });
+      a.addEventListener('focus',      function () { annotate(target); });
+      a.addEventListener('blur',       function () { hide(target); });
     });
   }
 

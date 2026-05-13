@@ -2002,7 +2002,9 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 }
 
 .nav-mega__title {
-  display: block;
+  /* inline-block so the rough-notation hover underline only spans
+   * the text width, not the full column. */
+  display: inline-block;
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -2010,6 +2012,7 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   line-height: var(--leading-snug);
   letter-spacing: 0;
   white-space: nowrap;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
