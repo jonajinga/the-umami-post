@@ -254,22 +254,26 @@
   }
 
   function drawFrame(el, rough) {
-    // getBoundingClientRect can return zeroed dimensions when the
-    // element hasn't been laid out yet (initial paint, hidden
-    // ancestor briefly revealed, dynamic flex sizing). Skip when
-    // the element has no real size — a later renderAll trigger
-    // (resize / load / spa:contentswap) will re-render once layout
-    // settles.
-    var rect = el.getBoundingClientRect();
-    var w = rect.width || el.offsetWidth;
-    var h = rect.height || el.offsetHeight;
+    // Use offsetWidth/Height as the source of truth — getBoundingClientRect
+    // can return small values during initial paint while offsetWidth
+    // reflects the laid-out box including padding/border. Bail when
+    // even offsetWidth is tiny; a later renderAll (load / resize /
+    // contentswap) will retry once layout settles.
+    var w = Math.max(el.offsetWidth, el.getBoundingClientRect().width || 0);
+    var h = Math.max(el.offsetHeight, el.getBoundingClientRect().height || 0);
     if (w < 14 || h < 14) return;
     var existing = el.querySelector('svg[data-rough-frame]');
     if (existing) existing.remove();
     var s = svg(w, h);
     s.setAttribute('data-rough-frame', 'true');
+    // preserveAspectRatio="none" lets the rough rectangle stretch
+    // edge-to-edge instead of letterboxing inside the SVG when the
+    // host element's aspect ratio differs from the viewBox.
+    s.setAttribute('preserveAspectRatio', 'none');
     s.style.position = 'absolute';
     s.style.inset = '0';
+    s.style.width = '100%';
+    s.style.height = '100%';
     s.style.pointerEvents = 'none';
     el.style.position = el.style.position || 'relative';
     el.appendChild(s);
