@@ -288,11 +288,13 @@ select option {
   letter-spacing: 0.12em;
   margin: 0;
 }
-/* The button + input row sits below the label, flex-wrap so it
- * survives narrow sidebars but the custom input shares the row. */
+/* The button + input row sits below the label. Single line:
+ * presets take their natural width, custom input flexes into
+ * whatever's left. nowrap prevents the input from kicking down
+ * to its own row in a narrow sidebar. */
 .serving-scaler__row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 4px;
 }
@@ -328,9 +330,10 @@ select option {
 .serving-scaler__custom-wrap {
   display: inline-flex;
   align-items: center;
-  flex: 1 1 auto;
-  min-width: 3.5rem;
+  flex: 1 1 0;
+  min-width: 2.5rem;
 }
+.serving-scaler__btn { flex: 0 0 auto; }
 .serving-scaler__custom {
   font-family: var(--font-ui);
   font-size: var(--text-sm);

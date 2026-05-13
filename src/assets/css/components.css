@@ -1688,15 +1688,10 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   border-bottom-color: var(--color-accent);
 }
 
-/* ── Section dropdowns — page-width, unified, world-class ────── */
+/* ── Section dropdowns — page-width, unified ────────────────── */
 .nav-dropdown {
   position: absolute;
   top: 100%;
-  /* Span the entire viewport horizontally rather than just the
-   * trigger column. JS used to override the left offset; we now
-   * pin to the viewport edges with calc so even a single-section
-   * dropdown reads as a full-page surface, the way real magazines
-   * shop their megamenus. */
   left: 50%;
   transform: translateX(-50%) translateY(-6px);
   width: 100vw;
@@ -1705,20 +1700,20 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   border-top: 3px solid var(--color-accent);
   box-shadow: 0 16px 48px -8px rgba(0, 0, 0, 0.22), 0 6px 16px -4px rgba(0, 0, 0, 0.10);
   z-index: calc(var(--z-nav) + 1);
-  display: grid;
-  grid-template-columns: 1.1fr 1.3fr 2fr;
   padding: var(--space-7) var(--space-10);
-  gap: var(--space-8);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.14s ease 0.06s, visibility 0.14s ease 0.06s, transform 0.14s ease 0.06s;
 }
 
-/* When a section dropdown lacks a 'Subsections' column, span 'Top Topics'
-   across the freed slot so the panel still reads as a balanced 3-column. */
-.nav-dropdown:not(:has(.nav-section-col + .nav-section-col + .nav-section-col)) {
-  grid-template-columns: 1.2fr 1.8fr;
+/* Section-page dropdowns (Subsections / Top Topics / Latest) use a
+ * grid sized to the number of cards actually present. Library and
+ * mega-style submenus skip this — `.nav-mega` paints its own grid. */
+.nav-dropdown:has(.nav-section-col) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-8);
 }
 
 /* Show each dropdown only on its own trigger. One pair per nav key.
@@ -2701,11 +2696,9 @@ body.is-home .quote-bar {
   grid-template-columns: 1.2fr 1fr;
   gap: var(--space-12);
   align-items: start;
-  padding: var(--space-8);
+  padding-bottom: var(--space-10);
   margin-bottom: var(--space-10);
-  /* Frame is drawn by rough.js via data-rough="frame" — suppress the
-   * native bottom border that used to do that job. */
-  border: 0;
+  border-bottom: 1px solid var(--color-rule);
 }
 
 @media (max-width: 768px) {
@@ -2786,9 +2779,7 @@ body.is-home .quote-bar {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-6) var(--space-5);
-  padding: var(--space-8);
   margin-bottom: var(--space-10);
-  position: relative;
 }
 @media (max-width: 1024px) {
   .site-footer__grid { grid-template-columns: repeat(3, 1fr); }

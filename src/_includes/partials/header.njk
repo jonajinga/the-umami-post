@@ -325,7 +325,7 @@
               href="{{ item.url }}"
               {% if hasDropdown %}id="nav-{{ item.key }}" aria-haspopup="true" aria-expanded="false"{% endif %}
               {% if page.url == item.url %}aria-current="page"{% endif %}>
-              <span data-rough="underline" data-rough-color="accent">{{ item.label }}</span>
+              {{ item.label }}
             </a>
           </li>
           {% endfor %}

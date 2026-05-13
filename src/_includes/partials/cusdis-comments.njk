@@ -2,13 +2,13 @@
    review layouts. The shell (header + toggle) renders unconditionally
    so readers know comments exist on every piece; the lazy-loaded
    thread only attempts to mount when site.comments.appId is set. #}
-<div class="article-comments">
+<div class="article-comments" data-rough="frame" data-rough-color="accent">
   <div class="article-comments__header">
     <div class="article-comments__heading">
       <span class="article-comments__title">Comments</span>
       <a class="article-comments__guidelines" href="/community-guidelines/">Community guidelines</a>
     </div>
-    <button type="button" class="article-comments__toggle" id="comments-toggle"
+    <button type="button" class="article-comments__toggle btn" id="comments-toggle"
       onclick="window.__umamiShowComments(this);">
       Show comments
     </button>
