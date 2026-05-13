@@ -5,13 +5,9 @@
 
 /* -- Recipe hero ----------------------------------------- */
 .recipe-hero {
-  margin: 0 0 var(--space-8);
+  margin: 0 0 var(--space-5);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--color-rule);
-  padding-bottom: var(--space-6);
-  /* Stack the eyebrow / title / dek / byline as a column even when
-   * rough-decorations.js flips the title to display:inline-block for
-   * the wavy underline. Without flex-column, the eyebrow + title
-   * collapse onto a single line. */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -51,29 +47,30 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-recipes);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 .recipe-hero__title {
   font-family: var(--font-masthead);
   font-size: var(--text-3xl);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.1;
   color: var(--color-ink);
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-2);
 }
 .recipe-hero__dek {
   font-family: var(--font-body);
   font-size: var(--text-md);
   font-style: italic;
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-snug);
   color: var(--color-ink-muted);
   max-width: var(--max-width-prose);
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-3);
 }
 .recipe-hero__byline {
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   color: var(--color-ink-faint);
+  margin: 0;
 }
 .recipe-hero__byline a {
   color: var(--color-link);
@@ -286,7 +283,9 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
 }
 .recipe-headnote {
   max-width: var(--max-width-prose);
-  margin: 0 auto var(--space-8);
+  margin: var(--space-6) auto var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
@@ -1045,12 +1044,11 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
 .recipe-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
-  justify-content: center;
-  margin: var(--space-12) auto 0;
-  padding-top: var(--space-8);
-  border-top: 1px solid var(--color-rule);
-  max-width: var(--max-width);
+  gap: var(--space-3);
+  align-items: center;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  border: 0;
 }
 .recipe-actions__btn {
   display: inline-flex;

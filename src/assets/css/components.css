@@ -1930,7 +1930,15 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   width: 100%;
 }
 
-/* ── More mega-dropdown — inherits the unified width ───────── */
+/* Every dropdown that contains a .nav-mega — Recipes, Techniques,
+ * How-Tos, Stories, Reviews, Seasonal, Submit, Explore — should
+ * read at the same width and column rhythm. Let .nav-mega own the
+ * grid; the outer .nav-dropdown stays a plain block container so
+ * nothing competes. */
+.nav-dropdown:has(.nav-mega) {
+  display: block;
+  padding: 0;
+}
 #dropdown-more {
   display: block;
   padding: 0;
@@ -1940,7 +1948,9 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-6);
-  padding: var(--space-2);
+  padding: var(--space-6) var(--space-8);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-mega__col {
