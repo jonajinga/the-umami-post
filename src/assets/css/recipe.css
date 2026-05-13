@@ -306,9 +306,11 @@ select option {
   background: var(--color-bg);
   color: var(--color-ink);
   border: 1px solid var(--color-rule);
-  padding: 0 10px;
+  padding: 0;
   height: 36px;
-  min-width: 40px;
+  width: 44px;
+  min-width: 44px;
+  flex: 0 0 44px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -316,6 +318,56 @@ select option {
   white-space: nowrap;
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
+/* Unit toggle pills are wider than the scale chips because their
+ * labels ("Metric") need more room than "1×". Equal width across
+ * both unit buttons so they read as a balanced switch. */
+.unit-toggle__btn { width: 72px; min-width: 72px; flex-basis: 72px; }
+
+/* Unit switch — two segmented buttons sharing a single track with
+ * a sliding thumb that animates between US and Metric positions.
+ * Replaces the old paired buttons so the unit chooser reads as a
+ * native-feeling switch even though both halves are click targets. */
+.unit-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  width: 160px;
+  height: 36px;
+  border: 0;
+  background: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  user-select: none;
+}
+.unit-switch__thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: var(--color-accent);
+  transition: transform 0.18s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.unit-switch[data-active="metric"] .unit-switch__thumb {
+  transform: translateX(calc(100% + 0px));
+}
+.unit-switch__btn {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: 0;
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+.unit-switch__btn--active { color: var(--color-bg); }
 .serving-scaler__btn:hover,
 .unit-toggle__btn:hover {
   border-color: var(--color-accent);

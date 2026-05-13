@@ -21,9 +21,10 @@
 
   <div class="unit-toggle">
     <span class="serving-scaler__label">Units</span>
-    <div class="serving-scaler__row">
-      <button type="button" class="unit-toggle__btn unit-toggle__btn--active" data-target-unit="us" data-rough="frame" data-rough-color="accent">US</button>
-      <button type="button" class="unit-toggle__btn" data-target-unit="metric" data-rough="frame" data-rough-color="ink">Metric</button>
+    <div class="unit-switch" role="group" aria-label="Measurement units" data-rough="frame" data-rough-color="ink">
+      <span class="unit-switch__thumb" data-unit-thumb aria-hidden="true"></span>
+      <button type="button" class="unit-switch__btn unit-switch__btn--active" data-target-unit="us">US</button>
+      <button type="button" class="unit-switch__btn" data-target-unit="metric">Metric</button>
     </div>
   </div>
 

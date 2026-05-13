@@ -270,14 +270,21 @@
         });
       }
 
-      // Unit toggle
+      // Unit toggle — works on both the legacy paired buttons
+      // (.unit-toggle__btn) and the new pill switch (.unit-switch).
+      function setActiveUnit(system) {
+        state.system = system;
+        scaler.querySelectorAll('[data-target-unit]').forEach(function (b) {
+          var on = b.getAttribute('data-target-unit') === system;
+          b.classList.toggle('unit-toggle__btn--active', on);
+          b.classList.toggle('unit-switch__btn--active', on);
+        });
+        var sw = scaler.querySelector('.unit-switch');
+        if (sw) sw.setAttribute('data-active', system);
+      }
       scaler.querySelectorAll('[data-target-unit]').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          state.system = btn.getAttribute('data-target-unit');
-          scaler.querySelectorAll('[data-target-unit]').forEach(function (b) {
-            b.classList.toggle('unit-toggle__btn--active',
-                               b.getAttribute('data-target-unit') === state.system);
-          });
+          setActiveUnit(btn.getAttribute('data-target-unit'));
           refresh();
         });
       });
@@ -285,14 +292,9 @@
       // Initial unit preference from localStorage
       try {
         var saved = localStorage.getItem((window.__PREFIX || 'umami') + '-unit-system');
-        if (saved && (saved === 'us' || saved === 'metric')) {
-          state.system = saved;
-          scaler.querySelectorAll('[data-target-unit]').forEach(function (b) {
-            b.classList.toggle('unit-toggle__btn--active',
-                               b.getAttribute('data-target-unit') === state.system);
-          });
-        }
-      } catch (e) {}
+        if (saved && (saved === 'us' || saved === 'metric')) setActiveUnit(saved);
+        else setActiveUnit(state.system);
+      } catch (e) { setActiveUnit(state.system); }
 
       refresh();
     });

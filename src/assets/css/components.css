@@ -1933,21 +1933,14 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 .nav-mega {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0;
+  gap: var(--space-6);
+  padding: var(--space-2);
 }
 
 .nav-mega__col {
-  padding: var(--space-6);
-  border-right: 1px solid var(--color-rule);
-  border-bottom: 1px solid var(--color-rule);
+  padding: var(--space-4) var(--space-5);
+  border: 0;
 }
-
-/* Strip the right border on the rightmost column of every row so it
- * doesn't dangle past the menu edge. */
-.nav-mega__col:nth-child(5n) { border-right: none; }
-/* Strip bottom borders on the last row so the menu doesn't gain a
- * trailing rule below it. nth-last-child(-n+5) catches the final 5. */
-.nav-mega__col:nth-last-child(-n+5) { border-bottom: none; }
 
 .nav-mega__heading {
   font-family: var(--font-ui);
@@ -1989,26 +1982,8 @@ body, .masthead, .site-footer, .nav-dropdown, .gs-panel {
 }
 .nav-mega__link:hover .nav-mega__title { color: var(--color-accent); }
 
-@media (max-width: 1280px) {
-  /* Wide laptop / tablet landscape: 4 columns. With 10 sections this
-   * produces 4-4-2 row counts, which still fits in one screen height. */
-  .nav-mega { grid-template-columns: repeat(4, 1fr); }
-  .nav-mega__col:nth-child(5n) { border-right: 1px solid var(--color-rule); }
-  .nav-mega__col:nth-child(4n) { border-right: none; }
-  .nav-mega__col:nth-last-child(-n+5) { border-bottom: 1px solid var(--color-rule); }
-  .nav-mega__col:nth-last-child(-n+2) { border-bottom: none; }
-}
-@media (max-width: 1024px) {
-  /* Tablet portrait: 2 columns × 5 rows. Reset the prior overrides. */
-  .nav-mega { grid-template-columns: repeat(2, 1fr); }
-  .nav-mega__col { padding: var(--space-4) var(--space-5); }
-  .nav-mega__col:nth-child(5n),
-  .nav-mega__col:nth-child(4n) { border-right: 1px solid var(--color-rule); }
-  .nav-mega__col:nth-child(2n) { border-right: none; }
-  .nav-mega__col:nth-last-child(-n+5),
-  .nav-mega__col:nth-last-child(-n+2) { border-bottom: 1px solid var(--color-rule); }
-  .nav-mega__col:nth-last-child(-n+2) { border-bottom: none; }
-}
+/* auto-fit handles every viewport; no fixed-column overrides
+ * needed. The grid collapses naturally as widths shrink. */
 
 /* Hide on mobile — drawer handles navigation there */
 @media (max-width: 768px) {

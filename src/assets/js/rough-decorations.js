@@ -254,9 +254,16 @@
   }
 
   function drawFrame(el, rough) {
+    // getBoundingClientRect can return zeroed dimensions when the
+    // element hasn't been laid out yet (initial paint, hidden
+    // ancestor briefly revealed, dynamic flex sizing). Skip when
+    // the element has no real size — a later renderAll trigger
+    // (resize / load / spa:contentswap) will re-render once layout
+    // settles.
     var rect = el.getBoundingClientRect();
-    var w = rect.width || 600;
-    var h = rect.height || 400;
+    var w = rect.width || el.offsetWidth;
+    var h = rect.height || el.offsetHeight;
+    if (w < 14 || h < 14) return;
     var existing = el.querySelector('svg[data-rough-frame]');
     if (existing) existing.remove();
     var s = svg(w, h);
@@ -268,7 +275,7 @@
     el.appendChild(s);
     var rc = rough.svg(s);
     var color = colorFor(el.getAttribute('data-rough-color') || 'ink');
-    var path = rc.rectangle(6, 6, w - 12, h - 12, {
+    var path = rc.rectangle(2, 2, w - 4, h - 4, {
       stroke: color,
       strokeWidth: 1.2,
       roughness: 0.5,
