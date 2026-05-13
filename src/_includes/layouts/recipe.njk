@@ -78,9 +78,9 @@ isReadingPage: true
     </div>
   </header>
 
-  {# Headnote — full-width prose row directly beneath the hero. This
-     is the narrative the cook reads before they roll up their sleeves. #}
+  {# Rough rule above the headnote — replaces the CSS border-top. #}
   {% if content and content.length > 0 %}
+  <div class="rough-divider rough-divider--prose" data-rough="divider" data-rough-color="ink" aria-hidden="true"></div>
   <section class="recipe-headnote article-body">
     {{ content | safe }}
   </section>

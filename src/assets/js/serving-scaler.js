@@ -271,12 +271,20 @@
       }
 
       // Unit toggle — drives the segmented .unit-switch via the
-      // data-active attribute (CSS picks the active label color
-      // and slides the thumb to the active half).
+      // data-active attribute and inline style colors. Inline styles
+      // are used because CSS rules with !important were being
+      // outranked by some upstream rule in production builds,
+      // leaving the inactive label nearly invisible.
       function setActiveUnit(system) {
         state.system = system;
         var sw = scaler.querySelector('.unit-switch');
         if (sw) sw.setAttribute('data-active', system);
+        scaler.querySelectorAll('[data-target-unit]').forEach(function (b) {
+          var active = b.getAttribute('data-target-unit') === system;
+          // Active button sits on the saffron thumb → cream label.
+          // Inactive button sits on the cream track → cocoa label.
+          b.style.color = active ? '#faf6ef' : '#2b1f18';
+        });
       }
       scaler.querySelectorAll('[data-target-unit]').forEach(function (btn) {
         btn.addEventListener('click', function () {

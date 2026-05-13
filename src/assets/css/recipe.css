@@ -7,10 +7,18 @@
 .recipe-hero {
   margin: 0 0 var(--space-5);
   padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--color-rule);
+  /* Rough.js line in the actions strip replaces this border. */
+  border-bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+/* Prose-wide rough rule sits above the headnote, capped at the
+ * prose container so it doesn't span the whole page like the
+ * accent rough-divider above the meta bar does. */
+.rough-divider--prose {
+  max-width: var(--max-width-prose);
+  margin: var(--space-4) auto 0;
 }
 /* Collapsed-meta state -- mirrors article.njk's article-header
  * pattern. Toolbar i-button toggles `data-meta-collapsed` and the
@@ -285,7 +293,9 @@ a.recipe-meta-bar__tag:hover { transform: translateY(-1px); }
   max-width: var(--max-width-prose);
   margin: var(--space-6) auto var(--space-6);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--color-rule);
+  /* Rough.js straight line drawn above the headnote via the
+   * adjacent .rough-divider element; suppress the CSS border. */
+  border-top: 0;
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);

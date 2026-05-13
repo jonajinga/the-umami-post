@@ -59,11 +59,9 @@
     var sel = [
       '.site-nav__link',
       '.nav-section-col__link',
-      '.nav-section-col__article',
       '.nav-dropdown__footer-link',
       '.nav-dropdown__footer',
       '.nav-drawer__link',
-      '.nav-drawer__latest-row',
       '.site-footer__nav a',
       '.breadcrumbs-bar__link',
       '.card__title a',
@@ -78,18 +76,25 @@
       a.addEventListener('focus',      function () { annotate(a); });
       a.addEventListener('blur',       function () { hide(a); });
     });
-    // Mega menu rows: the .nav-mega__link is full-column-width, so
-    // an underline drawn on the link itself spans the whole column.
-    // Target the inner .nav-mega__title span (which hugs the text)
-    // but trigger on the parent link so the hover area stays wide.
-    document.querySelectorAll('.nav-mega__link').forEach(function (a) {
-      if (a.dataset.navUnderlineBound === '1') return;
-      a.dataset.navUnderlineBound = '1';
-      var target = a.querySelector('.nav-mega__title') || a;
-      a.addEventListener('mouseenter', function () { annotate(target); });
-      a.addEventListener('mouseleave', function () { hide(target); });
-      a.addEventListener('focus',      function () { annotate(target); });
-      a.addEventListener('blur',       function () { hide(target); });
+    // Block-level link rows whose link element is full-width — we
+    // need to draw the underline on the inner title span so the
+    // rough rule hugs the text. Hover stays bound to the parent
+    // so the hot area is still the whole row.
+    var rowSelectors = [
+      { row: '.nav-mega__link',          inner: '.nav-mega__title' },
+      { row: '.nav-section-col__article', inner: '.nav-section-col__article-title' },
+      { row: '.nav-drawer__latest-row',   inner: '.nav-drawer__latest-title' }
+    ];
+    rowSelectors.forEach(function (pair) {
+      document.querySelectorAll(pair.row).forEach(function (a) {
+        if (a.dataset.navUnderlineBound === '1') return;
+        a.dataset.navUnderlineBound = '1';
+        var target = a.querySelector(pair.inner) || a;
+        a.addEventListener('mouseenter', function () { annotate(target); });
+        a.addEventListener('mouseleave', function () { hide(target); });
+        a.addEventListener('focus',      function () { annotate(target); });
+        a.addEventListener('blur',       function () { hide(target); });
+      });
     });
   }
 
