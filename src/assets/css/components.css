@@ -14,19 +14,10 @@
   border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-ui);
   font-size: var(--text-xs);
-  /* Strip stays at its original 36 px height so the section-nav rule
-   * above and the breadcrumb's own border-bottom don't move. The
-   * crumb text is pushed lower inside the bar via flex-end + a small
-   * bottom inset, not by growing the container. */
   min-height: 36px;
   display: flex;
-  /* Anchor the crumb list to the bottom edge of the bar (just above
-   * the border) instead of vertically centred. Combined with the
-   * 4 px padding-bottom on the list itself, the text sits a touch
-   * lower than centre without nudging either separator. */
-  align-items: flex-end;
-  /* Uppercase to match the section-nav strip directly above so the
-   * two read as one continuous chrome. */
+  align-items: center;
+  justify-content: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -34,31 +25,17 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  width: 100%;
+  justify-content: center;
   list-style: none;
-  /* 4 px padding-bottom — text sits 1 px closer to the border than
-   * the previous 5 px. Bar's own 36 px height + the section-nav
-   * rule above stay put; only the text moves. */
-  padding-top: 0;
-  padding-bottom: 4px;
+  padding: 0 var(--gutter);
   line-height: 1;
-  /* Keep margin-inline auto from .container so the crumbs align with
-   * the article-card grid below; reset only the block margin that
-   * the browser default ol ships with. */
   margin-block: 0;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
-  /* Always one line — long titles overflow horizontally with a
-   * scroll-snap fallback; never wrap onto a second row, which the
-   * sticky-strip aesthetic doesn't support. */
   white-space: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  /* Visually inset the first crumb so its leading character lines
-   * up with the section-nav link text above (link padding is
-   * space-4) rather than the masthead container's inner edge. */
-  padding-inline-start: calc(var(--gutter) + var(--space-3));
 }
 .breadcrumbs-bar__list::-webkit-scrollbar { display: none; }
 .breadcrumbs-bar__item--current {
@@ -164,8 +141,8 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) 0;
-  min-height: 3rem;
+  padding: var(--space-2) 0;
+  min-height: 2.5rem;
 }
 
 .masthead__lead {
@@ -2623,7 +2600,7 @@ a.dateline:hover { color: var(--color-accent); }
 .quote-bar {
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-rule);
-  padding: var(--space-2) 0;
+  padding: 4px 0;
   text-align: center;
   font-family: var(--font-body);
   font-size: var(--text-sm);

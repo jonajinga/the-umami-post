@@ -1,6 +1,7 @@
 {# Meta bar: time / yield / difficulty / cuisine / diet chips.
-   Expects: prepTime, cookTime, totalTime, yield, course, cuisine,
-   difficulty, diet (array). All optional. #}
+   Tags are clickable -- each routes to /topics/<slug>/, which is the
+   tag page auto-generated from collections.tagList. Course, cuisine,
+   diet, and free tags all share the flat tag namespace. #}
 <div class="recipe-meta-bar">
   {% if totalTime %}
   <div class="recipe-meta-bar__item">
@@ -26,12 +27,18 @@
     <span class="recipe-meta-bar__value">{{ yield }}</span>
   </div>
   {% endif %}
-  {% if course or cuisine or difficulty or diet %}
+  {% if difficulty %}
+  <div class="recipe-meta-bar__item recipe-meta-bar__item--difficulty">
+    <span class="recipe-meta-bar__label">Difficulty</span>
+    <span data-rough="difficulty" data-rough-level="{{ difficulty }}" aria-label="Difficulty {{ difficulty }} of 5"></span>
+  </div>
+  {% endif %}
+  {% if course or cuisine or diet or tags %}
   <div class="recipe-meta-bar__tags">
-    {% if course %}<span class="recipe-meta-bar__tag">{{ course }}</span>{% endif %}
-    {% if cuisine %}<span class="recipe-meta-bar__tag">{{ cuisine }}</span>{% endif %}
-    {% if difficulty %}<span class="recipe-meta-bar__tag">Difficulty {{ difficulty }}/5</span>{% endif %}
-    {% for d in diet %}<span class="recipe-meta-bar__tag">{{ d }}</span>{% endfor %}
+    {% if course %}<a href="/topics/{{ course | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="accent">{{ course }}</a>{% endif %}
+    {% if cuisine %}<a href="/topics/{{ cuisine | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="olive">{{ cuisine }}</a>{% endif %}
+    {% for d in diet %}<a href="/topics/{{ d | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="plum">{{ d }}</a>{% endfor %}
+    {% for t in tags %}{% if t and t != "recipes" and t != "techniques" and t != "reviews" %}<a href="/topics/{{ t | slugify }}/" class="recipe-meta-bar__tag" data-rough="chip" data-rough-color="paprika">{{ t }}</a>{% endif %}{% endfor %}
   </div>
   {% endif %}
 </div>

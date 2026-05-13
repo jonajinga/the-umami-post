@@ -44,7 +44,7 @@ isReadingPage: true
     <h1 class="recipe-hero__title">{{ title }}</h1>
     {% if dek %}<p class="recipe-hero__dek">{{ dek }}</p>{% endif %}
     {% if hero %}
-    <figure class="recipe-hero__photo">
+    <figure class="recipe-hero__photo" data-rough="frame" data-rough-color="ink">
       <img src="{{ hero }}" alt="{{ heroAlt or title }}" loading="eager" fetchpriority="high">
       {% if heroCaption %}<figcaption>{{ heroCaption }}</figcaption>{% endif %}
     </figure>
@@ -55,6 +55,8 @@ isReadingPage: true
       {% if updated %} &middot; Updated {{ updated | readableDate }}{% endif %}
     </p>
   </header>
+
+  <div class="rough-divider" data-rough="divider" data-rough-color="accent" aria-hidden="true"></div>
 
   {% include "partials/recipe-meta-bar.njk" %}
 
@@ -72,7 +74,7 @@ isReadingPage: true
       {% endif %}
     </aside>
 
-    <section class="recipe-body__instructions">
+    <section class="recipe-body__instructions article-body" style="max-width:none;">
       <h2>Instructions</h2>
       {% include "partials/instruction-list.njk" %}
 
@@ -123,4 +125,5 @@ isReadingPage: true
 <script src="/assets/js/serving-scaler.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/ingredient-checklist.js?v={{ buildTime }}" defer></script>
 <script src="/assets/js/cooking-mode.js?v={{ buildTime }}" defer></script>
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
 {% endblock %}

@@ -1874,6 +1874,36 @@ module.exports = function (eleventyConfig) {
     }
   });
 
+  // ─── Favicon rasterization: PNG sizes from the source SVG ────────────────
+  // SVG favicons cover every modern browser, but iOS / Android home-screen
+  // icons + Windows tiles still want PNG. Generate them once after every build.
+  eleventyConfig.on("eleventy.after", async () => {
+    const svgPath = "./_site/assets/favicon.svg";
+    if (!fs.existsSync(svgPath)) return;
+    let Resvg;
+    try { ({ Resvg } = require("@resvg/resvg-js")); } catch (e) { return; }
+    const svg = fs.readFileSync(svgPath, "utf8");
+    const sizes = [
+      { name: "favicon-16.png",       w: 16  },
+      { name: "favicon-32.png",       w: 32  },
+      { name: "favicon-192.png",      w: 192 },
+      { name: "favicon-512.png",      w: 512 },
+      { name: "apple-touch-icon.png", w: 180 }
+    ];
+    let written = 0;
+    for (const s of sizes) {
+      try {
+        const resvg = new Resvg(svg, { fitTo: { mode: "width", value: s.w } });
+        const png = resvg.render().asPng();
+        fs.writeFileSync(path.join("./_site/assets", s.name), png);
+        written++;
+      } catch (e) {
+        console.warn("favicon raster failed for", s.name, "--", e.message);
+      }
+    }
+    if (written) console.log(`[favicon] Wrote ${written} PNG sizes from favicon.svg`);
+  });
+
   // ─── OG image rasterization: convert the SVGs in /og/ to PNGs ─────────────
   // Social platforms (Twitter, Facebook, LinkedIn, Slack, Discord) don't
   // render SVG in OG previews. We keep the SVGs (nice for direct viewing)

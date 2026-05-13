@@ -86,7 +86,7 @@ isReadingPage: true
   {% endif %}
 
   <div class="recipe-body" style="grid-template-columns: 1fr;">
-    <section class="recipe-body__instructions" style="max-width: var(--max-width-prose); margin: 0 auto;">
+    <section class="recipe-body__instructions article-body" style="max-width: var(--max-width-prose); margin: 0 auto;">
       {% if whyMatters %}
       <h2>Why this matters</h2>
       <div class="article-body">{{ whyMatters | safe }}</div>
@@ -132,3 +132,5 @@ isReadingPage: true
 </div>
 
 {% include "partials/reader-chrome.njk" %}
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

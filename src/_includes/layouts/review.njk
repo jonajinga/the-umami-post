@@ -45,7 +45,7 @@ isReadingPage: true
   </header>
 
   <div class="recipe-body" style="grid-template-columns: 1fr;">
-    <section class="recipe-body__instructions" style="max-width: var(--max-width-prose); margin: 0 auto;">
+    <section class="recipe-body__instructions article-body" style="max-width: var(--max-width-prose); margin: 0 auto;">
 
       {% if verdict or rating or pros or cons %}
       <aside class="review-verdict">
@@ -94,3 +94,5 @@ isReadingPage: true
 </div>
 
 {% include "partials/reader-chrome.njk" %}
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

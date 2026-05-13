@@ -21,8 +21,8 @@ layout: layouts/base.njk
   {% set latestRecipes = collections.recipes | reverse %}
   {% if latestRecipes.length > 0 %}
   <section class="front-section-strip" aria-label="Latest recipes" style="margin-top: var(--space-12);">
-    <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-accent); padding-bottom: var(--space-3); margin-bottom: var(--space-6);">
-      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0;">Latest Recipes</h2>
+    <header class="home-section-head" style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom: var(--space-4); margin-bottom: var(--space-6); position: relative;">
+      <h2 style="font-family: var(--font-headline); font-size: var(--text-xl); margin: 0;" data-rough="underline" data-rough-color="accent">Latest Recipes</h2>
       <a href="/recipes/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-accent); text-decoration: none;">All recipes &rarr;</a>
     </header>
     <div class="recipe-grid">
@@ -39,8 +39,8 @@ layout: layouts/base.njk
     {% set latestTechniques = collections.techniques | reverse | limit(3) %}
     {% if latestTechniques.length > 0 %}
     <div>
-      <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-techniques); padding-bottom: var(--space-3); margin-bottom: var(--space-5);">
-        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Techniques</h2>
+      <header style="display:flex;justify-content:space-between;align-items:baseline; padding-bottom: var(--space-4); margin-bottom: var(--space-5);">
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="olive">Techniques</h2>
         <a href="/techniques/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-techniques); text-decoration: none;">All techniques &rarr;</a>
       </header>
       <ul style="list-style:none;padding:0;margin:0;">
@@ -57,8 +57,8 @@ layout: layouts/base.njk
     {% set latestReviews = collections.reviews | reverse | limit(3) %}
     {% if latestReviews.length > 0 %}
     <div>
-      <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom: 2px solid var(--color-reviews); padding-bottom: var(--space-3); margin-bottom: var(--space-5);">
-        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;">Reviews</h2>
+      <header style="display:flex;justify-content:space-between;align-items:baseline; padding-bottom: var(--space-4); margin-bottom: var(--space-5);">
+        <h2 style="font-family: var(--font-headline); font-size: var(--text-lg); margin: 0;" data-rough="underline" data-rough-color="reviews">Reviews</h2>
         <a href="/reviews/" style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-reviews); text-decoration: none;">All reviews &rarr;</a>
       </header>
       <ul style="list-style:none;padding:0;margin:0;">
@@ -87,3 +87,5 @@ layout: layouts/base.njk
   </section>
 
 </div>{# /.container #}
+
+<script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>

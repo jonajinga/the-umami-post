@@ -11,27 +11,45 @@
   {# ── Meta Description ── #}
   <meta name="description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
 
-  {# ── Open Graph ── #}
-  <meta property="og:type" content="{% if layout == 'article' %}article{% else %}website{% endif %}">
+  {# ── Open Graph ──
+     Recipes, technique guides, reviews, and stories all render as
+     og:type=article (Facebook's spec; OG has no first-class Recipe
+     type). The structured-data <script type="application/ld+json"> in
+     each layout carries the Schema.org Recipe / Review / HowTo data
+     that Google + others actually read. #}
+  {% set _readingLayout = layout == 'article' or layout == 'recipe' or layout == 'technique' or layout == 'review' %}
+  <meta property="og:type" content="{% if _readingLayout %}article{% else %}website{% endif %}">
   <meta property="og:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:description" content="{% if description or dek %}{{ description or dek }}{% else %}{{ site.description }}{% endif %}">
   <meta property="og:site_name" content="{{ site.title }}">
-  {# OG image: explicit front-matter image wins; article pages fall back to auto-generated card (PNG for social, SVG as secondary) #}
-  {% if image %}
-    <meta property="og:image" content="{{ site.url }}{{ image }}">
-  {% elif section %}
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:locale" content="{{ site.locale or 'en_US' }}">
+  {# OG image: explicit front-matter image / hero wins; article pages
+     fall back to auto-generated /og/<slug>.png card. #}
+  {% set _ogImage = image or hero %}
+  {% if _ogImage %}
+    <meta property="og:image" content="{{ site.url }}{{ _ogImage }}">
+    {% if heroAlt or imageAlt %}<meta property="og:image:alt" content="{{ heroAlt or imageAlt }}">{% endif %}
+  {% elif section or _readingLayout %}
     <meta property="og:image" content="{{ site.url }}/og/{{ page.url | ogSlug }}.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/png">
+  {% else %}
+    <meta property="og:image" content="{{ site.url }}{{ site.ogImage or '/assets/favicon-512.png' }}">
   {% endif %}
 
   {# ── Twitter Card ── #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
-  {% if section %}
+  <meta name="twitter:description" content="{% if description or dek %}{{ description or dek }}{% else %}{{ site.description }}{% endif %}">
+  {% if _ogImage %}
+  <meta name="twitter:image" content="{{ site.url }}{{ _ogImage }}">
+  {% elif section or _readingLayout %}
   <meta name="twitter:image" content="{{ site.url }}/og/{{ page.url | ogSlug }}.png">
+  {% endif %}
+  {% if site.social and site.social.twitter %}
+  <meta name="twitter:site" content="{{ site.social.twitter }}">
   {% endif %}
 
   {# ── Canonical ── #}
@@ -59,10 +77,13 @@
   <link rel="alternate" type="application/rss+xml" title="{{ title }}, {{ site.title }}" href="{{ site.url }}/feeds/{{ authorSlug }}.xml">
   {% endif %}
 
-  {# ── Favicon — light + dark variants via prefers-color-scheme ── #}
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" media="(prefers-color-scheme: light)">
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+  {# ── Favicon: SVG primary, PNG fallbacks for iOS / Android / Windows ── #}
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32"   href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16"   href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#FAF6EF" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1A1410" media="(prefers-color-scheme: dark)">
@@ -355,6 +376,10 @@
   {% if site.analytics and site.analytics.websiteId %}
   <script defer src="{{ site.analytics.scriptUrl }}" data-website-id="{{ site.analytics.websiteId }}"></script>
   {% endif %}
+
+  {# ── Rough.js hand-drawn decorations (auto-applies to .recipe-hero__title
+       and .page-header__title sitewide; opt-in via [data-rough] anywhere) ── #}
+  <script src="/assets/js/rough-decorations.js?v={{ buildTime }}" defer></script>
 
   {# ── Instant Page (prefetch on hover), loaded last so it never touches the critical path ── #}
   <script src="/assets/js/instant.page.js?v={{ buildTime }}" type="module"></script>
