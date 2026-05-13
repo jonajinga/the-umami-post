@@ -200,16 +200,45 @@
   border-top: 1px solid var(--color-rule);
 }
 
-/* Nutrition group — sits in the .recipe-meta-bar__content column
- * directly below the time/yield row, with a horizontal rule on
- * top to separate it. 'Per serving' eyebrow + Full-label button
- * share the header row; macros sit in a row below. */
+/* Nutrition group — sits inline alongside the time/yield/difficulty
+ * cluster. Separated by a vertical rule on the left. The 'Per
+ * serving' eyebrow + Full-label button share the header row;
+ * macros sit in a row below. */
 .recipe-meta-bar__nutrition-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-rule);
+  padding-left: var(--space-6);
+  margin-left: var(--space-2);
+  border-left: 1px solid var(--color-rule-heavy);
+  align-self: stretch;
+}
+.recipe-meta-bar__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+}
+.recipe-meta-bar__times {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+}
+.recipe-meta-bar__times .recipe-meta-bar__item {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+@media (max-width: 900px) {
+  .recipe-meta-bar__nutrition-group {
+    flex: 1 1 100%;
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: var(--space-4);
+    border-left: 0;
+    border-top: 1px solid var(--color-rule);
+  }
 }
 .recipe-meta-bar__nutrition-head {
   display: flex;
@@ -407,6 +436,16 @@ select option {
 }
 .recipe-body__instructions > h2:first-child {
   margin-top: 0;
+  /* Strip the .article-body global rule that adds a top border to
+   * every h2 — at the very top of the column it reads as an
+   * unwanted breaker line above 'Instructions'. */
+  padding-top: 0;
+  border-top: 0;
+}
+.recipe-body__ingredients > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .serving-scaler {
@@ -1197,20 +1236,29 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
 .wake-switch {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: 6px var(--space-4);
+  gap: 8px;
+  /* Padding has to be tight in the narrow actions column so the
+   * label doesn't get clipped behind the track. The rough.js
+   * frame leaves enough breathing room with 6px / 10px. */
+  padding: 6px 10px;
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: var(--font-ui);
-  font-size: var(--text-sm);
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-ink-muted);
-  min-height: 44px;
+  min-height: 36px;
   position: relative;
   transition: color var(--transition-fast);
+  white-space: nowrap;
+  /* Let the button shrink to fit; if it still overflows, let the
+   * label show ellipsis instead of getting clipped behind the
+   * track or rough frame. */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .wake-switch__track,
 .wake-switch__label { position: relative; z-index: 1; }
@@ -1218,8 +1266,9 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
 .wake-switch.is-on { color: var(--color-ink); }
 .wake-switch__track {
   position: relative;
-  width: 44px;
-  height: 24px;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 18px;
   background: var(--color-bg-inset);
   border: 1px solid var(--color-rule-heavy);
   border-radius: 999px;
@@ -1227,10 +1276,10 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
 }
 .wake-switch__thumb {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
   background: var(--color-ink-muted);
   border-radius: 50%;
   transition: transform 0.18s ease, background var(--transition-fast);
@@ -1240,10 +1289,16 @@ a.card__eyebrow:hover { color: var(--color-accent); text-decoration: underline; 
   border-color: var(--color-accent);
 }
 .wake-switch.is-on .wake-switch__thumb {
-  transform: translateX(20px);
+  transform: translateX(14px);
   background: var(--color-bg);
 }
-.wake-switch__label { white-space: nowrap; }
+.wake-switch__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
+}
 
 @media print {
   .recipe-actions { display: none; }
